@@ -1,0 +1,14 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>Resources/icons/dictionary.svg</file>
+    <file>Resources/icons/document-new.svg</file>
+    <file>Resources/icons/document-open.svg</file>
+    <file>Resources/icons/document-open-recent.svg</file>
+    <file>Resources/icons/document-import.svg</file>
+    <file>Resources/icons/folder-new.svg</file>
+    <file>Resources/icons/mail-message-new.svg</file>
+    <file>Resources/icons/amarok_cart_remove.svg</file>
+    <file>Resources/icons/help-about.svg</file>
+    <file>Resources/icons/system-help.svg</file>
+</qresource>
+</RCC>

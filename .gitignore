@@ -1,0 +1,23 @@
+##############################
+# Eclipse project meta data
+##############################
+/.settings/
+/.buildpath
+.buildpath
+/.project
+/.dbeaver-data-sources.xml
+/.dbeaver/
+/.cproject
+/.backup
+
+##############################
+# Examples meta data
+##############################
+/src/build/
+/src/.qmake.stash
+/src/Makefile
+/src/Makefile.Debug
+/src/Makefile.Release
+/src/moc_*
+/src/*.o
+/src/QVocabulary

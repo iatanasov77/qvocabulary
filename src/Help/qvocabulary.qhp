@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>walletfox.qt.helpexample</namespace>
+    <virtualFolder>html</virtualFolder>
+    <filterSection>
+        <toc>
+            <section title="QGraphics Help Example" ref="html/index.html">
+                <section title="Home" ref="./html/index.html"></section>
+                <!--
+                <section title="Delete object" ref="./deleteobject.html"></section>
+                -->
+            </section>
+        </toc>
+        <keywords>
+            <keyword name="Index" ref="./html/index.html"/>
+            <!--
+            <keyword name="Insert ellipse" ref="./insertellipse.html"/>
+            <keyword name="Delete object" ref="./deleteobject.html"/>
+            -->
+        </keywords>
+        <files>
+            <file>doc/index.html</file>
+            <!--  
+            <file>insertobject.html</file>
+            <file>insertellipse.html</file>
+            <file>insertrectangle.html</file>
+            <file>deleteobject.html</file>
+            <file>images/ellipse.png</file>
+            <file>images/rectangle.png</file>
+            -->
+        </files>
+    </filterSection>
+</QtHelpProject>
