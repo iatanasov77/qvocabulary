@@ -1,2 +1,2 @@
 # qvocabulary
-An QT alternative of Microsoft Vocabulary++
+A QT alternative of Microsoft Vocabulary++
