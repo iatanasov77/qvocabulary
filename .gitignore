@@ -13,11 +13,11 @@
 ##############################
 # Examples meta data
 ##############################
-/src/build/
-/src/.qmake.stash
-/src/Makefile
-/src/Makefile.Debug
-/src/Makefile.Release
-/src/moc_*
-/src/*.o
-/src/QVocabulary
+/*/*.autosave
+/build/
+/.qmake.stash
+/Makefile
+/Makefile.Debug
+/Makefile.Release
+/Help/*.qhc
+/Help/*.qch
