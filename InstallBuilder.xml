@@ -36,11 +36,11 @@
                         <distributionFile>
                             <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/QVocabulary.exe</origin>
                         </distributionFile>
-                        <distributionDirectory>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/platforms</origin>
-                        </distributionDirectory>
 						<distributionDirectory>
                             <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/plugins</origin>
+                        </distributionDirectory>
+                        <distributionDirectory>
+                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/Help</origin>
                         </distributionDirectory>
 						
 						<distributionFile>

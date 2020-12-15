@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QtHelpProject version="1.0">
+    <namespace>vankososft.qvocabulary.help</namespace>
+    <virtualFolder>doc</virtualFolder>
+    <filterSection>
+        <toc>
+            <section title="QVocabulary Help" ref="index.html">
+                <section title="Crete a New Database" ref="./createnewdatabase.html"/>
+                <section title="Import from Microsoft Vocabulary++" ref="./importfrommsvpp.html"></section>
+            </section>
+        </toc>
+        <keywords>
+            <keyword name="Crete a New Database" ref="./createnewdatabase.html"/>
+            <keyword name="Import from Microsoft Vocabulary++" ref="./importfrommsvpp.html"/>
+        </keywords>
+        <files>
+            <file>index.html</file>
+            <file>createnewdatabase.html</file>
+            <file>importfrommsvpp.html</file>
+            <!--  
+            <file>insertobject.html</file>
+            <file>insertellipse.html</file>
+            <file>insertrectangle.html</file>
+            <file>deleteobject.html</file>
+            <file>images/ellipse.png</file>
+            <file>images/rectangle.png</file>
+            -->
+        </files>
+    </filterSection>
+</QtHelpProject>

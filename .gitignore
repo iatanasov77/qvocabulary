@@ -13,6 +13,7 @@
 ##############################
 # Examples meta data
 ##############################
+/*/*.autosave
 /src/build/
 /src/.qmake.stash
 /src/Makefile
@@ -21,3 +22,5 @@
 /src/moc_*
 /src/*.o
 /src/QVocabulary
+/Help/*.qhc
+/Help/*.qch

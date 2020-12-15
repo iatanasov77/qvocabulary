@@ -42,7 +42,7 @@ void HelpWindow::initHelp()
 
 	HelpBrowser *textViewer = new HelpBrowser( helpEngine );
 	textViewer->setSource(
-		QUrl( "qthelp://walletfox.qt.helpexample/doc/index.html" )
+		QUrl( "qthelp://vankososft.qvocabulary.help/doc/index.html" )
 	);
 
 	connect(
