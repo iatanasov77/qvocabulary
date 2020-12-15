@@ -8,6 +8,6 @@ I. Howto Build Application
 	
 II. Howto Build Help
 	1. Enter into the Help folder
-	2. Run `qcollectiongenerator qvocabulary.qhcp -o qvocabulary.qhc`
+	2. Run `qcollectiongenerator qvocabulary.qhcp -o qvocabulary.qhc` OR `qhelpgenerator qvocabulary.qhcp -o qvocabulary.qhc`
 	3. During deployment Create Help folder with qvocabulary.qch and qvocabulary.qhc files into the deployment package
 	
