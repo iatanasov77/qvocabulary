@@ -19,7 +19,8 @@ VsSettings::VsSettings()
 	QDir userAppDataPath	= VsApplication::dataPath();
 	QString settingsFile	= userAppDataPath.absoluteFilePath( "settings.ini" );
 
-	_settings	= new QSettings( settingsFile, QSettings::NativeFormat );
+	//_settings	= new QSettings( settingsFile, QSettings::NativeFormat );
+	_settings	= new QSettings( settingsFile, QSettings::IniFormat );
 }
 
 VsSettings* VsSettings::createInstance()

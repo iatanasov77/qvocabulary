@@ -32,8 +32,8 @@ class MainWindow : public QMainWindow
 		void on_actionOpen_DB_triggered();
 		void on_actionInsertGroup_triggered();
 		void on_actionInsertWord_triggered();
-		void openRecentFile();
-		void clearRecentFiles();
+		void openRecentDatabase();
+		void clearRecentDatabases();
 
 		void on_actionHelp_triggered();
 		void on_actionAbout_triggered();
@@ -45,12 +45,13 @@ class MainWindow : public QMainWindow
 		void initIcons();
 		void initDatabase();
 
-		void createReccentFileActions();
+		void createReccentDatabaseActions();
 
 		void setCurrentDb( const QString &dbPath );
-		void updateRecentFileActions();
+		void updateRecentDatabaseActions();
 		QString strippedName( const QString &fullDbPath );
-		void createNewDatabase();
+		QString openDatabase();
+		QString createNewDatabase();
 
 		// Properties
 		Ui::MainWindow *ui;
@@ -58,11 +59,11 @@ class MainWindow : public QMainWindow
 		NewDatabaseDialog *dlgNewDatabase;
 		HelpWindow *wdgHelp;
 
-		QAction *actClearRecentFiles;
+		QAction *actClearRecentDatabases;
 		QAction *separatorAct;
-		enum { MaxRecentFiles = 5 };
+		enum { MaxRecentDatabases = 5 };
 		QString curDatabase;
-		QAction *recentFileActs[MaxRecentFiles];
+		QAction *recentDatabaseActs[MaxRecentDatabases];
 
 		QDockWidget* helpWindow;
 };

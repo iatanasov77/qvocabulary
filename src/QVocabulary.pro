@@ -63,6 +63,7 @@ SOURCES += \
     	Widget/VocabularyWordsWidget.cpp \
     	ModelView/Helper.cpp \
     	ModelView/SideBarListViewDelegate.cpp \
+    	Dialog/InitDatabaseDialog.cpp \
     	Dialog/NewDatabaseDialog.cpp \
     	Dialog/NewVocabularyGroupDialog.cpp \
     	Dialog/RenameVocabularyGroupDialog.cpp \
@@ -88,6 +89,7 @@ HEADERS += \
     	Widget/VocabularyWordsWidget.h \
     	ModelView/Helper.h \
     	ModelView/SideBarListViewDelegate.h \
+    	Dialog/InitDatabaseDialog.h \
     	Dialog/NewDatabaseDialog.h \
     	Dialog/NewVocabularyGroupDialog.h \
     	Dialog/RenameVocabularyGroupDialog.h \
@@ -98,6 +100,7 @@ FORMS += \
 		Widget/VocabularyWidget.ui \
 		Widget/VocabularyGroupsWidget.ui \
 		Widget/VocabularyWordsWidget.ui \
+		Dialog/InitDatabaseDialog.ui \
     	Dialog/NewDatabaseDialog.ui \
     	Dialog/NewVocabularyGroupDialog.ui \
     	MainWindow.ui

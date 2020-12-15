@@ -40,7 +40,7 @@
                             <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/platforms</origin>
                         </distributionDirectory>
 						<distributionDirectory>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/sqldrivers</origin>
+                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/plugins</origin>
                         </distributionDirectory>
 						
 						<distributionFile>
@@ -63,6 +63,9 @@
                         </distributionFile>
                         <distributionFile>
                             <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/Qt5Xml.dll</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/Qt5Svg.dll</origin>
                         </distributionFile>
                         
                         <distributionFile>
