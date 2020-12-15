@@ -15,6 +15,7 @@
 #include "Application/Import/MicrosoftVocabulary.h"
 #include "Widget/HelpWindow.h"
 #include "Widget/VocabularyWidget.h"
+#include "Dialog/InitDatabaseDialog.h"
 #include "Dialog/NewDatabaseDialog.h"
 #include "Dialog/NewVocabularyGroupDialog.h"
 
@@ -25,8 +26,8 @@ MainWindow::MainWindow( QWidget *parent ) :
     ui->setupUi( this );
 
     initIcons();
-    createReccentFileActions();
-    updateRecentFileActions();
+    createReccentDatabaseActions();
+    updateRecentDatabaseActions();
     initDatabase();
 }
 
@@ -79,7 +80,7 @@ void MainWindow::on_actionNew_DB_triggered()
 
 void MainWindow::on_actionOpen_DB_triggered()
 {
-	QString dbPath = QFileDialog::getOpenFileName( this, tr( "Open Database" ), QDir::homePath(), tr( "Db Files (*.db)" ) );
+	QString dbPath = openDatabase();
 
 	if ( ! dbPath.isEmpty() ) {
 		loadDb( dbPath );
@@ -105,7 +106,7 @@ void MainWindow::on_actionHelp_triggered()
 	wdgHelp->show();
 }
 
-void MainWindow::openRecentFile()
+void MainWindow::openRecentDatabase()
 {
     QAction *action = qobject_cast<QAction *>( sender() );
     if ( action ) {
@@ -113,36 +114,65 @@ void MainWindow::openRecentFile()
     }
 }
 
-void MainWindow::clearRecentFiles()
+void MainWindow::clearRecentDatabases()
 {
 	QStringList emptyList	= QStringList();
 
     QSettings* settings	= VsSettings::instance()->settings();
-    settings->setValue( "recentFileList", emptyList );
+    settings->setValue( "recentDatabaseList", emptyList );
     settings->sync();	// Sync ini file
 
-    updateRecentFileActions();
+    updateRecentDatabaseActions();
 }
 
-void MainWindow::createReccentFileActions()
+void MainWindow::createReccentDatabaseActions()
 {
-	for ( int i = 0; i < MaxRecentFiles; ++i ) {
-		recentFileActs[i] = new QAction( this );
-		recentFileActs[i]->setVisible( false );
-		connect( recentFileActs[i], SIGNAL( triggered() ),this, SLOT( openRecentFile() ) );
+	for ( int i = 0; i < MaxRecentDatabases; ++i ) {
+		recentDatabaseActs[i] = new QAction( this );
+		recentDatabaseActs[i]->setVisible( false );
+		connect( recentDatabaseActs[i], SIGNAL( triggered() ),this, SLOT( openRecentDatabase() ) );
 	}
 
-	for ( int i = 0; i < MaxRecentFiles; ++i )
-		ui->menu_Open_Database_Recent->addAction( recentFileActs[i] );
+	for ( int i = 0; i < MaxRecentDatabases; ++i )
+		ui->menu_Open_Database_Recent->addAction( recentDatabaseActs[i] );
 
-	actClearRecentFiles	= new QAction( this );
-	actClearRecentFiles->setText( tr( "Clear List" ) );
-	actClearRecentFiles->setIcon( QIcon( ":/Resources/icons/amarok_cart_remove.svg" ) );
-	actClearRecentFiles->setVisible( false );
-	connect( actClearRecentFiles, SIGNAL( triggered() ),this, SLOT( clearRecentFiles() ) );
+	actClearRecentDatabases	= new QAction( this );
+	actClearRecentDatabases->setText( tr( "Clear List" ) );
+	actClearRecentDatabases->setIcon( QIcon( ":/Resources/icons/amarok_cart_remove.svg" ) );
+	actClearRecentDatabases->setVisible( false );
+	connect( actClearRecentDatabases, SIGNAL( triggered() ),this, SLOT( clearRecentDatabases() ) );
 
 	separatorAct = ui->menu_Open_Database_Recent->addSeparator();
-	ui->menu_Open_Database_Recent->addAction( actClearRecentFiles );
+	ui->menu_Open_Database_Recent->addAction( actClearRecentDatabases );
+}
+
+void MainWindow::updateRecentDatabaseActions()
+{
+	QSettings* settings		= VsSettings::instance()->settings();
+    QStringList databases	= settings->value( "recentDatabaseList" ).toStringList();
+
+    int numRecentDatabases	= qMin( databases.size(), (int)MaxRecentDatabases );
+
+    for ( int i = 0; i < numRecentDatabases; ++i ) {
+        QString text = tr( "&%1 %2").arg( i + 1 ).arg( strippedName( databases[i] ) );
+        recentDatabaseActs[i]->setText( text );
+        recentDatabaseActs[i]->setData( databases[i] );
+        recentDatabaseActs[i]->setVisible( true );
+    }
+
+    for ( int j = numRecentDatabases; j < MaxRecentDatabases; ++j )
+        recentDatabaseActs[j]->setVisible( false );
+
+    ui->actionEmpty->setVisible( numRecentDatabases == 0 );
+    separatorAct->setVisible( numRecentDatabases > 0 );
+    actClearRecentDatabases->setVisible( numRecentDatabases > 0 );
+}
+
+QString MainWindow::strippedName( const QString &fullDbPath )
+{
+	QFileInfo fi( fullDbPath );
+
+    return "..." + fi.absolutePath().right( 20 ) + "/" + fi.fileName();
 }
 
 void MainWindow::loadDb( const QString &dbPath )
@@ -176,68 +206,57 @@ void MainWindow::setCurrentDb( const QString &dbPath )
     curDatabase = dbPath;
     setWindowFilePath( curDatabase );
 
-    QSettings* settings	= VsSettings::instance()->settings();
-    QStringList files = settings->value( "recentFileList" ).toStringList();
-    files.removeAll( dbPath );
-    files.prepend( dbPath );
-    while ( files.size() > MaxRecentFiles )
-        files.removeLast();
+    QSettings* settings		= VsSettings::instance()->settings();
+    QStringList databases	= settings->value( "recentDatabaseList" ).toStringList();
+    databases.removeAll( dbPath );
+    databases.prepend( dbPath );
+    while ( databases.size() > MaxRecentDatabases )
+        databases.removeLast();
 
-    settings->setValue( "recentFileList", files );
+    settings->setValue( "recentDatabaseList", databases );
     settings->sync();	// Sync ini file
 
-    updateRecentFileActions();
-}
-
-void MainWindow::updateRecentFileActions()
-{
-	QSettings* settings	= VsSettings::instance()->settings();
-    QStringList files = settings->value( "recentFileList" ).toStringList();
-
-    int numRecentFiles = qMin( files.size(), (int)MaxRecentFiles );
-
-    for ( int i = 0; i < numRecentFiles; ++i ) {
-        QString text = tr( "&%1 %2").arg( i + 1 ).arg( strippedName( files[i] ) );
-        recentFileActs[i]->setText( text );
-        recentFileActs[i]->setData( files[i] );
-        recentFileActs[i]->setVisible( true );
-    }
-
-    for ( int j = numRecentFiles; j < MaxRecentFiles; ++j )
-        recentFileActs[j]->setVisible( false );
-
-    ui->actionEmpty->setVisible( numRecentFiles == 0 );
-    separatorAct->setVisible( numRecentFiles > 0 );
-    actClearRecentFiles->setVisible( numRecentFiles > 0 );
-}
-
-QString MainWindow::strippedName( const QString &fullDbPath )
-{
-	QFileInfo fi( fullDbPath );
-
-    return "..." + fi.absolutePath().right( 20 ) + "/" + fi.fileName();
+    updateRecentDatabaseActions();
 }
 
 void MainWindow::initDatabase()
 {
 	QString dbPath;
 	QSettings* settings	= VsSettings::instance()->settings();
-	QStringList files = settings->value( "recentFileList" ).toStringList();
+	QStringList files = settings->value( "recentDatabaseList" ).toStringList();
 
 	if ( files.size() && QFile::exists( files.at( 0 ) ) ) {
 		dbPath	= files.at( 0 );
 	} else {
-		createNewDatabase();
+		InitDatabaseDialog *dlg	= new InitDatabaseDialog( this );
+
+		dlg->setModal( true );
+		if ( dlg->exec() == QDialog::Accepted )
+		{
+			if ( dlg->initDatabase() == InitDatabaseDialog::NewDatabase ) {
+				dbPath	= createNewDatabase();
+			}
+
+			if ( dlg->initDatabase() == InitDatabaseDialog::OpenDatabase ) {
+				dbPath	= openDatabase();
+			}
+		}
 	}
 
 	loadDb( dbPath );
 }
 
-void MainWindow::createNewDatabase()
+QString MainWindow::openDatabase()
+{
+	return QFileDialog::getOpenFileName( this, tr( "Open Database" ), QDir::homePath(), tr( "Db Files (*.db)" ) );
+}
+
+QString MainWindow::createNewDatabase()
 {
 	dlgNewDatabase	= new NewDatabaseDialog( this );
 	dlgNewDatabase->setModal( true );
-	dlgNewDatabase->show();
+	if ( dlgNewDatabase->exec() == QDialog::Accepted )
+		return dlgNewDatabase->database();
 }
 
 void MainWindow::on_actionImportMicrosoftVocabulary_triggered()

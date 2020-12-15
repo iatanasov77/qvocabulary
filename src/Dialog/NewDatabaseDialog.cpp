@@ -37,7 +37,7 @@ void NewDatabaseDialog::save()
 	QDir userAppDataPath	= VsApplication::dataPath();
 	QString dbPathHome		= userAppDataPath.absoluteFilePath( "untitled.db" );
 
-	QString dbPath 			= QFileDialog::getSaveFileName(
+	dbPath 					= QFileDialog::getSaveFileName(
 								this,
 								tr( "Create Database" ),
 								dbPathHome,
@@ -57,6 +57,11 @@ void NewDatabaseDialog::save()
 		QSqlError daoError	= qx::dao::insert( metaInfo );
 
 		// Load DB
-		qobject_cast<MainWindow*>( mw )->loadDb( dbPath );
+		//qobject_cast<MainWindow*>( mw )->loadDb( dbPath );
 	}
+}
+
+QString NewDatabaseDialog::database()
+{
+	return dbPath;
 }
