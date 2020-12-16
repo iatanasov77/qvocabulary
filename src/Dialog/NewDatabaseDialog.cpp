@@ -9,6 +9,7 @@
 #include "QxModelView.h"
 
 #include "Entity/VocabularyMetaInfo.h"
+#include "Entity/VocabularyGroup.h"
 
 #include "Application/VsApplication.h"
 #include "Application/VsDatabase.h"
@@ -34,6 +35,7 @@ NewDatabaseDialog::~NewDatabaseDialog()
 
 void NewDatabaseDialog::save()
 {
+	QSqlError daoError;
 	QDir userAppDataPath	= VsApplication::dataPath();
 	QString dbPathHome		= userAppDataPath.absoluteFilePath( "untitled.db" );
 
@@ -53,8 +55,13 @@ void NewDatabaseDialog::save()
 		metaInfo->name			= ui->leName->text();
 		metaInfo->language1		= ui->leLanguage_1->text();
 		metaInfo->language2		= ui->leLanguage_2->text();
+		daoError				= qx::dao::insert( metaInfo );
 
-		QSqlError daoError	= qx::dao::insert( metaInfo );
+		// Insert Default VocabularyGroup
+		VocabularyGroupPtr vocabularyGroup;
+		vocabularyGroup.reset( new VocabularyGroup() );
+		vocabularyGroup->name	= ui->leDefaultGroupName->text();
+		daoError				= qx::dao::insert( vocabularyGroup );
 
 		// Load DB
 		//qobject_cast<MainWindow*>( mw )->loadDb( dbPath );

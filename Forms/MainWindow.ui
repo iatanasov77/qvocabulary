@@ -43,21 +43,29 @@
     </property>
     <widget class="QMenu" name="menu_Open_Database_Recent">
      <property name="title">
-      <string>&amp;Open Database Recent</string>
+      <string>Open &amp;Database Recent</string>
      </property>
      <addaction name="actionEmpty"/>
     </widget>
     <widget class="QMenu" name="menuImport">
      <property name="title">
-      <string>Import</string>
+      <string>I&amp;mport</string>
      </property>
      <addaction name="actionImportMicrosoftVocabulary"/>
+    </widget>
+    <widget class="QMenu" name="menuQuiz_2">
+     <property name="title">
+      <string>Quiz</string>
+     </property>
+     <addaction name="actionSimple_Exam"/>
     </widget>
     <addaction name="actionNew_DB"/>
     <addaction name="actionOpen_DB"/>
     <addaction name="menu_Open_Database_Recent"/>
     <addaction name="separator"/>
     <addaction name="menuImport"/>
+    <addaction name="separator"/>
+    <addaction name="menuQuiz_2"/>
     <addaction name="separator"/>
     <addaction name="actionInsertGroup"/>
     <addaction name="actionInsertWord"/>
@@ -85,8 +93,11 @@
    </attribute>
    <addaction name="actionNew_DB"/>
    <addaction name="actionOpen_DB"/>
+   <addaction name="separator"/>
    <addaction name="actionInsertGroup"/>
    <addaction name="actionInsertWord"/>
+   <addaction name="separator"/>
+   <addaction name="actionSimple_Exam"/>
   </widget>
   <action name="actionOpen_DB">
    <property name="text">
@@ -135,7 +146,7 @@
   </action>
   <action name="actionEmpty">
    <property name="text">
-    <string>Empty</string>
+    <string>&amp;Empty</string>
    </property>
    <property name="visible">
     <bool>false</bool>
@@ -143,7 +154,17 @@
   </action>
   <action name="actionImportMicrosoftVocabulary">
    <property name="text">
-    <string>Import From Microsoft Vocabulary++ (*.xml)</string>
+    <string>&amp;Import From Microsoft Vocabulary++ (*.xml)</string>
+   </property>
+  </action>
+  <action name="actionSimple_Quiz">
+   <property name="text">
+    <string>Simple Quiz</string>
+   </property>
+  </action>
+  <action name="actionSimple_Exam">
+   <property name="text">
+    <string>Simple Exam</string>
    </property>
   </action>
  </widget>

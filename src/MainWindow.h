@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 
+#include "Widget/QuizWindow.h"
 #include "Widget/HelpWindow.h"
 #include "Widget/VocabularyWidget.h"
 #include "Dialog/NewDatabaseDialog.h"
@@ -39,6 +40,7 @@ class MainWindow : public QMainWindow
 		void on_actionAbout_triggered();
 
 		void on_actionImportMicrosoftVocabulary_triggered();
+		void on_actionSimple_Exam_triggered();
 
 	private:
 		// Methods
@@ -54,18 +56,20 @@ class MainWindow : public QMainWindow
 		QString createNewDatabase();
 
 		// Properties
-		Ui::MainWindow *ui;
-		VocabularyWidget *wdgVocabulary;
-		NewDatabaseDialog *dlgNewDatabase;
-		HelpWindow *wdgHelp;
+		Ui::MainWindow* ui;
+		VocabularyWidget* wdgVocabulary;
+		NewDatabaseDialog* dlgNewDatabase;
+		HelpWindow* wdgHelp;
+		QuizWindow* wdgQuiz;
 
-		QAction *actClearRecentDatabases;
-		QAction *separatorAct;
+		QAction* actClearRecentDatabases;
+		QAction* separatorAct;
 		enum { MaxRecentDatabases = 5 };
 		QString curDatabase;
-		QAction *recentDatabaseActs[MaxRecentDatabases];
+		QAction* recentDatabaseActs[MaxRecentDatabases];
 
-		QDockWidget* helpWindow;
+//		QDockWidget* helpWindow;
+//		QDockWidget* quizWindow;
 };
 
 #endif // MAINWINDOW_H

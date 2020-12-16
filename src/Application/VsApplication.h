@@ -7,6 +7,8 @@ class VsApplication
 {
 	public:
 		static QDir dataPath();
+
+		static const QString DB_VERSION;
 };
 
 #endif // VS_APPLICATION_H

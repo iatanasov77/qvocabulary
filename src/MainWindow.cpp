@@ -14,6 +14,7 @@
 #include "Application/VsDatabase.h"
 #include "Application/Import/MicrosoftVocabulary.h"
 #include "Widget/HelpWindow.h"
+#include "Widget/QuizWindow.h"
 #include "Widget/VocabularyWidget.h"
 #include "Dialog/InitDatabaseDialog.h"
 #include "Dialog/NewDatabaseDialog.h"
@@ -53,6 +54,9 @@ void MainWindow::initIcons()
 	ui->menu_Open_Database_Recent->setIcon( QIcon( ":/Resources/icons/document-open-recent.svg" ) );
 
 	ui->menuImport->setIcon( QIcon( ":/Resources/icons/document-import.svg" ) );
+	ui->menuQuiz_2->setIcon( QIcon( ":/Resources/icons/quiz.svg" ) );
+	ui->actionSimple_Exam->setIcon( QIcon( ":/Resources/icons/quiz.svg" ) );
+
 	ui->actionInsertGroup->setIcon( QIcon( ":/Resources/icons/folder-new.svg" ) );
 	ui->actionInsertWord->setIcon( QIcon( ":/Resources/icons/mail-message-new.svg" ) );
 
@@ -75,7 +79,8 @@ void MainWindow::on_actionInsertWord_triggered()
 
 void MainWindow::on_actionNew_DB_triggered()
 {
-	createNewDatabase();
+	QString dbPath	= createNewDatabase();
+	loadDb( dbPath );
 }
 
 void MainWindow::on_actionOpen_DB_triggered()
@@ -275,4 +280,12 @@ void MainWindow::on_actionImportMicrosoftVocabulary_triggered()
 		wdgVocabulary->initModels();
 		statusBar()->showMessage( tr( "Database imported" ), 2000 );
 	}
+}
+
+void MainWindow::on_actionSimple_Exam_triggered()
+{
+	wdgQuiz = new QuizWindow( this );
+	wdgQuiz->setWindowFlags( Qt::Window );
+	//wdgQuiz->setModal( true );
+	wdgQuiz->show();
 }

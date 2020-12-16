@@ -3,6 +3,8 @@
 #include <QDir>
 #include <QStandardPaths>
 
+const QString VsApplication::DB_VERSION = "20201216";
+
 QDir VsApplication::dataPath()
 {
 	//QDir dataPath{ QStandardPaths::writableLocation( QStandardPaths::AppDataLocation ) };

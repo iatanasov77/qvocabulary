@@ -3,6 +3,10 @@
 #include "precompiled.h"
 #include <QxOrm_Impl.h>
 
+#include <QRegularExpression>
+
+#include "VsApplication.h"
+
 const QString VsDatabase::DEFAULT_CONNECTION = "Default";
 
 /*
@@ -59,37 +63,101 @@ void VsDatabase::create( QString path, QString defaultGroupName )
 	bool ok = db.open();
 
 	if ( ok ) {
-		QSqlQuery query;
+		QString fileName = QString( ":/Resources/sql/qvocabulary-%1.sql" ).arg( VsApplication::DB_VERSION );
+		QFile file( fileName );
 
-		query.exec(
-			"create table VocabularyMetaInfo "
-			"(id integer primary key, "
-			"name varchar(255), "
-			"language1 varchar(255), "
-			"language2 varchar(255))"
-		);
-
-		query.exec(
-			"create table Vocabulary "
-			"(id integer primary key, "
-			"language_1 varchar(255), "
-			"language_2 varchar(255), "
-			"group_id integer)"
-		);
-
-		query.exec(
-			"create table VocabularyGroup "
-			"(id integer primary key, "
-			"name varchar(255))"
-		);
-
-		query.prepare(
-			"INSERT INTO VocabularyGroup(name) \
-			VALUES(:name); "
-		);
-		query.bindValue( ":name", defaultGroupName );
-		query.exec();
-
+		importSql( file, db );
 		connect( path );
 	}
+}
+
+void VsDatabase::importSql( QFile &qf, QSqlDatabase &db ) {
+    //Read query file content
+    qf.open( QIODevice::ReadOnly );
+    QString queryStr( qf.readAll() );
+    qf.close();
+
+    //Check if SQL Driver supports Transactions
+    if( db.driver()->hasFeature(QSqlDriver::Transactions) ) {
+    	executeImportTransaction( queryStr, db );
+
+    //Sql Driver doesn't supports transaction
+    } else {
+    	executeImportNonTransaction( queryStr, db );
+    }
+}
+
+void VsDatabase::executeImportTransaction( QString queryStr, QSqlDatabase &db )
+{
+	qDebug() << "Begin Transactional Import";
+	QSqlQuery query;
+
+	//Replace comments and tabs and new lines with space
+	queryStr	= queryStr.replace(
+						QRegularExpression(
+							"(\\/\\*(.|\\n)*?\\*\\/|^--.*\\n|\\t|\\n)",
+							QRegularExpression::CaseInsensitiveOption | QRegularExpression::MultilineOption
+						),
+						" "
+					);
+	//Remove waste spaces
+	queryStr = queryStr.trimmed();
+
+	//Extracting queries
+	QStringList qList = queryStr.split( ';', QString::SkipEmptyParts );
+
+	//Initialize regular expression for detecting special queries (`begin transaction` and `commit`).
+	//NOTE: I used new regular expression for Qt5 as recommended by Qt documentation.
+	QRegularExpression re_transaction( "\\bbegin.transaction.*", QRegularExpression::CaseInsensitiveOption );
+	QRegularExpression re_commit( "\\bcommit.*", QRegularExpression::CaseInsensitiveOption );
+
+	//Check if query file is already wrapped with a transaction
+	bool isStartedWithTransaction = re_transaction.match( qList.at( 0 ) ).hasMatch();
+	if( ! isStartedWithTransaction )
+		db.transaction();     //<=== not wrapped with a transaction, so we wrap it with a transaction.
+
+	//Execute each individual queries
+	foreach( const QString &s, qList ) {
+		if( re_transaction.match( s ).hasMatch() )    //<== detecting special query
+			db.transaction();
+		else if( re_commit.match( s ).hasMatch() )    //<== detecting special query
+			db.commit();
+		else {
+			query.exec( s );                        //<== execute normal query
+			if ( query.lastError().type() != QSqlError::NoError ) {
+				qDebug() << query.lastError().text();
+				db.rollback();                    //<== rollback the transaction if there is any problem
+			}
+		}
+	}
+	if( ! isStartedWithTransaction )
+		db.commit();          //<== ... completing of wrapping with transaction
+
+	qDebug() << "End Transactional Import";
+}
+
+void VsDatabase::executeImportNonTransaction( QString queryStr, QSqlDatabase &db )
+{
+	qDebug() << "Begin Non-Transactional Import";
+	QSqlQuery query;
+
+	//...so we need to remove special queries (`begin transaction` and `commit`)
+	queryStr	= queryStr.replace(
+						QRegularExpression(
+							"(\\bbegin.transaction.*;|\\bcommit.*;|\\/\\*(.|\\n)*?\\*\\/|^--.*\\n|\\t|\\n)",
+							QRegularExpression::CaseInsensitiveOption | QRegularExpression::MultilineOption
+						),
+						" "
+					);
+	queryStr	= queryStr.trimmed();
+
+	//Execute each individual queries
+	QStringList qList = queryStr.split( ';', QString::SkipEmptyParts );
+	foreach( const QString &s, qList ) {
+		query.exec( s );
+		if ( query.lastError().type() != QSqlError::NoError )
+			qDebug() << query.lastError().text();
+	}
+
+	qDebug() << "End Non-Transactional Import";
 }

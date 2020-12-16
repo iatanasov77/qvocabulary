@@ -1,5 +1,5 @@
 <!DOCTYPE RCC><RCC version="1.0">
-<qresource>
+<qresource prefix="/">
     <file>Resources/icons/dictionary.svg</file>
     <file>Resources/icons/document-new.svg</file>
     <file>Resources/icons/document-open.svg</file>
@@ -10,5 +10,8 @@
     <file>Resources/icons/amarok_cart_remove.svg</file>
     <file>Resources/icons/help-about.svg</file>
     <file>Resources/icons/system-help.svg</file>
+    <file>Resources/icons/quiz.svg</file>
+    
+    <file>Resources/sql/qvocabulary-20201216.sql</file>
 </qresource>
 </RCC>
