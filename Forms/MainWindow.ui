@@ -39,7 +39,7 @@
    </property>
    <widget class="QMenu" name="menuDatabase">
     <property name="title">
-     <string>Database</string>
+     <string>&amp;Vocabulary</string>
     </property>
     <widget class="QMenu" name="menu_Open_Database_Recent">
      <property name="title">
@@ -101,6 +101,9 @@
    </attribute>
    <addaction name="actionNew_DB"/>
    <addaction name="actionOpen_DB"/>
+   <addaction name="separator"/>
+   <addaction name="actionImportMicrosoftVocabulary"/>
+   <addaction name="actionExportMicrosoftVocabulary"/>
    <addaction name="separator"/>
    <addaction name="actionInsertGroup"/>
    <addaction name="actionInsertWord"/>
@@ -207,7 +210,7 @@
   </action>
   <action name="actionCompletedExams">
    <property name="text">
-    <string>Completed Exams</string>
+    <string>&amp;Completed Exams</string>
    </property>
   </action>
  </widget>

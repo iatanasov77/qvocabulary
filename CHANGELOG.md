@@ -1,3 +1,8 @@
+0.3.1	|	Release date: **20.12.2020**
+============================================
+* New Features:
+  - Litle Improvements. Menu and Toolbar changes.
+
 0.3.0	|	Release date: **20.12.2020**
 ============================================
 * New Features:

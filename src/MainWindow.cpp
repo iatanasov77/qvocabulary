@@ -62,6 +62,9 @@ void MainWindow::initIcons()
 	ui->actionSave_As->setIcon( QIcon( ":/Resources/icons/computer.svg" ) );
 
 	ui->menuImport->setIcon( QIcon( ":/Resources/icons/document-import.svg" ) );
+	ui->actionImportMicrosoftVocabulary->setIcon( QIcon( ":/Resources/icons/document-import.svg" ) );
+	ui->actionExportMicrosoftVocabulary->setIcon( QIcon( ":/Resources/icons/document-import.svg" ) );
+
 	ui->menuQuiz_2->setIcon( QIcon( ":/Resources/icons/quiz-list.svg" ) );
 	ui->actionSimpleExam->setIcon( QIcon( ":/Resources/icons/quiz.svg" ) );
 	ui->actionCompletedExams->setIcon( QIcon( ":/Resources/icons/quiz-list.svg" ) );
