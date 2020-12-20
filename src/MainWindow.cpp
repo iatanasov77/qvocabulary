@@ -14,6 +14,8 @@
 #include "Application/VsDatabase.h"
 #include "Application/Import/MicrosoftVocabulary.h"
 #include "Widget/HelpWindow.h"
+#include "Widget/QuizListWindow.h"
+#include "Widget/QuizWindow.h"
 #include "Widget/VocabularyWidget.h"
 #include "Dialog/InitDatabaseDialog.h"
 #include "Dialog/NewDatabaseDialog.h"
@@ -29,6 +31,12 @@ MainWindow::MainWindow( QWidget *parent ) :
     createReccentDatabaseActions();
     updateRecentDatabaseActions();
     initDatabase();
+
+    connect( ui->actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
+
+    //connect( exitAction, &QAction::triggered, qApp, &QApplication::closeAllWindows, Qt::QueuedConnection );
+	connect( ui->actionExit, SIGNAL( triggered() ), this, SLOT( close() ) );
+	connect( ui->actionExit, SIGNAL( triggered() ), qApp, SLOT( quit() ) );
 }
 
 MainWindow::~MainWindow()
@@ -51,13 +59,21 @@ void MainWindow::initIcons()
 	ui->actionNew_DB->setIcon( QIcon( ":/Resources/icons/document-new.svg" ) );
 	ui->actionOpen_DB->setIcon( QIcon( ":/Resources/icons/document-open.svg" ) );
 	ui->menu_Open_Database_Recent->setIcon( QIcon( ":/Resources/icons/document-open-recent.svg" ) );
+	ui->actionSave_As->setIcon( QIcon( ":/Resources/icons/computer.svg" ) );
 
 	ui->menuImport->setIcon( QIcon( ":/Resources/icons/document-import.svg" ) );
+	ui->menuQuiz_2->setIcon( QIcon( ":/Resources/icons/quiz-list.svg" ) );
+	ui->actionSimpleExam->setIcon( QIcon( ":/Resources/icons/quiz.svg" ) );
+	ui->actionCompletedExams->setIcon( QIcon( ":/Resources/icons/quiz-list.svg" ) );
+
 	ui->actionInsertGroup->setIcon( QIcon( ":/Resources/icons/folder-new.svg" ) );
 	ui->actionInsertWord->setIcon( QIcon( ":/Resources/icons/mail-message-new.svg" ) );
 
 	ui->actionHelp->setIcon( QIcon( ":/Resources/icons/system-help.svg" ) );
 	ui->actionAbout->setIcon( QIcon( ":/Resources/icons/help-about.svg" ) );
+
+	ui->actionExit->setIcon( QIcon( ":/Resources/icons/close.svg" ) );
+	ui->actionAboutQt->setIcon( QIcon( ":/Resources/icons/QtProject-designer.svg" ) );
 }
 
 void MainWindow::on_actionInsertGroup_triggered()
@@ -75,7 +91,8 @@ void MainWindow::on_actionInsertWord_triggered()
 
 void MainWindow::on_actionNew_DB_triggered()
 {
-	createNewDatabase();
+	QString dbPath	= createNewDatabase();
+	loadDb( dbPath );
 }
 
 void MainWindow::on_actionOpen_DB_triggered()
@@ -175,6 +192,23 @@ QString MainWindow::strippedName( const QString &fullDbPath )
     return "..." + fi.absolutePath().right( 20 ) + "/" + fi.fileName();
 }
 
+void MainWindow::on_actionSave_As_triggered()
+{
+	QString dbPath	= QFileDialog::getSaveFileName(
+							this,
+							tr( "Create Database" ),
+							curDatabase,
+							tr( "*.db" )
+						);
+
+	// An easy and safe way to do it, use the STD libraries, std::ifstream is a good option:
+	std::ifstream  src( curDatabase.toStdString().c_str(), std::ios::binary );
+	std::ofstream  dst( dbPath.toStdString().c_str(),   std::ios::binary );
+	dst << src.rdbuf();
+
+	loadDb( dbPath );
+}
+
 void MainWindow::loadDb( const QString &dbPath )
 {
 	if ( curDatabase == dbPath )
@@ -192,12 +226,22 @@ void MainWindow::loadDb( const QString &dbPath )
 	QApplication::setOverrideCursor( Qt::WaitCursor );
 
 	VsDatabase::instance()->connect( dbPath );
+
+	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
+	if ( metaInfo->dbVersion != VsApplication::DB_VERSION ) {
+		QMessageBox::warning(
+			this,
+			tr( "Warning" ),
+			tr( "The Current Database Version is Different from The Database Version used for the creation of this Database !" )
+		);
+	}
+
 	initWidgets();
 	wdgVocabulary->initModels();
+	setCurrentDb( dbPath );
 
 	QApplication::restoreOverrideCursor();
 
-	setCurrentDb( dbPath );
 	statusBar()->showMessage( tr( "Database loaded" ), 2000 );
 }
 
@@ -275,4 +319,38 @@ void MainWindow::on_actionImportMicrosoftVocabulary_triggered()
 		wdgVocabulary->initModels();
 		statusBar()->showMessage( tr( "Database imported" ), 2000 );
 	}
+}
+
+void MainWindow::on_actionExportMicrosoftVocabulary_triggered()
+{
+	QString xmlFile = QFileDialog::getOpenFileName(
+		this,
+		tr( "Open Microsoft Vocabulary++ Dictionary" ),
+		QDir::homePath(),
+		tr( "Microsoft Vocabulary Files (*.vocab)" )
+	);
+
+	if ( ! xmlFile.isEmpty() ) {
+//		MicrosoftVocabulary::exportToFile(( xmlFile );
+//
+//		initWidgets();
+//		wdgVocabulary->initModels();
+//		statusBar()->showMessage( tr( "Database imported" ), 2000 );
+	}
+}
+
+void MainWindow::on_actionSimpleExam_triggered()
+{
+	wdgQuiz = new QuizWindow( this );
+	wdgQuiz->setWindowFlags( Qt::Window );
+	//wdgQuiz->setModal( true );
+	wdgQuiz->show();
+}
+
+void MainWindow::on_actionCompletedExams_triggered()
+{
+	wdgQuizList = new QuizListWindow( this );
+	wdgQuizList->setWindowFlags( Qt::Window );
+	//wdgQuiz->setModal( true );
+	wdgQuizList->show();
 }

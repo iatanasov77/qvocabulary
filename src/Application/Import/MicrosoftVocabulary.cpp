@@ -29,6 +29,11 @@ bool MicrosoftVocabulary::importFromFile( QString file )
 	parseWords();
 }
 
+bool MicrosoftVocabulary::exportToFile( QString file )
+{
+
+}
+
 bool MicrosoftVocabulary::parseMeta()
 {
 	// MetaInfo Languages

@@ -11,6 +11,7 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "Application/VsDatabase.h"
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/Vocabulary.h"
 #include "Entity/VocabularyGroup.h"
@@ -51,10 +52,7 @@ void VocabularyWidget::init()
 void VocabularyWidget::initModels()
 {
 	// Init VocabularyMetaInfo
-	VocabularyMetaInfoPtr metaInfo;
-	metaInfo.reset( new VocabularyMetaInfo() );
-	metaInfo->id = 1;
-	QSqlError daoError	= qx::dao::fetch_by_id( metaInfo );
+	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	if ( metaInfo ) {
 		ui->databaseName->setText( metaInfo->name );
 	}

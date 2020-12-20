@@ -13,6 +13,7 @@ class VocabularyMetaInfo
 		QString name;
 		QString language1;
 		QString language2;
+		QString dbVersion;
 };
 
 QX_REGISTER_HPP_QX_VOCABULARY(VocabularyMetaInfo, qx::trait::no_base_class_defined, 0)
