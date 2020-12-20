@@ -6,6 +6,7 @@ class MicrosoftVocabulary : public Import
 {
 	public:
 		static bool importFromFile( QString file );
+		static bool exportToFile( QString file );
 
 	private:
 		static bool parseMeta();

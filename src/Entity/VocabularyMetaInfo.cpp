@@ -10,6 +10,7 @@ namespace qx {
 	  t.data( & VocabularyMetaInfo::name, "name" );
 	  t.data( & VocabularyMetaInfo::language1, "language1" );
 	  t.data( & VocabularyMetaInfo::language2, "language2" );
+	  t.data( & VocabularyMetaInfo::dbVersion, "db_version" );
 	}
 }
 
