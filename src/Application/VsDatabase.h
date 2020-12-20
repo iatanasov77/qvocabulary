@@ -3,6 +3,7 @@
 
 #include "precompiled.h"
 #include "Dialog/NewDatabaseDialog.h"
+#include "Entity/VocabularyMetaInfo.h"
 
 class VsDatabase
 {
@@ -18,14 +19,15 @@ class VsDatabase
 
         static VsDatabase* _instance;
         QMap<QString, QSqlDatabase> dbConnection;
+        VocabularyMetaInfoPtr metaInfoPtr;
 
 	public:
         ~VsDatabase();
         static VsDatabase* instance();
 
         void connect( const QString& path, QString connection = DEFAULT_CONNECTION );
-
         void importSql( QFile &qf, QSqlDatabase &db );
+        VocabularyMetaInfoPtr metaInfo();
 
         friend void NewDatabaseDialog::save();
 };

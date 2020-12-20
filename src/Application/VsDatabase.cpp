@@ -6,6 +6,7 @@
 #include <QRegularExpression>
 
 #include "VsApplication.h"
+#include "Entity/VocabularyMetaInfo.h"
 
 const QString VsDatabase::DEFAULT_CONNECTION = "Default";
 
@@ -54,6 +55,10 @@ void VsDatabase::connect( const QString& path, QString connection )
 
 	//dbConnection[connection]	= qx::QxSqlDatabase::getSingleton()->getDatabase();
 	//dbConnection[connection].open();
+
+	metaInfoPtr.reset( new VocabularyMetaInfo() );
+	metaInfoPtr->id = 1;
+	QSqlError daoError	= qx::dao::fetch_by_id( metaInfoPtr );
 }
 
 void VsDatabase::create( QString path, QString defaultGroupName )
@@ -69,6 +74,11 @@ void VsDatabase::create( QString path, QString defaultGroupName )
 		importSql( file, db );
 		connect( path );
 	}
+}
+
+VocabularyMetaInfoPtr VsDatabase::metaInfo()
+{
+	return metaInfoPtr;
 }
 
 void VsDatabase::importSql( QFile &qf, QSqlDatabase &db ) {

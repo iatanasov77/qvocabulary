@@ -129,8 +129,10 @@ void VocabularyGroupsWidget::deleteGroup()
 	VocabularyWidget *wdgVocabulary	= qobject_cast<VocabularyWidget *>( parent() );
 
 	QMessageBox::StandardButton reply;
-	reply = QMessageBox::question( this, "Delete Group",
-									"This will erase all Words associated with this Group. Do you agree?",
+	reply = QMessageBox::question(
+									this,
+									tr( "Delete Group" ),
+									tr( "This will erase all Words associated with this Group. Do you agree?" ),
 									QMessageBox::Yes|QMessageBox::No
 								);
 	if ( reply == QMessageBox::Yes ) {
@@ -138,6 +140,6 @@ void VocabularyGroupsWidget::deleteGroup()
 		pModel->qxDeleteById( pModel->data( indexId ) );
 
 		//refreshView( indexId, indexId.siblingAtColumn( 1 ) );
-		refreshView( );
+		refreshView();
 	}
 }

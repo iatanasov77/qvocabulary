@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 
+#include "Widget/QuizListWindow.h"
 #include "Widget/QuizWindow.h"
 #include "Widget/HelpWindow.h"
 #include "Widget/VocabularyWidget.h"
@@ -35,12 +36,15 @@ class MainWindow : public QMainWindow
 		void on_actionInsertWord_triggered();
 		void openRecentDatabase();
 		void clearRecentDatabases();
+		void on_actionSave_As_triggered();
 
 		void on_actionHelp_triggered();
 		void on_actionAbout_triggered();
 
 		void on_actionImportMicrosoftVocabulary_triggered();
-		void on_actionSimple_Exam_triggered();
+		void on_actionExportMicrosoftVocabulary_triggered();
+		void on_actionSimpleExam_triggered();
+		void on_actionCompletedExams_triggered();
 
 	private:
 		// Methods
@@ -60,6 +64,7 @@ class MainWindow : public QMainWindow
 		VocabularyWidget* wdgVocabulary;
 		NewDatabaseDialog* dlgNewDatabase;
 		HelpWindow* wdgHelp;
+		QuizListWindow* wdgQuizList;
 		QuizWindow* wdgQuiz;
 
 		QAction* actClearRecentDatabases;

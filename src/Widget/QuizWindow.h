@@ -1,11 +1,12 @@
 #ifndef WIDGET_QUIZ_WINDOW_H
 #define WIDGET_QUIZ_WINDOW_H
 
-#include "ui_HelpWindow.h"
 #include <QWidget>
 
 #include "Widget/QuizParametersWidget.h"
 #include "Widget/QuizWidget.h"
+
+#include "Entity/Quiz.h"
 
 namespace Ui {
 	class QuizWindow;
@@ -31,6 +32,7 @@ class QuizWindow : public QWidget
 	    Ui::QuizWindow* ui;
 	    QuizParametersWidget* wdgParameters;
 	    QuizWidget* wdgQuiz;
+
 };
 
 #endif // WIDGET_QUIZ_WINDOW_H

@@ -2,11 +2,15 @@
 #include "ui_QuizWidget.h"
 
 #include <QTableView>
+#include <QVector>
+#include <QTimer>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "Application/VsDatabase.h"
+#include "Application/VsAssessment.h"
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/Vocabulary.h"
 #include "Entity/VocabularyGroup.h"
@@ -20,11 +24,8 @@ QuizWidget::QuizWidget( QWidget *parent ) :
 {
     ui->setupUi( this );
 
-    currentGroup = 1;
-    hideColumns = {0, 3};
-
+    hideColumns = {0, 2, 3, 5};
     initModel();
-    loadGroup( currentGroup );
 
     connect(
 		ui->btnNextQuestion,
@@ -32,6 +33,8 @@ QuizWidget::QuizWidget( QWidget *parent ) :
 		this,
 		SLOT( insertWord() )
 	);
+
+    ui->frmTimer->hide();
 }
 
 QuizWidget::~QuizWidget()
@@ -44,12 +47,40 @@ QPushButton* QuizWidget::btnStopQuiz()
 	return ui->btnStopQuiz;
 }
 
+void QuizWidget::initTimer( int time )
+{
+	if ( time > 0 ) {
+		timerSeconds	= time;
+
+		QTimer *timer	= new QTimer( this );
+		connect( timer, &QTimer::timeout, this, &QuizWidget::updateTimer );
+		timer->start( 1000 );
+
+		ui->frmTimer->show();
+	}
+}
+
+void QuizWidget::updateTimer()
+{
+	if ( timerSeconds <= 0 ) {
+		emit quizFinished();
+		return;
+	}
+
+	timerSeconds--;
+
+	QTime time( 0, 0 );
+	QString text = time.addSecs( timerSeconds ).toString( "mm:ss" );
+
+	ui->lcdNumber->display( text );
+}
+
 void QuizWidget::initModel()
 {
-	pModelVocabulary	= new qx::QxModel<Vocabulary>();
-	pModelVocabulary->qxFetchAll();
+	metaInfo	= VsDatabase::instance()->metaInfo();
 
-	//pModel				= new qx::QxModel<QuizItem>();
+	pModelVocabulary	= new qx::QxModel<Vocabulary>();
+
 	pModel				= new QuizItemModel();
 
 	ui->tableView->setModel( pModel );
@@ -58,52 +89,88 @@ void QuizWidget::initModel()
 		ui->tableView->hideColumn( hideColumns[i] );
 	}
 
-//	QuizViewDelegate* itemDelegate	= new QuizViewDelegate( ui->tableView );
-//	ui->tableView->setItemDelegate( itemDelegate );
-
-	//ui->tableView->item( row,col )->setFlags( Qt::ItemIsSelectable|Qt::ItemIsEnabled );
+	connect(
+		pModel,
+		SIGNAL( dataChanged( const QModelIndex&, const QModelIndex& ) ),
+		this,
+		SLOT( onDataChanged( const QModelIndex&, const QModelIndex& ) )
+	);
 }
 
-void QuizWidget::setViewHeader( VocabularyMetaInfoPtr metaInfo )
+void QuizWidget::setQuiz( int quizId, QList<QString> groupIds, bool randomize, int time )
 {
-	pModel->setHeaderData( 1, Qt::Horizontal, metaInfo->language1, Qt::DisplayRole );
-	pModel->setHeaderData( 2, Qt::Horizontal, metaInfo->language2, Qt::DisplayRole );
+	rightAnswers		= 0;
+
+	quiz.reset( new Quiz() );
+	quiz->id 			= quizId;
+	QSqlError daoError	= qx::dao::fetch_by_id( quiz );
+
+	// Clear Previous Quiz Items
+	pModel->clear();
+
+	QString query		= QString( "WHERE group_id IN ( %1 )" ).arg( groupIds.join( "," ) );
+	pModelVocabulary->qxFetchByQuery( query );
+	itemsRange	= QVector<int>( pModelVocabulary->rowCount() );
+	std::iota( itemsRange.begin(), itemsRange.end(), 0 );
+	if ( randomize )
+		std::random_shuffle( itemsRange.begin(), itemsRange.end() );
+
+	QString lang1	= ( quiz->direction == FIRST_TO_SECOND ) ? metaInfo->language1 : metaInfo->language2;
+	QString lang2	= ( quiz->direction == FIRST_TO_SECOND ) ? metaInfo->language2 : metaInfo->language1;
+
+	pModel->setHeaderData( 1, Qt::Horizontal, lang1, Qt::DisplayRole );
+	pModel->setHeaderData( 4, Qt::Horizontal, lang2, Qt::DisplayRole );
+
+	if ( time > 0 ) {
+		initTimer( time );
+	}
 }
 
 void QuizWidget::insertWord()
 {
-	QString word	= randomWord();
-	int targetRow	= pModel->rowCount( QModelIndex() );
+	if ( ! itemsRange.count() )
+		return;
+
+	int targetRow		= pModel->rowCount( QModelIndex() );
+	int randomRow		= itemsRange.takeFirst();
+	int column1			= ( quiz->direction == FIRST_TO_SECOND ) ? 1 : 2;
+	int column2			= ( quiz->direction == FIRST_TO_SECOND ) ? 2 : 1;
+
+	//qDebug() << "Random Row: " << randomRow << " Column 1: " << column1 << " Column 2: " << column2;
+	QVariant wordLang1	= pModelVocabulary->data( pModelVocabulary->index( randomRow, column1 ) );
+	QVariant wordLang2	= pModelVocabulary->data( pModelVocabulary->index( randomRow, column2 ) );
 
 	pModel->insertRow( targetRow );
-	pModel->setData( pModel->index( targetRow, 1 ), QVariant( word ) );
-}
-
-void QuizWidget::loadGroup( int groupId )
-{
-//	QString query	= QString( "WHERE group_id=%1" ).arg( groupId );
-//	pModel->qxFetchByQuery( query );
-//
-//	currentGroup = groupId;
-}
-
-QString QuizWidget::randomWord()
-{
-	int randomRow	= qrand() % ( ( pModelVocabulary->rowCount() + 1 ) - 0 ) + 0;
-
-	return pModelVocabulary->data( pModelVocabulary->index( randomRow, 1 ) ).toString();
+	pModel->setData( pModel->index( targetRow, 1 ), wordLang1 );
+	pModel->setData( pModel->index( targetRow, 2 ), wordLang2 );
+	pModel->setData( pModel->index( targetRow, 3 ), QVariant::fromValue( quiz->id ) );
 }
 
 void QuizWidget::onDataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
-	pModel->setData( topLeft.siblingAtColumn( 3 ), QVariant( currentGroup ) );
+	if ( topLeft == bottomRight && topLeft.column() == 4 ) {
+		QString lang2	= pModel->data( topLeft.siblingAtColumn( 2 ) ).toString();
+		QString answer	= pModel->data( topLeft.siblingAtColumn( 4 ) ).toString();
+
+		// Detect if answer is right
+//		QRegExp rx( "(?i)\b" + lang2 + "\b" );
+//		bool found	= answer.indexOf ( rx ) >= 0;
+		bool found	= lang2.contains( answer );
+		if ( found )
+			rightAnswers++;
+
+		//qDebug() << "Lang2: " << lang2 << " Answer: " << answer << " Right: " << found;
+		pModel->setData( topLeft.siblingAtColumn( 5 ), found );
+	}
+}
+
+void QuizWidget::finishQuiz()
+{
+	int questionsNumber	= pModel->rowCount();
+
+	quiz->assessment	= VsAssessment::evaluate( questionsNumber, rightAnswers );
+	quiz->finishedAt	= QDateTime::currentDateTime();
+	QSqlError daoError	= qx::dao::update( quiz );
+
 	pModel->qxSave();
-
-
-	//QRegExp rx( "^\\d\\d?$" );
-	/*
-	QRegExp rx( "(?i)\b" + word + "\b" );
-	bool found	= word.indexOf ( rx ) >= 0;
-	*/
-
 }

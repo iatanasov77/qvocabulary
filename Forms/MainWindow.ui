@@ -49,19 +49,23 @@
     </widget>
     <widget class="QMenu" name="menuImport">
      <property name="title">
-      <string>I&amp;mport</string>
+      <string>I&amp;mport / Export</string>
      </property>
      <addaction name="actionImportMicrosoftVocabulary"/>
+     <addaction name="actionExportMicrosoftVocabulary"/>
     </widget>
     <widget class="QMenu" name="menuQuiz_2">
      <property name="title">
-      <string>Quiz</string>
+      <string>&amp;Quiz</string>
      </property>
-     <addaction name="actionSimple_Exam"/>
+     <addaction name="actionSimpleExam"/>
+     <addaction name="separator"/>
+     <addaction name="actionCompletedExams"/>
     </widget>
     <addaction name="actionNew_DB"/>
     <addaction name="actionOpen_DB"/>
     <addaction name="menu_Open_Database_Recent"/>
+    <addaction name="actionSave_As"/>
     <addaction name="separator"/>
     <addaction name="menuImport"/>
     <addaction name="separator"/>
@@ -69,13 +73,17 @@
     <addaction name="separator"/>
     <addaction name="actionInsertGroup"/>
     <addaction name="actionInsertWord"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>He&amp;lp</string>
     </property>
     <addaction name="actionHelp"/>
+    <addaction name="separator"/>
     <addaction name="actionAbout"/>
+    <addaction name="actionAboutQt"/>
    </widget>
    <addaction name="menuDatabase"/>
    <addaction name="menuHelp"/>
@@ -97,7 +105,8 @@
    <addaction name="actionInsertGroup"/>
    <addaction name="actionInsertWord"/>
    <addaction name="separator"/>
-   <addaction name="actionSimple_Exam"/>
+   <addaction name="actionCompletedExams"/>
+   <addaction name="actionSimpleExam"/>
   </widget>
   <action name="actionOpen_DB">
    <property name="text">
@@ -154,7 +163,10 @@
   </action>
   <action name="actionImportMicrosoftVocabulary">
    <property name="text">
-    <string>&amp;Import From Microsoft Vocabulary++ (*.xml)</string>
+    <string>&amp;Import From Microsoft Vocabulary++ (*.vocab)</string>
+   </property>
+   <property name="toolTip">
+    <string>Import From Microsoft Vocabulary++ (*.vocab)</string>
    </property>
   </action>
   <action name="actionSimple_Quiz">
@@ -162,9 +174,40 @@
     <string>Simple Quiz</string>
    </property>
   </action>
-  <action name="actionSimple_Exam">
+  <action name="actionSimpleExam">
    <property name="text">
-    <string>Simple Exam</string>
+    <string>&amp;Simple Exam</string>
+   </property>
+  </action>
+  <action name="actionSave_As">
+   <property name="text">
+    <string>&amp;Save As</string>
+   </property>
+  </action>
+  <action name="actionExportMicrosoftVocabulary">
+   <property name="text">
+    <string>&amp;Export To Microsoft Vocabulary++ (*.vocab)</string>
+   </property>
+   <property name="toolTip">
+    <string>Export To Microsoft Vocabulary++ (*.vocab)</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>&amp;Exit</string>
+   </property>
+  </action>
+  <action name="actionAboutQt">
+   <property name="text">
+    <string>About &amp;QT</string>
+   </property>
+   <property name="toolTip">
+    <string>About QT</string>
+   </property>
+  </action>
+  <action name="actionCompletedExams">
+   <property name="text">
+    <string>Completed Exams</string>
    </property>
   </action>
  </widget>

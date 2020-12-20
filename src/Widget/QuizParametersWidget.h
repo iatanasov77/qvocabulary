@@ -3,6 +3,10 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QCheckBox>
+
+#include "GlobalTypes.h"
+#include "Entity/VocabularyMetaInfo.h"
 
 namespace Ui {
 	class QuizParametersWidget;
@@ -17,14 +21,23 @@ class QuizParametersWidget : public QWidget
 		~QuizParametersWidget();
 
 		QPushButton* btnStartQuiz();
+		void setMetaInfo( VocabularyMetaInfoPtr metaInfo );
 		void initGroups();
 
-		int initDatabase();
-		static const int NewDatabase	= 0;
-		static const int OpenDatabase	= 1;
+		QList<QCheckBox*> getChkGroups();
+		EnumDirection getDirection();
+		QCheckBox* getChkRandomize();
+		int time();
+
+	public slots:
+		void setDirection();
+		void initTimer( bool on );
 
 	private:
 	    Ui::QuizParametersWidget* ui;
+
+	    QList<QCheckBox*> chkGroups;
+	    EnumDirection direction;
 };
 
 #endif // WIDGET_QUIZPARAMETERS_H

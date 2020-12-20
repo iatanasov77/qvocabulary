@@ -55,6 +55,7 @@ void NewDatabaseDialog::save()
 		metaInfo->name			= ui->leName->text();
 		metaInfo->language1		= ui->leLanguage_1->text();
 		metaInfo->language2		= ui->leLanguage_2->text();
+		metaInfo->dbVersion		= VsApplication::DB_VERSION;
 		daoError				= qx::dao::insert( metaInfo );
 
 		// Insert Default VocabularyGroup

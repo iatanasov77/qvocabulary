@@ -12,6 +12,9 @@ namespace qx {
 
 		t.data( & QuizItem::quiz_id, "quiz_id" );	// To can Move Groups( I dont know how to do this with related object)
 		//t.relationManyToOne( & Vocabulary::group, "group_id" );
+
+		t.data( & QuizItem::answer, "answer" );
+		t.data( & QuizItem::rightAnswer, "right_answer" );
 	}
 }
 

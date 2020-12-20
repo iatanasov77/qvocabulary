@@ -3,7 +3,7 @@
 #include <QDir>
 #include <QStandardPaths>
 
-const QString VsApplication::DB_VERSION = "20201216";
+const QString VsApplication::DB_VERSION = "20201220";
 
 QDir VsApplication::dataPath()
 {

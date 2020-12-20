@@ -29,27 +29,33 @@ class QuizWidget : public QWidget
 
 		QPushButton* btnStopQuiz();
 
-		void setViewHeader( VocabularyMetaInfoPtr metaInfo );
-		void loadGroup( int groupId );
+		void setQuiz( int quizId, QList<QString> groups, bool randomize = false, int time = 0 );
+		void finishQuiz();
+
+	signals:
+		void quizFinished();
 
 	public slots:
 		void insertWord();
 		void onDataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
+		void updateTimer();
 
 	private:
+		void initTimer( int time = 0 );
 		void initModel();
 
-		QString randomWord();
-
-		int currentGroup;
 		Ui::QuizWidget* ui;
+		QList<int> hideColumns;
 
-		//qx::QxModel<Quiz>* pModelQuiz;
-		qx::QxModel<Vocabulary>* pModelVocabulary;
+		VocabularyMetaInfoPtr metaInfo;
+		QuizPtr quiz;
 
 		qx::QxModel<QuizItem>* pModel;
+		qx::QxModel<Vocabulary>* pModelVocabulary;
+		QVector<int> itemsRange;
+		int rightAnswers;
+		int timerSeconds;
 
-		QList<int> hideColumns;
 };
 
 #endif // WIDGET_QUIZ_H
