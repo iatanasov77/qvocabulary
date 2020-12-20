@@ -1,3 +1,10 @@
+0.3.0	|	Release date: **20.12.2020**
+============================================
+* New Features:
+  - Already it can play quizes.
+* Improvements:
+  - Create New Database from Sql script.
+
 0.2.0	|	Release date: **15.12.2020**
 ============================================
 * New Features:
