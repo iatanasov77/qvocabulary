@@ -35,10 +35,12 @@ class VocabularyWordsWidget : public QWidget
 		void displayContextMenu( QPoint pos );
 		void moveToGroup();
 		void deleteWord();
+		void search();
 
 	private:
 		void initModel();
 		void initContextMenu();
+		void displaySearchResults( qx::QxModel<Vocabulary> *searchModel );
 
 		int currentGroup;
 		Ui::VocabularyWordsWidget *ui;
