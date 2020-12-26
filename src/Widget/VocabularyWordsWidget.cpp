@@ -8,6 +8,7 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "Application/VsDatabase.h"
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/Vocabulary.h"
 #include "Entity/VocabularyGroup.h"
@@ -28,6 +29,8 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     initContextMenu();
 
     loadGroup( currentGroup );
+
+    connect( ui->btnSearch, SIGNAL( released() ), this, SLOT( search() ) );
 }
 
 VocabularyWordsWidget::~VocabularyWordsWidget()
@@ -81,6 +84,8 @@ void VocabularyWordsWidget::loadGroup( int groupId )
 {
 	QString query	= QString( "WHERE group_id=%1" ).arg( groupId );
 	pModel->qxFetchByQuery( query );
+	//ui->stackedWidget->setCurrentWidget( ui->tableView );
+	ui->stackedWidget->setCurrentWidget( ui->pageVocabulary );
 
 	currentGroup = groupId;
 }
@@ -170,4 +175,49 @@ void VocabularyWordsWidget::deleteWord()
 	}
 	pModel->qxSave();
 	refreshView( selectedRows[0].siblingAtColumn( 0 ), selectedRows[selectedRows.size()-1].siblingAtColumn( 3 ) );
+}
+
+void VocabularyWordsWidget::search()
+{
+	qx::QxModel<Vocabulary>* searchModel	= new qx::QxModel<Vocabulary>();
+	QString searchWord						= ui->leSearch->text();
+	QString query							= QString( "WHERE language_1 LIKE '%%1%' OR language_2 LIKE '%%1%'" ).arg( searchWord );
+	searchModel->qxFetchByQuery( query );
+
+	displaySearchResults( searchModel );
+}
+
+void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searchModel )
+{
+	int groupId;
+	QString groupName;
+	QMap<int, QTreeWidgetItem*> groups;
+	qx::QxModel<VocabularyGroup>* groupModel	= new qx::QxModel<VocabularyGroup>();
+
+	ui->treeWidget->clear();
+
+	QTreeWidgetItem* childItem;
+	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
+	ui->treeWidget->setHeaderLabels( QStringList() << "\t" + metaInfo->language1 << metaInfo->language2 );
+	for ( int i = 0; i < searchModel->rowCount(); ++i ) {
+		groupId	= searchModel->data( searchModel->index( i, 3 ) ).toInt();
+		if ( ! groups.contains( groupId ) ) {
+			VocabularyGroupPtr group;
+			group.reset( new VocabularyGroup() );
+			group->id 	= groupId;
+			groupModel->qxFetchById( groupId );
+			groupName	= groupModel->data( groupModel->index( 0, 1 ) ).toString();
+
+			groups[groupId]	= new QTreeWidgetItem( ui->treeWidget );
+			groups[groupId]->setText( 0, groupName );
+			ui->treeWidget->expandItem( groups[groupId] );
+		}
+
+		childItem = new QTreeWidgetItem();
+		childItem->setText( 0, searchModel->data( searchModel->index( i, 1 ) ).toString() );
+		childItem->setText( 1, searchModel->data( searchModel->index( i, 2 ) ).toString() );
+		groups[groupId]->addChild( childItem );
+	}
+
+	ui->stackedWidget->setCurrentWidget( ui->pageSearch );
 }
