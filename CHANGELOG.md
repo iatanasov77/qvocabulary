@@ -1,3 +1,9 @@
+0.5.0	|	Release date: **29.12.2020**
+============================================
+* New Features:
+  - Implement Export To Microsot Vocabulary
+
+
 0.4.0	|	Release date: **26.12.2020**
 ============================================
 * New Features:
