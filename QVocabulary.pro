@@ -53,6 +53,7 @@ SOURCES += $$files(src/*.cpp, true)
 HEADERS += $$files(src/*.h, true)
 FORMS += $$files(Forms/*.ui, true)
 RESOURCES = QVocabulary.qrc
+RC_ICONS = dictionary.ico
 
 CONFIG(debug, debug|release) {
     DESTDIR = build/debug
