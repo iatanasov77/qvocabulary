@@ -34,45 +34,45 @@
                     <platforms>all</platforms>
                     <distributionFileList>
                         <distributionFile>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/QVocabulary.exe</origin>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/QVocabulary.exe</origin>
                         </distributionFile>
 						<distributionDirectory>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/plugins</origin>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/plugins</origin>
                         </distributionDirectory>
                         <distributionDirectory>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/Help</origin>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/Help</origin>
                         </distributionDirectory>
 						
 						<distributionFile>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/Qt5Core.dll</origin>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/Qt5Core.dll</origin>
                         </distributionFile>
                         <distributionFile>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/Qt5Gui.dll</origin>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/Qt5Gui.dll</origin>
                         </distributionFile>
                         <distributionFile>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/Qt5Widgets.dll</origin>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/Qt5Widgets.dll</origin>
                         </distributionFile>
                         <distributionFile>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/Qt5Sql.dll</origin>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/Qt5Sql.dll</origin>
                         </distributionFile>
                         <distributionFile>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/QxOrm.dll</origin>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/QxOrm.dll</origin>
                         </distributionFile>
                         <distributionFile>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/Qt5Help.dll</origin>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/Qt5Help.dll</origin>
                         </distributionFile>
                         <distributionFile>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/Qt5Xml.dll</origin>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/Qt5Xml.dll</origin>
                         </distributionFile>
                         <distributionFile>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/Qt5Svg.dll</origin>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/Qt5Svg.dll</origin>
                         </distributionFile>
                         
                         <distributionFile>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/libstdc++-6.dll</origin>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/libstdc++-6.dll</origin>
                         </distributionFile>
                         <distributionFile>
-                            <origin>E:/Projects/ProjectsDesktop/VS_QVocabulary_Setup/Redistribute/libgcc_s_seh-1.dll</origin>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/libgcc_s_seh-1.dll</origin>
                         </distributionFile>
                     </distributionFileList>
                     <shortcutList>

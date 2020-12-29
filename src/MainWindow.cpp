@@ -326,19 +326,17 @@ void MainWindow::on_actionImportMicrosoftVocabulary_triggered()
 
 void MainWindow::on_actionExportMicrosoftVocabulary_triggered()
 {
-	QString xmlFile = QFileDialog::getOpenFileName(
+	QString xmlFile = QFileDialog::getSaveFileName(
 		this,
-		tr( "Open Microsoft Vocabulary++ Dictionary" ),
-		QDir::homePath(),
+		tr( "Export to Microsoft Vocabulary++ Dictionary" ),
+		QDir::homePath() + "/untitled.vocab",
 		tr( "Microsoft Vocabulary Files (*.vocab)" )
 	);
 
 	if ( ! xmlFile.isEmpty() ) {
-//		MicrosoftVocabulary::exportToFile(( xmlFile );
-//
-//		initWidgets();
-//		wdgVocabulary->initModels();
-//		statusBar()->showMessage( tr( "Database imported" ), 2000 );
+		MicrosoftVocabulary::exportToFile( xmlFile );
+
+		statusBar()->showMessage( tr( "Database exported" ), 2000 );
 	}
 }
 

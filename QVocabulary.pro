@@ -4,6 +4,9 @@
 QT += core gui sql help xml
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+#CONFIG += static
+CONFIG += c++11
+
 # Compile with:
 # qmake-mingw CONFIG+=debug
 CONFIG(debug, debug|release) {

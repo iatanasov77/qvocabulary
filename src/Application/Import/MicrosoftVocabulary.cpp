@@ -3,6 +3,11 @@
 #include <QtXml>
 #include <QFile>
 
+#include "precompiled.h"
+#include "QxOrm_Impl.h"
+#include "QxModelView.h"
+
+#include "Application/VsDatabase.h"
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/VocabularyGroup.h"
 #include "Entity/Vocabulary.h"
@@ -31,7 +36,61 @@ bool MicrosoftVocabulary::importFromFile( QString file )
 
 bool MicrosoftVocabulary::exportToFile( QString file )
 {
+	QDomDocument doc( "Dictionary" );
+	doc.appendChild( doc.createProcessingInstruction( "xml", "version=\"1.0\" encoding=\"utf-8\"" ) );
 
+	QDomElement root = doc.createElement( "Dictionary" );
+	root.setAttribute( "xmlns:xsd", "http://www.w3.org/2001/XMLSchema" );
+	root.setAttribute( "xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance" );
+	doc.appendChild( root );
+
+	// Export Meta Info
+	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
+	QDomElement elMetaLanguage0	= doc.createElement( "Language0" );
+	QDomElement elMetaLanguage1	= doc.createElement( "Language1" );
+	QDomText txtMetaLanguage0	= doc.createTextNode( metaInfo->language1 );
+	QDomText txtMetaLanguage1	= doc.createTextNode( metaInfo->language2 );
+	elMetaLanguage0.appendChild( txtMetaLanguage0 );
+	elMetaLanguage1.appendChild( txtMetaLanguage1 );
+	root.appendChild( elMetaLanguage0 );
+	root.appendChild( elMetaLanguage1 );
+
+	// Export WordList
+	QDomElement word;
+	QDomElement elLanguage0;
+	QDomElement elLanguage1;
+	QDomText txtLanguage0;
+	QDomText txtLanguage1;
+	QDomElement wordlist			= doc.createElement( "Wordlist" );
+	qx::QxModel<Vocabulary>* model	= new qx::QxModel<Vocabulary>();
+
+	model->qxFetchAll();
+	for( int r = 0; r < model->rowCount(); ++r ) {
+		word			= doc.createElement( "Word" );
+		elLanguage0		= doc.createElement( "Language0" );
+		elLanguage1		= doc.createElement( "Language1" );
+
+		txtLanguage0 	= doc.createTextNode( model->data( model->index( r, 1 ) ).toString() );
+		txtLanguage1 	= doc.createTextNode( model->data( model->index( r, 2 ) ).toString() );
+
+		elLanguage0.appendChild( txtLanguage0 );
+		elLanguage1.appendChild( txtLanguage1 );
+		word.appendChild( elLanguage0 );
+		word.appendChild( elLanguage1 );
+		wordlist.appendChild( word );
+	}
+	root.appendChild( wordlist );
+
+	// Write to File
+	QFile f( file );
+	if ( ! f.open( QIODevice::WriteOnly | QIODevice::Text ) )
+		return false;
+
+	QString xml = doc.toString();
+	QTextStream out( &f );
+	out << xml;
+
+	return true;
 }
 
 bool MicrosoftVocabulary::parseMeta()
