@@ -28,8 +28,6 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     initModel();
     initContextMenu();
 
-    loadGroup( currentGroup );
-
     connect( ui->btnSearch, SIGNAL( released() ), this, SLOT( search() ) );
 }
 

@@ -44,6 +44,11 @@ VocabularyGroupsWidget::~VocabularyGroupsWidget()
     delete ui;
 }
 
+int VocabularyGroupsWidget::currentGroup()
+{
+	return ui->listView->model()->data( ui->listView->model()->index( 0, 0 ) ).toInt();
+}
+
 void VocabularyGroupsWidget::initModel()
 {
 	pModel	= new qx::QxModel<VocabularyGroup>();
