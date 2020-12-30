@@ -28,6 +28,7 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     initModel();
     initContextMenu();
 
+    connect( ui->leSearch, SIGNAL( returnPressed() ), ui->btnSearch, SIGNAL( released() ) );
     connect( ui->btnSearch, SIGNAL( released() ), this, SLOT( search() ) );
 }
 
@@ -78,8 +79,13 @@ void VocabularyWordsWidget::insertWord()
 	pModel->insertRow( pModel->rowCount( QModelIndex() ) );
 }
 
+/**
+ * NOTE: Dont call this function. It is called in VocabularyWidget::loadGroup( int groupId )
+ * 		 There is functionality to remember current group into the settings.
+ */
 void VocabularyWordsWidget::loadGroup( int groupId )
 {
+	ui->leSearch->setText( "" );	// Clear Serch Field
 	QString query	= QString( "WHERE group_id=%1" ).arg( groupId );
 	pModel->qxFetchByQuery( query );
 	//ui->stackedWidget->setCurrentWidget( ui->tableView );
@@ -90,7 +96,7 @@ void VocabularyWordsWidget::loadGroup( int groupId )
 
 int VocabularyWordsWidget::deleteGroup( int groupId )
 {
-	QString query	= QString( "WHERE group_id=%1" ).arg( groupId );
+	QString query	= QString( "WHERE group_id=%1" ).arg( QString::number( groupId ) );
 	pModel->qxDeleteByQuery( query );
 
 	if ( currentGroup == groupId ) {

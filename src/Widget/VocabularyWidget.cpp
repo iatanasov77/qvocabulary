@@ -6,12 +6,14 @@
 #include <QHeaderView>
 #include <QSplitter>
 #include <QMenu>
+#include <QSettings>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
 #include "Application/VsDatabase.h"
+#include "Application/VsSettings.h"
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/Vocabulary.h"
 #include "Entity/VocabularyGroup.h"
@@ -29,7 +31,14 @@ VocabularyWidget::VocabularyWidget( QWidget *parent ) :
     init();
     initModels();
 
-    wdgWords->loadGroup( wdgGroups->currentGroup() );
+    // Load Current Group by settings or first loaded
+    QSettings* settings	= VsSettings::instance()->settings();
+    int currentGroup	= settings->value( "currentGroup" ).toInt();
+    if ( currentGroup ) {
+    	loadGroup( currentGroup );
+    } else {
+    	loadGroup( wdgGroups->currentGroup() );
+    }
 }
 
 VocabularyWidget::~VocabularyWidget()
@@ -74,8 +83,12 @@ void VocabularyWidget::insertWord()
 
 void VocabularyWidget::loadGroup( int groupId )
 {
-	currentGroup	= groupId;
+	QSettings* settings	= VsSettings::instance()->settings();
+	currentGroup		= groupId;
 	wdgWords->loadGroup( groupId );
+
+	settings->setValue( "currentGroup", currentGroup );
+	settings->sync();	// Sync ini file
 }
 
 void VocabularyWidget::deleteGroup( int groupId )
@@ -89,5 +102,10 @@ void VocabularyWidget::loadGroup( const QModelIndex &index )
     QString groupName	= index.siblingAtColumn( 1 ).data().toString();
 
 	setCurrentGroupName( groupName );
-    wdgWords->loadGroup( groupId );
+    loadGroup( groupId );
+}
+
+void VocabularyWidget::refreshWidgets()
+{
+	init();
 }

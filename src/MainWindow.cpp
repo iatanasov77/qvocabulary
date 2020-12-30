@@ -150,16 +150,15 @@ void MainWindow::clearRecentDatabases()
 	QStringList emptyList;
 	QAction *action		= qobject_cast<QAction *>( sender() );
 	bool withCurrent	= action->data().toBool();
+	QSettings* settings	= VsSettings::instance()->settings();
 
 	if ( withCurrent ) {
 		emptyList	= QStringList();
 	} else {
-		QSettings* settings		= VsSettings::instance()->settings();
 		QStringList databases	= settings->value( "recentDatabaseList" ).toStringList();
 		emptyList				= QStringList( QStringList() << databases.at( 0 ) );
 	}
 
-    QSettings* settings	= VsSettings::instance()->settings();
     settings->setValue( "recentDatabaseList", emptyList );
     settings->sync();	// Sync ini file
 
