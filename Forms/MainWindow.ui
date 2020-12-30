@@ -121,7 +121,7 @@
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>&amp;About</string>
+    <string>&amp;About QVocabulary</string>
    </property>
   </action>
   <action name="actionHelp">
