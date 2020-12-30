@@ -129,10 +129,6 @@ void VocabularyGroupsWidget::renameGroup()
 
 void VocabularyGroupsWidget::deleteGroup()
 {
-	QModelIndex indexId				= ui->listView->currentIndex().siblingAtColumn( 0 );
-	int groupId						= pModel->data( indexId ).toInt();
-	VocabularyWidget *wdgVocabulary	= qobject_cast<VocabularyWidget *>( parent() );
-
 	QMessageBox::StandardButton reply;
 	reply = QMessageBox::question(
 									this,
@@ -140,11 +136,25 @@ void VocabularyGroupsWidget::deleteGroup()
 									tr( "This will erase all Words associated with this Group. Do you agree?" ),
 									QMessageBox::Yes|QMessageBox::No
 								);
+
 	if ( reply == QMessageBox::Yes ) {
-		//wdgVocabulary->deleteGroup( groupId );
+		QModelIndex indexId				= ui->listView->currentIndex().siblingAtColumn( 0 );
+		VocabularyWidget *wdgVocabulary	= qobject_cast<VocabularyWidget *>( parent() );
+
+		//wdgVocabulary->deleteGroup( pModel->data( indexId ).toInt() );
+		qx::QxModel<Vocabulary>* vocModel	= new qx::QxModel<Vocabulary>;
+		QString query	= QString( "WHERE group_id=%1" ).arg( QString::number( pModel->data( indexId ).toInt() ) );
+		vocModel->qxDeleteByQuery( query );
+
 		pModel->qxDeleteById( pModel->data( indexId ) );
 
-		//refreshView( indexId, indexId.siblingAtColumn( 1 ) );
 		refreshView();
+
+		/**
+		 * @Todo: Refreshing the widgets is very hard:
+		 * 			QObject::connect: Cannot connect SideBarListViewDelegate::buttonClicked( QModelIndex ) to (nullptr)::loadGroup( QModelIndex )
+		 */
+//		qDebug() << QString::number( currentGroup() );
+//		wdgVocabulary->refreshWidgets();
 	}
 }
