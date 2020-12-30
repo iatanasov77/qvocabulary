@@ -8,6 +8,7 @@
 #include "Widget/Quiz/QuizWindow.h"
 #include "Widget/Help/HelpWindow.h"
 #include "Widget/Vocabulary/VocabularyWidget.h"
+#include "Widget/Settings/SettingsWindow.h"
 #include "Dialog/NewDatabaseDialog.h"
 //#include "Dialog/NewVocabularyGroupDialog.h"
 //#include "Dialog/RenameVocabularyGroupDialog.h"
@@ -37,6 +38,7 @@ class MainWindow : public QMainWindow
 		void openRecentDatabase();
 		void clearRecentDatabases();
 		void on_actionSave_As_triggered();
+		void on_actionPreferences_triggered();
 
 		void on_actionHelp_triggered();
 		void on_actionAbout_triggered();
@@ -64,6 +66,7 @@ class MainWindow : public QMainWindow
 		VocabularyWidget* wdgVocabulary;
 		NewDatabaseDialog* dlgNewDatabase;
 		HelpWindow* wdgHelp;
+		SettingsWindow* wdgSettings;
 		QuizListWindow* wdgQuizList;
 		QuizWindow* wdgQuiz;
 

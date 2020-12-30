@@ -17,6 +17,7 @@
 #include "Widget/Quiz/QuizListWindow.h"
 #include "Widget/Quiz/QuizWindow.h"
 #include "Widget/Vocabulary/VocabularyWidget.h"
+#include "Widget/Settings/SettingsWindow.h"
 #include "Dialog/InitDatabaseDialog.h"
 #include "Dialog/NewDatabaseDialog.h"
 #include "Dialog/NewVocabularyGroupDialog.h"
@@ -77,6 +78,8 @@ void MainWindow::initIcons()
 
 	ui->actionExit->setIcon( QIcon( ":/Resources/icons/close.svg" ) );
 	ui->actionAboutQt->setIcon( QIcon( ":/Resources/icons/QtProject-designer.svg" ) );
+
+	ui->actionPreferences->setIcon( QIcon( ":/Resources/icons/settings.svg" ) );
 }
 
 void MainWindow::on_actionInsertGroup_triggered()
@@ -135,6 +138,14 @@ void MainWindow::on_actionHelp_triggered()
 	wdgHelp->setWindowFlags( Qt::Window );
 	//wdgHelp->setModal( true );
 	wdgHelp->show();
+}
+
+void MainWindow::on_actionPreferences_triggered()
+{
+	wdgSettings = new SettingsWindow( this );
+	wdgSettings->setWindowFlags( Qt::Window );
+	//wdgHelp->setModal( true );
+	wdgSettings->show();
 }
 
 void MainWindow::openRecentDatabase()
