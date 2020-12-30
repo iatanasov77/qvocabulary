@@ -28,6 +28,7 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     initModel();
     initContextMenu();
 
+    connect( ui->leSearch, SIGNAL( returnPressed() ), ui->btnSearch, SIGNAL( released() ) );
     connect( ui->btnSearch, SIGNAL( released() ), this, SLOT( search() ) );
 }
 
@@ -84,6 +85,7 @@ void VocabularyWordsWidget::insertWord()
  */
 void VocabularyWordsWidget::loadGroup( int groupId )
 {
+	ui->leSearch->setText( "" );	// Clear Serch Field
 	QString query	= QString( "WHERE group_id=%1" ).arg( groupId );
 	pModel->qxFetchByQuery( query );
 	//ui->stackedWidget->setCurrentWidget( ui->tableView );
