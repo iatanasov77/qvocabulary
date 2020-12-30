@@ -147,7 +147,17 @@ void MainWindow::openRecentDatabase()
 
 void MainWindow::clearRecentDatabases()
 {
-	QStringList emptyList	= QStringList();
+	QStringList emptyList;
+	QAction *action		= qobject_cast<QAction *>( sender() );
+	bool withCurrent	= action->data().toBool();
+
+	if ( withCurrent ) {
+		emptyList	= QStringList();
+	} else {
+		QSettings* settings		= VsSettings::instance()->settings();
+		QStringList databases	= settings->value( "recentDatabaseList" ).toStringList();
+		emptyList				= QStringList( QStringList() << databases.at( 0 ) );
+	}
 
     QSettings* settings	= VsSettings::instance()->settings();
     settings->setValue( "recentDatabaseList", emptyList );
@@ -168,13 +178,22 @@ void MainWindow::createReccentDatabaseActions()
 		ui->menu_Open_Database_Recent->addAction( recentDatabaseActs[i] );
 
 	actClearRecentDatabases	= new QAction( this );
-	actClearRecentDatabases->setText( tr( "Clear List" ) );
+	actClearRecentDatabases->setText( tr( "Clear Recent" ) );
 	actClearRecentDatabases->setIcon( QIcon( ":/Resources/icons/amarok_cart_remove.svg" ) );
 	actClearRecentDatabases->setVisible( false );
+	actClearRecentDatabases->setData( QVariant( true ) );	// With Current Database Also
 	connect( actClearRecentDatabases, SIGNAL( triggered() ),this, SLOT( clearRecentDatabases() ) );
+
+	actClearRecentDatabasesWithoutCurrent	= new QAction( this );
+	actClearRecentDatabasesWithoutCurrent->setText( tr( "Clear Recent Without Current" ) );
+	actClearRecentDatabasesWithoutCurrent->setIcon( QIcon( ":/Resources/icons/amarok_cart_remove.svg" ) );
+	actClearRecentDatabasesWithoutCurrent->setVisible( false );
+	actClearRecentDatabasesWithoutCurrent->setData( QVariant( false ) );	// Without Current Database
+	connect( actClearRecentDatabasesWithoutCurrent, SIGNAL( triggered() ),this, SLOT( clearRecentDatabases() ) );
 
 	separatorAct = ui->menu_Open_Database_Recent->addSeparator();
 	ui->menu_Open_Database_Recent->addAction( actClearRecentDatabases );
+	ui->menu_Open_Database_Recent->addAction( actClearRecentDatabasesWithoutCurrent );
 }
 
 void MainWindow::updateRecentDatabaseActions()
@@ -197,6 +216,7 @@ void MainWindow::updateRecentDatabaseActions()
     ui->actionEmpty->setVisible( numRecentDatabases == 0 );
     separatorAct->setVisible( numRecentDatabases > 0 );
     actClearRecentDatabases->setVisible( numRecentDatabases > 0 );
+    actClearRecentDatabasesWithoutCurrent->setVisible( numRecentDatabases > 1 );
 }
 
 QString MainWindow::strippedName( const QString &fullDbPath )

@@ -68,6 +68,7 @@ class MainWindow : public QMainWindow
 		QuizWindow* wdgQuiz;
 
 		QAction* actClearRecentDatabases;
+		QAction* actClearRecentDatabasesWithoutCurrent;
 		QAction* separatorAct;
 		enum { MaxRecentDatabases = 5 };
 		QString curDatabase;

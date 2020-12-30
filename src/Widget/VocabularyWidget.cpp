@@ -28,6 +28,8 @@ VocabularyWidget::VocabularyWidget( QWidget *parent ) :
 
     init();
     initModels();
+
+    wdgWords->loadGroup( wdgGroups->currentGroup() );
 }
 
 VocabularyWidget::~VocabularyWidget()

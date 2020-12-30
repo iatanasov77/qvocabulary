@@ -25,6 +25,7 @@ class VocabularyGroupsWidget : public QWidget
 
 		void refreshView( QModelIndex topLeft, QModelIndex bottomRight );
 		void refreshView();
+		int currentGroup();
 
 	public slots:
 		void setCurrentGroup( const QModelIndex &index );
@@ -36,8 +37,8 @@ class VocabularyGroupsWidget : public QWidget
 		void initModel();
 		void initContextMenu();
 
-		Ui::VocabularyGroupsWidget *ui;
-		qx::QxModel<VocabularyGroup> *pModel;
+		Ui::VocabularyGroupsWidget* ui;
+		qx::QxModel<VocabularyGroup>* pModel;
 };
 
 #endif // WIDGET_VOCABULARYGROUPS_H
