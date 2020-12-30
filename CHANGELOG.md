@@ -1,3 +1,8 @@
+0.7.1	|	Release date: **30.12.2020**
+============================================
+* Improvements:
+  - Add Copyright String and Link to the Project Source.
+
 0.7.0	|	Release date: **30.12.2020**
 ============================================
 * Improvements:

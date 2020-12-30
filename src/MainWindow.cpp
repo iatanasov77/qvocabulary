@@ -73,7 +73,7 @@ void MainWindow::initIcons()
 	ui->actionInsertWord->setIcon( QIcon( ":/Resources/icons/mail-message-new.svg" ) );
 
 	ui->actionHelp->setIcon( QIcon( ":/Resources/icons/system-help.svg" ) );
-	ui->actionAbout->setIcon( QIcon( ":/Resources/icons/help-about.svg" ) );
+	ui->actionAbout->setIcon( QIcon( ":/Resources/icons/dictionary.svg" ) );
 
 	ui->actionExit->setIcon( QIcon( ":/Resources/icons/close.svg" ) );
 	ui->actionAboutQt->setIcon( QIcon( ":/Resources/icons/QtProject-designer.svg" ) );
@@ -115,7 +115,12 @@ void MainWindow::on_actionAbout_triggered()
 		"<br /><br />"
 		"<b>Version: </b>%1<br />"
 		"<b>Build: </b>%2<br />"
-	).arg( VsApplication::appVersion() ).arg( QDateTime::currentDateTime().toString( "dd.MM.yyyy hh:mm" ) );
+		"<br />"
+		"%3 2020 <a href='https://github.com/iatanasov77/qvocabulary'>https://github.com/iatanasov77/qvocabulary</a>"
+	)
+	.arg( VsApplication::appVersion() )
+	.arg( QDateTime::currentDateTime().toString( "dd.MM.yyyy hh:mm" ) )
+	.arg( QString::fromUtf8( "\u00A9" ) );
 
 	QMessageBox::about(
 		this,
