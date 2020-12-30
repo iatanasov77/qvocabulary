@@ -1,3 +1,12 @@
+0.8.1	|	Release date: **30.12.2020**
+============================================
+* New Features:
+* Bug-Fixes:
+* Improvements:
+  - VocabularyGroups Frame - Different Size Policy at Different OS.
+  - Vocabulary Search Field Handle Enter button.
+  - Clear Search Field when Search Results on blur.
+
 0.8.0	|	Release date: **30.12.2020**
 ============================================
 * New Features:
