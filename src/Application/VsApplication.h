@@ -7,6 +7,7 @@ class VsApplication
 {
 	public:
 		static QDir dataPath();
+		static QString appVersion();
 
 		static const QString DB_VERSION;
 };

@@ -1,26 +1,28 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource prefix="/">
-	<file>Resources/icons/close.svg</file>
-	<file>Resources/icons/computer.svg</file>
-	<file>Resources/icons/preferences-desktop-search.svg</file>
-    <file>Resources/icons/dictionary.svg</file>
-    <file>Resources/icons/document-new.svg</file>
-    <file>Resources/icons/document-open.svg</file>
-    <file>Resources/icons/document-open-recent.svg</file>
-    <file>Resources/icons/document-import.svg</file>
-    <file>Resources/icons/folder-new.svg</file>
-    <file>Resources/icons/mail-message-new.svg</file>
-    <file>Resources/icons/amarok_cart_remove.svg</file>
-    <file>Resources/icons/help-about.svg</file>
-    <file>Resources/icons/system-help.svg</file>
-    <file>Resources/icons/quiz-list.svg</file>
-    <file>Resources/icons/quiz.svg</file>
-    <file>Resources/icons/download-later.svg</file>
-    <file>Resources/icons/QtProject-designer.svg</file>
-    
-    <file>Resources/sql/qvocabulary-20201216.sql</file>
-    <file>Resources/sql/qvocabulary-20201217.sql</file>
-    <file>Resources/sql/qvocabulary-20201219.sql</file>
-    <file>Resources/sql/qvocabulary-20201220.sql</file>
-</qresource>
+<!DOCTYPE RCC>
+<RCC version="1.0">
+	<qresource prefix="/">
+		<file>VERSION</file>
+		<file>Resources/icons/close.svg</file>
+		<file>Resources/icons/computer.svg</file>
+		<file>Resources/icons/preferences-desktop-search.svg</file>
+	    <file>Resources/icons/dictionary.svg</file>
+	    <file>Resources/icons/document-new.svg</file>
+	    <file>Resources/icons/document-open.svg</file>
+	    <file>Resources/icons/document-open-recent.svg</file>
+	    <file>Resources/icons/document-import.svg</file>
+	    <file>Resources/icons/folder-new.svg</file>
+	    <file>Resources/icons/mail-message-new.svg</file>
+	    <file>Resources/icons/amarok_cart_remove.svg</file>
+	    <file>Resources/icons/help-about.svg</file>
+	    <file>Resources/icons/system-help.svg</file>
+	    <file>Resources/icons/quiz-list.svg</file>
+	    <file>Resources/icons/quiz.svg</file>
+	    <file>Resources/icons/download-later.svg</file>
+	    <file>Resources/icons/QtProject-designer.svg</file>
+	    
+	    <file>Resources/sql/qvocabulary-20201216.sql</file>
+	    <file>Resources/sql/qvocabulary-20201217.sql</file>
+	    <file>Resources/sql/qvocabulary-20201219.sql</file>
+	    <file>Resources/sql/qvocabulary-20201220.sql</file>
+	</qresource>
 </RCC>

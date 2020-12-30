@@ -1,3 +1,8 @@
+0.7.0	|	Release date: **30.12.2020**
+============================================
+* Improvements:
+  - Improve AboutBox to display version information.
+
 0.6.0	|	Release date: **29.12.2020**
 ============================================
 * New Features:

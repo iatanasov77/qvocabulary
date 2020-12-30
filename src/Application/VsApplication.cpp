@@ -18,3 +18,19 @@ QDir VsApplication::dataPath()
 
 	return dataPath;
 }
+
+QString VsApplication::appVersion()
+{
+	QString data;
+	QString fileName( ":/VERSION" );
+
+	QFile file( fileName );
+	if( ! file.open( QIODevice::ReadOnly ) ) {
+		data = QString( "Cannot open VERSION file!" );
+	} else {
+		data = file.readAll();
+	}
+
+	file.close();
+	return data;
+}

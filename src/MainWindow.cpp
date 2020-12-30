@@ -109,12 +109,18 @@ void MainWindow::on_actionOpen_DB_triggered()
 
 void MainWindow::on_actionAbout_triggered()
 {
+	QString aboutText = QString(
+		"The <b>QVocabulary</b> is a vocabulary application, <br />"
+		"an alternative of Microsoft Vocabulary++."
+		"<br /><br />"
+		"<b>Version: </b>%1<br />"
+		"<b>Build: </b>%2<br />"
+	).arg( VsApplication::appVersion() ).arg( QDateTime::currentDateTime().toString( "dd.MM.yyyy hh:mm" ) );
+
 	QMessageBox::about(
 		this,
 		tr( "About QVocabulary" ),
-		tr( "The <b>QVocabulary</b> is a vocabulary application "
-		   "an alternative of Microsoft Vocabulary++.")
-
+		tr( qPrintable( aboutText ) )
 	);
 }
 
