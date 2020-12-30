@@ -1,3 +1,12 @@
+0.8.0	|	Release date: **30.12.2020**
+============================================
+* New Features:
+  - Add Menu Action 'Remove Recent Databases Without Current'
+* Improvements:
+  - Load First Group at Startup
+
+
+
 0.7.1	|	Release date: **30.12.2020**
 ============================================
 * Improvements:
