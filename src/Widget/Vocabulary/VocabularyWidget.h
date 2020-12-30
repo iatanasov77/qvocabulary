@@ -13,8 +13,8 @@
 
 #include "Entity/Vocabulary.h"
 
-#include "Widget/VocabularyGroupsWidget.h"
-#include "Widget/VocabularyWordsWidget.h"
+#include "Widget/Vocabulary/VocabularyGroupsWidget.h"
+#include "Widget/Vocabulary/VocabularyWordsWidget.h"
 
 namespace Ui {
 	class VocabularyWidget;

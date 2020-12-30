@@ -3,8 +3,8 @@
 
 #include <QWidget>
 
-#include "Widget/QuizParametersWidget.h"
-#include "Widget/QuizWidget.h"
+#include "Widget/Quiz/QuizParametersWidget.h"
+#include "Widget/Quiz/QuizWidget.h"
 
 #include "Entity/Quiz.h"
 

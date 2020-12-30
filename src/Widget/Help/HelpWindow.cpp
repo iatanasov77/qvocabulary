@@ -6,7 +6,7 @@
 #include <QHelpContentWidget>
 #include <QHelpIndexWidget>
 
-#include "Widget/HelpBrowser.h"
+#include "Widget/Help/HelpBrowser.h"
 
 HelpWindow::HelpWindow( QWidget *parent ) :
     QWidget( parent ),

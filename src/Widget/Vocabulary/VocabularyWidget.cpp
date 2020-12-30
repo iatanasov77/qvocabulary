@@ -19,8 +19,8 @@
 #include "Entity/VocabularyGroup.h"
 #include "ModelView/SideBarListViewDelegate.h"
 
-#include "Widget/VocabularyGroupsWidget.h"
-#include "Widget/VocabularyWordsWidget.h"
+#include "Widget/Vocabulary/VocabularyGroupsWidget.h"
+#include "Widget/Vocabulary/VocabularyWordsWidget.h"
 
 VocabularyWidget::VocabularyWidget( QWidget *parent ) :
     QWidget( parent ),

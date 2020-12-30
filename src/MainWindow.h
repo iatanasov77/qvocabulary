@@ -4,10 +4,10 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 
-#include "Widget/QuizListWindow.h"
-#include "Widget/QuizWindow.h"
-#include "Widget/HelpWindow.h"
-#include "Widget/VocabularyWidget.h"
+#include "Widget/Quiz/QuizListWindow.h"
+#include "Widget/Quiz/QuizWindow.h"
+#include "Widget/Help/HelpWindow.h"
+#include "Widget/Vocabulary/VocabularyWidget.h"
 #include "Dialog/NewDatabaseDialog.h"
 //#include "Dialog/NewVocabularyGroupDialog.h"
 //#include "Dialog/RenameVocabularyGroupDialog.h"
