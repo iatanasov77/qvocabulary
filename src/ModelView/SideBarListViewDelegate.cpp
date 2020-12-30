@@ -42,8 +42,14 @@ QSize SideBarListViewDelegate::sizeHint( const QStyleOptionViewItem &option, con
 {
 	QSize result = QItemDelegate::sizeHint( option, index );
 
-	result.setWidth( 1 );
-	result.setHeight( result.height() * 2 );
+	// Different Size Policy at Different OS
+	#if ( defined (_WIN32) || defined (_WIN64) )
+		//result.setWidth( 1 );
+		result.setHeight( result.height() * 1.5 );
+    #elif ( defined (LINUX) || defined (__linux__) )
+		//result.setWidth( 1 );
+		result.setHeight( result.height() * 2 );
+    #endif
 
 	return result;
 }
