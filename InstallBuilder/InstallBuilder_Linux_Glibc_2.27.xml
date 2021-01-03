@@ -1,7 +1,7 @@
 <project>
     <shortName>QVocabulary</shortName>
     <fullName>QVocabulary</fullName>
-    <version>0.9.0-glibc_2.23</version>
+    <version>0.9.0-Glibc_2.27</version>
     <licenseFile>/vagrant/LICENSE</licenseFile>
     <componentList>
         <component>
@@ -14,7 +14,7 @@
                 <shortcut>
                     <comment></comment>
                     <exec>${installdir}/QVocabulary</exec>
-                    <icon></icon>
+                    <icon>${installdir}/dictionary.svg</icon>
                     <name>QVocabulary</name>
                     <path></path>
                     <platforms>all</platforms>
@@ -34,23 +34,26 @@
                     <platforms>all</platforms>
                     <distributionFileList>
                         <distributionFile>
-                            <origin>/vagrant/Temp/Redistribute_Linux/AppRun_Glibc_2.23/qt.conf</origin>
+                            <origin>/vagrant/Temp/Redistribute_Linux/AppRun_Glibc_2.27/qt.conf</origin>
                         </distributionFile>
                         <distributionFile>
-                            <origin>/vagrant/Temp/Redistribute_Linux/AppRun_Glibc_2.23/QVocabulary</origin>
+                            <origin>/vagrant/Temp/Redistribute_Linux/AppRun_Glibc_2.27/QVocabulary</origin>
                         </distributionFile>
                         <distributionDirectory>
-                            <origin>/vagrant/Temp/Redistribute_Linux/AppRun_Glibc_2.23/lib</origin>
+                            <origin>/vagrant/Temp/Redistribute_Linux/AppRun_Glibc_2.27/lib</origin>
                         </distributionDirectory>
                         <distributionDirectory>
-                            <origin>/vagrant/Temp/Redistribute_Linux/AppRun_Glibc_2.23/plugins</origin>
+                            <origin>/vagrant/Temp/Redistribute_Linux/AppRun_Glibc_2.27/plugins</origin>
                         </distributionDirectory>
                         <distributionDirectory>
-                            <origin>/vagrant/Temp/Redistribute_Linux/AppRun_Glibc_2.23/doc</origin>
+                            <origin>/vagrant/Temp/Redistribute_Linux/AppRun_Glibc_2.27/doc</origin>
                         </distributionDirectory>
                         <distributionDirectory>
-                            <origin>/vagrant/Temp/Redistribute_Linux/AppRun_Glibc_2.23/translations</origin>
+                            <origin>/vagrant/Temp/Redistribute_Linux/AppRun_Glibc_2.27/translations</origin>
                         </distributionDirectory>
+                        <distributionFile>
+                            <origin>/vagrant/Temp/Redistribute_Linux/AppRun_Glibc_2.27/dictionary.svg</origin>
+                        </distributionFile>
                     </distributionFileList>
                     <shortcutList>
                         <shortcut>
