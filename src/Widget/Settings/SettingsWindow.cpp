@@ -4,7 +4,10 @@
 #include <QDebug>
 #include <QTreeWidgetItem>
 
+#include "AbstractSettingsWidget.h"
 #include "SettingsWidgetGeneral.h"
+
+class SettingsWidgetGeneral;
 
 SettingsWindow::SettingsWindow( QWidget *parent ) :
     QWidget( parent ),
@@ -19,6 +22,9 @@ SettingsWindow::SettingsWindow( QWidget *parent ) :
 
     initSettingsMenu();
     showSettingsGeneral();
+
+	connect( ui->btnApply, SIGNAL( released() ), this, SLOT( applySettings() ) );
+    connect( ui->btnSaveAndExit, SIGNAL( released() ), this, SLOT( saveAndExitSettings() ) );
 }
 
 SettingsWindow::~SettingsWindow()
@@ -52,9 +58,31 @@ void SettingsWindow::showSettingsUnimpemented( QString settingsTitle )
 
 void SettingsWindow::showSettingsGeneral()
 {
-	//qDebug() << "Settings General";
-	SettingsWidgetGeneral* wdg	= new SettingsWidgetGeneral( this );
+	wdg	= new SettingsWidgetGeneral( this );
+	//wdg	= qobject_cast<AbstractSettingsWidget *>( new SettingsWidgetGeneral( this ) );
 
 	ui->settingsTitle->setText( tr( "General" ) );
 	ui->formLayout->addWidget( wdg );
+}
+
+void SettingsWindow::applySettings()
+{
+	wdg->apply();
+}
+
+void SettingsWindow::saveAndExitSettings()
+{
+	wdg->apply();
+	close();
+}
+
+void SettingsWindow::changeEvent( QEvent* event )
+{
+    if ( event->type() == QEvent::LanguageChange )
+    {
+        ui->retranslateUi( this );
+    }
+
+    // remember to call base class implementation
+    QWidget::changeEvent( event );
 }

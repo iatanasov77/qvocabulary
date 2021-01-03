@@ -24,6 +24,10 @@ class QuizWindow : public QWidget
 		void startQuiz();
 		void stopQuiz();
 
+	protected:
+		// this event is called, when a new translator is loaded or the system language is changed
+		void changeEvent( QEvent* );
+
 	private:
 		void init();
 		void initConnections();

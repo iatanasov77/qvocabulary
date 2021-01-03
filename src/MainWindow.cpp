@@ -28,6 +28,13 @@ MainWindow::MainWindow( QWidget *parent ) :
 {
     ui->setupUi( this );
 
+    // Load Current Language
+    QSettings* settings		= VsSettings::instance()->settings();
+    QString currentLanguage = settings->value( "language" ).toString();
+    if ( ! currentLanguage.isEmpty() ) {
+    	VsApplication::instance()->loadLanguage( currentLanguage );
+    }
+
     initIcons();
     createReccentDatabaseActions();
     updateRecentDatabaseActions();
@@ -122,7 +129,7 @@ void MainWindow::on_actionAbout_triggered()
 		"%3 2020 <a href='https://github.com/iatanasov77/qvocabulary'>https://github.com/iatanasov77/qvocabulary</a>"
 	)
 	.arg( VsApplication::appVersion() )
-	.arg( QDateTime::currentDateTime().toString( "dd.MM.yyyy hh:mm" ) )
+	.arg( VsApplication::appBuildTime() )
 	.arg( QString::fromUtf8( "\u00A9" ) );
 
 	QMessageBox::about(
@@ -395,4 +402,19 @@ void MainWindow::on_actionCompletedExams_triggered()
 	wdgQuizList->setWindowFlags( Qt::Window );
 	//wdgQuiz->setModal( true );
 	wdgQuizList->show();
+}
+
+void MainWindow::changeEvent( QEvent* event )
+{
+    if ( event->type() == QEvent::LanguageChange )
+    {
+        // retranslate designer form (single inheritance approach)
+        ui->retranslateUi( this );
+
+        //QString languageName	= QLocale::languageToString( QLocale().language() );
+        statusBar()->showMessage( tr( "Current Language changed to %1" ).arg( QLocale().nativeLanguageName() ), 2000 );
+    }
+
+    // remember to call base class implementation
+    QMainWindow::changeEvent( event );
 }

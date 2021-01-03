@@ -120,3 +120,14 @@ void QuizWindow::stopQuiz()
 	wdgParameters->setEnabled( true );
 	wdgQuiz->setEnabled( false );
 }
+
+void QuizWindow::changeEvent( QEvent* event )
+{
+    if ( event->type() == QEvent::LanguageChange )
+    {
+        ui->retranslateUi( this );
+    }
+
+    // remember to call base class implementation
+    QWidget::changeEvent( event );
+}

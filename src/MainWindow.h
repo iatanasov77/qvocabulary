@@ -30,6 +30,10 @@ class MainWindow : public QMainWindow
 		//friend void NewVocabularyGroupDialog::reloadWidgets();
 		//friend void RenameVocabularyGroupDialog::reloadWidgets();
 
+	protected:
+		// this event is called, when a new translator is loaded or the system language is changed
+		void changeEvent(QEvent*);
+
 	private slots:
 		void on_actionNew_DB_triggered();
 		void on_actionOpen_DB_triggered();

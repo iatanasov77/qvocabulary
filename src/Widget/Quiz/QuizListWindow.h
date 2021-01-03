@@ -23,6 +23,10 @@ class QuizListWindow : public QWidget
 		explicit QuizListWindow( QWidget *parent = 0 );
 		~QuizListWindow();
 
+	protected:
+		// this event is called, when a new translator is loaded or the system language is changed
+		void changeEvent( QEvent* );
+
 	private:
 		void initQuizList();
 		QGroupBox* quizButtons( int quizId );

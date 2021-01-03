@@ -38,6 +38,10 @@ class VocabularyWidget : public QWidget
 	public slots:
 		void loadGroup( const QModelIndex &index );
 
+	protected:
+		// this event is called, when a new translator is loaded or the system language is changed
+		void changeEvent( QEvent* );
+
 	private:
 		void init();
 

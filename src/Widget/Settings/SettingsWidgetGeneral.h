@@ -3,17 +3,25 @@
 
 #include <QWidget>
 
+#include "AbstractSettingsWidget.h"
+
 namespace Ui {
 	class SettingsWidgetGeneral;
 }
 
-class SettingsWidgetGeneral : public QWidget
+class SettingsWidgetGeneral : public AbstractSettingsWidget
 {
     Q_OBJECT
 
 	public:
 		explicit SettingsWidgetGeneral( QWidget *parent = 0 );
 		~SettingsWidgetGeneral();
+
+		virtual void apply();
+
+	protected:
+		// this event is called, when a new translator is loaded or the system language is changed
+		void changeEvent( QEvent* );
 
 	private:
 		void init();

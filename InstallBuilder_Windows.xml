@@ -42,7 +42,10 @@
                         <distributionDirectory>
                             <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/Help</origin>
                         </distributionDirectory>
-						
+						<distributionDirectory>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/translations</origin>
+                        </distributionDirectory>
+                        
 						<distributionFile>
                             <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/Qt5Core.dll</origin>
                         </distributionFile>
