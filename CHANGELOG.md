@@ -1,3 +1,8 @@
+0.9.1	|	Release date: **03.01.2021**
+============================================
+* New Features:
+  - Add InstallBuilder project files for Windows and Linux.
+
 0.9.0	|	Release date: **03.01.2021**
 ============================================
 * New Features:
