@@ -54,14 +54,6 @@
      <addaction name="actionImportMicrosoftVocabulary"/>
      <addaction name="actionExportMicrosoftVocabulary"/>
     </widget>
-    <widget class="QMenu" name="menuQuiz_2">
-     <property name="title">
-      <string>&amp;Quiz</string>
-     </property>
-     <addaction name="actionSimpleExam"/>
-     <addaction name="separator"/>
-     <addaction name="actionCompletedExams"/>
-    </widget>
     <addaction name="actionNew_DB"/>
     <addaction name="actionOpen_DB"/>
     <addaction name="menu_Open_Database_Recent"/>
@@ -69,12 +61,8 @@
     <addaction name="separator"/>
     <addaction name="menuImport"/>
     <addaction name="separator"/>
-    <addaction name="menuQuiz_2"/>
-    <addaction name="separator"/>
     <addaction name="actionInsertGroup"/>
     <addaction name="actionInsertWord"/>
-    <addaction name="separator"/>
-    <addaction name="actionPreferences"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
@@ -87,7 +75,30 @@
     <addaction name="actionAbout"/>
     <addaction name="actionAboutQt"/>
    </widget>
+   <widget class="QMenu" name="menuQuiz">
+    <property name="title">
+     <string>&amp;Quiz</string>
+    </property>
+    <addaction name="actionSimpleExam"/>
+    <addaction name="separator"/>
+    <addaction name="actionCompletedExams"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Setti&amp;ngs</string>
+    </property>
+    <widget class="QMenu" name="menuLanguages">
+     <property name="title">
+      <string>Languages</string>
+     </property>
+    </widget>
+    <addaction name="menuLanguages"/>
+    <addaction name="separator"/>
+    <addaction name="actionPreferences"/>
+   </widget>
    <addaction name="menuDatabase"/>
+   <addaction name="menuQuiz"/>
+   <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -110,8 +121,6 @@
    <addaction name="actionInsertGroup"/>
    <addaction name="actionInsertWord"/>
    <addaction name="separator"/>
-   <addaction name="actionCompletedExams"/>
-   <addaction name="actionSimpleExam"/>
   </widget>
   <action name="actionOpen_DB">
    <property name="text">
@@ -179,11 +188,6 @@
     <string>Simple Quiz</string>
    </property>
   </action>
-  <action name="actionSimpleExam">
-   <property name="text">
-    <string>&amp;Simple Exam</string>
-   </property>
-  </action>
   <action name="actionSave_As">
    <property name="text">
     <string>&amp;Save As</string>
@@ -210,6 +214,11 @@
     <string>About QT</string>
    </property>
   </action>
+  <action name="actionSimpleExam">
+   <property name="text">
+    <string>&amp;Simple Exam</string>
+   </property>
+  </action>
   <action name="actionCompletedExams">
    <property name="text">
     <string>&amp;Completed Exams</string>
@@ -217,7 +226,12 @@
   </action>
   <action name="actionPreferences">
    <property name="text">
-    <string>Preferences</string>
+    <string>&amp;Preferences</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="text">
+    <string>English</string>
    </property>
   </action>
  </widget>
