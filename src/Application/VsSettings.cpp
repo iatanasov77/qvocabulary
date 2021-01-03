@@ -46,3 +46,19 @@ QSettings* VsSettings::settings()
 {
 	return _settings;
 }
+
+QMap<QString, QString> VsSettings::languages()
+{
+	QMap<QString, QString> languages;
+
+	/*
+	 *  Always translated in Bulgarian
+	 *
+	languages["en"]	= QObject::tr( "English" );
+	languages["bg"]	= QObject::tr( "Bulgarian" );
+	*/
+	languages["en"]	= "English";
+	languages["bg"]	= "Bulgarian";
+
+	return languages;
+}

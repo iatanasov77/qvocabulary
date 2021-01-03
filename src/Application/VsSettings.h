@@ -16,6 +16,7 @@ class VsSettings
         ~VsSettings();
         static VsSettings* instance();
         QSettings* settings();
+        QMap<QString, QString> languages();
 };
 
 #endif // VS_SETTINGS_H

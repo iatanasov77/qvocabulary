@@ -39,6 +39,7 @@ MainWindow::MainWindow( QWidget *parent ) :
     createReccentDatabaseActions();
     updateRecentDatabaseActions();
     initDatabase();
+    initMenuLanguages();
 
     connect( ui->actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
 
@@ -73,7 +74,6 @@ void MainWindow::initIcons()
 	ui->actionImportMicrosoftVocabulary->setIcon( QIcon( ":/Resources/icons/document-import.svg" ) );
 	ui->actionExportMicrosoftVocabulary->setIcon( QIcon( ":/Resources/icons/document-import.svg" ) );
 
-	ui->menuQuiz_2->setIcon( QIcon( ":/Resources/icons/quiz-list.svg" ) );
 	ui->actionSimpleExam->setIcon( QIcon( ":/Resources/icons/quiz.svg" ) );
 	ui->actionCompletedExams->setIcon( QIcon( ":/Resources/icons/quiz-list.svg" ) );
 
@@ -417,4 +417,27 @@ void MainWindow::changeEvent( QEvent* event )
 
     // remember to call base class implementation
     QMainWindow::changeEvent( event );
+}
+
+void MainWindow::initMenuLanguages()
+{
+	QMap<QString, QString> languages	= VsSettings::instance()->languages();
+
+	foreach ( QString key, languages.keys() ) {
+		QAction* act	= new QAction( this );
+		act->setText( languages[key] );
+		act->setData( QVariant( key ) );
+
+		connect( act, SIGNAL( triggered() ), this, SLOT( loadLanguage() ) );
+		ui->menuLanguages->addAction( act );
+	}
+}
+
+void MainWindow::loadLanguage()
+{
+	QAction *action = qobject_cast<QAction *>( sender() );
+
+	if ( action ) {
+		VsApplication::instance()->loadLanguage( action->data().toString() );
+	}
 }

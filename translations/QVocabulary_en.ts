@@ -150,10 +150,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Preferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>About QVocabulary</source>
         <translation type="unfinished"></translation>
     </message>
@@ -225,6 +221,22 @@
         <source>Current Language changed to %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Setti&amp;ngs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Languages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewDatabaseDialog</name>
@@ -265,6 +277,17 @@
     </message>
     <message>
         <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bulgarian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -370,14 +393,6 @@
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>English</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bulgarian</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SettingsWindow</name>
@@ -441,7 +456,7 @@
     </message>
     <message>
         <source>Database:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vocabulary:</translation>
     </message>
     <message>
         <source>Current Group:</source>

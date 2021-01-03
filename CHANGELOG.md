@@ -1,3 +1,8 @@
+0.9.2	|	Release date: **03.01.2021**
+============================================
+* Improvements:
+  - Refactoring menus of the MainWindow.
+
 0.9.1	|	Release date: **03.01.2021**
 ============================================
 * New Features:

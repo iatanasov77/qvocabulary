@@ -47,7 +47,7 @@
     </message>
     <message>
         <source>&amp;Quiz</source>
-        <translation type="unfinished">Тест</translation>
+        <translation type="unfinished">Тестове</translation>
     </message>
     <message>
         <source>He&amp;lp</source>
@@ -151,7 +151,7 @@
     </message>
     <message>
         <source>Preferences</source>
-        <translation type="unfinished">Предпочитания</translation>
+        <translation type="obsolete">Предпочитания</translation>
     </message>
     <message>
         <source>About QVocabulary</source>
@@ -225,6 +225,22 @@
         <source>Current Language changed to %1</source>
         <translation type="unfinished">Езикът е сменен на  %1</translation>
     </message>
+    <message>
+        <source>Setti&amp;ngs</source>
+        <translation type="unfinished">Настройки</translation>
+    </message>
+    <message>
+        <source>Languages</source>
+        <translation type="unfinished">Език</translation>
+    </message>
+    <message>
+        <source>&amp;Preferences</source>
+        <translation type="unfinished">Предпоитания</translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation type="unfinished">Английски</translation>
+    </message>
 </context>
 <context>
     <name>NewDatabaseDialog</name>
@@ -266,6 +282,17 @@
     <message>
         <source>Name</source>
         <translation type="unfinished">Име</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>English</source>
+        <translation type="unfinished">Английски</translation>
+    </message>
+    <message>
+        <source>Bulgarian</source>
+        <translation type="unfinished">Български</translation>
     </message>
 </context>
 <context>
@@ -380,11 +407,11 @@
     </message>
     <message>
         <source>English</source>
-        <translation type="unfinished">Английски</translation>
+        <translation type="obsolete">Английски</translation>
     </message>
     <message>
         <source>Bulgarian</source>
-        <translation type="unfinished">Български</translation>
+        <translation type="obsolete">Български</translation>
     </message>
 </context>
 <context>
@@ -450,7 +477,7 @@
     </message>
     <message>
         <source>Database:</source>
-        <translation type="unfinished">ДБ:</translation>
+        <translation type="unfinished">Речник:</translation>
     </message>
     <message>
         <source>Current Group:</source>

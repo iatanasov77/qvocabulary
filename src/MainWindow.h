@@ -52,10 +52,13 @@ class MainWindow : public QMainWindow
 		void on_actionSimpleExam_triggered();
 		void on_actionCompletedExams_triggered();
 
+		void loadLanguage();
+
 	private:
 		// Methods
 		void initIcons();
 		void initDatabase();
+		void initMenuLanguages();
 
 		void createReccentDatabaseActions();
 
