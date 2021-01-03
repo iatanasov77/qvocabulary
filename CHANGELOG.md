@@ -1,3 +1,11 @@
+0.9.0	|	Release date: **03.01.2021**
+============================================
+* New Features:
+  - Starting Application Internationalisation and  Add Dynamic Translations.
+  - Create a Settings Window/Dialog.
+* Improvements:
+  - Many other fixes, improvements and refactoring.
+
 0.8.1	|	Release date: **30.12.2020**
 ============================================
 * New Features:
