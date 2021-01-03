@@ -40,6 +40,10 @@ class QuizWidget : public QWidget
 		void onDataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
 		void updateTimer();
 
+	protected:
+		// this event is called, when a new translator is loaded or the system language is changed
+		void changeEvent( QEvent* );
+
 	private:
 		void initTimer( int time = 0 );
 		void initModel();

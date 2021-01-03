@@ -12,6 +12,10 @@ class HelpWindow : public QWidget
 		explicit HelpWindow( QWidget *parent = 0 );
 		~HelpWindow();
 
+	protected:
+		// this event is called, when a new translator is loaded or the system language is changed
+		void changeEvent( QEvent* );
+
 	private:
 		void initHelp();
 

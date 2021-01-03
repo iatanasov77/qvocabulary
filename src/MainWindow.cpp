@@ -13,10 +13,11 @@
 #include "Application/VsSettings.h"
 #include "Application/VsDatabase.h"
 #include "Application/Import/MicrosoftVocabulary.h"
-#include "Widget/HelpWindow.h"
-#include "Widget/QuizListWindow.h"
-#include "Widget/QuizWindow.h"
-#include "Widget/VocabularyWidget.h"
+#include "Widget/Help/HelpWindow.h"
+#include "Widget/Quiz/QuizListWindow.h"
+#include "Widget/Quiz/QuizWindow.h"
+#include "Widget/Vocabulary/VocabularyWidget.h"
+#include "Widget/Settings/SettingsWindow.h"
 #include "Dialog/InitDatabaseDialog.h"
 #include "Dialog/NewDatabaseDialog.h"
 #include "Dialog/NewVocabularyGroupDialog.h"
@@ -26,6 +27,13 @@ MainWindow::MainWindow( QWidget *parent ) :
     ui( new Ui::MainWindow )
 {
     ui->setupUi( this );
+
+    // Load Current Language
+    QSettings* settings		= VsSettings::instance()->settings();
+    QString currentLanguage = settings->value( "language" ).toString();
+    if ( ! currentLanguage.isEmpty() ) {
+    	VsApplication::instance()->loadLanguage( currentLanguage );
+    }
 
     initIcons();
     createReccentDatabaseActions();
@@ -77,6 +85,8 @@ void MainWindow::initIcons()
 
 	ui->actionExit->setIcon( QIcon( ":/Resources/icons/close.svg" ) );
 	ui->actionAboutQt->setIcon( QIcon( ":/Resources/icons/QtProject-designer.svg" ) );
+
+	ui->actionPreferences->setIcon( QIcon( ":/Resources/icons/settings.svg" ) );
 }
 
 void MainWindow::on_actionInsertGroup_triggered()
@@ -119,7 +129,7 @@ void MainWindow::on_actionAbout_triggered()
 		"%3 2020 <a href='https://github.com/iatanasov77/qvocabulary'>https://github.com/iatanasov77/qvocabulary</a>"
 	)
 	.arg( VsApplication::appVersion() )
-	.arg( QDateTime::currentDateTime().toString( "dd.MM.yyyy hh:mm" ) )
+	.arg( VsApplication::appBuildTime() )
 	.arg( QString::fromUtf8( "\u00A9" ) );
 
 	QMessageBox::about(
@@ -135,6 +145,14 @@ void MainWindow::on_actionHelp_triggered()
 	wdgHelp->setWindowFlags( Qt::Window );
 	//wdgHelp->setModal( true );
 	wdgHelp->show();
+}
+
+void MainWindow::on_actionPreferences_triggered()
+{
+	wdgSettings = new SettingsWindow( this );
+	wdgSettings->setWindowFlags( Qt::Window );
+	//wdgHelp->setModal( true );
+	wdgSettings->show();
 }
 
 void MainWindow::openRecentDatabase()
@@ -384,4 +402,19 @@ void MainWindow::on_actionCompletedExams_triggered()
 	wdgQuizList->setWindowFlags( Qt::Window );
 	//wdgQuiz->setModal( true );
 	wdgQuizList->show();
+}
+
+void MainWindow::changeEvent( QEvent* event )
+{
+    if ( event->type() == QEvent::LanguageChange )
+    {
+        // retranslate designer form (single inheritance approach)
+        ui->retranslateUi( this );
+
+        //QString languageName	= QLocale::languageToString( QLocale().language() );
+        statusBar()->showMessage( tr( "Current Language changed to %1" ).arg( QLocale().nativeLanguageName() ), 2000 );
+    }
+
+    // remember to call base class implementation
+    QMainWindow::changeEvent( event );
 }

@@ -225,3 +225,14 @@ void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searc
 
 	ui->stackedWidget->setCurrentWidget( ui->pageSearch );
 }
+
+void VocabularyWordsWidget::changeEvent( QEvent* event )
+{
+    if ( event->type() == QEvent::LanguageChange )
+    {
+        ui->retranslateUi( this );
+    }
+
+    // remember to call base class implementation
+    QWidget::changeEvent( event );
+}

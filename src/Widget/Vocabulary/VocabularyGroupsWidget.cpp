@@ -158,3 +158,14 @@ void VocabularyGroupsWidget::deleteGroup()
 //		wdgVocabulary->refreshWidgets();
 	}
 }
+
+void VocabularyGroupsWidget::changeEvent( QEvent* event )
+{
+    if ( event->type() == QEvent::LanguageChange )
+    {
+        ui->retranslateUi( this );
+    }
+
+    // remember to call base class implementation
+    QWidget::changeEvent( event );
+}

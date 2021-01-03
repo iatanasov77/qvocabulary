@@ -54,6 +54,7 @@ HEADERS += $$files(src/*.h, true)
 FORMS += $$files(Forms/*.ui, true)
 RESOURCES = QVocabulary.qrc
 RC_ICONS = dictionary.ico
+TRANSLATIONS += $$files(translations/*.ts, true)
 
 CONFIG(debug, debug|release) {
     DESTDIR = build/debug

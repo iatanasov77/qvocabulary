@@ -74,6 +74,8 @@
     <addaction name="actionInsertGroup"/>
     <addaction name="actionInsertWord"/>
     <addaction name="separator"/>
+    <addaction name="actionPreferences"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -211,6 +213,11 @@
   <action name="actionCompletedExams">
    <property name="text">
     <string>&amp;Completed Exams</string>
+   </property>
+  </action>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences</string>
    </property>
   </action>
  </widget>

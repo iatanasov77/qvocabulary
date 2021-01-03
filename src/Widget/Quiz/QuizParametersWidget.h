@@ -33,6 +33,10 @@ class QuizParametersWidget : public QWidget
 		void setDirection();
 		void initTimer( bool on );
 
+	protected:
+		// this event is called, when a new translator is loaded or the system language is changed
+		void changeEvent( QEvent* );
+
 	private:
 	    Ui::QuizParametersWidget* ui;
 

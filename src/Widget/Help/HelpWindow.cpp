@@ -6,7 +6,7 @@
 #include <QHelpContentWidget>
 #include <QHelpIndexWidget>
 
-#include "Widget/HelpBrowser.h"
+#include "Widget/Help/HelpBrowser.h"
 
 HelpWindow::HelpWindow( QWidget *parent ) :
     QWidget( parent ),
@@ -64,4 +64,15 @@ void HelpWindow::initHelp()
 	horizSplitter->insertWidget( 1, textViewer );
 
 	ui->layout->addWidget( horizSplitter );
+}
+
+void HelpWindow::changeEvent( QEvent* event )
+{
+    if ( event->type() == QEvent::LanguageChange )
+    {
+        ui->retranslateUi( this );
+    }
+
+    // remember to call base class implementation
+    QWidget::changeEvent( event );
 }

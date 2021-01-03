@@ -4,10 +4,11 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 
-#include "Widget/QuizListWindow.h"
-#include "Widget/QuizWindow.h"
-#include "Widget/HelpWindow.h"
-#include "Widget/VocabularyWidget.h"
+#include "Widget/Quiz/QuizListWindow.h"
+#include "Widget/Quiz/QuizWindow.h"
+#include "Widget/Help/HelpWindow.h"
+#include "Widget/Vocabulary/VocabularyWidget.h"
+#include "Widget/Settings/SettingsWindow.h"
 #include "Dialog/NewDatabaseDialog.h"
 //#include "Dialog/NewVocabularyGroupDialog.h"
 //#include "Dialog/RenameVocabularyGroupDialog.h"
@@ -29,6 +30,10 @@ class MainWindow : public QMainWindow
 		//friend void NewVocabularyGroupDialog::reloadWidgets();
 		//friend void RenameVocabularyGroupDialog::reloadWidgets();
 
+	protected:
+		// this event is called, when a new translator is loaded or the system language is changed
+		void changeEvent(QEvent*);
+
 	private slots:
 		void on_actionNew_DB_triggered();
 		void on_actionOpen_DB_triggered();
@@ -37,6 +42,7 @@ class MainWindow : public QMainWindow
 		void openRecentDatabase();
 		void clearRecentDatabases();
 		void on_actionSave_As_triggered();
+		void on_actionPreferences_triggered();
 
 		void on_actionHelp_triggered();
 		void on_actionAbout_triggered();
@@ -64,6 +70,7 @@ class MainWindow : public QMainWindow
 		VocabularyWidget* wdgVocabulary;
 		NewDatabaseDialog* dlgNewDatabase;
 		HelpWindow* wdgHelp;
+		SettingsWindow* wdgSettings;
 		QuizListWindow* wdgQuizList;
 		QuizWindow* wdgQuiz;
 

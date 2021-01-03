@@ -19,8 +19,8 @@
 #include "Entity/VocabularyGroup.h"
 #include "ModelView/SideBarListViewDelegate.h"
 
-#include "Widget/VocabularyGroupsWidget.h"
-#include "Widget/VocabularyWordsWidget.h"
+#include "Widget/Vocabulary/VocabularyGroupsWidget.h"
+#include "Widget/Vocabulary/VocabularyWordsWidget.h"
 
 VocabularyWidget::VocabularyWidget( QWidget *parent ) :
     QWidget( parent ),
@@ -65,6 +65,7 @@ void VocabularyWidget::initModels()
 	// Init VocabularyMetaInfo
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	if ( metaInfo ) {
+		//qDebug() << "Database Name: " << metaInfo->name;
 		ui->databaseName->setText( metaInfo->name );
 	}
 
@@ -108,4 +109,15 @@ void VocabularyWidget::loadGroup( const QModelIndex &index )
 void VocabularyWidget::refreshWidgets()
 {
 	init();
+}
+
+void VocabularyWidget::changeEvent( QEvent* event )
+{
+    if ( event->type() == QEvent::LanguageChange )
+    {
+        ui->retranslateUi( this );
+    }
+
+    // remember to call base class implementation
+    QWidget::changeEvent( event );
 }

@@ -5,8 +5,8 @@
 #include <QMessageBox>
 
 #include "Application/VsDatabase.h"
-#include "Widget/QuizParametersWidget.h"
-#include "Widget/QuizWidget.h"
+#include "Widget/Quiz/QuizParametersWidget.h"
+#include "Widget/Quiz/QuizWidget.h"
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/Quiz.h"
 
@@ -119,4 +119,15 @@ void QuizWindow::stopQuiz()
 
 	wdgParameters->setEnabled( true );
 	wdgQuiz->setEnabled( false );
+}
+
+void QuizWindow::changeEvent( QEvent* event )
+{
+    if ( event->type() == QEvent::LanguageChange )
+    {
+        ui->retranslateUi( this );
+    }
+
+    // remember to call base class implementation
+    QWidget::changeEvent( event );
 }

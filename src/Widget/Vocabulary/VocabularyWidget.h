@@ -13,8 +13,8 @@
 
 #include "Entity/Vocabulary.h"
 
-#include "Widget/VocabularyGroupsWidget.h"
-#include "Widget/VocabularyWordsWidget.h"
+#include "Widget/Vocabulary/VocabularyGroupsWidget.h"
+#include "Widget/Vocabulary/VocabularyWordsWidget.h"
 
 namespace Ui {
 	class VocabularyWidget;
@@ -37,6 +37,10 @@ class VocabularyWidget : public QWidget
 
 	public slots:
 		void loadGroup( const QModelIndex &index );
+
+	protected:
+		// this event is called, when a new translator is loaded or the system language is changed
+		void changeEvent( QEvent* );
 
 	private:
 		void init();

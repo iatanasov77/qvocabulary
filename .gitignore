@@ -9,6 +9,7 @@
 /.dbeaver/
 /.cproject
 /.backup
+/*.backup
 
 ##############################
 # Examples meta data

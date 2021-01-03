@@ -3,8 +3,8 @@
 
 #include <QWidget>
 
-#include "Widget/QuizParametersWidget.h"
-#include "Widget/QuizWidget.h"
+#include "Widget/Quiz/QuizParametersWidget.h"
+#include "Widget/Quiz/QuizWidget.h"
 
 #include "Entity/Quiz.h"
 
@@ -23,6 +23,10 @@ class QuizWindow : public QWidget
 	public slots:
 		void startQuiz();
 		void stopQuiz();
+
+	protected:
+		// this event is called, when a new translator is loaded or the system language is changed
+		void changeEvent( QEvent* );
 
 	private:
 		void init();
