@@ -38,7 +38,6 @@ DEFINES += _BUILDING_QX_VOCABULARY
     PRECOMPILED_HEADER = src/precompiled.h
 }
 
-# Include Path for Linux
 INCLUDEPATH += /usr/include/QxOrm/include
 LIBPATH     += /usr/lib
 
@@ -48,9 +47,12 @@ CONFIG(debug, debug|release) {
     LIBS += -lQxOrm
 }
 
+INCLUDEPATH += /home/vagrant/tools/qt-mustache/src
 INCLUDEPATH += /projects/VS_QVocabulary/src
 SOURCES += $$files(src/*.cpp, true)
+SOURCES += /home/vagrant/tools/qt-mustache/src/mustache.cpp
 HEADERS += $$files(src/*.h, true)
+HEADERS += /home/vagrant/tools/qt-mustache/src/mustache.h
 FORMS += $$files(Forms/*.ui, true)
 RESOURCES = QVocabulary.qrc
 RC_ICONS = dictionary.ico

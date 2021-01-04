@@ -155,7 +155,7 @@
     </message>
     <message>
         <source>About QVocabulary</source>
-        <translation type="unfinished">Относно QVocabulary</translation>
+        <translation type="obsolete">Относно QVocabulary</translation>
     </message>
     <message>
         <source>Clear Recent</source>
@@ -288,11 +288,15 @@
     <name>QObject</name>
     <message>
         <source>English</source>
-        <translation type="unfinished">Английски</translation>
+        <translation type="obsolete">Английски</translation>
     </message>
     <message>
         <source>Bulgarian</source>
-        <translation type="unfinished">Български</translation>
+        <translation type="obsolete">Български</translation>
+    </message>
+    <message>
+        <source>About QVocabulary</source>
+        <translation type="unfinished">Относно QVocabulary</translation>
     </message>
 </context>
 <context>

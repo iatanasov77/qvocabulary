@@ -47,9 +47,6 @@ void SettingsWidgetGeneral::apply()
 	QString	selectedLanguage	= ui->cmbLanguage->itemData( idx ).toString();
 
 	VsApplication::instance()->loadLanguage( selectedLanguage );
-
-	settings->setValue( "language", selectedLanguage );
-	settings->sync();	// Sync ini file
 }
 
 void SettingsWidgetGeneral::changeEvent( QEvent* event )

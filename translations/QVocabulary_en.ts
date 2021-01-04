@@ -150,10 +150,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>About QVocabulary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clear Recent</source>
         <translation type="unfinished"></translation>
     </message>
@@ -283,11 +279,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <source>English</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bulgarian</source>
+        <source>About QVocabulary</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

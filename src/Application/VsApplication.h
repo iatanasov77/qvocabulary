@@ -26,6 +26,7 @@ class VsApplication
 		static QString appBuildTime();
 
 		void loadLanguage( const QString& rLanguage );
+		QString appAboutBody();
 
 		static const QString DB_VERSION;
 };

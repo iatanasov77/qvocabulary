@@ -1,3 +1,8 @@
+0.9.3	|	Release date: **04.01.2021**
+============================================
+* Improvements:
+  - Add translations of the AboutBox. Add Templating library.
+
 0.9.2	|	Release date: **03.01.2021**
 ============================================
 * Improvements:

@@ -1,6 +1,8 @@
 # QVocabulary
 A QT alternative of Microsoft Vocabulary++
 
+For building use this vagrant machine: https://github.com/iatanasov77/my-desktop-projects
+
 I. Howto Build Application
 	1. First clone or download source in the separate folder
 	2. Run `qmake` to create a Makefile
