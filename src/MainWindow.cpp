@@ -9,6 +9,8 @@
 #include <QStandardPaths>
 #include <QStringList>
 
+#include "mustache.h"
+
 #include "Application/VsApplication.h"
 #include "Application/VsSettings.h"
 #include "Application/VsDatabase.h"
@@ -119,23 +121,20 @@ void MainWindow::on_actionOpen_DB_triggered()
 
 void MainWindow::on_actionAbout_triggered()
 {
-	QString aboutText = QString(
-		"The <b>QVocabulary</b> is a vocabulary application, <br />"
-		"an alternative of Microsoft Vocabulary++."
-		"<br /><br />"
-		"<b>Version: </b>%1<br />"
-		"<b>Build: </b>%2<br />"
-		"<br />"
-		"%3 2020 <a href='https://github.com/iatanasov77/qvocabulary'>https://github.com/iatanasov77/qvocabulary</a>"
-	)
-	.arg( VsApplication::appVersion() )
-	.arg( VsApplication::appBuildTime() )
-	.arg( QString::fromUtf8( "\u00A9" ) );
+	QVariantHash aboutBody;
+	aboutBody["version"]		= VsApplication::appVersion();
+	aboutBody["build"]			= VsApplication::appBuildTime();
+	//aboutBody["copySign"] 		= QString::fromUtf8( "\u00A9" );
+
+	Mustache::Renderer renderer;
+	Mustache::QtVariantContext context( aboutBody );
+
+	QString aboutText = renderer.render( VsApplication::instance()->appAboutBody(), &context );
 
 	QMessageBox::about(
 		this,
-		tr( "About QVocabulary" ),
-		tr( qPrintable( aboutText ) )
+		QObject::tr( "About QVocabulary" ),
+		aboutText	//QObject::tr( qPrintable( aboutText ) )
 	);
 }
 

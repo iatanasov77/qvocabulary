@@ -7,6 +7,9 @@
 #include <QTranslator>
 #include <QLocale>
 #include <QDateTime>
+#include <QSettings>
+
+#include "Application/VsSettings.h"
 
 const QString VsApplication::DB_VERSION = "20201220";
 
@@ -19,6 +22,11 @@ VsApplication* VsApplication::_instance = 0;
 
 VsApplication::VsApplication()
 {
+	m_currLang	= "en";
+
+	QSettings* settings	= VsSettings::instance()->settings();
+	settings->setValue( "language", m_currLang );
+	settings->sync();	// Sync ini file
 }
 
 VsApplication* VsApplication::createInstance()
@@ -89,6 +97,10 @@ void VsApplication::loadLanguage( const QString& rLanguage )
 		QString languageName	= QLocale::languageToString( locale.language() );
 		switchTranslator( m_translator, QString( "QVocabulary_%1.qm" ).arg( rLanguage ) );
 		switchTranslator( m_translatorQt, QString( "qt_%1.qm" ).arg( rLanguage ) );
+
+		QSettings* settings	= VsSettings::instance()->settings();
+		settings->setValue( "language", m_currLang );
+		settings->sync();	// Sync ini file
 	}
 }
 
@@ -105,4 +117,20 @@ void VsApplication::switchTranslator( QTranslator& translator, const QString& fi
 		qDebug() << path + filename;
 		qApp->installTranslator( &translator );
 	}
+}
+
+QString VsApplication::appAboutBody()
+{
+	QString data;
+	QString fileName	= QString( ":/Resources/html/about_%1.html" ).arg( m_currLang );
+
+	QFile file( fileName );
+	if( ! file.open( QIODevice::ReadOnly ) ) {
+		data = QString( "Cannot open AboutBody file!" );
+	} else {
+		data = file.readAll();
+	}
+
+	file.close();
+	return data;
 }
