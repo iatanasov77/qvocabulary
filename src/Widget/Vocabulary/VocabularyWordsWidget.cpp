@@ -15,6 +15,7 @@
 
 #include "VocabularyWidget.h"
 #include "ModelView/Helper.h"
+#include "ModelView/VocabularyTableViewDelegate.h"
 
 VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     QWidget( parent ),
@@ -41,6 +42,9 @@ VocabularyWordsWidget::~VocabularyWordsWidget()
 void VocabularyWordsWidget::initModel()
 {
 	pModel	= new qx::QxModel<Vocabulary>();
+
+	VocabularyTableViewDelegate* itemDelegate	= new VocabularyTableViewDelegate( ui->tableView );
+	ui->tableView->setItemDelegate( itemDelegate );
 
 	ui->tableView->setModel( pModel );
 	ui->tableView->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
