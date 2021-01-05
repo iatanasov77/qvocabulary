@@ -15,6 +15,7 @@
 #include "Application/VsSettings.h"
 #include "Application/VsDatabase.h"
 #include "Application/Import/MicrosoftVocabulary.h"
+#include "Application/Import/QVocabulary.h"
 #include "Widget/Help/HelpWindow.h"
 #include "Widget/Quiz/QuizListWindow.h"
 #include "Widget/Quiz/QuizWindow.h"
@@ -390,6 +391,24 @@ void MainWindow::on_actionExportMicrosoftVocabulary_triggered()
 		MicrosoftVocabulary::exportToFile( xmlFile );
 
 		statusBar()->showMessage( tr( "Database exported" ), 2000 );
+	}
+}
+
+void MainWindow::on_actionImportVankoSoftQVocabulary_triggered()
+{
+	QString dbFile = QFileDialog::getOpenFileName(
+		this,
+		tr( "Open VankoSoft QVocabulary Database" ),
+		QDir::homePath(),
+		tr( "VankoSoft QVocabulary Database (*.db)" )
+	);
+
+	if ( ! dbFile.isEmpty() ) {
+		QVocabulary::importFromDb( dbFile );
+
+		initWidgets();
+		wdgVocabulary->initModels();
+		statusBar()->showMessage( tr( "Database imported" ), 2000 );
 	}
 }
 

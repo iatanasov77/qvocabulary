@@ -49,6 +49,8 @@ class MainWindow : public QMainWindow
 
 		void on_actionImportMicrosoftVocabulary_triggered();
 		void on_actionExportMicrosoftVocabulary_triggered();
+		void on_actionImportVankoSoftQVocabulary_triggered();
+
 		void on_actionSimpleExam_triggered();
 		void on_actionCompletedExams_triggered();
 
