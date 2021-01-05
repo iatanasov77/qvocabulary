@@ -8,8 +8,16 @@ RenameVocabularyGroupDialog::RenameVocabularyGroupDialog( QWidget *parent ) :
     ui( new Ui::NewVocabularyGroupDialog )
 {
     ui->setupUi( this );
+}
+
+RenameVocabularyGroupDialog::RenameVocabularyGroupDialog( QString oldGroupName, QWidget *parent ) :
+    QDialog( parent ),
+    ui( new Ui::NewVocabularyGroupDialog )
+{
+    ui->setupUi( this );
 
     this->setWindowTitle( "Rename Vocabulary Group" );
+    ui->leName->setText( oldGroupName );
 
     QPushButton *renameButton = ui->buttonBox->button( QDialogButtonBox::Save );
     renameButton->setText( "Rename" );

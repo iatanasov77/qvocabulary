@@ -1,3 +1,12 @@
+0.10.0	|	Release date: **05.01.2021**
+============================================
+* New Features:
+  - Set Transcription values in bold.
+  - In the Rename Group Dialog populate field with old name.
+  - Fix Quiz Functionality for new Vocabulary Table Structure.
+  - Add Transcription to the Vocabulary Source Word.
+
+
 0.9.4	|	Release date: **05.01.2021**
 ============================================
 * Improvements:

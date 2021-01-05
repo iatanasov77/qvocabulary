@@ -8,10 +8,11 @@
 #include <QLocale>
 #include <QDateTime>
 #include <QSettings>
+#include <QVersionNumber>
 
 #include "Application/VsSettings.h"
 
-const QString VsApplication::DB_VERSION = "20201220";
+const QString VsApplication::DB_VERSION = "20210105";
 
 /*
  * This one did the trick!
@@ -133,4 +134,17 @@ QString VsApplication::appAboutBody()
 
 	file.close();
 	return data;
+}
+
+bool VsApplication::canOpenDb( QString dbVersion )
+{
+	// 0 => equal, -1 => less, 1 => greater
+	int compare = QVersionNumber::compare( QVersionNumber::fromString( appVersion() ), QVersionNumber::fromString( "0.10.0" ) );
+	//qDebug() << "Compare Versions: " << QString::number( compare );
+
+	if ( compare >= 0 && dbVersion.toInt() < 20210105 ) {
+		return false;
+	}
+
+	return true;
 }

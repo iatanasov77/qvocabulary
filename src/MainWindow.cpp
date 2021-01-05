@@ -15,6 +15,7 @@
 #include "Application/VsSettings.h"
 #include "Application/VsDatabase.h"
 #include "Application/Import/MicrosoftVocabulary.h"
+#include "Application/Import/QVocabulary.h"
 #include "Widget/Help/HelpWindow.h"
 #include "Widget/Quiz/QuizListWindow.h"
 #include "Widget/Quiz/QuizWindow.h"
@@ -278,7 +279,13 @@ void MainWindow::loadDb( const QString &dbPath )
 	VsDatabase::instance()->connect( dbPath );
 
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
-	if ( metaInfo->dbVersion != VsApplication::DB_VERSION ) {
+	if ( VsApplication::canOpenDb( metaInfo->dbVersion ) == false ) {
+		// Clear Recent Databases List and call initDatabase() again
+		QSettings* settings	= VsSettings::instance()->settings();
+		settings->setValue( "recentDatabaseList", QStringList() );
+		settings->sync();	// Sync ini file
+		initDatabase();
+	} else if ( metaInfo->dbVersion != VsApplication::DB_VERSION ) {
 		QMessageBox::warning(
 			this,
 			tr( "Warning" ),
@@ -384,6 +391,24 @@ void MainWindow::on_actionExportMicrosoftVocabulary_triggered()
 		MicrosoftVocabulary::exportToFile( xmlFile );
 
 		statusBar()->showMessage( tr( "Database exported" ), 2000 );
+	}
+}
+
+void MainWindow::on_actionImportVankoSoftQVocabulary_triggered()
+{
+	QString dbFile = QFileDialog::getOpenFileName(
+		this,
+		tr( "Open VankoSoft QVocabulary Database" ),
+		QDir::homePath(),
+		tr( "VankoSoft QVocabulary Database (*.db)" )
+	);
+
+	if ( ! dbFile.isEmpty() ) {
+		QVocabulary::importFromDb( dbFile );
+
+		initWidgets();
+		wdgVocabulary->initModels();
+		statusBar()->showMessage( tr( "Database imported" ), 2000 );
 	}
 }
 

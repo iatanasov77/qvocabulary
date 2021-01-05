@@ -53,6 +53,8 @@
      </property>
      <addaction name="actionImportMicrosoftVocabulary"/>
      <addaction name="actionExportMicrosoftVocabulary"/>
+     <addaction name="separator"/>
+     <addaction name="actionImportVankoSoftQVocabulary"/>
     </widget>
     <addaction name="actionNew_DB"/>
     <addaction name="actionOpen_DB"/>
@@ -89,7 +91,7 @@
     </property>
     <widget class="QMenu" name="menuLanguages">
      <property name="title">
-      <string>Languages</string>
+      <string>&amp;Languages</string>
      </property>
     </widget>
     <addaction name="menuLanguages"/>
@@ -232,6 +234,11 @@
   <action name="actionEnglish">
    <property name="text">
     <string>English</string>
+   </property>
+  </action>
+  <action name="actionImportVankoSoftQVocabulary">
+   <property name="text">
+    <string>Import from VankoSoft QVocabulary (*.db)</string>
    </property>
   </action>
  </widget>

@@ -124,7 +124,8 @@ void VocabularyGroupsWidget::displayContextMenu( QPoint pos )
 
 void VocabularyGroupsWidget::renameGroup()
 {
-	RenameVocabularyGroupDialog *dlg	= new RenameVocabularyGroupDialog( this );
+	QString oldGroupName	= ui->listView->model()->data( ui->listView->currentIndex().siblingAtColumn( 1 ) ).toString();
+	RenameVocabularyGroupDialog *dlg	= new RenameVocabularyGroupDialog( oldGroupName, this );
 
 	dlg->setModal( true );
 	if( dlg->exec() == QDialog::Accepted )
