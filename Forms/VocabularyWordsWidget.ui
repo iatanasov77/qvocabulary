@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>497</width>
     <height>300</height>
    </rect>
   </property>
@@ -19,7 +19,14 @@
      <item>
       <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>Vocabulary Words</string>
+        <string>Vocabulary Words:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chkShowTranscriptions">
+       <property name="text">
+        <string>Show Transcriptions</string>
        </property>
       </widget>
      </item>

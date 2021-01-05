@@ -17,6 +17,7 @@ class RenameVocabularyGroupDialog : public QDialog
 
 	public:
 		explicit RenameVocabularyGroupDialog( QWidget *parent = 0 );
+		RenameVocabularyGroupDialog( QString oldGroupName, QWidget *parent = 0 );
 		~RenameVocabularyGroupDialog();
 
 		QString newName();

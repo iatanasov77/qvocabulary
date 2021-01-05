@@ -1,5 +1,9 @@
-#include "Import.h"
+#ifndef IMPORT_MICROSOFTVOCABULARY_H
+#define IMPORT_MICROSOFTVOCABULARY_H
 
+#include <QtXml>
+
+#include "Import.h"
 #include "Entity/VocabularyGroup.h"
 
 class MicrosoftVocabulary : public Import
@@ -14,3 +18,5 @@ class MicrosoftVocabulary : public Import
 
 		static QDomDocument *xml;
 };
+
+#endif	// IMPORT_MICROSOFTVOCABULARY_H

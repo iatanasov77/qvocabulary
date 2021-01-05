@@ -36,6 +36,7 @@ class VocabularyWordsWidget : public QWidget
 		void moveToGroup();
 		void deleteWord();
 		void search();
+		void showTranscriptions( int state );
 
 		void modelRowsInserted( const QModelIndex & parent, int start, int end );
 

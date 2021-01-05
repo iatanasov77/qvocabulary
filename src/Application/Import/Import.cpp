@@ -24,15 +24,13 @@ Import::~Import()
 
 }
 
-VocabularyGroupPtr Import::createGroup()
+VocabularyGroupPtr Import::createGroup( QString groupName )
 {
 	QString query;
-	QString groupName;
 	QSqlError daoError;
 	VocabularyGroupPtr vocg;
 	qx::QxModel<VocabularyGroup>* pModel	= new qx::QxModel<VocabularyGroup>();
 
-	groupName	= "Imported";
 	query		= QString( "WHERE name='%1'" ).arg( groupName );
 	pModel->qxFetchByQuery( query );
 
@@ -58,6 +56,11 @@ VocabularyGroupPtr Import::createGroup()
 }
 
 bool Import::importFromFile( QString file )
+{
+	return false;
+}
+
+bool Import::importFromDb( QString dbName )
 {
 	return false;
 }

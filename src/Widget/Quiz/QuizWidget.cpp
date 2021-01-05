@@ -140,8 +140,8 @@ void QuizWidget::insertWord()
 
 	int targetRow		= pModel->rowCount( QModelIndex() );
 	int randomRow		= itemsRange.takeFirst();
-	int column1			= ( quiz->direction == FIRST_TO_SECOND ) ? 1 : 2;
-	int column2			= ( quiz->direction == FIRST_TO_SECOND ) ? 2 : 1;
+	int column1			= ( quiz->direction == FIRST_TO_SECOND ) ? 1 : 3;
+	int column2			= ( quiz->direction == FIRST_TO_SECOND ) ? 3 : 1;
 
 	//qDebug() << "Random Row: " << randomRow << " Column 1: " << column1 << " Column 2: " << column2;
 	QVariant wordLang1	= pModelVocabulary->data( pModelVocabulary->index( randomRow, column1 ) );
