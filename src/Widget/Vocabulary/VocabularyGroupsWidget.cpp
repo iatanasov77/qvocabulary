@@ -54,6 +54,13 @@ void VocabularyGroupsWidget::initModel()
 	pModel	= new qx::QxModel<VocabularyGroup>();
 	pModel->qxFetchAll();
 	ui->listView->setModel( pModel );
+
+	connect(
+		pModel,
+		SIGNAL( rowsInserted( const QModelIndex&, int, int ) ),
+		this,
+		SLOT( modelRowsInserted( const QModelIndex&, int, int ) )
+	);
 }
 
 void VocabularyGroupsWidget::initContextMenu()
@@ -168,4 +175,10 @@ void VocabularyGroupsWidget::changeEvent( QEvent* event )
 
     // remember to call base class implementation
     QWidget::changeEvent( event );
+}
+
+void VocabularyGroupsWidget::modelRowsInserted( const QModelIndex & parent, int start, int end )
+{
+	//ui->listView->scrollTo( pModel->index( start, 0 ) );
+	ui->listView->scrollToBottom();
 }

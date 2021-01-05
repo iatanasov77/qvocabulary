@@ -53,6 +53,13 @@ void VocabularyWordsWidget::initModel()
 		this,
 		SLOT( onDataChanged( const QModelIndex&, const QModelIndex& ) )
 	);
+
+	connect(
+		pModel,
+		SIGNAL( rowsInserted( const QModelIndex&, int, int ) ),
+		this,
+		SLOT( modelRowsInserted( const QModelIndex&, int, int ) )
+	);
 }
 
 void VocabularyWordsWidget::initContextMenu()
@@ -235,4 +242,11 @@ void VocabularyWordsWidget::changeEvent( QEvent* event )
 
     // remember to call base class implementation
     QWidget::changeEvent( event );
+}
+
+void VocabularyWordsWidget::modelRowsInserted( const QModelIndex & parent, int start, int end )
+{
+	//qDebug() << "Row Inserted: " << start;
+	//ui->tableView->scrollTo( pModel->index( start, 1 ) );
+	ui->tableView->scrollToBottom();
 }
