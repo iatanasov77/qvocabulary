@@ -278,7 +278,13 @@ void MainWindow::loadDb( const QString &dbPath )
 	VsDatabase::instance()->connect( dbPath );
 
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
-	if ( metaInfo->dbVersion != VsApplication::DB_VERSION ) {
+	if ( VsApplication::canOpenDb( metaInfo->dbVersion ) == false ) {
+		// Clear Recent Databases List and call initDatabase() again
+		QSettings* settings	= VsSettings::instance()->settings();
+		settings->setValue( "recentDatabaseList", QStringList() );
+		settings->sync();	// Sync ini file
+		initDatabase();
+	} else if ( metaInfo->dbVersion != VsApplication::DB_VERSION ) {
 		QMessageBox::warning(
 			this,
 			tr( "Warning" ),

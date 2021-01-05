@@ -12,6 +12,7 @@ class Vocabulary
 
 		long id;
 		QString language_1;
+		QString transcription;
 		QString language_2;
 
 		long group_id;	// To can Move Groups( I dont know how to do this with related object)

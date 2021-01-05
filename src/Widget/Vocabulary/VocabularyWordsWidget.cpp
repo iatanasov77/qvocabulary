@@ -23,11 +23,12 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     ui->setupUi( this );
 
     currentGroup = 1;
-    hideColumns = {0, 3};
+    hideColumns = {0, 2, 4};
 
     initModel();
     initContextMenu();
 
+    connect( ui->chkShowTranscriptions, SIGNAL( stateChanged( int ) ), this, SLOT( showTranscriptions( int ) ) );
     connect( ui->leSearch, SIGNAL( returnPressed() ), ui->btnSearch, SIGNAL( released() ) );
     connect( ui->btnSearch, SIGNAL( released() ), this, SLOT( search() ) );
 }
@@ -78,7 +79,8 @@ void VocabularyWordsWidget::initContextMenu()
 void VocabularyWordsWidget::setViewHeader( VocabularyMetaInfoPtr metaInfo )
 {
 	pModel->setHeaderData( 1, Qt::Horizontal, metaInfo->language1, Qt::DisplayRole );
-	pModel->setHeaderData( 2, Qt::Horizontal, metaInfo->language2, Qt::DisplayRole );
+	pModel->setHeaderData( 2, Qt::Horizontal, tr( "Transcription" ), Qt::DisplayRole );
+	pModel->setHeaderData( 3, Qt::Horizontal, metaInfo->language2, Qt::DisplayRole );
 }
 
 void VocabularyWordsWidget::insertWord()
@@ -123,8 +125,11 @@ void VocabularyWordsWidget::refreshView( QModelIndex topLeft, QModelIndex bottom
 
 void VocabularyWordsWidget::onDataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
-	if ( topLeft == bottomRight && ! hideColumns.contains( topLeft.column() ) ) { // Because cannot be edited(Moved to another group)
-		pModel->setData( topLeft.siblingAtColumn( 3 ), QVariant( currentGroup ) );
+	if (
+		topLeft == bottomRight &&
+		( topLeft.column() == 2 || ! hideColumns.contains( topLeft.column() ) ) // Transcription column or Hidden Column :)
+	) { // Because cannot be edited(Moved to another group)
+		pModel->setData( topLeft.siblingAtColumn( 4 ), QVariant( currentGroup ) );
 		pModel->qxSave();
 	}
 }
@@ -165,16 +170,16 @@ void VocabularyWordsWidget::moveToGroup()
 
 	QList<QModelIndex> selectedRows	= ui->tableView->selectionModel()->selectedRows();
 	for ( int i = 0; i < selectedRows.size(); ++i ) {
-		qDebug() << "Old Group: " << pModel->data( selectedRows[i].siblingAtColumn( 3 ) ).toInt();
+		//qDebug() << "Old Group: " << pModel->data( selectedRows[i].siblingAtColumn( 4 ) ).toInt();
 
-		//ui->tableView->model()->setData( selectedRows[i].siblingAtColumn( 3 ), QVariant( groupId ) );
-		pModel->setData( selectedRows[i].siblingAtColumn( 3 ), QVariant( groupId ) );
+		//ui->tableView->model()->setData( selectedRows[i].siblingAtColumn( 4 ), QVariant( groupId ) );
+		pModel->setData( selectedRows[i].siblingAtColumn( 4 ), QVariant( groupId ) );
 
-		qDebug() << "New Group: " << pModel->data( selectedRows[i].siblingAtColumn( 3 ) ).toInt();
+		qDebug() << "New Group: " << pModel->data( selectedRows[i].siblingAtColumn( 4 ) ).toInt();
 	}
 
 	pModel->qxSave();
-	refreshView( selectedRows[0].siblingAtColumn( 0 ), selectedRows[selectedRows.size()-1].siblingAtColumn( 3 ) );
+	refreshView( selectedRows[0].siblingAtColumn( 0 ), selectedRows[selectedRows.size()-1].siblingAtColumn( 4 ) );
 }
 
 void VocabularyWordsWidget::deleteWord()
@@ -185,7 +190,7 @@ void VocabularyWordsWidget::deleteWord()
 		pModel->qxDeleteById( pModel->data( selectedRows[i].siblingAtColumn( 0 ) ) );
 	}
 	pModel->qxSave();
-	refreshView( selectedRows[0].siblingAtColumn( 0 ), selectedRows[selectedRows.size()-1].siblingAtColumn( 3 ) );
+	refreshView( selectedRows[0].siblingAtColumn( 0 ), selectedRows[selectedRows.size()-1].siblingAtColumn( 4 ) );
 }
 
 void VocabularyWordsWidget::search()
@@ -211,7 +216,7 @@ void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searc
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	ui->treeWidget->setHeaderLabels( QStringList() << "\t" + metaInfo->language1 << metaInfo->language2 );
 	for ( int i = 0; i < searchModel->rowCount(); ++i ) {
-		groupId	= searchModel->data( searchModel->index( i, 3 ) ).toInt();
+		groupId	= searchModel->data( searchModel->index( i, 4 ) ).toInt();
 		if ( ! groups.contains( groupId ) ) {
 			VocabularyGroupPtr group;
 			group.reset( new VocabularyGroup() );
@@ -249,4 +254,13 @@ void VocabularyWordsWidget::modelRowsInserted( const QModelIndex & parent, int s
 	//qDebug() << "Row Inserted: " << start;
 	//ui->tableView->scrollTo( pModel->index( start, 1 ) );
 	ui->tableView->scrollToBottom();
+}
+
+void VocabularyWordsWidget::showTranscriptions( int state )
+{
+	if ( state == Qt::Checked ) {
+		ui->tableView->showColumn( 2 );
+	} else {
+		ui->tableView->hideColumn( 2 );
+	}
 }

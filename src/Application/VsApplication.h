@@ -24,6 +24,7 @@ class VsApplication
 		static QDir dataPath();
 		static QString appVersion();
 		static QString appBuildTime();
+		static bool canOpenDb( QString dbVersion );
 
 		void loadLanguage( const QString& rLanguage );
 		QString appAboutBody();
