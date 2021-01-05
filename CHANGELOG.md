@@ -1,3 +1,8 @@
+0.9.4	|	Release date: **05.01.2021**
+============================================
+* Improvements:
+  - Scroll views to the bottom when a row is inserted.
+
 0.9.3	|	Release date: **04.01.2021**
 ============================================
 * Improvements:

@@ -39,6 +39,7 @@ class QuizWidget : public QWidget
 		void insertWord();
 		void onDataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
 		void updateTimer();
+		void modelRowsInserted( const QModelIndex & parent, int start, int end );
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
