@@ -1,0 +1,9 @@
+Try This-One
+=============
+https://doc.qt.io/qt-5/qtspeech-hello-speak-example.html
+
+
+For Windows Read This:
+--------------------------
+https://en.wikipedia.org/wiki/Microsoft_text-to-speech_voices
+
