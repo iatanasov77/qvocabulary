@@ -67,7 +67,7 @@ bool SideBarListViewDelegate::editorEvent(
 	switch ( event->type() ) {
 		case QEvent::MouseButtonPress:
 			{
-				qDebug() << "MouseButtonPress: " << _currRow;
+				//qDebug() << "MouseButtonPress: " << _currRow;
 				_currRow	= index.row();
 				QMouseEvent* me = static_cast<QMouseEvent *>(event);
 				int currRow	= _currRow;
@@ -79,14 +79,14 @@ bool SideBarListViewDelegate::editorEvent(
 			}
 			break;
 		case QEvent::MouseButtonRelease:
-			qDebug() << "MouseButtonRelease: " << _currRow;
+			//qDebug() << "MouseButtonRelease: " << _currRow;
 			_event	= 0;
 			//_currRow	= index.row();
 			emit buttonClicked( index );
 			break;
 
 		default:
-			qDebug() << "Default Event: " << _currRow;
+			//qDebug() << "Default Event: " << _currRow;
 			_currRow	= -1;
 			break;
 	}

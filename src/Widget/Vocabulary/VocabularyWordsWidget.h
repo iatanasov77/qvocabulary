@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QListView>
 #include <QModelIndex>
+#include <QTextToSpeech>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -37,6 +38,7 @@ class VocabularyWordsWidget : public QWidget
 		void deleteWord();
 		void search();
 		void showTranscriptions( int state );
+		void sayWord( const QModelIndex &index );
 
 		void modelRowsInserted( const QModelIndex & parent, int start, int end );
 
@@ -47,12 +49,15 @@ class VocabularyWordsWidget : public QWidget
 	private:
 		void initModel();
 		void initContextMenu();
+		void initTextToSpeech();
+		void adjustRowSelection();
 		void displaySearchResults( qx::QxModel<Vocabulary> *searchModel );
 
 		int currentGroup;
 		Ui::VocabularyWordsWidget *ui;
 		qx::QxModel<Vocabulary> *pModel;
 		QList<int> hideColumns;
+		QTextToSpeech* speeker;
 };
 
 #endif // WIDGET_VOCABULARYWORDS_H
