@@ -24,8 +24,10 @@ class SettingsWindow : public QWidget
 
 	private:
 		void initSettingsMenu();
-		void showSettingsUnimpemented( QString settingsTitle );
+		void showSettingsUnimplemented( QString settingsTitle );
 		void showSettingsGeneral();
+		void showSettingsSpeaker();
+		void setSettingsWidget( AbstractSettingsWidget* newWdg );
 
 	    Ui::SettingsWindow* ui;
 	    AbstractSettingsWidget* wdg;

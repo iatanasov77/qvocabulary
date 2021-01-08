@@ -6,8 +6,7 @@
 
 #include "AbstractSettingsWidget.h"
 #include "SettingsWidgetGeneral.h"
-
-class SettingsWidgetGeneral;
+#include "SettingsWidgetSpeaker.h"
 
 SettingsWindow::SettingsWindow( QWidget *parent ) :
     QWidget( parent ),
@@ -40,29 +39,49 @@ void SettingsWindow::initSettingsMenu()
 
 	treeItem	= new QTreeWidgetItem( ui->treeWidget );
 	treeItem->setText( 0, "General" );
+
+	treeItem	= new QTreeWidgetItem( ui->treeWidget );
+	treeItem->setText( 0, "Speaker" );
 }
 
 void SettingsWindow::showSettings( QTreeWidgetItem* item, int column )
 {
+	// Switch does not support strings
 	if ( item->text( 0 ) == "General" ) {
 		showSettingsGeneral();
+	} else if ( item->text( 0 ) == "Speaker" ) {
+		showSettingsSpeaker();
 	} else {
-		showSettingsUnimpemented( item->text( 0 ) );
+		showSettingsUnimplemented( item->text( 0 ) );
 	}
 }
 
-void SettingsWindow::showSettingsUnimpemented( QString settingsTitle )
+void SettingsWindow::showSettingsUnimplemented( QString settingsTitle )
 {
 	qDebug() << "Settings Unimpemented";
 }
 
 void SettingsWindow::showSettingsGeneral()
 {
-	wdg	= new SettingsWidgetGeneral( this );
-	//wdg	= qobject_cast<AbstractSettingsWidget *>( new SettingsWidgetGeneral( this ) );
-
 	ui->settingsTitle->setText( tr( "General" ) );
-	ui->formLayout->addWidget( wdg );
+	setSettingsWidget( new SettingsWidgetGeneral( this ) );
+}
+
+void SettingsWindow::showSettingsSpeaker()
+{
+	ui->settingsTitle->setText( tr( "Speaker" ) );
+	setSettingsWidget( new SettingsWidgetSpeaker( this ) );
+}
+
+void SettingsWindow::setSettingsWidget( AbstractSettingsWidget* newWdg )
+{
+	QLayoutItem *child;
+	while ( ( child = ui->formLayout->takeAt( 0 ) ) != 0 ) {
+	    delete child;
+	}
+
+	wdg	= newWdg;
+	ui->formLayout->addWidget( newWdg );
 }
 
 void SettingsWindow::applySettings()
