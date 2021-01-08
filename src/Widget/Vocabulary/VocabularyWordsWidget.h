@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QListView>
 #include <QModelIndex>
+#include <QTextToSpeech>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -11,6 +12,7 @@
 
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/Vocabulary.h"
+#include "Application/VsSpeaker.h"
 
 namespace Ui {
 	class VocabularyWordsWidget;
@@ -37,8 +39,10 @@ class VocabularyWordsWidget : public QWidget
 		void deleteWord();
 		void search();
 		void showTranscriptions( int state );
+		void sayWord( const QModelIndex &index );
 
 		void modelRowsInserted( const QModelIndex & parent, int start, int end );
+		void updateSpeaker();
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
@@ -47,12 +51,15 @@ class VocabularyWordsWidget : public QWidget
 	private:
 		void initModel();
 		void initContextMenu();
+		void initTextToSpeech();
+		void adjustRowSelection();
 		void displaySearchResults( qx::QxModel<Vocabulary> *searchModel );
 
 		int currentGroup;
 		Ui::VocabularyWordsWidget *ui;
 		qx::QxModel<Vocabulary> *pModel;
 		QList<int> hideColumns;
+		VsSpeaker* speeker;
 };
 
 #endif // WIDGET_VOCABULARYWORDS_H

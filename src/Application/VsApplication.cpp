@@ -25,9 +25,9 @@ VsApplication::VsApplication()
 {
 	m_currLang	= "en";
 
-	QSettings* settings	= VsSettings::instance()->settings();
-	settings->setValue( "language", m_currLang );
-	settings->sync();	// Sync ini file
+//	QSettings* settings	= VsSettings::instance()->settings();
+//	settings->setValue( "language", m_currLang );
+//	settings->sync();	// Sync ini file
 }
 
 VsApplication* VsApplication::createInstance()
@@ -88,6 +88,22 @@ QString VsApplication::appBuildTime()
 	return build;
 }
 
+QMap<QString, QString> VsApplication::languages()
+{
+	QMap<QString, QString> languages;
+
+	/*
+	 *  Always translated in Bulgarian
+	 *
+	languages["en"]	= QObject::tr( "English" );
+	languages["bg"]	= QObject::tr( "Bulgarian" );
+	*/
+	languages["en"]	= "English";
+	languages["bg"]	= "Bulgarian";
+
+	return languages;
+}
+
 void VsApplication::loadLanguage( const QString& rLanguage )
 {
 	if( m_currLang != rLanguage ) {
@@ -99,9 +115,7 @@ void VsApplication::loadLanguage( const QString& rLanguage )
 		switchTranslator( m_translator, QString( "QVocabulary_%1.qm" ).arg( rLanguage ) );
 		switchTranslator( m_translatorQt, QString( "qt_%1.qm" ).arg( rLanguage ) );
 
-		QSettings* settings	= VsSettings::instance()->settings();
-		settings->setValue( "language", m_currLang );
-		settings->sync();	// Sync ini file
+		VsSettings::instance()->setValue( "language", m_currLang, "General" );
 	}
 }
 

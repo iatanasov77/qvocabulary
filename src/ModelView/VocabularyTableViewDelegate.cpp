@@ -1,5 +1,10 @@
 #include "VocabularyTableViewDelegate.h"
 
+#include <QApplication>
+#include <QIcon>
+#include <QMouseEvent>
+#include <QDebug>
+
 VocabularyTableViewDelegate::VocabularyTableViewDelegate( QObject *parent ) : QStyledItemDelegate( parent )
 {
 
@@ -9,15 +14,76 @@ void VocabularyTableViewDelegate::paint(
 	QPainter *painter,
 	const QStyleOptionViewItem &option,
 	const QModelIndex &index
-) const
-{
+) const {
 	QStyleOptionViewItem op( option );
+	initStyleOption( &op, index );
+	op.font.setBold( true );
 
-	if ( index.column() == 2 ) {
-		op.font.setBold( true );
-//		op.palette.setColor( QPalette::Normal, QPalette::Background, Qt::black );
-//		op.palette.setColor( QPalette::Normal, QPalette::Foreground, Qt::white );
+	QStyleOptionButton button	= createButton( buttonRect( option.rect ) );
+	QStyle *style				= option.widget ? option.widget->style() : QApplication::style();
+
+//	if( option.state & QStyle::State_MouseOver )
+//		button.state	= QStyle::State_MouseOver;
+
+	style->drawControl( QStyle::CE_PushButton, &button, painter, option.widget );
+
+	op.rect	= textRect( option.rect );
+	QStyledItemDelegate::paint( painter, op, index );
+}
+
+bool VocabularyTableViewDelegate::editorEvent(
+	QEvent *event,
+	QAbstractItemModel *model,
+	const QStyleOptionViewItem &option,
+	const QModelIndex &index
+) {
+	if ( event->type() == QEvent::MouseButtonRelease ) {
+		QMouseEvent* e	= ( QMouseEvent* )event;
+		int clickX		= e->x();
+		int clickY		= e->y();
+
+		QRect btnRect	= buttonRect( option.rect );
+		if(
+			( clickX > btnRect.x() && clickX < btnRect.x() + btnRect.width() ) &&
+			( clickY > btnRect.y() && clickY < btnRect.y() + btnRect.height() )
+		) {
+			emit buttonClicked( index );
+		}
 	}
 
-	QStyledItemDelegate::paint( painter, op, index );
+	return true;
+}
+
+QStyleOptionButton VocabularyTableViewDelegate::createButton( QRect buttonRect  ) const
+{
+	QStyleOptionButton button;
+
+	//button.text.clear();
+	button.rect		= buttonRect;
+	//button.text 	= "=^.^=";
+	button.icon 	= QIcon( ":/Resources/icons/speaker.png" );
+	button.iconSize	= QSize( 16, 16 );
+	button.state 	= QStyle::State_Enabled;
+
+	return button;
+}
+
+QRect VocabularyTableViewDelegate::textRect( QRect cellRect ) const
+{
+	int x = cellRect.left();
+	int y = cellRect.top();
+	int w = cellRect.width() - 30;
+	int h = cellRect.height();
+
+	return QRect( x, y, w, h );
+}
+
+QRect VocabularyTableViewDelegate::buttonRect( QRect cellRect ) const
+{
+	int x = cellRect.left() + cellRect.width() - 30;
+	int y = cellRect.top();
+	int w = 30;
+	int h = 30;
+
+	return QRect( x, y, w, h );
 }

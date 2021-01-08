@@ -222,15 +222,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Languages</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Preferences</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Languages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import from VankoSoft QVocabulary (*.db)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open VankoSoft QVocabulary Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VankoSoft QVocabulary Database (*.db)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -387,6 +399,62 @@
     </message>
 </context>
 <context>
+    <name>SettingsWidgetSpeaker</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hello QtTextToSpeech,
+this is an example text in English.
+
+QtSpeech is a library that makes text to speech easy with Qt.
+Done, over and out.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rate:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pitch:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Engine:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Voice name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speak</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsWindow</name>
     <message>
         <source>Preferences</source>
@@ -394,10 +462,6 @@
     </message>
     <message>
         <source>type filter text</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -409,7 +473,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Te&amp;xtLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speaker</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -462,10 +534,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Vocabulary Words</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Search Word:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -475,6 +543,18 @@
     </message>
     <message>
         <source>Delete Word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vocabulary Words:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Transcriptions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transcription</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

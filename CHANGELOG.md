@@ -1,3 +1,13 @@
+0.11.0	|	Release date: **09.01.2021**
+============================================
+* New Features:
+  - Add Text Speech Functionality. Speeking Source Word.
+  - Add TextToSpeech Settings.
+* Improvements and Code Refactoring:
+  - Updating translations.
+  - Refactoring Project File.
+
+
 0.10.0	|	Release date: **05.01.2021**
 ============================================
 * New Features:

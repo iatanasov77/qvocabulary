@@ -231,7 +231,7 @@
     </message>
     <message>
         <source>Languages</source>
-        <translation type="unfinished">Език</translation>
+        <translation type="obsolete">Език</translation>
     </message>
     <message>
         <source>&amp;Preferences</source>
@@ -240,6 +240,22 @@
     <message>
         <source>English</source>
         <translation type="unfinished">Английски</translation>
+    </message>
+    <message>
+        <source>&amp;Languages</source>
+        <translation type="unfinished">Език</translation>
+    </message>
+    <message>
+        <source>Import from VankoSoft QVocabulary (*.db)</source>
+        <translation type="unfinished">Импорт от VankoSoft QVocabulary (*.db)</translation>
+    </message>
+    <message>
+        <source>Open VankoSoft QVocabulary Database</source>
+        <translation type="unfinished">Отвори VankoSoft QVocabulary ДБ</translation>
+    </message>
+    <message>
+        <source>VankoSoft QVocabulary Database (*.db)</source>
+        <translation type="unfinished">VankoSoft QVocabulary ДБ (*.db)</translation>
     </message>
 </context>
 <context>
@@ -296,7 +312,7 @@
     </message>
     <message>
         <source>About QVocabulary</source>
-        <translation type="unfinished">Относно QVocabulary</translation>
+        <translation>Относно QVocabulary</translation>
     </message>
 </context>
 <context>
@@ -419,6 +435,62 @@
     </message>
 </context>
 <context>
+    <name>SettingsWidgetSpeaker</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Фрейм</translation>
+    </message>
+    <message>
+        <source>Hello QtTextToSpeech,
+this is an example text in English.
+
+QtSpeech is a library that makes text to speech easy with Qt.
+Done, over and out.
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Volume:</source>
+        <translation type="unfinished">Сила на звука:</translation>
+    </message>
+    <message>
+        <source>Rate:</source>
+        <translation type="unfinished">Скорост:</translation>
+    </message>
+    <message>
+        <source>Pitch:</source>
+        <translation type="unfinished">Височина:</translation>
+    </message>
+    <message>
+        <source>Engine:</source>
+        <translation type="unfinished">Енджин:</translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation type="unfinished">Език:</translation>
+    </message>
+    <message>
+        <source>Voice name:</source>
+        <translation type="unfinished">Глас:</translation>
+    </message>
+    <message>
+        <source>Speak</source>
+        <translation type="unfinished">Говори</translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished">Пауза</translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation type="unfinished">Продължи</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation type="unfinished">Спри</translation>
+    </message>
+</context>
+<context>
     <name>SettingsWindow</name>
     <message>
         <source>Preferences</source>
@@ -427,10 +499,6 @@
     <message>
         <source>type filter text</source>
         <translation type="unfinished">филтър текст</translation>
-    </message>
-    <message>
-        <source>TextLabel</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>General</source>
@@ -443,6 +511,14 @@
     <message>
         <source>Save and Exit</source>
         <translation type="unfinished">Запазване и Изход</translation>
+    </message>
+    <message>
+        <source>Te&amp;xtLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speaker</source>
+        <translation type="unfinished">Говорител</translation>
     </message>
 </context>
 <context>
@@ -496,7 +572,7 @@
     </message>
     <message>
         <source>Vocabulary Words</source>
-        <translation type="unfinished">Речник</translation>
+        <translation type="obsolete">Речник</translation>
     </message>
     <message>
         <source>Search Word:</source>
@@ -509,6 +585,18 @@
     <message>
         <source>Delete Word</source>
         <translation type="unfinished">Изтрий Дума</translation>
+    </message>
+    <message>
+        <source>Vocabulary Words:</source>
+        <translation type="unfinished">Речник:</translation>
+    </message>
+    <message>
+        <source>Show Transcriptions</source>
+        <translation type="unfinished">Показване на транскрипции</translation>
+    </message>
+    <message>
+        <source>Transcription</source>
+        <translation type="unfinished">Транскрипция</translation>
     </message>
 </context>
 </TS>

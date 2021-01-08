@@ -20,6 +20,8 @@
 	    <file>Resources/icons/download-later.svg</file>
 	    <file>Resources/icons/QtProject-designer.svg</file>
 	    <file>Resources/icons/settings.svg</file>
+	    <file>Resources/icons/speaker.svg</file>
+	    <file>Resources/icons/speaker.png</file>
 	    
 	    <file>Resources/sql/qvocabulary-20201216.sql</file>
 	    <file>Resources/sql/qvocabulary-20201217.sql</file>
