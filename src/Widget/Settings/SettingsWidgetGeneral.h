@@ -14,7 +14,7 @@ class SettingsWidgetGeneral : public AbstractSettingsWidget
     Q_OBJECT
 
 	public:
-		explicit SettingsWidgetGeneral( QWidget *parent = 0 );
+		explicit SettingsWidgetGeneral( QString title, QWidget *parent = 0 );
 		~SettingsWidgetGeneral();
 
 		virtual void apply();

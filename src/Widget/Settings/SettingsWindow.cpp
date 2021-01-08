@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QTreeWidgetItem>
 
+#include "GlobalTypes.h"
 #include "AbstractSettingsWidget.h"
 #include "SettingsWidgetGeneral.h"
 #include "SettingsWidgetSpeaker.h"
@@ -19,7 +20,6 @@ SettingsWindow::SettingsWindow( QWidget *parent ) :
 	//ui->splitter->setStretchFactor( 2, 8 );
 	ui->splitter->setSizes( QList<int>() << 200 << 700 );
 
-    initSettingsMenu();
     initWidgets();
     showSettingsGeneral();
 
@@ -32,34 +32,33 @@ SettingsWindow::~SettingsWindow()
     delete ui;
 }
 
-void SettingsWindow::initSettingsMenu()
+void SettingsWindow::initWidgets()
 {
+	widgets["General"]	= new SettingsWidgetGeneral( QT_TR_NOOP( "General" ) );
+	widgets["Speaker"]	= new SettingsWidgetSpeaker( QT_TR_NOOP( "Speaker" ) );
+
+	// Init Settings Menu
 	QTreeWidgetItem *treeItem;
 	ui->treeWidget->setColumnCount( 1 );
 	connect( ui->treeWidget, SIGNAL( itemClicked( QTreeWidgetItem*, int ) ), this, SLOT( showSettings( QTreeWidgetItem*, int ) ) );
 
-	treeItem	= new QTreeWidgetItem( ui->treeWidget );
-	treeItem->setText( 0, "General" );
-
-	treeItem	= new QTreeWidgetItem( ui->treeWidget );
-	treeItem->setText( 0, "Speaker" );
-}
-
-void SettingsWindow::initWidgets()
-{
-	widgets["General"]	= new SettingsWidgetGeneral();
-	widgets["Speaker"]	= new SettingsWidgetSpeaker();
-
-	foreach ( AbstractSettingsWidget* wdg, widgets )
+	foreach ( AbstractSettingsWidget* wdg, widgets ) {
 		ui->mainWidget->addWidget( wdg );
+
+		// Add to Menu
+		treeItem	= new QTreeWidgetItem( ui->treeWidget );
+		treeItem->setText( 0, tr( qPrintable( wdg->title() ) ) );
+		treeItem->setData( 0, ObserverRole, wdg->title() );
+	}
 }
 
 void SettingsWindow::showSettings( QTreeWidgetItem* item, int column )
 {
+	QString observerData	= item->data( 0, ObserverRole ).toString();
 	// Switch does not support strings
-	if ( item->text( 0 ) == "General" ) {
+	if ( observerData == "General" ) {
 		showSettingsGeneral();
-	} else if ( item->text( 0 ) == "Speaker" ) {
+	} else if ( observerData == "Speaker" ) {
 		showSettingsSpeaker();
 	} else {
 		showSettingsUnimplemented( item->text( 0 ) );
@@ -73,13 +72,13 @@ void SettingsWindow::showSettingsUnimplemented( QString settingsTitle )
 
 void SettingsWindow::showSettingsGeneral()
 {
-	ui->settingsTitle->setText( tr( "General" ) );
+	ui->settingsTitle->setText( tr( qPrintable( widgets["General"]->title() ) ) );
 	ui->mainWidget->setCurrentWidget( widgets["General"] );
 }
 
 void SettingsWindow::showSettingsSpeaker()
 {
-	ui->settingsTitle->setText( tr( "Speaker" ) );
+	ui->settingsTitle->setText( tr( qPrintable( widgets["Speaker"]->title() ) ) );
 	ui->mainWidget->setCurrentWidget( widgets["Speaker"] );
 }
 

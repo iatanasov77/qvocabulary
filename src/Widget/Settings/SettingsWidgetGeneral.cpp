@@ -9,8 +9,8 @@
 #include "AbstractSettingsWidget.h"
 #include "Application/VsApplication.h"
 
-SettingsWidgetGeneral::SettingsWidgetGeneral( QWidget *parent ) :
-	AbstractSettingsWidget( parent ),
+SettingsWidgetGeneral::SettingsWidgetGeneral( QString title, QWidget *parent ) :
+	AbstractSettingsWidget( title, parent ),
     ui( new Ui::SettingsWidgetGeneral )
 {
     ui->setupUi( this );

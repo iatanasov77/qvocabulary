@@ -26,7 +26,6 @@ class SettingsWindow : public QWidget
 		void changeEvent( QEvent* );
 
 	private:
-		void initSettingsMenu();
 		void initWidgets();
 		void showSettingsUnimplemented( QString settingsTitle );
 		void showSettingsGeneral();

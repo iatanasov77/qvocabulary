@@ -7,4 +7,9 @@ enum EnumDirection {
 };
 Q_DECLARE_METATYPE(EnumDirection)
 
+enum ItemDataRole {
+	ObserverRole = 14
+};
+Q_DECLARE_METATYPE(ItemDataRole)
+
 #endif	// GLOBALTYPES_H

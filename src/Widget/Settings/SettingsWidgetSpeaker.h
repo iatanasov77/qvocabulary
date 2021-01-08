@@ -16,7 +16,7 @@ class SettingsWidgetSpeaker : public AbstractSettingsWidget
     Q_OBJECT
 
 	public:
-		explicit SettingsWidgetSpeaker( QWidget *parent = 0 );
+		explicit SettingsWidgetSpeaker( QString title, QWidget *parent = 0 );
 		~SettingsWidgetSpeaker();
 
 		virtual void apply();
