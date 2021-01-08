@@ -47,18 +47,34 @@ QSettings* VsSettings::settings()
 	return _settings;
 }
 
-QMap<QString, QString> VsSettings::languages()
+QVariant VsSettings::value( QString key, QString group, QVariant defaultValue )
 {
-	QMap<QString, QString> languages;
+	_settings->beginGroup( group );
+	QVariant value	= _settings->value( key, defaultValue );
+	_settings->endGroup();
 
-	/*
-	 *  Always translated in Bulgarian
-	 *
-	languages["en"]	= QObject::tr( "English" );
-	languages["bg"]	= QObject::tr( "Bulgarian" );
-	*/
-	languages["en"]	= "English";
-	languages["bg"]	= "Bulgarian";
+	return value;
+}
 
-	return languages;
+void VsSettings::setValue( QString key, QVariant value, QString group )
+{
+	_settings->beginGroup( group );
+	_settings->setValue( key, value );
+	_settings->endGroup();
+
+	_settings->sync();
+}
+
+QMap<QString, QVariant> VsSettings::speakerSettings()
+{
+	QMap<QString, QVariant> ttsSettings;
+
+	ttsSettings["pitch"]	= value( "pitch", "Speaker", QVariant( 0 ) );
+	ttsSettings["rate"]		= value( "rate", "Speaker", QVariant( 0 ) );
+	ttsSettings["volume"]	= value( "volume", "Speaker", QVariant( 70 ) );
+	ttsSettings["engine"]	= value( "engine", "Speaker", QVariant( "default" ) );
+	ttsSettings["language"]	= value( "language", "Speaker", QVariant( "en_US" ) );
+	ttsSettings["voice"]	= value( "voice", "Speaker", QVariant( 0 ) );
+
+	return ttsSettings;
 }

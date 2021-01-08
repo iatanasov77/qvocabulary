@@ -2,19 +2,20 @@
 #define ABSTRACT_SETTINGS_WIDGET_H
 
 #include <QWidget>
-#include <QSettings>
+
+#include "Application/VsSettings.h"
 
 class AbstractSettingsWidget : public QWidget
 {
     Q_OBJECT
 
-	protected:
-		QSettings* settings;
-
 	public:
 		explicit AbstractSettingsWidget( QWidget *parent = 0 );
 
 		virtual void apply() = 0;
+
+	protected:
+		VsSettings* settings;
 };
 
 #endif // ABSTRACT_SETTINGS_WIDGET_H

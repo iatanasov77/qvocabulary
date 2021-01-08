@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QDebug>
 
+#include "Application/VsApplication.h"
 #include "Application/VsSettings.h"
 #include "AbstractSettingsWidget.h"
 #include "Application/VsApplication.h"
@@ -24,14 +25,12 @@ SettingsWidgetGeneral::~SettingsWidgetGeneral()
 
 void SettingsWidgetGeneral::init()
 {
-//	ui->cmbLanguage->addItem( tr( "English" ), QVariant( "en" ) );
-//	ui->cmbLanguage->addItem( tr( "Bulgarian" ), QVariant( "bg" ) );
-	QMap<QString, QString> languages	= VsSettings::instance()->languages();
+	QMap<QString, QString> languages	= VsApplication::instance()->languages();
 	foreach ( QString key, languages.keys() ) {
 		ui->cmbLanguage->addItem( languages[key], QVariant( key ) );
 	}
 
-	int index = ui->cmbLanguage->findData( settings->value( "language" ).toString() );
+	int index = ui->cmbLanguage->findData( settings->value( "language", "General" ).toString() );
 	if ( index != -1 ) { // -1 for not found
 		ui->cmbLanguage->setCurrentIndex( index );
 	}

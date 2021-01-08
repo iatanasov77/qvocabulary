@@ -3,12 +3,14 @@
 
 #include <QTableView>
 #include <QMenu>
+#include <QTextToSpeech>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
 #include "Application/VsDatabase.h"
+#include "Application/VsSpeaker.h"
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/Vocabulary.h"
 #include "Entity/VocabularyGroup.h"
@@ -28,6 +30,7 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
 
     initModel();
     initContextMenu();
+    initTextToSpeech();
 
     connect( ui->chkShowTranscriptions, SIGNAL( stateChanged( int ) ), this, SLOT( showTranscriptions( int ) ) );
     connect( ui->leSearch, SIGNAL( returnPressed() ), ui->btnSearch, SIGNAL( released() ) );
@@ -44,7 +47,8 @@ void VocabularyWordsWidget::initModel()
 	pModel	= new qx::QxModel<Vocabulary>();
 
 	VocabularyTableViewDelegate* itemDelegate	= new VocabularyTableViewDelegate( ui->tableView );
-	ui->tableView->setItemDelegate( itemDelegate );
+	ui->tableView->setItemDelegateForColumn( 2, itemDelegate );
+	//ui->tableView->setItemDelegate( itemDelegate );
 
 	ui->tableView->setModel( pModel );
 	ui->tableView->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
@@ -65,12 +69,18 @@ void VocabularyWordsWidget::initModel()
 		this,
 		SLOT( modelRowsInserted( const QModelIndex&, int, int ) )
 	);
+
+	connect(
+		itemDelegate,
+		SIGNAL( buttonClicked( QModelIndex ) ),
+		this,
+		SLOT( sayWord( QModelIndex ) )
+	);
 }
 
 void VocabularyWordsWidget::initContextMenu()
 {
-	ui->tableView->setSelectionBehavior( QAbstractItemView::SelectRows );
-	ui->tableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
+	adjustRowSelection();
 	ui->tableView->setContextMenuPolicy( Qt::CustomContextMenu );
 	connect(
 		ui->tableView,
@@ -78,6 +88,11 @@ void VocabularyWordsWidget::initContextMenu()
 		this,
 		SLOT( displayContextMenu( QPoint ) )
 	);
+}
+
+void VocabularyWordsWidget::initTextToSpeech()
+{
+	speeker = new VsSpeaker( this );
 }
 
 void VocabularyWordsWidget::setViewHeader( VocabularyMetaInfoPtr metaInfo )
@@ -267,4 +282,30 @@ void VocabularyWordsWidget::showTranscriptions( int state )
 	} else {
 		ui->tableView->hideColumn( 2 );
 	}
+}
+
+void VocabularyWordsWidget::adjustRowSelection()
+{
+//	const QColor hlClr	= Qt::red; // highlight color to set
+//	const QColor txtClr = Qt::white; // highlighted text color to set
+//
+//	QPalette p			= palette();
+//	p.setColor( QPalette::Highlight, hlClr );
+//	p.setColor( QPalette::HighlightedText, txtClr );
+//	ui->tableView->setPalette( p );
+
+	ui->tableView->setSelectionBehavior( QAbstractItemView::SelectRows );
+	//ui->tableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
+}
+
+void VocabularyWordsWidget::sayWord( const QModelIndex &index )
+{
+    QString word	= index.siblingAtColumn( 1 ).data().toString();
+
+    speeker->tts()->say( word );
+}
+
+void VocabularyWordsWidget::updateSpeaker()
+{
+	speeker->updateTts();
 }

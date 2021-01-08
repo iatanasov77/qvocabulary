@@ -18,17 +18,22 @@ class SettingsWindow : public QWidget
 		explicit SettingsWindow( QWidget *parent = 0 );
 		~SettingsWindow();
 
+	signals:
+		void speakerSettingsUpdated();
+
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
 		void changeEvent( QEvent* );
 
 	private:
 		void initSettingsMenu();
-		void showSettingsUnimpemented( QString settingsTitle );
+		void initWidgets();
+		void showSettingsUnimplemented( QString settingsTitle );
 		void showSettingsGeneral();
+		void showSettingsSpeaker();
 
 	    Ui::SettingsWindow* ui;
-	    AbstractSettingsWidget* wdg;
+	    QMap<QString, AbstractSettingsWidget*> widgets;
 
 	private slots:
 		void showSettings( QTreeWidgetItem* item, int column );

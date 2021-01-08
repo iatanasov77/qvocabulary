@@ -4,5 +4,5 @@
 
 AbstractSettingsWidget::AbstractSettingsWidget( QWidget *parent ) : QWidget( parent )
 {
-	settings	= VsSettings::instance()->settings();
+	settings	= VsSettings::instance();
 }

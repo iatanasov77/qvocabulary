@@ -70,6 +70,9 @@
                         <distributionFile>
                             <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/Qt5Svg.dll</origin>
                         </distributionFile>
+                        <distributionFile>
+                            <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/Qt5TextToSpeech.dll</origin>
+                        </distributionFile>
                         
                         <distributionFile>
                             <origin>E:/Projects/VS_MyDesktopProjects/Temp/Redistribute_Windows/libstdc++-6.dll</origin>
