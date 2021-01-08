@@ -16,7 +16,11 @@ class VsSettings
         ~VsSettings();
         static VsSettings* instance();
         QSettings* settings();
-        QMap<QString, QString> languages();
+
+        QVariant value( QString key, QString group, QVariant defaultValue = QVariant() );
+        void setValue( QString key, QVariant value, QString group );
+
+        QMap<QString, QVariant> speakerSettings();
 };
 
 #endif // VS_SETTINGS_H

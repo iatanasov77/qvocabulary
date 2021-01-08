@@ -37,6 +37,18 @@ Done, over and out.
      </item>
      <item>
       <widget class="QSlider" name="slVolume">
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="singleStep">
+        <number>5</number>
+       </property>
+       <property name="pageStep">
+        <number>20</number>
+       </property>
+       <property name="value">
+        <number>70</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -55,6 +67,12 @@ Done, over and out.
      </item>
      <item>
       <widget class="QSlider" name="slRate">
+       <property name="minimum">
+        <number>-10</number>
+       </property>
+       <property name="maximum">
+        <number>10</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -73,6 +91,12 @@ Done, over and out.
      </item>
      <item>
       <widget class="QSlider" name="slPitch">
+       <property name="minimum">
+        <number>-10</number>
+       </property>
+       <property name="maximum">
+        <number>10</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>

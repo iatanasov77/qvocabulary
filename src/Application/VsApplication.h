@@ -26,6 +26,7 @@ class VsApplication
 		static QString appBuildTime();
 		static bool canOpenDb( QString dbVersion );
 
+		QMap<QString, QString> languages();
 		void loadLanguage( const QString& rLanguage );
 		QString appAboutBody();
 

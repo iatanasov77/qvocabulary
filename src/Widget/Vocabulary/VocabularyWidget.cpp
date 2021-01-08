@@ -32,8 +32,7 @@ VocabularyWidget::VocabularyWidget( QWidget *parent ) :
     initModels();
 
     // Load Current Group by settings or first loaded
-    QSettings* settings	= VsSettings::instance()->settings();
-    int currentGroup	= settings->value( "currentGroup" ).toInt();
+    int currentGroup	= VsSettings::instance()->value( "currentGroup", "Vocabulary" ).toInt();
     if ( currentGroup ) {
     	loadGroup( currentGroup );
     } else {
@@ -84,12 +83,10 @@ void VocabularyWidget::insertWord()
 
 void VocabularyWidget::loadGroup( int groupId )
 {
-	QSettings* settings	= VsSettings::instance()->settings();
 	currentGroup		= groupId;
 	wdgWords->loadGroup( groupId );
 
-	settings->setValue( "currentGroup", currentGroup );
-	settings->sync();	// Sync ini file
+	VsSettings::instance()->setValue( "currentGroup", currentGroup, "Vocabulary" );
 }
 
 void VocabularyWidget::deleteGroup( int groupId )
@@ -120,4 +117,9 @@ void VocabularyWidget::changeEvent( QEvent* event )
 
     // remember to call base class implementation
     QWidget::changeEvent( event );
+}
+
+void VocabularyWidget::updateSpeaker()
+{
+	wdgWords->updateSpeaker();
 }

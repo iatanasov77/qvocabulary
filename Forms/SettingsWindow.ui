@@ -45,14 +45,14 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QLabel" name="settingsTitle">
            <property name="text">
-            <string>TextLabel</string>
+            <string>Te&amp;xtLabel</string>
            </property>
           </widget>
          </item>
@@ -81,7 +81,11 @@
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <layout class="QFormLayout" name="formLayout"/>
+           <widget class="QStackedWidget" name="mainWidget">
+            <widget class="QWidget" name="Page1" native="true">
+             <layout class="QFormLayout" name="formLayout"/>
+            </widget>
+           </widget>
           </item>
          </layout>
         </widget>

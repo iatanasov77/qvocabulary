@@ -32,8 +32,7 @@ MainWindow::MainWindow( QWidget *parent ) :
     ui->setupUi( this );
 
     // Load Current Language
-    QSettings* settings		= VsSettings::instance()->settings();
-    QString currentLanguage = settings->value( "language" ).toString();
+    QString currentLanguage = VsSettings::instance()->value( "language", "General" ).toString();
     if ( ! currentLanguage.isEmpty() ) {
     	VsApplication::instance()->loadLanguage( currentLanguage );
     }
@@ -152,6 +151,9 @@ void MainWindow::on_actionPreferences_triggered()
 	wdgSettings = new SettingsWindow( this );
 	wdgSettings->setWindowFlags( Qt::Window );
 	//wdgHelp->setModal( true );
+
+	connect( wdgSettings, SIGNAL( speakerSettingsUpdated() ), wdgVocabulary, SLOT( updateSpeaker() ) );
+
 	wdgSettings->show();
 }
 
@@ -168,17 +170,14 @@ void MainWindow::clearRecentDatabases()
 	QStringList emptyList;
 	QAction *action		= qobject_cast<QAction *>( sender() );
 	bool withCurrent	= action->data().toBool();
-	QSettings* settings	= VsSettings::instance()->settings();
 
 	if ( withCurrent ) {
 		emptyList	= QStringList();
 	} else {
-		QStringList databases	= settings->value( "recentDatabaseList" ).toStringList();
+		QStringList databases	= VsSettings::instance()->value( "recentDatabaseList", "MainWindow" ).toStringList();
 		emptyList				= QStringList( QStringList() << databases.at( 0 ) );
 	}
-
-    settings->setValue( "recentDatabaseList", emptyList );
-    settings->sync();	// Sync ini file
+	VsSettings::instance()->setValue( "recentDatabaseList", emptyList, "MainWindow" );
 
     updateRecentDatabaseActions();
 }
@@ -215,8 +214,7 @@ void MainWindow::createReccentDatabaseActions()
 
 void MainWindow::updateRecentDatabaseActions()
 {
-	QSettings* settings		= VsSettings::instance()->settings();
-    QStringList databases	= settings->value( "recentDatabaseList" ).toStringList();
+    QStringList databases	= VsSettings::instance()->value( "recentDatabaseList", "MainWindow" ).toStringList();
 
     int numRecentDatabases	= qMin( databases.size(), (int)MaxRecentDatabases );
 
@@ -281,9 +279,7 @@ void MainWindow::loadDb( const QString &dbPath )
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	if ( VsApplication::canOpenDb( metaInfo->dbVersion ) == false ) {
 		// Clear Recent Databases List and call initDatabase() again
-		QSettings* settings	= VsSettings::instance()->settings();
-		settings->setValue( "recentDatabaseList", QStringList() );
-		settings->sync();	// Sync ini file
+		VsSettings::instance()->setValue( "recentDatabaseList", QStringList(), "MainWindow" );
 		initDatabase();
 	} else if ( metaInfo->dbVersion != VsApplication::DB_VERSION ) {
 		QMessageBox::warning(
@@ -307,15 +303,13 @@ void MainWindow::setCurrentDb( const QString &dbPath )
     curDatabase = dbPath;
     setWindowFilePath( curDatabase );
 
-    QSettings* settings		= VsSettings::instance()->settings();
-    QStringList databases	= settings->value( "recentDatabaseList" ).toStringList();
+    QStringList databases	= VsSettings::instance()->value( "recentDatabaseList", "MainWindow" ).toStringList();
     databases.removeAll( dbPath );
     databases.prepend( dbPath );
     while ( databases.size() > MaxRecentDatabases )
         databases.removeLast();
 
-    settings->setValue( "recentDatabaseList", databases );
-    settings->sync();	// Sync ini file
+    VsSettings::instance()->setValue( "recentDatabaseList", QVariant( databases ), "MainWindow" );
 
     updateRecentDatabaseActions();
 }
@@ -323,9 +317,8 @@ void MainWindow::setCurrentDb( const QString &dbPath )
 void MainWindow::initDatabase()
 {
 	QString dbPath;
-	QSettings* settings	= VsSettings::instance()->settings();
-	QStringList files = settings->value( "recentDatabaseList" ).toStringList();
 
+	QStringList files	= VsSettings::instance()->value( "recentDatabaseList", "MainWindow" ).toStringList();
 	if ( files.size() && QFile::exists( files.at( 0 ) ) ) {
 		dbPath	= files.at( 0 );
 	} else {
@@ -445,7 +438,7 @@ void MainWindow::changeEvent( QEvent* event )
 
 void MainWindow::initMenuLanguages()
 {
-	QMap<QString, QString> languages	= VsSettings::instance()->languages();
+	QMap<QString, QString> languages	= VsApplication::instance()->languages();
 
 	foreach ( QString key, languages.keys() ) {
 		QAction* act	= new QAction( this );

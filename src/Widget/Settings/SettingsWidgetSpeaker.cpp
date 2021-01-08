@@ -9,6 +9,7 @@
 #include "Application/VsSettings.h"
 #include "AbstractSettingsWidget.h"
 #include "Application/VsApplication.h"
+#include "Application/VsSpeaker.h"
 
 SettingsWidgetSpeaker::SettingsWidgetSpeaker( QWidget *parent ) :
 	AbstractSettingsWidget( parent ),
@@ -27,8 +28,13 @@ SettingsWidgetSpeaker::~SettingsWidgetSpeaker()
 
 void SettingsWidgetSpeaker::init()
 {
-	statusbar	= new QStatusBar();
+	statusbar		= new QStatusBar();
 	ui->layoutStatus->addWidget( statusbar );
+
+	speakerSettings	= VsSettings::instance()->speakerSettings();
+	ui->slRate->setValue( speakerSettings["rate"].toInt() );
+	ui->slPitch->setValue( speakerSettings["pitch"].toInt() );
+	ui->slVolume->setValue( speakerSettings["volume"].toInt() );
 
 	ui->cmbEngines->addItem( "Default", QString( "default" ) );
 	const auto engines	= QTextToSpeech::availableEngines();
@@ -36,16 +42,33 @@ void SettingsWidgetSpeaker::init()
 	for ( const QString &engine : engines )
 		ui->cmbEngines->addItem( engine, engine );
 
-	ui->cmbEngines->setCurrentIndex( 0 );
-	engineSelected( 0 );
+	int engineIndex	= ui->cmbEngines->findData( speakerSettings["engine"] );
+	if ( engineIndex < 0 ) engineIndex = 0;
+
+	ui->cmbEngines->setCurrentIndex( engineIndex );
+	engineSelected( engineIndex );
+
+	connect( ui->btnSpeak, &QPushButton::clicked, this, &SettingsWidgetSpeaker::speak );
+	connect( ui->slPitch, &QSlider::valueChanged, this, &SettingsWidgetSpeaker::setPitch );
+	connect( ui->slRate, &QSlider::valueChanged, this, &SettingsWidgetSpeaker::setRate );
+	connect( ui->slVolume, &QSlider::valueChanged, this, &SettingsWidgetSpeaker::setVolume );
+	connect(
+		ui->cmbEngines,
+		static_cast<void ( QComboBox::* )( int )>( &QComboBox::currentIndexChanged ),
+		this,
+		&SettingsWidgetSpeaker::engineSelected
+	);
 }
 
 void SettingsWidgetSpeaker::apply()
 {
-	int idx						= ui->cmbLanguages->currentIndex();
-	QString	selectedLanguage	= ui->cmbLanguages->itemData( idx ).toString();
+	VsSettings::instance()->setValue( "pitch", QVariant( ui->slPitch->value() ), "Speaker" );
+	VsSettings::instance()->setValue( "rate", QVariant( ui->slRate->value() ), "Speaker" );
+	VsSettings::instance()->setValue( "volume", QVariant( ui->slVolume->value() ), "Speaker" );
 
-	VsApplication::instance()->loadLanguage( selectedLanguage );
+	VsSettings::instance()->setValue( "engine", ui->cmbEngines->currentData(), "Speaker" );
+	VsSettings::instance()->setValue( "language", ui->cmbLanguages->currentData(), "Speaker" );
+	VsSettings::instance()->setValue( "voice", QVariant( ui->cmbVoices->currentIndex() ), "Speaker" );
 }
 
 void SettingsWidgetSpeaker::changeEvent( QEvent* event )
@@ -94,7 +117,12 @@ void SettingsWidgetSpeaker::engineSelected( int index )
 
     // Populate the languages combobox before connecting its signal.
     const QVector<QLocale> locales = speeker->availableLocales();
-    //const QList<QLocale> locales = speeker->availableLocales();
+
+    // Apply Settings
+    QLocale locale = speakerSettings["language"].toLocale();
+    if ( locales.indexOf( locale ) >= 0 ) {
+    	speeker->setLocale( locale );
+    }
 
     QLocale current = speeker->locale();
     for ( const QLocale &locale : locales ) {
@@ -176,6 +204,13 @@ void SettingsWidgetSpeaker::localeChanged( const QLocale &locale )
     ui->cmbVoices->clear();
 
     voices = speeker->availableVoices();
+
+    // Apply Settings
+    int voiceIndex	= speakerSettings["voice"].toInt();
+    if ( voiceIndex >= 0 && voiceIndex < voices.size() ) {
+    	speeker->setVoice( voices.at( voiceIndex ) );
+	}
+
     QVoice currentVoice = speeker->voice();
     for ( const QVoice &voice : qAsConst( voices ) ) {
     	ui->cmbVoices->addItem( QString( "%1 - %2 - %3" ).arg( voice.name() )

@@ -20,6 +20,7 @@ SettingsWindow::SettingsWindow( QWidget *parent ) :
 	ui->splitter->setSizes( QList<int>() << 200 << 700 );
 
     initSettingsMenu();
+    initWidgets();
     showSettingsGeneral();
 
 	connect( ui->btnApply, SIGNAL( released() ), this, SLOT( applySettings() ) );
@@ -44,6 +45,15 @@ void SettingsWindow::initSettingsMenu()
 	treeItem->setText( 0, "Speaker" );
 }
 
+void SettingsWindow::initWidgets()
+{
+	widgets["General"]	= new SettingsWidgetGeneral();
+	widgets["Speaker"]	= new SettingsWidgetSpeaker();
+
+	foreach ( AbstractSettingsWidget* wdg, widgets )
+		ui->mainWidget->addWidget( wdg );
+}
+
 void SettingsWindow::showSettings( QTreeWidgetItem* item, int column )
 {
 	// Switch does not support strings
@@ -64,34 +74,26 @@ void SettingsWindow::showSettingsUnimplemented( QString settingsTitle )
 void SettingsWindow::showSettingsGeneral()
 {
 	ui->settingsTitle->setText( tr( "General" ) );
-	setSettingsWidget( new SettingsWidgetGeneral( this ) );
+	ui->mainWidget->setCurrentWidget( widgets["General"] );
 }
 
 void SettingsWindow::showSettingsSpeaker()
 {
 	ui->settingsTitle->setText( tr( "Speaker" ) );
-	setSettingsWidget( new SettingsWidgetSpeaker( this ) );
-}
-
-void SettingsWindow::setSettingsWidget( AbstractSettingsWidget* newWdg )
-{
-	QLayoutItem *child;
-	while ( ( child = ui->formLayout->takeAt( 0 ) ) != 0 ) {
-	    delete child;
-	}
-
-	wdg	= newWdg;
-	ui->formLayout->addWidget( newWdg );
+	ui->mainWidget->setCurrentWidget( widgets["Speaker"] );
 }
 
 void SettingsWindow::applySettings()
 {
-	wdg->apply();
+	AbstractSettingsWidget*	w	= qobject_cast<AbstractSettingsWidget*>( ui->mainWidget->currentWidget() );
+	w->apply();
+	if ( w == widgets["Speaker"] )
+		emit speakerSettingsUpdated();
 }
 
 void SettingsWindow::saveAndExitSettings()
 {
-	wdg->apply();
+	applySettings();
 	close();
 }
 

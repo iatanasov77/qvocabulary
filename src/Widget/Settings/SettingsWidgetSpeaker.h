@@ -47,6 +47,7 @@ class SettingsWidgetSpeaker : public AbstractSettingsWidget
 	    QStatusBar* statusbar;
 	    QTextToSpeech* speeker;
 	    QVector<QVoice> voices;
+	    QMap<QString, QVariant> speakerSettings;
 };
 
 #endif // WIDGET_SETTINGS_WIDGET_SPEAKER_H

@@ -10,6 +10,7 @@
 #include "QxModelView.h"
 
 #include "Application/VsDatabase.h"
+#include "Application/VsSpeaker.h"
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/Vocabulary.h"
 #include "Entity/VocabularyGroup.h"
@@ -91,7 +92,7 @@ void VocabularyWordsWidget::initContextMenu()
 
 void VocabularyWordsWidget::initTextToSpeech()
 {
-	speeker = new QTextToSpeech( this );
+	speeker = new VsSpeaker( this );
 }
 
 void VocabularyWordsWidget::setViewHeader( VocabularyMetaInfoPtr metaInfo )
@@ -301,5 +302,10 @@ void VocabularyWordsWidget::sayWord( const QModelIndex &index )
 {
     QString word	= index.siblingAtColumn( 1 ).data().toString();
 
-    speeker->say( word );
+    speeker->tts()->say( word );
+}
+
+void VocabularyWordsWidget::updateSpeaker()
+{
+	speeker->updateTts();
 }

@@ -14,7 +14,7 @@ class QuizItemModel : public qx::QxModel<QuizItem>
 	Q_OBJECT
 
 	public:
-		QuizItemModel( QObject * parent = 0 );
+		QuizItemModel( QObject* parent = nullptr );
 	    virtual ~QuizItemModel();
 
 		virtual Qt::ItemFlags flags( const QModelIndex & index ) const;
