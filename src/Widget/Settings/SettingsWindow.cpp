@@ -59,6 +59,7 @@ void SettingsWindow::initMenu()
 	menuModel				= new QSortFilterProxyModel( this );
 
 	menuModel->setSourceModel( sourceModel );
+	menuModel->setFilterKeyColumn( 1 );
 
 	ui->treeView->setModel( menuModel );
 	ui->treeView->hideColumn( 0 );	// Id Column for this model
@@ -76,7 +77,7 @@ void SettingsWindow::showWidget( QString widgetId, QString widgetTitle )
 {
 	auto wdg	= widgets.find( widgetId );
 	if( wdg != widgets.end() ) {
-		ui->settingsTitle->setText( tr( qPrintable( widgetTitle ) ) );
+		ui->settingsTitle->setText( widgetTitle );
 		ui->mainWidget->setCurrentWidget( wdg.value() );
 	} else {
 		qDebug() << "Settings Unimpemented";
