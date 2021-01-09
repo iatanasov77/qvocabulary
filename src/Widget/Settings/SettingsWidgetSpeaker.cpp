@@ -11,8 +11,8 @@
 #include "Application/VsApplication.h"
 #include "Application/VsSpeaker.h"
 
-SettingsWidgetSpeaker::SettingsWidgetSpeaker( QString title, QWidget *parent ) :
-	AbstractSettingsWidget( title, parent ),
+SettingsWidgetSpeaker::SettingsWidgetSpeaker( QWidget *parent ) :
+	AbstractSettingsWidget( parent ),
     ui( new Ui::SettingsWidgetSpeaker ),
 	speeker( nullptr )
 {

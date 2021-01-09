@@ -12,4 +12,7 @@ enum ItemDataRole {
 };
 Q_DECLARE_METATYPE(ItemDataRole)
 
+enum ItemDataSource { Txt, Xml };
+Q_DECLARE_METATYPE(ItemDataSource)
+
 #endif	// GLOBALTYPES_H

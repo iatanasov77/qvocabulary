@@ -408,6 +408,17 @@
     </message>
 </context>
 <context>
+    <name>SettingsMenu</name>
+    <message>
+        <source>General</source>
+        <translation type="unfinished">Основни</translation>
+    </message>
+    <message>
+        <source>Speaker</source>
+        <translation type="unfinished">Говорител</translation>
+    </message>
+</context>
+<context>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Frame</source>
@@ -520,6 +531,40 @@ Done, over and out.
         <source>Speaker</source>
         <translation type="unfinished">Говорител</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отказ</translation>
+    </message>
+</context>
+<context>
+    <name>TreeModel</name>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Summary</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Vocabulary</name>
+    <message>
+        <source>Transcriptions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation type="unfinished">Английски</translation>
+    </message>
+    <message>
+        <source>Bulgarian</source>
+        <translation type="unfinished">Български</translation>
+    </message>
+    <message>
+        <source>Transcription</source>
+        <translation type="unfinished">Транскрипция</translation>
+    </message>
 </context>
 <context>
     <name>VocabularyGroupsWidget</name>
@@ -596,7 +641,7 @@ Done, over and out.
     </message>
     <message>
         <source>Transcription</source>
-        <translation type="unfinished">Транскрипция</translation>
+        <translation type="obsolete">Транскрипция</translation>
     </message>
 </context>
 </TS>

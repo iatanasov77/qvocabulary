@@ -388,6 +388,17 @@
     </message>
 </context>
 <context>
+    <name>SettingsMenu</name>
+    <message>
+        <source>General</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speaker</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Frame</source>
@@ -484,6 +495,40 @@ Done, over and out.
         <source>Speaker</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TreeModel</name>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Summary</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Vocabulary</name>
+    <message>
+        <source>Transcriptions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bulgarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transcription</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VocabularyGroupsWidget</name>
@@ -551,10 +596,6 @@ Done, over and out.
     </message>
     <message>
         <source>Show Transcriptions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transcription</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

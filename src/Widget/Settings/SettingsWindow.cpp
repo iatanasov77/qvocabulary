@@ -2,12 +2,15 @@
 #include "ui_SettingsWindow.h"
 
 #include <QDebug>
-#include <QTreeWidgetItem>
+#include <QFile>
 
 #include "GlobalTypes.h"
+#include "GlobalTranslations.h"
 #include "AbstractSettingsWidget.h"
 #include "SettingsWidgetGeneral.h"
 #include "SettingsWidgetSpeaker.h"
+
+#include "ModelView/SettingsMenu/TreeModel.h"
 
 SettingsWindow::SettingsWindow( QWidget *parent ) :
     QWidget( parent ),
@@ -16,15 +19,17 @@ SettingsWindow::SettingsWindow( QWidget *parent ) :
     ui->setupUi( this );
     setWindowIcon( QIcon( ":/Resources/icons/settings.svg" ) );
 
-    // you can try with QSplitter::setStretchFactor or QSplitter::setSizes to resize the splitter.
-	//ui->splitter->setStretchFactor( 2, 8 );
 	ui->splitter->setSizes( QList<int>() << 200 << 700 );
 
+	initMenu();
     initWidgets();
-    showSettingsGeneral();
+    showSettings( ui->treeView->model()->index( 0, 0 ) );
 
+    connect( ui->leFilter, SIGNAL( textChanged( const QString& ) ), this, SLOT( filterMenu( const QString& ) ) );
+    connect( ui->treeView, SIGNAL( clicked( const QModelIndex& ) ), this, SLOT( showSettings( const QModelIndex& ) ) );
 	connect( ui->btnApply, SIGNAL( released() ), this, SLOT( applySettings() ) );
     connect( ui->btnSaveAndExit, SIGNAL( released() ), this, SLOT( saveAndExitSettings() ) );
+    connect( ui->btnCancel, SIGNAL( released() ), this, SLOT( cancelSettings() ) );
 }
 
 SettingsWindow::~SettingsWindow()
@@ -34,52 +39,48 @@ SettingsWindow::~SettingsWindow()
 
 void SettingsWindow::initWidgets()
 {
-	widgets["General"]	= new SettingsWidgetGeneral( QT_TR_NOOP( "General" ) );
-	widgets["Speaker"]	= new SettingsWidgetSpeaker( QT_TR_NOOP( "Speaker" ) );
-
-	// Init Settings Menu
-	QTreeWidgetItem *treeItem;
-	ui->treeWidget->setColumnCount( 1 );
-	connect( ui->treeWidget, SIGNAL( itemClicked( QTreeWidgetItem*, int ) ), this, SLOT( showSettings( QTreeWidgetItem*, int ) ) );
+	widgets["General"]	= new SettingsWidgetGeneral();
+	widgets["Speaker"]	= new SettingsWidgetSpeaker();
 
 	foreach ( AbstractSettingsWidget* wdg, widgets ) {
 		ui->mainWidget->addWidget( wdg );
-
-		// Add to Menu
-		treeItem	= new QTreeWidgetItem( ui->treeWidget );
-		treeItem->setText( 0, tr( qPrintable( wdg->title() ) ) );
-		treeItem->setData( 0, ObserverRole, wdg->title() );
 	}
 }
 
-void SettingsWindow::showSettings( QTreeWidgetItem* item, int column )
+void SettingsWindow::initMenu()
 {
-	QString observerData	= item->data( 0, ObserverRole ).toString();
-	// Switch does not support strings
-	if ( observerData == "General" ) {
-		showSettingsGeneral();
-	} else if ( observerData == "Speaker" ) {
-		showSettingsSpeaker();
+	/* TREE EXAMPLE
+	QFile file( ":/Resources/settings_menu/menu.txt" );
+	TreeModel* model	= new TreeModel( file.readAll(), this, Txt );
+	*/
+	QFile file( ":/Resources/settings_menu/menu.xml" );
+	file.open( QIODevice::ReadOnly );
+	TreeModel* sourceModel	= new TreeModel( file.readAll(), this, Xml );
+	menuModel				= new QSortFilterProxyModel( this );
+
+	menuModel->setSourceModel( sourceModel );
+
+	ui->treeView->setModel( menuModel );
+	ui->treeView->hideColumn( 0 );	// Id Column for this model
+}
+
+void SettingsWindow::showSettings( const QModelIndex &index )
+{
+	QString id		= ui->treeView->model()->data( index.siblingAtColumn( 0 ) ).toString();
+	QString title	= ui->treeView->model()->data( index.siblingAtColumn( 1 ) ).toString();
+	//qDebug() << "TreeView ID: " << id;
+	showWidget( id, title );
+}
+
+void SettingsWindow::showWidget( QString widgetId, QString widgetTitle )
+{
+	auto wdg	= widgets.find( widgetId );
+	if( wdg != widgets.end() ) {
+		ui->settingsTitle->setText( tr( qPrintable( widgetTitle ) ) );
+		ui->mainWidget->setCurrentWidget( wdg.value() );
 	} else {
-		showSettingsUnimplemented( item->text( 0 ) );
+		qDebug() << "Settings Unimpemented";
 	}
-}
-
-void SettingsWindow::showSettingsUnimplemented( QString settingsTitle )
-{
-	qDebug() << "Settings Unimpemented";
-}
-
-void SettingsWindow::showSettingsGeneral()
-{
-	ui->settingsTitle->setText( tr( qPrintable( widgets["General"]->title() ) ) );
-	ui->mainWidget->setCurrentWidget( widgets["General"] );
-}
-
-void SettingsWindow::showSettingsSpeaker()
-{
-	ui->settingsTitle->setText( tr( qPrintable( widgets["Speaker"]->title() ) ) );
-	ui->mainWidget->setCurrentWidget( widgets["Speaker"] );
 }
 
 void SettingsWindow::applySettings()
@@ -96,6 +97,11 @@ void SettingsWindow::saveAndExitSettings()
 	close();
 }
 
+void SettingsWindow::cancelSettings()
+{
+	close();
+}
+
 void SettingsWindow::changeEvent( QEvent* event )
 {
     if ( event->type() == QEvent::LanguageChange )
@@ -105,4 +111,11 @@ void SettingsWindow::changeEvent( QEvent* event )
 
     // remember to call base class implementation
     QWidget::changeEvent( event );
+}
+
+void SettingsWindow::filterMenu( const QString& filterString )
+{
+	//	setFilterWildcard(const QString &pattern)
+	//	setFilterFixedString(const QString &pattern)
+	menuModel->setFilterFixedString( filterString );
 }

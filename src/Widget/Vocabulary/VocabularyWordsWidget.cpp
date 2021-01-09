@@ -1,6 +1,7 @@
 #include "VocabularyWordsWidget.h"
 #include "ui_VocabularyWordsWidget.h"
 
+#include <QApplication>
 #include <QTableView>
 #include <QMenu>
 #include <QTextToSpeech>
@@ -97,9 +98,15 @@ void VocabularyWordsWidget::initTextToSpeech()
 
 void VocabularyWordsWidget::setViewHeader( VocabularyMetaInfoPtr metaInfo )
 {
-	pModel->setHeaderData( 1, Qt::Horizontal, metaInfo->language1, Qt::DisplayRole );
-	pModel->setHeaderData( 2, Qt::Horizontal, tr( "Transcription" ), Qt::DisplayRole );
-	pModel->setHeaderData( 3, Qt::Horizontal, metaInfo->language2, Qt::DisplayRole );
+	QStringList headTitles;
+	headTitles
+		<< qApp->translate( "Vocabulary", metaInfo->language1.toStdString().c_str() )
+		<< qApp->translate( "Vocabulary", metaInfo->language2.toStdString().c_str() )
+		<< qApp->translate( "Vocabulary", "Transcription" );
+
+	pModel->setHeaderData( 1, Qt::Horizontal, headTitles.at( 0 ), Qt::DisplayRole );
+	pModel->setHeaderData( 2, Qt::Horizontal, headTitles.at( 2 ), Qt::DisplayRole );
+	pModel->setHeaderData( 3, Qt::Horizontal, headTitles.at( 1 ), Qt::DisplayRole );
 }
 
 void VocabularyWordsWidget::insertWord()
