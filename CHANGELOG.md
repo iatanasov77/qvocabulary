@@ -1,3 +1,15 @@
+0.12.0	|	Release date: **09.01.2021**
+============================================
+* New Features:
+  - Add Cancel Button into the Settings/Preferences Window.
+  - Implement SettingsWindow Menu Filtering.
+* Bug-Fixes:
+  - Some Bug Fixes.
+* Other:
+  - Update Translations.
+  - Change Settings Menu TreeWidget with TreeView.
+
+
 0.11.0	|	Release date: **09.01.2021**
 ============================================
 * New Features:
