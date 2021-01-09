@@ -1,11 +1,11 @@
 #include "SettingsWindow.h"
-#include "GlobalTranslations.h"
 #include "ui_SettingsWindow.h"
 
 #include <QDebug>
 #include <QFile>
 
 #include "GlobalTypes.h"
+#include "GlobalTranslations.h"
 #include "AbstractSettingsWidget.h"
 #include "SettingsWidgetGeneral.h"
 #include "SettingsWidgetSpeaker.h"
@@ -19,13 +19,11 @@ SettingsWindow::SettingsWindow( QWidget *parent ) :
     ui->setupUi( this );
     setWindowIcon( QIcon( ":/Resources/icons/settings.svg" ) );
 
-    // you can try with QSplitter::setStretchFactor or QSplitter::setSizes to resize the splitter.
-	//ui->splitter->setStretchFactor( 2, 8 );
 	ui->splitter->setSizes( QList<int>() << 200 << 700 );
 
 	initMenu();
     initWidgets();
-    showWidget( "General" );
+    showSettings( ui->treeView->model()->index( 0, 0 ) );
 
     connect( ui->treeView, SIGNAL( clicked( const QModelIndex& ) ), this, SLOT( showSettings( const QModelIndex& ) ) );
 	connect( ui->btnApply, SIGNAL( released() ), this, SLOT( applySettings() ) );
