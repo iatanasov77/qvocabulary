@@ -1,4 +1,5 @@
 #include "SettingsWindow.h"
+#include "GlobalTranslations.h"
 #include "ui_SettingsWindow.h"
 
 #include <QDebug>

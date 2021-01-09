@@ -3,6 +3,7 @@
 
 #include <QStringList>
 #include <QDomDocument>
+#include <QApplication>
 
 TreeModel::TreeModel( const QString &data, QObject *parent, ItemDataSource dataType )
     : QAbstractItemModel( parent )
@@ -84,7 +85,9 @@ QVariant TreeModel::data( const QModelIndex &index, int role ) const
 
     TreeItem *item = static_cast<TreeItem*>( index.internalPointer() );
 
-    return item->data( index.column() );
+    return index.column() == 1 ?
+    		QVariant( qApp->translate( "SettingsMenu", item->data( index.column() ).toString().toStdString().c_str() ) ) :
+    		item->data( index.column() );
 }
 
 Qt::ItemFlags TreeModel::flags( const QModelIndex &index ) const
