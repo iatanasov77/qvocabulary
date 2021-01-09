@@ -55,12 +55,12 @@ void SettingsWindow::initMenu()
 	*/
 	QFile file( ":/Resources/settings_menu/menu.xml" );
 	file.open( QIODevice::ReadOnly );
-	TreeModel* sourceModel				= new TreeModel( file.readAll(), this, Xml );
-	QSortFilterProxyModel* proxyModel	= new QSortFilterProxyModel(this);
+	TreeModel* sourceModel	= new TreeModel( file.readAll(), this, Xml );
+	menuModel				= new QSortFilterProxyModel( this );
 
-	proxyModel->setSourceModel( sourceModel );
+	menuModel->setSourceModel( sourceModel );
 
-	ui->treeView->setModel( proxyModel );
+	ui->treeView->setModel( menuModel );
 	ui->treeView->hideColumn( 0 );	// Id Column for this model
 }
 
@@ -115,5 +115,7 @@ void SettingsWindow::changeEvent( QEvent* event )
 
 void SettingsWindow::filterMenu( const QString& filterString )
 {
-
+	//	setFilterWildcard(const QString &pattern)
+	//	setFilterFixedString(const QString &pattern)
+	menuModel->setFilterFixedString( filterString );
 }
