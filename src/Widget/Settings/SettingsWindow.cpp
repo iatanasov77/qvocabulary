@@ -77,7 +77,7 @@ void SettingsWindow::showWidget( QString widgetId, QString widgetTitle )
 {
 	auto wdg	= widgets.find( widgetId );
 	if( wdg != widgets.end() ) {
-		ui->settingsTitle->setText( tr( qPrintable( widgetTitle ) ) );
+		ui->settingsTitle->setText( widgetTitle );
 		ui->mainWidget->setCurrentWidget( wdg.value() );
 	} else {
 		qDebug() << "Settings Unimpemented";
