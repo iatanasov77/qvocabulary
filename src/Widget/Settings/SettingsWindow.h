@@ -33,10 +33,11 @@ class SettingsWindow : public QWidget
 	    QMap<QString, AbstractSettingsWidget*> widgets;
 
 	private slots:
-		void showSettings( const QModelIndex &index );
+		void showSettings( const QModelIndex& index );
 		void applySettings();
 		void saveAndExitSettings();
 		void cancelSettings();
+		void filterMenu( const QString& filterString );
 };
 
 #endif // WIDGET_SETTINGS_WINDOW_H

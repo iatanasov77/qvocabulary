@@ -25,7 +25,7 @@
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
        <item>
-        <widget class="QLineEdit" name="lineEdit">
+        <widget class="QLineEdit" name="leFilter">
          <property name="placeholderText">
           <string>type filter text</string>
          </property>
@@ -131,7 +131,7 @@
  </widget>
  <tabstops>
   <tabstop>treeView</tabstop>
-  <tabstop>lineEdit</tabstop>
+  <tabstop>leFilter</tabstop>
  </tabstops>
  <resources/>
  <connections/>

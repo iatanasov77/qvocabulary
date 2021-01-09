@@ -25,6 +25,7 @@ SettingsWindow::SettingsWindow( QWidget *parent ) :
     initWidgets();
     showSettings( ui->treeView->model()->index( 0, 0 ) );
 
+    connect( ui->leFilter, SIGNAL( textChanged( const QString& ) ), this, SLOT( filterMenu( const QString& ) ) );
     connect( ui->treeView, SIGNAL( clicked( const QModelIndex& ) ), this, SLOT( showSettings( const QModelIndex& ) ) );
 	connect( ui->btnApply, SIGNAL( released() ), this, SLOT( applySettings() ) );
     connect( ui->btnSaveAndExit, SIGNAL( released() ), this, SLOT( saveAndExitSettings() ) );
@@ -54,9 +55,12 @@ void SettingsWindow::initMenu()
 	*/
 	QFile file( ":/Resources/settings_menu/menu.xml" );
 	file.open( QIODevice::ReadOnly );
-	TreeModel* model	= new TreeModel( file.readAll(), this, Xml );
+	TreeModel* sourceModel				= new TreeModel( file.readAll(), this, Xml );
+	QSortFilterProxyModel* proxyModel	= new QSortFilterProxyModel(this);
 
-	ui->treeView->setModel( model );
+	proxyModel->setSourceModel( sourceModel );
+
+	ui->treeView->setModel( proxyModel );
 	ui->treeView->hideColumn( 0 );	// Id Column for this model
 }
 
@@ -107,4 +111,9 @@ void SettingsWindow::changeEvent( QEvent* event )
 
     // remember to call base class implementation
     QWidget::changeEvent( event );
+}
+
+void SettingsWindow::filterMenu( const QString& filterString )
+{
+
 }
