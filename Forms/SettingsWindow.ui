@@ -82,7 +82,7 @@
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
            <widget class="QStackedWidget" name="mainWidget">
-            <widget class="QWidget" name="Page1" native="true">
+            <widget class="QWidget" name="Page1">
              <layout class="QFormLayout" name="formLayout"/>
             </widget>
            </widget>
@@ -116,6 +116,13 @@
           <widget class="QPushButton" name="btnSaveAndExit">
            <property name="text">
             <string>Save and Exit</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="btnCancel">
+           <property name="text">
+            <string>Cancel</string>
            </property>
           </widget>
          </item>

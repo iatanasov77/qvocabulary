@@ -484,6 +484,10 @@ Done, over and out.
         <source>Speaker</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VocabularyGroupsWidget</name>

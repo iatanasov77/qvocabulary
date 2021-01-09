@@ -25,6 +25,7 @@ SettingsWindow::SettingsWindow( QWidget *parent ) :
 
 	connect( ui->btnApply, SIGNAL( released() ), this, SLOT( applySettings() ) );
     connect( ui->btnSaveAndExit, SIGNAL( released() ), this, SLOT( saveAndExitSettings() ) );
+    connect( ui->btnCancel, SIGNAL( released() ), this, SLOT( cancelSettings() ) );
 }
 
 SettingsWindow::~SettingsWindow()
@@ -81,6 +82,11 @@ void SettingsWindow::applySettings()
 void SettingsWindow::saveAndExitSettings()
 {
 	applySettings();
+	close();
+}
+
+void SettingsWindow::cancelSettings()
+{
 	close();
 }
 

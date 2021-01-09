@@ -36,6 +36,7 @@ class SettingsWindow : public QWidget
 		void showSettings( QTreeWidgetItem* item, int column );
 		void applySettings();
 		void saveAndExitSettings();
+		void cancelSettings();
 };
 
 #endif // WIDGET_SETTINGS_WINDOW_H

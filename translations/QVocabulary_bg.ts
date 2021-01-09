@@ -520,6 +520,10 @@ Done, over and out.
         <source>Speaker</source>
         <translation type="unfinished">Говорител</translation>
     </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отказ</translation>
+    </message>
 </context>
 <context>
     <name>VocabularyGroupsWidget</name>
