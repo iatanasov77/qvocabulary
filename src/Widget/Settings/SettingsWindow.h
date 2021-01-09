@@ -27,7 +27,7 @@ class SettingsWindow : public QWidget
 	private:
 		void initWidgets();
 		void initMenu();
-		void showWidget( QString widgetId );
+		void showWidget( QString widgetId, QString widgetTitle );
 
 	    Ui::SettingsWindow* ui;
 	    QMap<QString, AbstractSettingsWidget*> widgets;

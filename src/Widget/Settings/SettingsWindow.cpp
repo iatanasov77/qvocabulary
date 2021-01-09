@@ -40,8 +40,8 @@ SettingsWindow::~SettingsWindow()
 
 void SettingsWindow::initWidgets()
 {
-	widgets["General"]	= new SettingsWidgetGeneral( QT_TR_NOOP( "General" ) );
-	widgets["Speaker"]	= new SettingsWidgetSpeaker( QT_TR_NOOP( "Speaker" ) );
+	widgets["General"]	= new SettingsWidgetGeneral();
+	widgets["Speaker"]	= new SettingsWidgetSpeaker();
 
 	foreach ( AbstractSettingsWidget* wdg, widgets ) {
 		ui->mainWidget->addWidget( wdg );
@@ -64,16 +64,17 @@ void SettingsWindow::initMenu()
 
 void SettingsWindow::showSettings( const QModelIndex &index )
 {
-	QString id	= ui->treeView->model()->data( index.siblingAtColumn( 0 ) ).toString();
+	QString id		= ui->treeView->model()->data( index.siblingAtColumn( 0 ) ).toString();
+	QString title	= ui->treeView->model()->data( index.siblingAtColumn( 1 ) ).toString();
 	//qDebug() << "TreeView ID: " << id;
-	showWidget( id );
+	showWidget( id, title );
 }
 
-void SettingsWindow::showWidget( QString widgetId )
+void SettingsWindow::showWidget( QString widgetId, QString widgetTitle )
 {
 	auto wdg	= widgets.find( widgetId );
 	if( wdg != widgets.end() ) {
-		ui->settingsTitle->setText( tr( qPrintable( wdg.value()->title() ) ) );
+		ui->settingsTitle->setText( tr( qPrintable( widgetTitle ) ) );
 		ui->mainWidget->setCurrentWidget( wdg.value() );
 	} else {
 		qDebug() << "Settings Unimpemented";
