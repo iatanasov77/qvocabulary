@@ -21,7 +21,7 @@ SettingsWindow::SettingsWindow( QWidget *parent ) :
 	ui->splitter->setSizes( QList<int>() << 200 << 700 );
 
     initWidgets();
-    showSettingsGeneral();
+    showWidget( "General" );
 
 	connect( ui->btnApply, SIGNAL( released() ), this, SLOT( applySettings() ) );
     connect( ui->btnSaveAndExit, SIGNAL( released() ), this, SLOT( saveAndExitSettings() ) );
@@ -55,31 +55,19 @@ void SettingsWindow::initWidgets()
 void SettingsWindow::showSettings( QTreeWidgetItem* item, int column )
 {
 	QString observerData	= item->data( 0, ObserverRole ).toString();
-	// Switch does not support strings
-	if ( observerData == "General" ) {
-		showSettingsGeneral();
-	} else if ( observerData == "Speaker" ) {
-		showSettingsSpeaker();
+
+	showWidget( observerData );
+}
+
+void SettingsWindow::showWidget( QString observerData )
+{
+	auto wdg	= widgets.find( observerData );
+	if( wdg != widgets.end() ) {
+		ui->settingsTitle->setText( tr( qPrintable( wdg.value()->title() ) ) );
+		ui->mainWidget->setCurrentWidget( wdg.value() );
 	} else {
-		showSettingsUnimplemented( item->text( 0 ) );
+		qDebug() << "Settings Unimpemented";
 	}
-}
-
-void SettingsWindow::showSettingsUnimplemented( QString settingsTitle )
-{
-	qDebug() << "Settings Unimpemented";
-}
-
-void SettingsWindow::showSettingsGeneral()
-{
-	ui->settingsTitle->setText( tr( qPrintable( widgets["General"]->title() ) ) );
-	ui->mainWidget->setCurrentWidget( widgets["General"] );
-}
-
-void SettingsWindow::showSettingsSpeaker()
-{
-	ui->settingsTitle->setText( tr( qPrintable( widgets["Speaker"]->title() ) ) );
-	ui->mainWidget->setCurrentWidget( widgets["Speaker"] );
 }
 
 void SettingsWindow::applySettings()

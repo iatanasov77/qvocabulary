@@ -27,9 +27,7 @@ class SettingsWindow : public QWidget
 
 	private:
 		void initWidgets();
-		void showSettingsUnimplemented( QString settingsTitle );
-		void showSettingsGeneral();
-		void showSettingsSpeaker();
+		void showWidget( QString observerData );
 
 	    Ui::SettingsWindow* ui;
 	    QMap<QString, AbstractSettingsWidget*> widgets;
