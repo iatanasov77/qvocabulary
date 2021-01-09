@@ -2,7 +2,7 @@
 #define WIDGET_SETTINGS_WINDOW_H
 
 #include <QWidget>
-#include <QTreeWidgetItem>
+#include <QSortFilterProxyModel>
 
 #include "AbstractSettingsWidget.h"
 
@@ -27,16 +27,19 @@ class SettingsWindow : public QWidget
 
 	private:
 		void initWidgets();
-		void showWidget( QString observerData );
+		void initMenu();
+		void showWidget( QString widgetId, QString widgetTitle );
 
 	    Ui::SettingsWindow* ui;
 	    QMap<QString, AbstractSettingsWidget*> widgets;
+	    QSortFilterProxyModel* menuModel;
 
 	private slots:
-		void showSettings( QTreeWidgetItem* item, int column );
+		void showSettings( const QModelIndex& index );
 		void applySettings();
 		void saveAndExitSettings();
 		void cancelSettings();
+		void filterMenu( const QString& filterString );
 };
 
 #endif // WIDGET_SETTINGS_WINDOW_H
