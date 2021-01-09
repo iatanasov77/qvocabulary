@@ -1,3 +1,10 @@
+0.12.1	|	Release date: **09.01.2021**
+============================================
+* Bug-Fixes:
+  - Fix SettingsWindow Widget Title Translation.
+  - Fix SettingsWindow Menu filtering into the right model column.
+
+
 0.12.0	|	Release date: **09.01.2021**
 ============================================
 * New Features:
