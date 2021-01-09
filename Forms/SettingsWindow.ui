@@ -32,15 +32,10 @@
         </widget>
        </item>
        <item>
-        <widget class="QTreeWidget" name="treeWidget">
+        <widget class="QTreeView" name="treeView">
          <property name="headerHidden">
           <bool>true</bool>
          </property>
-         <column>
-          <property name="text">
-           <string notr="true">1</string>
-          </property>
-         </column>
         </widget>
        </item>
       </layout>
@@ -135,7 +130,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>treeWidget</tabstop>
+  <tabstop>treeView</tabstop>
   <tabstop>lineEdit</tabstop>
  </tabstops>
  <resources/>

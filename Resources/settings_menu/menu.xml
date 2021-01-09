@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Menu xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<MenuItems>
+		<MenuItem id="General">General</MenuItem>
+		<MenuItem id="Speaker">Speaker</MenuItem>
+	</MenuItems>
+</Menu>

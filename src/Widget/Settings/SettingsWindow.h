@@ -2,7 +2,6 @@
 #define WIDGET_SETTINGS_WINDOW_H
 
 #include <QWidget>
-#include <QTreeWidgetItem>
 
 #include "AbstractSettingsWidget.h"
 
@@ -27,13 +26,14 @@ class SettingsWindow : public QWidget
 
 	private:
 		void initWidgets();
-		void showWidget( QString observerData );
+		void initMenu();
+		void showWidget( QString widgetId );
 
 	    Ui::SettingsWindow* ui;
 	    QMap<QString, AbstractSettingsWidget*> widgets;
 
 	private slots:
-		void showSettings( QTreeWidgetItem* item, int column );
+		void showSettings( const QModelIndex &index );
 		void applySettings();
 		void saveAndExitSettings();
 		void cancelSettings();

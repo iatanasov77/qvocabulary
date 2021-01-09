@@ -2,12 +2,14 @@
 #include "ui_SettingsWindow.h"
 
 #include <QDebug>
-#include <QTreeWidgetItem>
+#include <QFile>
 
 #include "GlobalTypes.h"
 #include "AbstractSettingsWidget.h"
 #include "SettingsWidgetGeneral.h"
 #include "SettingsWidgetSpeaker.h"
+
+#include "ModelView/SettingsMenu/TreeModel.h"
 
 SettingsWindow::SettingsWindow( QWidget *parent ) :
     QWidget( parent ),
@@ -20,9 +22,11 @@ SettingsWindow::SettingsWindow( QWidget *parent ) :
 	//ui->splitter->setStretchFactor( 2, 8 );
 	ui->splitter->setSizes( QList<int>() << 200 << 700 );
 
+	initMenu();
     initWidgets();
     showWidget( "General" );
 
+    connect( ui->treeView, SIGNAL( clicked( const QModelIndex& ) ), this, SLOT( showSettings( const QModelIndex& ) ) );
 	connect( ui->btnApply, SIGNAL( released() ), this, SLOT( applySettings() ) );
     connect( ui->btnSaveAndExit, SIGNAL( released() ), this, SLOT( saveAndExitSettings() ) );
     connect( ui->btnCancel, SIGNAL( released() ), this, SLOT( cancelSettings() ) );
@@ -38,31 +42,35 @@ void SettingsWindow::initWidgets()
 	widgets["General"]	= new SettingsWidgetGeneral( QT_TR_NOOP( "General" ) );
 	widgets["Speaker"]	= new SettingsWidgetSpeaker( QT_TR_NOOP( "Speaker" ) );
 
-	// Init Settings Menu
-	QTreeWidgetItem *treeItem;
-	ui->treeWidget->setColumnCount( 1 );
-	connect( ui->treeWidget, SIGNAL( itemClicked( QTreeWidgetItem*, int ) ), this, SLOT( showSettings( QTreeWidgetItem*, int ) ) );
-
 	foreach ( AbstractSettingsWidget* wdg, widgets ) {
 		ui->mainWidget->addWidget( wdg );
-
-		// Add to Menu
-		treeItem	= new QTreeWidgetItem( ui->treeWidget );
-		treeItem->setText( 0, tr( qPrintable( wdg->title() ) ) );
-		treeItem->setData( 0, ObserverRole, wdg->title() );
 	}
 }
 
-void SettingsWindow::showSettings( QTreeWidgetItem* item, int column )
+void SettingsWindow::initMenu()
 {
-	QString observerData	= item->data( 0, ObserverRole ).toString();
+	/* TREE EXAMPLE
+	QFile file( ":/Resources/settings_menu/menu.txt" );
+	TreeModel* model	= new TreeModel( file.readAll(), this, Txt );
+	*/
+	QFile file( ":/Resources/settings_menu/menu.xml" );
+	file.open( QIODevice::ReadOnly );
+	TreeModel* model	= new TreeModel( file.readAll(), this, Xml );
 
-	showWidget( observerData );
+	ui->treeView->setModel( model );
+	ui->treeView->hideColumn( 0 );	// Id Column for this model
 }
 
-void SettingsWindow::showWidget( QString observerData )
+void SettingsWindow::showSettings( const QModelIndex &index )
 {
-	auto wdg	= widgets.find( observerData );
+	QString id	= ui->treeView->model()->data( index.siblingAtColumn( 0 ) ).toString();
+	//qDebug() << "TreeView ID: " << id;
+	showWidget( id );
+}
+
+void SettingsWindow::showWidget( QString widgetId )
+{
+	auto wdg	= widgets.find( widgetId );
 	if( wdg != widgets.end() ) {
 		ui->settingsTitle->setText( tr( qPrintable( wdg.value()->title() ) ) );
 		ui->mainWidget->setCurrentWidget( wdg.value() );
