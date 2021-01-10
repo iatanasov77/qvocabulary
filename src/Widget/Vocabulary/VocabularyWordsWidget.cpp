@@ -33,6 +33,11 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     initContextMenu();
     initTextToSpeech();
 
+    // Enable Drag&Drop for Rows
+    ui->tableView->verticalHeader()->setSectionsMovable( true );
+	ui->tableView->verticalHeader()->setDragEnabled( true );
+	ui->tableView->verticalHeader()->setDragDropMode( QAbstractItemView::InternalMove );
+
     connect( ui->chkShowTranscriptions, SIGNAL( stateChanged( int ) ), this, SLOT( showTranscriptions( int ) ) );
     connect( ui->leSearch, SIGNAL( returnPressed() ), ui->btnSearch, SIGNAL( released() ) );
     connect( ui->btnSearch, SIGNAL( released() ), this, SLOT( search() ) );
