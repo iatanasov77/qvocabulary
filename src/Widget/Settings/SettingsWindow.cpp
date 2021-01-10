@@ -55,7 +55,7 @@ void SettingsWindow::initMenu()
 	menuModel				= new QSortFilterProxyModel( this );
 
 	menuModel->setSourceModel( sourceModel );
-	menuModel->setFilterKeyColumn( 1 );
+	menuModel->setFilterKeyColumn( 0 );	// Filter is applyed to the Title Column
 
 	ui->treeView->setModel( menuModel );
 	ui->treeView->hideColumn( 1 );	// Id Column for this model
