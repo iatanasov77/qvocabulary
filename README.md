@@ -5,7 +5,7 @@ For building use this vagrant machine: https://github.com/iatanasov77/my-desktop
 
 ## I. Howto Build Application
 	### 1. First clone or download source in the separate folder
-	### 2. Run `qmake` to create a Makefile ( To Build For Windows use qmake-mingw )
+	### 2. Run `qmake` to create a Makefile ( To Build For Windows use `qmake-mingw` )
 	### 3. Run `make`
 	
 ## II. Howto Build Help
