@@ -32,7 +32,6 @@
 	    <file>Resources/html/about_en.html</file>
 	    <file>Resources/html/about_bg.html</file>
 	    
-	    <file>Resources/settings_menu/menu.txt</file>
 	    <file>Resources/settings_menu/menu.xml</file>
 	</qresource>
 </RCC>
