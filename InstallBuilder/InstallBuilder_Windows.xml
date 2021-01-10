@@ -1,7 +1,7 @@
 <project>
     <shortName>QVocabulary</shortName>
     <fullName>QVocabulary</fullName>
-    <version>1.0</version>
+    <version>0.12.3</version>
     <licenseFile>E:/Projects/VS_MyDesktopProjects/LICENSE</licenseFile>
     <componentList>
         <component>
