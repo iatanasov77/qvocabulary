@@ -5,16 +5,11 @@
 #include <QDomDocument>
 #include <QApplication>
 
-TreeModel::TreeModel( const QString &data, QObject *parent, ItemDataSource dataType )
+TreeModel::TreeModel( const QString &data, QObject *parent )
     : QAbstractItemModel( parent )
 {
-	if ( dataType == Txt ) {
-		rootItem = new TreeItem( { tr( "Title" ), tr( "Summary" ) } );
-		setupModelData( data.split( '\n' ), rootItem );
-	} else if ( dataType == Xml ) {
-		rootItem = new TreeItem( { tr( "Title" ), tr( "Summary" ) } );
-		setupModelDataFromXml( data, rootItem );
-	}
+	rootItem = new TreeItem( { tr( "Title" ), tr( "Id" ) } );
+	setupModelData( data, rootItem );
 }
 
 TreeModel::~TreeModel()
@@ -85,7 +80,7 @@ QVariant TreeModel::data( const QModelIndex &index, int role ) const
 
     TreeItem *item = static_cast<TreeItem*>( index.internalPointer() );
 
-    return index.column() == 1 ?
+    return index.column() == 0 ?
     		QVariant( qApp->translate( "SettingsMenu", item->data( index.column() ).toString().toStdString().c_str() ) ) :
     		item->data( index.column() );
 }
@@ -106,85 +101,34 @@ QVariant TreeModel::headerData( int section, Qt::Orientation orientation, int ro
     return QVariant();
 }
 
-void TreeModel::setupModelData( const QStringList &lines, TreeItem *parent )
+void TreeModel::setupModelData( const QString data, TreeItem *parent )
 {
-    QVector<TreeItem*> parents;
-    QVector<int> indentations;
-    parents << parent;
-    indentations << 0;
-
-    int number = 0;
-
-    while ( number < lines.count() ) {
-        int position = 0;
-        while ( position < lines[number].length() ) {
-            if ( lines[number].at(position) != ' ' )
-                break;
-            position++;
-        }
-
-        const QString lineData = lines[number].mid( position ).trimmed();
-
-        if ( ! lineData.isEmpty() ) {
-            // Read the column data from the rest of the line.
-            const QStringList columnStrings = lineData.split( QLatin1Char( '\t' ), Qt::SkipEmptyParts );
-            QVector<QVariant> columnData;
-            columnData.reserve( columnStrings.count() );
-            for ( const QString &columnString : columnStrings )
-                columnData << columnString;
-
-            if ( position > indentations.last() ) {
-                // The last child of the current parent is now the new parent
-                // unless the current parent has no children.
-
-                if ( parents.last()->childCount() > 0 ) {
-                    parents << parents.last()->child( parents.last()->childCount()-1 );
-                    indentations << position;
-                }
-            } else {
-                while ( position < indentations.last() && parents.count() > 0 ) {
-                    parents.pop_back();
-                    indentations.pop_back();
-                }
-            }
-
-            // Append a new item to the current parent's list of children.
-            parents.last()->appendChild( new TreeItem( columnData, parents.last() ) );
-        }
-        ++number;
-    }
-}
-
-void TreeModel::setupModelDataFromXml( const QString data, TreeItem *parent )
-{
-	QVector<TreeItem*> parents;
-	parents << parent;
-
 	QDomDocument* xml	= new QDomDocument();
 	xml->setContent( data );
 
+	// First Child
 	QDomElement item	= xml->elementsByTagName( "MenuItems" ).at( 0 ).firstChild().toElement();
+	iterateChildItems( parent, item );
+}
+
+void TreeModel::iterateChildItems( TreeItem* parent, QDomElement item )	// item passed is first child of the parent
+{
 	while( ! item.isNull() )
 	{
 		QString id		= item.attribute( "id" );
-		QString title	= item.text();
+		// Title translations are in `GlobalTranslations.h`
+		QString title	= item.elementsByTagName( "Title" ).at( 0 ).toElement().text();
 
 		QVector<QVariant> columnData;
-		columnData << id << title;
+		columnData << title << id;
 
-		if ( true ) {	// Has Childs
+		parent->appendChild( new TreeItem( columnData, parent ) );
 
-		} else {
-
+		QDomNode	firstChild	= item.elementsByTagName( "MenuItems" ).at( 0 ).firstChild();
+		if ( ! firstChild.isNull() ) {	// Has Childs
+			iterateChildItems( parent->child( parent->childCount() -1 ), firstChild.toElement() );
 		}
-		parents.last()->appendChild( new TreeItem( columnData, parents.last() ) );
-		_ids	<< id;
 
 		item	= item.nextSibling().toElement();
 	}
-}
-
-QStringList TreeModel::ids()
-{
-	return _ids;
 }

@@ -1,9 +1,15 @@
+/*
+ * FROM THIS EXAMPLE BUT CHANGED SOURCE FILE FORMAT FROM TXT TO XML:
+ * ===========================================================================
+ * https://doc.qt.io/qt-5/qtwidgets-itemviews-simpletreemodel-example.html
+ */
 #ifndef SETTINGSMENU_TREEMODEL_H
 #define SETTINGSMENU_TREEMODEL_H
 
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
+#include <QDomElement>
 
 class TreeItem;
 
@@ -14,7 +20,7 @@ class TreeModel : public QAbstractItemModel
     Q_OBJECT
 
 	public:
-		explicit TreeModel( const QString &data, QObject *parent = nullptr, ItemDataSource dataType = Txt );
+		explicit TreeModel( const QString &data, QObject *parent = nullptr );
 		~TreeModel();
 
 		QVariant data( const QModelIndex &index, int role ) const override;
@@ -28,8 +34,8 @@ class TreeModel : public QAbstractItemModel
 		QStringList ids();
 
 	private:
-		void setupModelData( const QStringList &lines, TreeItem *parent );
-		void setupModelDataFromXml( const QString data, TreeItem *parent );
+		void setupModelData( const QString data, TreeItem *parent );
+		void iterateChildItems( TreeItem* parent, QDomElement item );
 
 		TreeItem *rootItem;
 		QStringList _ids;

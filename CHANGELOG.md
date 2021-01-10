@@ -1,3 +1,12 @@
+0.12.2	|	Release date: **10.01.2021**
+============================================
+* New Features:
+  - Made Settings menu model to parse childs of route items.
+* Other: 
+  - Refactoring of the Settings Menu xml source.
+  - CPP Code Refactoring.
+
+
 0.12.1	|	Release date: **09.01.2021**
 ============================================
 * Bug-Fixes:
