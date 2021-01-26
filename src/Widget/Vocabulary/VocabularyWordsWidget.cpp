@@ -19,6 +19,8 @@
 #include "VocabularyWidget.h"
 #include "ModelView/Helper.h"
 #include "ModelView/VocabularyTableViewDelegate.h"
+#include "ModelView/VocabularyWordsTableView.h"
+#include "ModelView/VocabularyWordsModel.h"
 
 VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     QWidget( parent ),
@@ -26,17 +28,15 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
 {
     ui->setupUi( this );
 
-    currentGroup = 1;
-    hideColumns = {0, 2, 4};
+    // Enable Drag&Drop for Rows
+	ui->tableView->verticalHeader()->setSectionsMovable( true );
+
+    currentGroup 	= 1;
+    hideColumns 	= {0, 2, 4};
 
     initModel();
     initContextMenu();
     initTextToSpeech();
-
-    // Enable Drag&Drop for Rows
-    ui->tableView->verticalHeader()->setSectionsMovable( true );
-	ui->tableView->verticalHeader()->setDragEnabled( true );
-	ui->tableView->verticalHeader()->setDragDropMode( QAbstractItemView::InternalMove );
 
     connect( ui->chkShowTranscriptions, SIGNAL( stateChanged( int ) ), this, SLOT( showTranscriptions( int ) ) );
     connect( ui->leSearch, SIGNAL( returnPressed() ), ui->btnSearch, SIGNAL( released() ) );
@@ -50,7 +50,8 @@ VocabularyWordsWidget::~VocabularyWordsWidget()
 
 void VocabularyWordsWidget::initModel()
 {
-	pModel	= new qx::QxModel<Vocabulary>();
+	//pModel	= new qx::QxModel<Vocabulary>();
+	pModel	= new VocabularyWordsModel();
 
 	VocabularyTableViewDelegate* itemDelegate	= new VocabularyTableViewDelegate( ui->tableView );
 	ui->tableView->setItemDelegateForColumn( 2, itemDelegate );
@@ -201,8 +202,6 @@ void VocabularyWordsWidget::moveToGroup()
 
 	QList<QModelIndex> selectedRows	= ui->tableView->selectionModel()->selectedRows();
 	for ( int i = 0; i < selectedRows.size(); ++i ) {
-		//qDebug() << "Old Group: " << pModel->data( selectedRows[i].siblingAtColumn( 4 ) ).toInt();
-
 		//ui->tableView->model()->setData( selectedRows[i].siblingAtColumn( 4 ), QVariant( groupId ) );
 		pModel->setData( selectedRows[i].siblingAtColumn( 4 ), QVariant( groupId ) );
 
@@ -282,7 +281,6 @@ void VocabularyWordsWidget::changeEvent( QEvent* event )
 
 void VocabularyWordsWidget::modelRowsInserted( const QModelIndex & parent, int start, int end )
 {
-	//qDebug() << "Row Inserted: " << start;
 	//ui->tableView->scrollTo( pModel->index( start, 1 ) );
 	ui->tableView->scrollToBottom();
 }
@@ -298,15 +296,8 @@ void VocabularyWordsWidget::showTranscriptions( int state )
 
 void VocabularyWordsWidget::adjustRowSelection()
 {
-//	const QColor hlClr	= Qt::red; // highlight color to set
-//	const QColor txtClr = Qt::white; // highlighted text color to set
-//
-//	QPalette p			= palette();
-//	p.setColor( QPalette::Highlight, hlClr );
-//	p.setColor( QPalette::HighlightedText, txtClr );
-//	ui->tableView->setPalette( p );
-
 	ui->tableView->setSelectionBehavior( QAbstractItemView::SelectRows );
+	ui->tableView->setSelectionMode( QAbstractItemView::SingleSelection );	// SingleSelection because easyer
 	//ui->tableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
 }
 

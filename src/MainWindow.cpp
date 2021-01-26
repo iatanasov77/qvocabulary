@@ -59,6 +59,7 @@ MainWindow::~MainWindow()
 void MainWindow::initWidgets()
 {
 	wdgVocabulary	= new VocabularyWidget( this );
+	wdgVocabulary->setAcceptDrops( true ) ;
 	setCentralWidget( wdgVocabulary );
 }
 
