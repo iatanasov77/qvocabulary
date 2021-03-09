@@ -19,7 +19,6 @@
 #include "VocabularyWidget.h"
 #include "ModelView/Helper.h"
 #include "ModelView/VocabularyTableViewDelegate.h"
-#include "ModelView/VocabularyWordsTableView.h"
 #include "ModelView/VocabularyWordsModel.h"
 
 VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
@@ -28,13 +27,11 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
 {
     ui->setupUi( this );
 
-    // Enable Drag&Drop for Rows
-	ui->tableView->verticalHeader()->setSectionsMovable( true );
-
     currentGroup 	= 1;
     hideColumns 	= {0, 2, 4};
 
     initModel();
+    adjustRowSelection();
     initContextMenu();
     initTextToSpeech();
 
@@ -50,7 +47,6 @@ VocabularyWordsWidget::~VocabularyWordsWidget()
 
 void VocabularyWordsWidget::initModel()
 {
-	//pModel	= new qx::QxModel<Vocabulary>();
 	pModel	= new VocabularyWordsModel();
 
 	VocabularyTableViewDelegate* itemDelegate	= new VocabularyTableViewDelegate( ui->tableView );
@@ -78,6 +74,13 @@ void VocabularyWordsWidget::initModel()
 	);
 
 	connect(
+		pModel,
+		SIGNAL( modelUpdated() ),
+		this,
+		SLOT( updateView() )
+	);
+
+	connect(
 		itemDelegate,
 		SIGNAL( buttonClicked( QModelIndex ) ),
 		this,
@@ -87,7 +90,6 @@ void VocabularyWordsWidget::initModel()
 
 void VocabularyWordsWidget::initContextMenu()
 {
-	adjustRowSelection();
 	ui->tableView->setContextMenuPolicy( Qt::CustomContextMenu );
 	connect(
 		ui->tableView,
@@ -151,6 +153,12 @@ int VocabularyWordsWidget::deleteGroup( int groupId )
 void VocabularyWordsWidget::refreshView( QModelIndex topLeft, QModelIndex bottomRight )
 {
 	emit pModel->dataChanged( topLeft, bottomRight );
+	initModel();
+	loadGroup( currentGroup );
+}
+
+void VocabularyWordsWidget::updateView()
+{
 	initModel();
 	loadGroup( currentGroup );
 }
@@ -219,7 +227,6 @@ void VocabularyWordsWidget::deleteWord()
 	for ( int i = 0; i < selectedRows.size(); ++i ) {
 		pModel->qxDeleteById( pModel->data( selectedRows[i].siblingAtColumn( 0 ) ) );
 	}
-	pModel->qxSave();
 	refreshView( selectedRows[0].siblingAtColumn( 0 ), selectedRows[selectedRows.size()-1].siblingAtColumn( 4 ) );
 }
 
@@ -297,8 +304,8 @@ void VocabularyWordsWidget::showTranscriptions( int state )
 void VocabularyWordsWidget::adjustRowSelection()
 {
 	ui->tableView->setSelectionBehavior( QAbstractItemView::SelectRows );
-	ui->tableView->setSelectionMode( QAbstractItemView::SingleSelection );	// SingleSelection because easyer
-	//ui->tableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
+	//ui->tableView->setSelectionMode( QAbstractItemView::SingleSelection );	// SingleSelection because easyer
+	ui->tableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
 }
 
 void VocabularyWordsWidget::sayWord( const QModelIndex &index )

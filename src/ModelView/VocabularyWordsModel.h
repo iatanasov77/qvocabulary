@@ -2,6 +2,7 @@
 #define MODEL_VOCABULARYWORDS_H
 
 #include <QObject>
+#include <QMap>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -36,6 +37,12 @@ class VocabularyWordsModel : public qx::QxModel<Vocabulary>
 			const QModelIndex &destinationIndex,
 			int destinationRow
 		);
+
+	private:
+		void _myMoveRows( int sourceRow, int destinationRow, int countRows );
+
+	signals:
+		void modelUpdated();
 };
 
 #endif	// MODEL_VOCABULARYWORDS_H
