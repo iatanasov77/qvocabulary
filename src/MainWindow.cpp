@@ -59,6 +59,7 @@ MainWindow::~MainWindow()
 void MainWindow::initWidgets()
 {
 	wdgVocabulary	= new VocabularyWidget( this );
+	wdgVocabulary->setAcceptDrops( true ) ;
 	setCentralWidget( wdgVocabulary );
 }
 
@@ -260,8 +261,7 @@ void MainWindow::on_actionSave_As_triggered()
 
 void MainWindow::loadDb( const QString &dbPath )
 {
-	if ( curDatabase == dbPath )
-		return;
+	if ( curDatabase == dbPath ) return;
 
 	if ( ! QFile::exists( dbPath ) ) {
 		QMessageBox::warning( this, tr( "Recent Databases" ),
@@ -333,10 +333,12 @@ void MainWindow::initDatabase()
 
 			if ( dlg->initDatabase() == InitDatabaseDialog::OpenDatabase ) {
 				dbPath	= openDatabase();
+				//qDebug() << "Open DB: " << dbPath;
 			}
 		}
 	}
 
+	//qDebug() << "Load DB: " << dbPath;
 	loadDb( dbPath );
 }
 
