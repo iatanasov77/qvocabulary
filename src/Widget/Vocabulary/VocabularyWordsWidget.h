@@ -43,6 +43,7 @@ class VocabularyWordsWidget : public QWidget
 
 		void modelRowsInserted( const QModelIndex & parent, int start, int end );
 		void updateSpeaker();
+		void updateView();
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed

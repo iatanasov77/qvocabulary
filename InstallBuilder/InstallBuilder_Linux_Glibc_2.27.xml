@@ -1,7 +1,7 @@
 <project>
     <shortName>QVocabulary</shortName>
     <fullName>QVocabulary</fullName>
-    <version>0.9.3-Glibc_2.27</version>
+    <version>0.12.3-Glibc_2.27</version>
     <licenseFile>/vagrant/LICENSE</licenseFile>
     <componentList>
         <component>

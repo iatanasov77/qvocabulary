@@ -1,3 +1,13 @@
+0.13.0	|	Release date: **09.03.2021**
+============================================
+* New Features:
+  - Drag&Drop/Reorder Vocabulary Words.
+* Improvements and Refactoring:
+  - Move Worked. Needs Refactoring.
+  - Update README.md
+  - Update InstallBuilder projects.
+	
+
 0.12.3	|	Release date: **10.01.2021**
 ============================================
 * Bug-Fixes:
