@@ -1,3 +1,10 @@
+0.13.1	|	Release date: **10.03.2021**
+============================================
+* Bug-Fixes:
+  - Fix SearchResults Widget to show language_2 
+  - Fix SearchResults Widget headers to be translated.
+
+
 0.13.0	|	Release date: **09.03.2021**
 ============================================
 * New Features:
