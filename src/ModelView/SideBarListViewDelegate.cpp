@@ -5,10 +5,10 @@
 #include <QSize>
 #include <QListView>
 
-SideBarListViewDelegate::SideBarListViewDelegate( QObject *parent ) :
+SideBarListViewDelegate::SideBarListViewDelegate( int currRow, QObject *parent ) :
     QItemDelegate( parent )
 {
-	_currRow	= 0;
+	_currRow	= currRow;
 	_event		= 0;
 }
 

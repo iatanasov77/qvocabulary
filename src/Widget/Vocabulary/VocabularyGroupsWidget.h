@@ -26,6 +26,11 @@ class VocabularyGroupsWidget : public QWidget
 		void refreshView( QModelIndex topLeft, QModelIndex bottomRight );
 		void refreshView();
 		int currentGroup();
+		int groupRow( int groupId );
+		void setCurrentGroup( int groupId );
+
+	signals:
+		void currentGroupChanged( const QModelIndex &index );
 
 	public slots:
 		void setCurrentGroup( const QModelIndex &index );
