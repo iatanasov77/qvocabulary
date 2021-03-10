@@ -1,3 +1,9 @@
+0.13.2	|	Release date: **10.03.2021**
+============================================
+* Bug-Fixes:
+  - Set Right Active CurrentGroup Button on load.
+
+
 0.13.1	|	Release date: **10.03.2021**
 ============================================
 * Bug-Fixes:

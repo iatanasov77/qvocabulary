@@ -12,7 +12,7 @@ class SideBarListViewDelegate : public QItemDelegate
     Q_OBJECT
 
 	public:
-		SideBarListViewDelegate( QObject *parent = 0 );
+		SideBarListViewDelegate( int currRow = 0, QObject *parent = 0 );
 		virtual void paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
 		virtual QSize sizeHint( const QStyleOptionViewItem& option, const QModelIndex& index ) const;
 		bool editorEvent( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index );

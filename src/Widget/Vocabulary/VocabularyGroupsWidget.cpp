@@ -23,10 +23,16 @@ VocabularyGroupsWidget::VocabularyGroupsWidget( QWidget *parent ) :
     initModel();
     initContextMenu();
 
+    int currentGroupRow = 0;
+    int currentGroup	= VsSettings::instance()->value( "currentGroup", "Vocabulary" ).toInt();
+    if ( currentGroup ) {
+    	currentGroupRow	= groupRow( currentGroup );
+    }
+
 	/*
 	 * Init view delegate
 	 */
-    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( ui->listView );
+    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( currentGroupRow, ui->listView );
     ui->listView->setItemDelegate( itemDelegate );
 
     /*
@@ -35,6 +41,7 @@ VocabularyGroupsWidget::VocabularyGroupsWidget( QWidget *parent ) :
 	VocabularyWidget *wdgVocabulary	= qobject_cast<VocabularyWidget *>( parent ); // parent() if not in constructor
 	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), wdgVocabulary, SLOT( loadGroup( QModelIndex ) ) );
 	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), this, SLOT( setCurrentGroup( QModelIndex ) ) );
+	connect( this, SIGNAL( currentGroupChanged( QModelIndex ) ), itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ) );
 
 	wdgVocabulary->setCurrentGroupName( ui->listView->model()->data( ui->listView->model()->index( 0, 1 ) ).toString() );
 }
@@ -85,6 +92,27 @@ void VocabularyGroupsWidget::refreshView( QModelIndex topLeft, QModelIndex botto
 void VocabularyGroupsWidget::refreshView()
 {
 	initModel();
+}
+
+int VocabularyGroupsWidget::groupRow( int groupId )
+{
+	for ( int i = 0; i < pModel->rowCount(); i++ ) {
+		if ( pModel->index( i, 0 ).data().toInt() == groupId ) {
+			return i;
+		}
+	}
+
+	return 0;
+}
+
+void VocabularyGroupsWidget::setCurrentGroup( int groupId )
+{
+	int currentGroupRow = 0;
+	if ( groupId ) {
+		currentGroupRow	= groupRow( groupId );
+	}
+
+	emit currentGroupChanged( pModel->index( currentGroupRow, 0 ) );
 }
 
 void VocabularyGroupsWidget::setCurrentGroup( const QModelIndex &index )

@@ -35,6 +35,7 @@ VocabularyWidget::VocabularyWidget( QWidget *parent ) :
     int currentGroup	= VsSettings::instance()->value( "currentGroup", "Vocabulary" ).toInt();
     if ( currentGroup ) {
     	loadGroup( currentGroup );
+    	wdgGroups->setCurrentGroup( currentGroup );
     } else {
     	loadGroup( wdgGroups->currentGroup() );
     }
