@@ -106,11 +106,7 @@ void VocabularyWordsWidget::initTextToSpeech()
 
 void VocabularyWordsWidget::setViewHeader( VocabularyMetaInfoPtr metaInfo )
 {
-	QStringList headTitles;
-	headTitles
-		<< qApp->translate( "Vocabulary", metaInfo->language1.toStdString().c_str() )
-		<< qApp->translate( "Vocabulary", metaInfo->language2.toStdString().c_str() )
-		<< qApp->translate( "Vocabulary", "Transcription" );
+	QStringList headTitles	= viewHeaders( metaInfo );
 
 	pModel->setHeaderData( 1, Qt::Horizontal, headTitles.at( 0 ), Qt::DisplayRole );
 	pModel->setHeaderData( 2, Qt::Horizontal, headTitles.at( 2 ), Qt::DisplayRole );
@@ -251,7 +247,9 @@ void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searc
 
 	QTreeWidgetItem* childItem;
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
-	ui->treeWidget->setHeaderLabels( QStringList() << "\t" + metaInfo->language1 << metaInfo->language2 );
+	QStringList headTitles			= viewHeaders( metaInfo );
+	ui->treeWidget->setHeaderLabels( QStringList() << "\t" + headTitles.at( 0 ) << headTitles.at( 1 ) );
+
 	for ( int i = 0; i < searchModel->rowCount(); ++i ) {
 		groupId	= searchModel->data( searchModel->index( i, 4 ) ).toInt();
 		if ( ! groups.contains( groupId ) ) {
@@ -268,9 +266,12 @@ void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searc
 
 		childItem = new QTreeWidgetItem();
 		childItem->setText( 0, searchModel->data( searchModel->index( i, 1 ) ).toString() );
-		childItem->setText( 1, searchModel->data( searchModel->index( i, 2 ) ).toString() );
+		childItem->setText( 1, searchModel->data( searchModel->index( i, 3 ) ).toString() );
 		groups[groupId]->addChild( childItem );
 	}
+
+	// Resize Columns
+	ui->treeWidget->setColumnWidth( 0 , 200 );
 
 	ui->stackedWidget->setCurrentWidget( ui->pageSearch );
 }
@@ -288,6 +289,10 @@ void VocabularyWordsWidget::changeEvent( QEvent* event )
 
 void VocabularyWordsWidget::modelRowsInserted( const QModelIndex & parent, int start, int end )
 {
+	Q_UNUSED( parent );
+	Q_UNUSED( start );
+	Q_UNUSED( end );
+
 	//ui->tableView->scrollTo( pModel->index( start, 1 ) );
 	ui->tableView->scrollToBottom();
 }
@@ -318,4 +323,15 @@ void VocabularyWordsWidget::sayWord( const QModelIndex &index )
 void VocabularyWordsWidget::updateSpeaker()
 {
 	speeker->updateTts();
+}
+
+QStringList VocabularyWordsWidget::viewHeaders( VocabularyMetaInfoPtr metaInfo )
+{
+	QStringList headTitles;
+	headTitles
+		<< qApp->translate( "Vocabulary", metaInfo->language1.toStdString().c_str() )
+		<< qApp->translate( "Vocabulary", metaInfo->language2.toStdString().c_str() )
+		<< qApp->translate( "Vocabulary", "Transcription" );
+
+	return headTitles;
 }

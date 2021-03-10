@@ -50,6 +50,7 @@ class VocabularyWordsWidget : public QWidget
 		void changeEvent( QEvent* );
 
 	private:
+		QStringList viewHeaders( VocabularyMetaInfoPtr metaInfo );
 		void initModel();
 		void initContextMenu();
 		void initTextToSpeech();
