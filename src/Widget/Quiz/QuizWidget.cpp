@@ -195,6 +195,10 @@ void QuizWidget::changeEvent( QEvent* event )
 
 void QuizWidget::modelRowsInserted( const QModelIndex & parent, int start, int end )
 {
+	Q_UNUSED( parent );
+	Q_UNUSED( start );
+	Q_UNUSED( end );
+
 	//qDebug() << "Row Inserted: " << start;
 	//ui->tableView->scrollTo( pModel->index( start, 1 ) );
 	ui->tableView->scrollToBottom();

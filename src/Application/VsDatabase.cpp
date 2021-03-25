@@ -42,6 +42,8 @@ VsDatabase* VsDatabase::instance() {
 
 void VsDatabase::connect( const QString& path, QString connection )
 {
+	Q_UNUSED( connection );
+
 	if ( ! QFile::exists( path ) ) {
 		create( path );
 	}
@@ -63,6 +65,8 @@ void VsDatabase::connect( const QString& path, QString connection )
 
 void VsDatabase::create( QString path, QString defaultGroupName )
 {
+	Q_UNUSED( defaultGroupName );
+
 	QSqlDatabase db = QSqlDatabase::addDatabase( "QSQLITE" ); //not dbConnection
 	db.setDatabaseName( path );
 	bool ok = db.open();
@@ -148,6 +152,8 @@ void VsDatabase::executeImportTransaction( QString queryStr, QSqlDatabase &db )
 
 void VsDatabase::executeImportNonTransaction( QString queryStr, QSqlDatabase &db )
 {
+	Q_UNUSED( db );
+
 	qDebug() << "Begin Non-Transactional Import";
 	QSqlQuery query;
 

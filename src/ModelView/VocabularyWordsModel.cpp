@@ -89,6 +89,9 @@ bool VocabularyWordsModel::moveRows(
 	const QModelIndex &destinationIndex,
 	int destinationRow
 ) {
+	Q_UNUSED( sourceIndex );
+	Q_UNUSED( destinationIndex );
+
 	QSqlError daoError;
 
 	beginMoveRows( QModelIndex(), sourceRow, sourceRow + countRows - 1, QModelIndex(), destinationRow );

@@ -122,8 +122,6 @@ void VocabularyGroupsWidget::setCurrentGroup( const QModelIndex &index )
 
 void VocabularyGroupsWidget::displayContextMenu( QPoint pos )
 {
-	QModelIndex currentIndex	= ui->listView->currentIndex();
-
 	// This made everything :)
 	ui->listView->setCurrentIndex( ui->listView->indexAt( pos ) );
 
@@ -144,7 +142,7 @@ void VocabularyGroupsWidget::displayContextMenu( QPoint pos )
 		menu,
 		SIGNAL( aboutToHide() ),
 		this,
-		SLOT( setCurrentGroup( currentIndex ) )
+		SLOT( setCurrentGroup( ui->listView->currentIndex() ) )
 	);
 
 	menu->popup( ui->listView->viewport()->mapToGlobal( pos ) );
@@ -175,9 +173,9 @@ void VocabularyGroupsWidget::deleteGroup()
 
 	if ( reply == QMessageBox::Yes ) {
 		QModelIndex indexId				= ui->listView->currentIndex().siblingAtColumn( 0 );
-		VocabularyWidget *wdgVocabulary	= qobject_cast<VocabularyWidget *>( parent() );
-
+		//VocabularyWidget *wdgVocabulary	= qobject_cast<VocabularyWidget *>( parent() );
 		//wdgVocabulary->deleteGroup( pModel->data( indexId ).toInt() );
+
 		qx::QxModel<Vocabulary>* vocModel	= new qx::QxModel<Vocabulary>;
 		QString query	= QString( "WHERE group_id=%1" ).arg( QString::number( pModel->data( indexId ).toInt() ) );
 		vocModel->qxDeleteByQuery( query );
@@ -208,6 +206,10 @@ void VocabularyGroupsWidget::changeEvent( QEvent* event )
 
 void VocabularyGroupsWidget::modelRowsInserted( const QModelIndex & parent, int start, int end )
 {
+	Q_UNUSED( parent );
+	Q_UNUSED( start );
+	Q_UNUSED( end );
+
 	//ui->listView->scrollTo( pModel->index( start, 0 ) );
 	ui->listView->scrollToBottom();
 }

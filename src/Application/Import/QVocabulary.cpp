@@ -36,6 +36,8 @@ bool QVocabulary::importFromDb( QString dbName )
 	} else {
 		qDebug() << "Import Source Database Cannot Be Opened!";
 	}
+
+	return true;
 }
 
 bool QVocabulary::parseMeta()
@@ -59,7 +61,7 @@ bool QVocabulary::parseWords()
 	QSqlError daoError;
 	VocabularyPtr voc;
 	VocabularyGroupPtr vocg;
-	int currentGroup;
+	int currentGroup	= -1;
 
 	QSqlQuery query( "SELECT * FROM Vocabulary", db );
 	while ( query.next() ) {

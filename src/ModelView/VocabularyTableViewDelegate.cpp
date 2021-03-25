@@ -62,6 +62,8 @@ QWidget* VocabularyTableViewDelegate::createEditor(
 		const QStyleOptionViewItem &option,
 		const QModelIndex &index
 ) const {
+	Q_UNUSED( index );
+
 	qDebug() << "CREATE EDITOR";
 
 	QRect editorRect	= textRect( option.rect );
