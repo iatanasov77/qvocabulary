@@ -1,3 +1,9 @@
+0.13.4	|	Release date: **25.03.2021**
+============================================
+* Bug-Fixes:
+  - Make windows icon transparent
+
+
 0.13.3	|	Release date: **25.03.2021**
 ============================================
 * Bug-Fixes / Improvements:
