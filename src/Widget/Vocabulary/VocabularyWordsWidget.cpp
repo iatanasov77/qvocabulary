@@ -54,7 +54,9 @@ void VocabularyWordsWidget::initModel()
 	//ui->tableView->setItemDelegate( itemDelegate );
 
 	ui->tableView->setModel( pModel );
-	ui->tableView->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
+	//ui->tableView->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
+	ui->tableView->horizontalHeader()->resizeSections( QHeaderView::ResizeToContents );
+	ui->tableView->horizontalHeader()->setStretchLastSection( true );
 	for( int i = 0; i < hideColumns.size(); i++ ) {
 		ui->tableView->hideColumn( hideColumns[i] );
 	}
