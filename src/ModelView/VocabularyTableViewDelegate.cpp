@@ -1,6 +1,7 @@
 #include "VocabularyTableViewDelegate.h"
 
 #include <QApplication>
+#include <QLineEdit>
 #include <QIcon>
 #include <QMouseEvent>
 #include <QDebug>
@@ -21,9 +22,6 @@ void VocabularyTableViewDelegate::paint(
 
 	QStyleOptionButton button	= createButton( buttonRect( option.rect ) );
 	QStyle *style				= option.widget ? option.widget->style() : QApplication::style();
-
-//	if( option.state & QStyle::State_MouseOver )
-//		button.state	= QStyle::State_MouseOver;
 
 	style->drawControl( QStyle::CE_PushButton, &button, painter, option.widget );
 
@@ -51,16 +49,35 @@ bool VocabularyTableViewDelegate::editorEvent(
 		}
 	}
 
-	return true;
+	if ( event->type() == QEvent::MouseButtonDblClick ) {
+//		QRect editorRect	= textRect( option.rect );
+//		option.rect			= editorRect;
+	}
+
+	return QStyledItemDelegate::editorEvent( event, model, option, index );
 }
+
+QWidget* VocabularyTableViewDelegate::createEditor(
+		QWidget *parent,
+		const QStyleOptionViewItem &option,
+		const QModelIndex &index
+) const {
+	qDebug() << "CREATE EDITOR";
+
+	QRect editorRect	= textRect( option.rect );
+	QLineEdit* editor	= new QLineEdit( parent );
+	//editor->setGeometry( editorRect );
+	editor->resize( editorRect.width(), editorRect.height() );
+	//connect( editor, SIGNAL( editingFinished() ), this, SLOT( commitAndCloseEditor() ) );
+
+	return editor;
+ }
 
 QStyleOptionButton VocabularyTableViewDelegate::createButton( QRect buttonRect  ) const
 {
 	QStyleOptionButton button;
 
-	//button.text.clear();
 	button.rect		= buttonRect;
-	//button.text 	= "=^.^=";
 	button.icon 	= QIcon( ":/Resources/icons/speaker.png" );
 	button.iconSize	= QSize( 16, 16 );
 	button.state 	= QStyle::State_Enabled;

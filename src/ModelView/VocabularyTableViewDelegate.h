@@ -11,6 +11,7 @@ class VocabularyTableViewDelegate : public QStyledItemDelegate
 		VocabularyTableViewDelegate( QObject *parent = 0 );
 		virtual void paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
 		bool editorEvent( QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index );
+		QWidget* createEditor( QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
 
 	private:
 		QRect textRect( QRect cellRect ) const;

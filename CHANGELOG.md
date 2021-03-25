@@ -1,3 +1,10 @@
+0.13.3	|	Release date: **25.03.2021**
+============================================
+* Bug-Fixes / Improvements:
+  - Vocabulary words table make columns resizable.
+  - Make Transcriptions editable.
+
+
 0.13.2	|	Release date: **10.03.2021**
 ============================================
 * Bug-Fixes:
