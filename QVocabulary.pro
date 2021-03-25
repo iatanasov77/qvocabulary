@@ -60,7 +60,8 @@ HEADERS += $$files(src/*.h, true)
 HEADERS += /home/vagrant/tools/qt-mustache/src/mustache.h
 FORMS += $$files(Forms/*.ui, true)
 RESOURCES = QVocabulary.qrc
-RC_ICONS = dictionary.ico
+#RC_ICONS = dictionary.ico
+RC_ICONS = dictionary_transparent.ico
 TRANSLATIONS += $$files(translations/*.ts, true)
 
 ###############################
