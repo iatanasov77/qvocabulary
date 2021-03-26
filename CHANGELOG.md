@@ -1,3 +1,11 @@
+0.13.5	|	Release date: **26.03.2021**
+============================================
+* Bug-Fixes and Improvements:
+  - Standard Quiz Fixes.
+  - Remove compiler(gcc) warnings.
+  - Vocabulary QSplitter add border devider.
+
+
 0.13.4	|	Release date: **25.03.2021**
 ============================================
 * Bug-Fixes:
