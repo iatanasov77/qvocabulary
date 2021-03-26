@@ -329,10 +329,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>E&amp;nglish to Bulgarian</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Bulgarian to English</source>
         <translation type="unfinished"></translation>
     </message>
@@ -346,6 +342,10 @@
     </message>
     <message>
         <source>Start Quiz!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>English to Bulgarian</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -488,14 +488,6 @@ Done, over and out.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>General</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Speaker</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -507,7 +499,7 @@ Done, over and out.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Summary</source>
+        <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -527,6 +519,14 @@ Done, over and out.
     </message>
     <message>
         <source>Transcription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Source Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Answer</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

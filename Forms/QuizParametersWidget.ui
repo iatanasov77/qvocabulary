@@ -108,7 +108,7 @@
          <item>
           <widget class="QRadioButton" name="rbFirst2Second">
            <property name="text">
-            <string>E&amp;nglish to Bulgarian</string>
+            <string>English to Bulgarian</string>
            </property>
            <property name="checked">
             <bool>true</bool>

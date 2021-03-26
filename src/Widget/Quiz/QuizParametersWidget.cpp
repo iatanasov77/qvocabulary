@@ -23,6 +23,7 @@ QuizParametersWidget::QuizParametersWidget( QWidget *parent ) :
 
     initGroups();
     initTimer( false );
+    setDirection();
 
     connect(
 		ui->rbFirst2Second,
@@ -51,8 +52,8 @@ void QuizParametersWidget::setMetaInfo( VocabularyMetaInfoPtr metaInfo )
 	QString lblFirst2Second = QString( "%1 to %2" ).arg( metaInfo->language1 ).arg( metaInfo->language2 );
 	QString lblSecond2First = QString( "%1 to %2" ).arg( metaInfo->language2 ).arg( metaInfo->language1 );
 
-	ui->rbFirst2Second->setText( lblFirst2Second );
-	ui->rbSecond2First->setText( lblSecond2First );
+	ui->rbFirst2Second->setText( qApp->translate( "Vocabulary", lblFirst2Second.toStdString().c_str() ) );
+	ui->rbSecond2First->setText( qApp->translate( "Vocabulary", lblSecond2First.toStdString().c_str() ) );
 }
 
 void QuizParametersWidget::initTimer( bool on )
