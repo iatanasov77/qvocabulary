@@ -57,10 +57,14 @@ VocabularyGroupPtr Import::createGroup( QString groupName )
 
 bool Import::importFromFile( QString file )
 {
+	Q_UNUSED( file );
+
 	return false;
 }
 
 bool Import::importFromDb( QString dbName )
 {
+	Q_UNUSED( dbName );
+
 	return false;
 }

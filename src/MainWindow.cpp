@@ -353,6 +353,8 @@ QString MainWindow::createNewDatabase()
 	dlgNewDatabase->setModal( true );
 	if ( dlgNewDatabase->exec() == QDialog::Accepted )
 		return dlgNewDatabase->database();
+
+	return "UNSELECTED DATABASE";
 }
 
 void MainWindow::on_actionImportMicrosoftVocabulary_triggered()

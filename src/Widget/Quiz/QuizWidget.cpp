@@ -77,14 +77,21 @@ void QuizWidget::updateTimer()
 
 void QuizWidget::initModel()
 {
+	QStringList headTitles;
+	headTitles << qApp->translate( "Vocabulary", "Source Language" )
+			<< qApp->translate( "Vocabulary", "Answer" );
 	metaInfo	= VsDatabase::instance()->metaInfo();
 
 	pModelVocabulary	= new qx::QxModel<Vocabulary>();
 
 	pModel				= new QuizItemModel();
+	pModel->setHeaderData( 1, Qt::Horizontal, headTitles.at( 0 ), Qt::DisplayRole );
+	pModel->setHeaderData( 4, Qt::Horizontal, headTitles.at( 1 ), Qt::DisplayRole );
 
 	ui->tableView->setModel( pModel );
-	ui->tableView->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
+	//ui->tableView->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
+	ui->tableView->horizontalHeader()->resizeSections( QHeaderView::ResizeToContents );
+	ui->tableView->horizontalHeader()->setStretchLastSection( true );
 	for( int i = 0; i < hideColumns.size(); i++ ) {
 		ui->tableView->hideColumn( hideColumns[i] );
 	}
@@ -125,12 +132,14 @@ void QuizWidget::setQuiz( int quizId, QList<QString> groupIds, bool randomize, i
 	QString lang1	= ( quiz->direction == FIRST_TO_SECOND ) ? metaInfo->language1 : metaInfo->language2;
 	QString lang2	= ( quiz->direction == FIRST_TO_SECOND ) ? metaInfo->language2 : metaInfo->language1;
 
-	pModel->setHeaderData( 1, Qt::Horizontal, lang1, Qt::DisplayRole );
-	pModel->setHeaderData( 4, Qt::Horizontal, lang2, Qt::DisplayRole );
+	pModel->setHeaderData( 1, Qt::Horizontal, qApp->translate( "Vocabulary", lang1.toStdString().c_str() ), Qt::DisplayRole );
+	pModel->setHeaderData( 4, Qt::Horizontal, qApp->translate( "Vocabulary", lang2.toStdString().c_str() ), Qt::DisplayRole );
 
 	if ( time > 0 ) {
 		initTimer( time );
 	}
+
+	insertWord();
 }
 
 void QuizWidget::insertWord()
@@ -180,6 +189,7 @@ void QuizWidget::finishQuiz()
 	QSqlError daoError	= qx::dao::update( quiz );
 
 	pModel->qxSave();
+	ui->frmTimer->hide();
 }
 
 void QuizWidget::changeEvent( QEvent* event )
@@ -195,6 +205,10 @@ void QuizWidget::changeEvent( QEvent* event )
 
 void QuizWidget::modelRowsInserted( const QModelIndex & parent, int start, int end )
 {
+	Q_UNUSED( parent );
+	Q_UNUSED( start );
+	Q_UNUSED( end );
+
 	//qDebug() << "Row Inserted: " << start;
 	//ui->tableView->scrollTo( pModel->index( start, 1 ) );
 	ui->tableView->scrollToBottom();

@@ -350,11 +350,11 @@
     </message>
     <message>
         <source>E&amp;nglish to Bulgarian</source>
-        <translation type="unfinished">Английски на Българси</translation>
+        <translation type="obsolete">Английски на Българси</translation>
     </message>
     <message>
         <source>Bulgarian to English</source>
-        <translation type="unfinished">Български към Английски</translation>
+        <translation type="unfinished">Български на Английски</translation>
     </message>
     <message>
         <source>Randomize</source>
@@ -367,6 +367,10 @@
     <message>
         <source>Start Quiz!</source>
         <translation type="unfinished">Стартирай Теста!</translation>
+    </message>
+    <message>
+        <source>English to Bulgarian</source>
+        <translation type="unfinished">Английски на Българси</translation>
     </message>
 </context>
 <context>
@@ -513,7 +517,7 @@ Done, over and out.
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished">Основни</translation>
+        <translation type="obsolete">Основни</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -529,7 +533,7 @@ Done, over and out.
     </message>
     <message>
         <source>Speaker</source>
-        <translation type="unfinished">Говорител</translation>
+        <translation type="obsolete">Говорител</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -543,7 +547,7 @@ Done, over and out.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Summary</source>
+        <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -551,7 +555,7 @@ Done, over and out.
     <name>Vocabulary</name>
     <message>
         <source>Transcriptions</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Транскрипции</translation>
     </message>
     <message>
         <source>English</source>
@@ -564,6 +568,14 @@ Done, over and out.
     <message>
         <source>Transcription</source>
         <translation type="unfinished">Транскрипция</translation>
+    </message>
+    <message>
+        <source>Source Language</source>
+        <translation type="unfinished">Въпросна дума</translation>
+    </message>
+    <message>
+        <source>Answer</source>
+        <translation type="unfinished">Отговор</translation>
     </message>
 </context>
 <context>

@@ -20,4 +20,6 @@ int InitDatabaseDialog::initDatabase()
 	} else if ( ui->rbOpenDatabase->isChecked() ) {
 		return OpenDatabase;
 	}
+
+	return -1;
 }

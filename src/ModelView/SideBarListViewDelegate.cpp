@@ -64,13 +64,16 @@ bool SideBarListViewDelegate::editorEvent(
 	const QStyleOptionViewItem &option,
 	const QModelIndex &index
 ) {
+	Q_UNUSED( model );
+	Q_UNUSED( option );
+
 	switch ( event->type() ) {
 		case QEvent::MouseButtonPress:
 			{
 				//qDebug() << "MouseButtonPress: " << _currRow;
 				_currRow	= index.row();
 				QMouseEvent* me = static_cast<QMouseEvent *>(event);
-				int currRow	= _currRow;
+				//int currRow	= _currRow;
 				_currRow	= index.row();
 				if ( me->button() == Qt::RightButton )
 				{

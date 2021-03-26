@@ -32,6 +32,8 @@ bool MicrosoftVocabulary::importFromFile( QString file )
 
 	//parseMeta();
 	parseWords();
+
+	return true;
 }
 
 bool MicrosoftVocabulary::exportToFile( QString file )

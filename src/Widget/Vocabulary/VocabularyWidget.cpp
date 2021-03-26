@@ -48,6 +48,9 @@ VocabularyWidget::~VocabularyWidget()
 
 void VocabularyWidget::init()
 {
+	/*
+	 * Init widgets in the QSplitter
+	 */
 	QSplitter* horizSplitter 	= new QSplitter( Qt::Horizontal );
 	wdgGroups					= new VocabularyGroupsWidget( this );
 	wdgWords					= new VocabularyWordsWidget( this );
@@ -57,6 +60,18 @@ void VocabularyWidget::init()
 
 	horizSplitter->insertWidget( 0, wdgGroups );
 	horizSplitter->insertWidget( 1, wdgWords );
+
+	/*
+ 	 * Styling QSplitter
+ 	 */
+	const QString splitterSheet =  \
+		"QSplitter::handle:horizontal { \
+			border: 1px solid black; \
+			margin: 0px; \
+			padding: 0px; \
+		}";
+	horizSplitter->setStyleSheet( splitterSheet );
+
 	ui->horizontalLayout->addWidget( horizSplitter );
 }
 
