@@ -1,3 +1,9 @@
+0.14.0	|	Release date: **28.03.2021**
+============================================
+* New Features:
+  - Quiz add status icon on answer column.
+
+
 0.13.5	|	Release date: **26.03.2021**
 ============================================
 * Bug-Fixes and Improvements:
