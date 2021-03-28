@@ -60,7 +60,6 @@ class QuizWidget : public QWidget
 		QVector<int> itemsRange;
 		int rightAnswers;
 		int timerSeconds;
-
 };
 
 #endif // WIDGET_QUIZ_H
