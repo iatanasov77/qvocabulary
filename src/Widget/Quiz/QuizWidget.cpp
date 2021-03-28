@@ -16,6 +16,7 @@
 #include "Entity/VocabularyGroup.h"
 
 #include "ModelView/QuizViewDelegate.h"
+#include "ModelView/QuizItemModelDelegate.h"
 #include "ModelView/QuizItemModel.h"
 
 QuizWidget::QuizWidget( QWidget *parent ) :
@@ -77,6 +78,9 @@ void QuizWidget::updateTimer()
 
 void QuizWidget::initModel()
 {
+	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate( ui->tableView );
+	ui->tableView->setItemDelegateForColumn( 4, itemDelegate );
+
 	QStringList headTitles;
 	headTitles << qApp->translate( "Vocabulary", "Source Language" )
 			<< qApp->translate( "Vocabulary", "Answer" );
@@ -160,6 +164,7 @@ void QuizWidget::insertWord()
 	pModel->setData( pModel->index( targetRow, 1 ), wordLang1 );
 	pModel->setData( pModel->index( targetRow, 2 ), wordLang2 );
 	pModel->setData( pModel->index( targetRow, 3 ), QVariant::fromValue( quiz->id ) );
+	pModel->setData( pModel->index( targetRow, 5 ), false );
 }
 
 void QuizWidget::onDataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
@@ -171,7 +176,7 @@ void QuizWidget::onDataChanged( const QModelIndex& topLeft, const QModelIndex& b
 		// Detect if answer is right
 //		QRegExp rx( "(?i)\b" + lang2 + "\b" );
 //		bool found	= answer.indexOf ( rx ) >= 0;
-		bool found	= lang2.contains( answer );
+		bool found	= answer.size() && lang2.contains( answer, Qt::CaseInsensitive );
 		if ( found )
 			rightAnswers++;
 

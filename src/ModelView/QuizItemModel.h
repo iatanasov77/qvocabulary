@@ -18,6 +18,7 @@ class QuizItemModel : public qx::QxModel<QuizItem>
 	    virtual ~QuizItemModel();
 
 		virtual Qt::ItemFlags flags( const QModelIndex & index ) const;
+		void setAnswerIcon( const QModelIndex& index, bool right );
 };
 
 
