@@ -78,7 +78,9 @@ void QuizWidget::updateTimer()
 
 void QuizWidget::initModel()
 {
-	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate( ui->tableView );
+	bool displayAnswerStatus	= true;
+
+	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate( ui->tableView, displayAnswerStatus );
 	ui->tableView->setItemDelegateForColumn( 4, itemDelegate );
 
 	QStringList headTitles;
