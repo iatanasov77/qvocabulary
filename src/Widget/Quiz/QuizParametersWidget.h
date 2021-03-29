@@ -42,6 +42,7 @@ class QuizParametersWidget : public QWidget
 
 	    QList<QCheckBox*> chkGroups;
 	    EnumDirection direction;
+	    QMap<QString, QVariant> quizSettings;
 };
 
 #endif // WIDGET_QUIZPARAMETERS_H

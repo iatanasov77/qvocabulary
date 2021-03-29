@@ -20,5 +20,9 @@
 			<Title>Speaker</Title>
 			<MenuItems />
 		</MenuItem>
+		<MenuItem id="quiz">
+			<Title>Quiz</Title>
+			<MenuItems />
+		</MenuItem>
 	</MenuItems>
 </Menu>

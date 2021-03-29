@@ -9,6 +9,7 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "Application/VsSettings.h"
 #include "Application/VsDatabase.h"
 #include "Application/VsAssessment.h"
 #include "Entity/VocabularyMetaInfo.h"
@@ -78,9 +79,12 @@ void QuizWidget::updateTimer()
 
 void QuizWidget::initModel()
 {
-	bool displayAnswerStatus	= true;
+	QMap<QString, QVariant> quizSettings	= VsSettings::instance()->quizSettings();
 
-	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate( ui->tableView, displayAnswerStatus );
+	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate(
+		ui->tableView,
+		quizSettings["displayQuizAnswerStatus"].toBool()
+	);
 	ui->tableView->setItemDelegateForColumn( 4, itemDelegate );
 
 	QStringList headTitles;

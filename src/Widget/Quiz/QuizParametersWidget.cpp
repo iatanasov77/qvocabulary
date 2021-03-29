@@ -14,12 +14,15 @@
 #include "GlobalTypes.h"
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/VocabularyGroup.h"
+#include "Application/VsSettings.h"
 
 QuizParametersWidget::QuizParametersWidget( QWidget *parent ) :
 	QWidget( parent ),
     ui( new Ui::QuizParametersWidget )
 {
     ui->setupUi( this );
+    quizSettings		= VsSettings::instance()->quizSettings();
+    bool displayTimer	= quizSettings["displayQuizAnswerStatus"].toBool();
 
     initGroups();
     initTimer( false );
@@ -40,6 +43,10 @@ QuizParametersWidget::QuizParametersWidget( QWidget *parent ) :
 	);
 
 	connect( ui->chkTimer, SIGNAL( clicked( bool ) ), this, SLOT( initTimer( bool ) ) );
+
+	ui->chkRandomize->setChecked( quizSettings["randomiizeWords"].toBool() );
+	ui->chkTimer->setChecked( displayTimer );
+	emit ui->chkTimer->clicked( displayTimer );
 }
 
 QuizParametersWidget::~QuizParametersWidget()
