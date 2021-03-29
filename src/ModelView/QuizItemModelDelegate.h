@@ -8,10 +8,11 @@ class QuizItemModelDelegate : public QStyledItemDelegate
     Q_OBJECT
 
 	public:
-		QuizItemModelDelegate( QObject *parent = 0 );
+		QuizItemModelDelegate( QObject *parent = 0, bool displayAnswerStatus = false );
 		virtual void paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
 
 	private:
+		bool _displayAnswerStatus;
 		int _iconSize;
 		int _rightPadding;
 

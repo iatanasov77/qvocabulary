@@ -5,10 +5,11 @@
 #include <QIcon>
 #include <QDebug>
 
-QuizItemModelDelegate::QuizItemModelDelegate( QObject *parent ) : QStyledItemDelegate( parent )
+QuizItemModelDelegate::QuizItemModelDelegate( QObject *parent, bool displayAnswerStatus ) : QStyledItemDelegate( parent )
 {
-	_iconSize = 16;
-	_rightPadding	= 16;
+	_displayAnswerStatus	= displayAnswerStatus;
+	_iconSize 				= 16;
+	_rightPadding			= 16;
 }
 
 void QuizItemModelDelegate::paint(
@@ -20,7 +21,7 @@ void QuizItemModelDelegate::paint(
 	QStyleOptionViewItem op( option );
 	initStyleOption( &op, index );
 
-	if ( index.column() == 4 ) {
+	if ( index.column() == 4 && _displayAnswerStatus ) {
 		//QIcon icon = qvariant_cast<QIcon>(index.data(Qt::DecorationRole));
 		if ( index.siblingAtColumn( 5 ).data().toBool() ) {
 			icon	= QIcon( ":/Resources/icons/Symbol_OK.svg" );

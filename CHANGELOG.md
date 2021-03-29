@@ -1,3 +1,14 @@
+0.14.1	|	Release date: **29.03.2021**
+============================================
+* Improvements:
+  - Change QuizParameters time widget from QLineEdit to QTimeEdit.
+  - Add Default Quiz Parameters into the Settings.
+  - Quiz: display answer status as parameter.
+
+* Bug-Fixes:
+  - Disconect signal quizFinished when timer finished because it makes non-stop database queries.
+
+
 0.14.0	|	Release date: **28.03.2021**
 ============================================
 * New Features:

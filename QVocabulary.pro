@@ -58,7 +58,8 @@ SOURCES += $$files(src/*.cpp, true)
 SOURCES += /home/vagrant/tools/qt-mustache/src/mustache.cpp
 HEADERS += $$files(src/*.h, true)
 HEADERS += /home/vagrant/tools/qt-mustache/src/mustache.h
-FORMS += $$files(Forms/*.ui, true)
+FORMS += $$files(Forms/*.ui, true) \
+    Forms/SettingsWidgetQuiz.ui
 RESOURCES = QVocabulary.qrc
 #RC_ICONS = dictionary.ico
 RC_ICONS = dictionary_transparent.ico

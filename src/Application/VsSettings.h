@@ -21,6 +21,7 @@ class VsSettings
         void setValue( QString key, QVariant value, QString group );
 
         QMap<QString, QVariant> speakerSettings();
+        QMap<QString, QVariant> quizSettings();
 };
 
 #endif // VS_SETTINGS_H

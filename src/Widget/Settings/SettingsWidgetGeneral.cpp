@@ -7,7 +7,6 @@
 #include "Application/VsApplication.h"
 #include "Application/VsSettings.h"
 #include "AbstractSettingsWidget.h"
-#include "Application/VsApplication.h"
 
 SettingsWidgetGeneral::SettingsWidgetGeneral( QWidget *parent ) :
 	AbstractSettingsWidget( parent ),

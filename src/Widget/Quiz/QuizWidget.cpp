@@ -9,6 +9,7 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "Application/VsSettings.h"
 #include "Application/VsDatabase.h"
 #include "Application/VsAssessment.h"
 #include "Entity/VocabularyMetaInfo.h"
@@ -78,7 +79,12 @@ void QuizWidget::updateTimer()
 
 void QuizWidget::initModel()
 {
-	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate( ui->tableView );
+	QMap<QString, QVariant> quizSettings	= VsSettings::instance()->quizSettings();
+
+	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate(
+		ui->tableView,
+		quizSettings["displayQuizAnswerStatus"].toBool()
+	);
 	ui->tableView->setItemDelegateForColumn( 4, itemDelegate );
 
 	QStringList headTitles;
@@ -193,8 +199,10 @@ void QuizWidget::finishQuiz()
 	quiz->finishedAt	= QDateTime::currentDateTime();
 	QSqlError daoError	= qx::dao::update( quiz );
 
-	pModel->qxSave();
+	disconnect( this, SIGNAL( quizFinished() ), 0, 0 );
 	ui->frmTimer->hide();
+
+	pModel->qxSave();
 }
 
 void QuizWidget::changeEvent( QEvent* event )

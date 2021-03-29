@@ -9,6 +9,7 @@
 #include "AbstractSettingsWidget.h"
 #include "SettingsWidgetGeneral.h"
 #include "SettingsWidgetSpeaker.h"
+#include "SettingsWidgetQuiz.h"
 
 #include "ModelView/SettingsMenu/TreeModel.h"
 
@@ -41,6 +42,7 @@ void SettingsWindow::initWidgets()
 {
 	widgets["general"]	= new SettingsWidgetGeneral();
 	widgets["speaker"]	= new SettingsWidgetSpeaker();
+	widgets["quiz"]		= new SettingsWidgetQuiz();
 
 	foreach ( AbstractSettingsWidget* wdg, widgets ) {
 		ui->mainWidget->addWidget( wdg );
