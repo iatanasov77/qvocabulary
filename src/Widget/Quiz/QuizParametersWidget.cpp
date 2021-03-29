@@ -24,8 +24,11 @@ QuizParametersWidget::QuizParametersWidget( QWidget *parent ) :
     quizSettings		= VsSettings::instance()->quizSettings();
     bool displayTimer	= quizSettings["displayQuizAnswerStatus"].toBool();
 
+    ui->chkRandomize->setChecked( quizSettings["randomiizeWords"].toBool() );
+    ui->chkTimer->setChecked( displayTimer );
+
     initGroups();
-    initTimer( false );
+    initTimer( displayTimer );
     setDirection();
 
     connect(
@@ -43,10 +46,6 @@ QuizParametersWidget::QuizParametersWidget( QWidget *parent ) :
 	);
 
 	connect( ui->chkTimer, SIGNAL( clicked( bool ) ), this, SLOT( initTimer( bool ) ) );
-
-	ui->chkRandomize->setChecked( quizSettings["randomiizeWords"].toBool() );
-	ui->chkTimer->setChecked( displayTimer );
-	emit ui->chkTimer->clicked( displayTimer );
 }
 
 QuizParametersWidget::~QuizParametersWidget()
@@ -65,8 +64,8 @@ void QuizParametersWidget::setMetaInfo( VocabularyMetaInfoPtr metaInfo )
 
 void QuizParametersWidget::initTimer( bool on )
 {
-	ui->leTimer->setValidator( new QIntValidator( 0, 3600, this ) );
-	ui->leTimer->setText( QString::number( 1800 ) );
+	QTime timer( 0, 0 );
+	ui->teTimer->setTime( timer.addSecs( quizSettings["timerDefaultTime"].toInt() ) );
 
 	if ( on ) {
 		ui->frmTime->show();
@@ -130,7 +129,8 @@ int QuizParametersWidget::time()
 {
 	int time	= 0;
 	if ( ui->chkTimer->isChecked() ) {
-		time	= ui->leTimer->text().toInt();
+		QTime tdt	= ui->teTimer->time();
+		time		= ( tdt.hour() * 3600 ) + ( tdt.minute() * 60 ) + tdt.second();
 	}
 
 	return time;

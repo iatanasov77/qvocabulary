@@ -36,6 +36,13 @@ QuizWidget::QuizWidget( QWidget *parent ) :
 		SLOT( insertWord() )
 	);
 
+    connect(
+		this,
+		SIGNAL( quizFinished() ),
+		this,
+		SLOT( finishQuiz() )
+	);
+
     ui->frmTimer->hide();
 }
 

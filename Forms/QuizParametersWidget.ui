@@ -164,7 +164,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QLineEdit" name="leTimer"/>
+            <widget class="QTimeEdit" name="teTimer"/>
            </item>
            <item>
             <spacer name="horizontalSpacer_2">
