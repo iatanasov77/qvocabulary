@@ -36,13 +36,6 @@ QuizWidget::QuizWidget( QWidget *parent ) :
 		SLOT( insertWord() )
 	);
 
-    connect(
-		this,
-		SIGNAL( quizFinished() ),
-		this,
-		SLOT( finishQuiz() )
-	);
-
     ui->frmTimer->hide();
 }
 
@@ -206,8 +199,10 @@ void QuizWidget::finishQuiz()
 	quiz->finishedAt	= QDateTime::currentDateTime();
 	QSqlError daoError	= qx::dao::update( quiz );
 
-	pModel->qxSave();
+	disconnect( this, SIGNAL( quizFinished() ), 0, 0 );
 	ui->frmTimer->hide();
+
+	pModel->qxSave();
 }
 
 void QuizWidget::changeEvent( QEvent* event )
