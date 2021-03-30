@@ -397,6 +397,10 @@
         <source>Speaker</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Quiz</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetGeneral</name>
@@ -406,6 +410,33 @@
     </message>
     <message>
         <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsWidgetQuiz</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Answer Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Randomiize Words</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Timer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timer Default Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HH:mm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

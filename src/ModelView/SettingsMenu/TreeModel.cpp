@@ -116,7 +116,7 @@ void TreeModel::iterateChildItems( TreeItem* parent, QDomElement item )	// item 
 	while( ! item.isNull() )
 	{
 		QString id		= item.attribute( "id" );
-		// Title translations are in `GlobalTranslations.h`
+		// Title translations are in `DynamicTranslations.h`
 		QString title	= item.elementsByTagName( "Title" ).at( 0 ).toElement().text();
 
 		QVector<QVariant> columnData;

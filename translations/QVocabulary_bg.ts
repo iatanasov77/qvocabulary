@@ -421,6 +421,10 @@
         <source>Speaker</source>
         <translation type="unfinished">Говорител</translation>
     </message>
+    <message>
+        <source>Quiz</source>
+        <translation type="unfinished">Тест</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetGeneral</name>
@@ -447,6 +451,33 @@
     <message>
         <source>Bulgarian</source>
         <translation type="obsolete">Български</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsWidgetQuiz</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Фрейм</translation>
+    </message>
+    <message>
+        <source>Display Answer Status</source>
+        <translation type="unfinished">Показвай статус на отговора</translation>
+    </message>
+    <message>
+        <source>Randomiize Words</source>
+        <translation type="unfinished">Рандъм ред на думите</translation>
+    </message>
+    <message>
+        <source>Display Timer</source>
+        <translation type="unfinished">Показвай таймер</translation>
+    </message>
+    <message>
+        <source>Timer Default Time</source>
+        <translation type="unfinished">Таймер дефаулт време</translation>
+    </message>
+    <message>
+        <source>HH:mm</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
