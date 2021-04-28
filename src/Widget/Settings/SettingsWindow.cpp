@@ -5,7 +5,6 @@
 #include <QFile>
 
 #include "GlobalTypes.h"
-#include "GlobalTranslations.h"
 #include "AbstractSettingsWidget.h"
 #include "SettingsWidgetGeneral.h"
 #include "SettingsWidgetSpeaker.h"

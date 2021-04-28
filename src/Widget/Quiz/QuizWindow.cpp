@@ -109,7 +109,8 @@ void QuizWindow::startQuiz()
 	quiz->startedAt		= QDateTime::currentDateTime();
 	daoError			= qx::dao::insert( quiz );
 
-	wdgQuiz->setQuiz( quiz->id, groupIds, quiz->randomize, wdgParameters->time() );
+	bool diplayTranscriptions	= wdgParameters->getChkDisplayTranscriptions()->isChecked();
+	wdgQuiz->setQuiz( quiz->id, groupIds, quiz->randomize, diplayTranscriptions, wdgParameters->time() );
 	wdgQuiz->setEnabled( true );
 }
 

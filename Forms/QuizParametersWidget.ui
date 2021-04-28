@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>373</width>
-    <height>424</height>
+    <width>697</width>
+    <height>535</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -72,19 +72,29 @@
           </layout>
          </item>
          <item>
-          <widget class="QGroupBox" name="grpGroups">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>9</verstretch>
-            </sizepolicy>
+          <widget class="QScrollArea" name="scrollArea">
+           <property name="widgetResizable">
+            <bool>true</bool>
            </property>
-           <property name="title">
-            <string/>
-           </property>
-           <property name="checkable">
-            <bool>false</bool>
-           </property>
+           <widget class="QWidget" name="scrollAreaContent">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>649</width>
+              <height>80</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_5">
+             <item>
+              <widget class="QGroupBox" name="grpGroups">
+               <property name="title">
+                <string>GroupBox</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
         </layout>
@@ -108,7 +118,7 @@
          <item>
           <widget class="QRadioButton" name="rbFirst2Second">
            <property name="text">
-            <string>English to Bulgarian</string>
+            <string>E&amp;nglish to Bulgarian</string>
            </property>
            <property name="checked">
             <bool>true</bool>
@@ -123,6 +133,13 @@
           </widget>
          </item>
         </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="chkDisplayTranscription">
+        <property name="text">
+         <string>Display Transcription</string>
+        </property>
        </widget>
       </item>
       <item>

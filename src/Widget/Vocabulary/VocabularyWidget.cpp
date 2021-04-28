@@ -31,6 +31,11 @@ VocabularyWidget::VocabularyWidget( QWidget *parent ) :
     init();
     initModels();
 
+    // Hide Current group Display in Header Frame
+    for( int i = 0; i < ui->horizontalLayout_3->count(); ++i ) {
+        ui->horizontalLayout_3->itemAt(i)->widget()->hide();
+    }
+
     // Load Current Group by settings or first loaded
     int currentGroup	= VsSettings::instance()->value( "currentGroup", "Vocabulary" ).toInt();
     if ( currentGroup ) {
@@ -80,8 +85,7 @@ void VocabularyWidget::initModels()
 	// Init VocabularyMetaInfo
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	if ( metaInfo ) {
-		//qDebug() << "Database Name: " << metaInfo->name;
-		ui->databaseName->setText( metaInfo->name );
+		ui->databaseName->setText( QString( "%1 ( %2 words )" ).arg( metaInfo->name ).arg( QString::number( qx::dao::count<Vocabulary>() ) ) );
 	}
 
 	wdgWords->setViewHeader( metaInfo );

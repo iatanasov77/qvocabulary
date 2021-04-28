@@ -83,8 +83,9 @@ QMap<QString, QVariant> VsSettings::quizSettings()
 {
 	QMap<QString, QVariant> quizSettings;
 
+	quizSettings["displayTranscriptions"]	= value( "displayTranscriptions", "Quiz", QVariant( false ) );
 	quizSettings["displayQuizAnswerStatus"]	= value( "displayQuizAnswerStatus", "Quiz", QVariant( false ) );
-	quizSettings["randomiizeWords"]			= value( "randomiizeWords", "Quiz", QVariant( true ) );
+	quizSettings["randomizeWords"]			= value( "randomizeWords", "Quiz", QVariant( true ) );
 	quizSettings["displayTimer"]			= value( "displayTimer", "Quiz", QVariant( false ) );
 	quizSettings["timerDefaultTime"]		= value( "volume", "Quiz", QVariant( 1800 ) );
 

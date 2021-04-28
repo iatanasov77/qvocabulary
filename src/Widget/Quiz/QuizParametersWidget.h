@@ -27,6 +27,7 @@ class QuizParametersWidget : public QWidget
 		QList<QCheckBox*> getChkGroups();
 		EnumDirection getDirection();
 		QCheckBox* getChkRandomize();
+		QCheckBox* getChkDisplayTranscriptions();
 		int time();
 
 	public slots:

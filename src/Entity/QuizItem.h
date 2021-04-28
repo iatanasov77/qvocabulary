@@ -15,6 +15,7 @@ class QuizItem
 		//QuizPtr quiz;
 
 		QString language_1;
+		QString transcription;
 		QString language_2;
 		QString answer;
 		bool rightAnswer;

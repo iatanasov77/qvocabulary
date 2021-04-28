@@ -29,7 +29,7 @@ class QuizWidget : public QWidget
 
 		QPushButton* btnStopQuiz();
 
-		void setQuiz( int quizId, QList<QString> groups, bool randomize = false, int time = 0 );
+		void setQuiz( int quizId, QList<QString> groups, bool randomize = false, bool displayTranscriptions = false, int time = 0 );
 		void finishQuiz();
 
 	signals:
