@@ -40,6 +40,10 @@ void NewVocabularyGroupDialog::save()
 	pModelVocabularyGroup->insertRow( row );
 	pModelVocabularyGroup->setData( pModelVocabularyGroup->index( row, 1 ), ui->leName->text() );
 	pModelVocabularyGroup->qxSave();
+	reloadWidgets();
 
+	// Set Current group to the new created group
+	int newGroupId	= pModelVocabularyGroup->data( pModelVocabularyGroup->index( row, 0 ) ).toInt();
+	mw->setCurrentGroup( newGroupId );
 	reloadWidgets();
 }

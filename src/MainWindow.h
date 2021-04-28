@@ -26,6 +26,7 @@ class MainWindow : public QMainWindow
 		~MainWindow();
 
 		void loadDb( const QString &dbPath );
+		void setCurrentGroup( int groupId );
 		void initWidgets();
 		//friend void NewVocabularyGroupDialog::reloadWidgets();
 		//friend void RenameVocabularyGroupDialog::reloadWidgets();

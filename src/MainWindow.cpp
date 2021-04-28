@@ -462,3 +462,11 @@ void MainWindow::loadLanguage()
 		VsApplication::instance()->loadLanguage( action->data().toString() );
 	}
 }
+
+/**
+ * Called From NewVocabularyGroupDialog
+ */
+void MainWindow::setCurrentGroup( int groupId )
+{
+	wdgVocabulary->setCurrentGroup( groupId );
+}

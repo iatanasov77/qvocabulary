@@ -34,6 +34,7 @@ class VocabularyWidget : public QWidget
 		void deleteGroup( int groupId );
 		void setCurrentGroupName( QString groupName );
 		void refreshWidgets();
+		void setCurrentGroup( int groupId );
 
 	public slots:
 		void loadGroup( const QModelIndex &index );
