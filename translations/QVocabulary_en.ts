@@ -400,6 +400,17 @@
     </message>
 </context>
 <context>
+    <name>RenameVocabularyGroupDialog</name>
+    <message>
+        <source>Rename Vocabulary Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsMenu</name>
     <message>
         <source>General</source>
@@ -643,6 +654,10 @@ Done, over and out.
     </message>
     <message>
         <source>Show Transcriptions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to Group</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
