@@ -1,3 +1,12 @@
+0.15.1	|	Release date: **28.04.2021**
+============================================
+* New Features:
+  - New Translations.
+* Bug-Fixes:
+  - When create new group, set current group to the new one.
+  - New Translations.
+
+
 0.15.0	|	Release date: **28.04.2021**
 ============================================
 * New Features:
