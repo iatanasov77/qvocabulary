@@ -1,3 +1,12 @@
+0.15.0	|	Release date: **28.04.2021**
+============================================
+* New Features:
+  - Add Transcriptions in the quiz.
+  - Make Groups scrollable in the Quiz Parameters.
+  - Display Words Count.
+  - Add New Translations.
+
+
 0.14.1	|	Release date: **29.03.2021**
 ============================================
 * Improvements:
