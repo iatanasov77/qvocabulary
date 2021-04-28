@@ -26,8 +26,9 @@ void SettingsWidgetQuiz::init()
 {
 	quizSettings	= VsSettings::instance()->quizSettings();
 
-	ui->chDisplayAnserStatus->setChecked( quizSettings["displayQuizAnswerStatus"].toBool() );
-	ui->chRandomiizeWords->setChecked( quizSettings["randomiizeWords"].toBool() );
+	ui->chDisplayTranscriptions->setChecked( quizSettings["displayTranscriptions"].toBool() );
+	ui->chDisplayAnswerStatus->setChecked( quizSettings["displayQuizAnswerStatus"].toBool() );
+	ui->chRandomizeWords->setChecked( quizSettings["randomizeWords"].toBool() );
 	ui->chDisplayTimer->setChecked( quizSettings["displayTimer"].toBool() );
 
 	QTime timerDefaultTime( 0, 0 );
@@ -36,8 +37,9 @@ void SettingsWidgetQuiz::init()
 
 void SettingsWidgetQuiz::apply()
 {
-	VsSettings::instance()->setValue( "displayQuizAnswerStatus", QVariant( ui->chDisplayAnserStatus->isChecked() ), "Quiz" );
-	VsSettings::instance()->setValue( "randomiizeWords", QVariant( ui->chRandomiizeWords->isChecked() ), "Quiz" );
+	VsSettings::instance()->setValue( "displayTranscriptions", QVariant( ui->chDisplayTranscriptions->isChecked() ), "Quiz" );
+	VsSettings::instance()->setValue( "displayQuizAnswerStatus", QVariant( ui->chDisplayAnswerStatus->isChecked() ), "Quiz" );
+	VsSettings::instance()->setValue( "randomizeWords", QVariant( ui->chRandomizeWords->isChecked() ), "Quiz" );
 	VsSettings::instance()->setValue( "displayTimer", QVariant( ui->chDisplayTimer->isChecked() ), "Quiz" );
 
 	QTime tdt				= ui->teTimerDefaultTime->time();

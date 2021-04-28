@@ -8,6 +8,7 @@ namespace qx {
 	{
 		t.id( & QuizItem::id, "id" );
 		t.data( & QuizItem::language_1, "language_1" );
+		t.data( & QuizItem::transcription, "transcription" );
 		t.data( & QuizItem::language_2, "language_2" );
 
 		t.data( & QuizItem::quiz_id, "quiz_id" );	// To can Move Groups( I dont know how to do this with related object)

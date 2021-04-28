@@ -348,6 +348,18 @@
         <source>English to Bulgarian</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>E&amp;nglish to Bulgarian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Transcription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GroupBox</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QuizWidget</name>
@@ -424,10 +436,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Randomiize Words</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Display Timer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -437,6 +445,14 @@
     </message>
     <message>
         <source>HH:mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Transcriptions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Randomize Words</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

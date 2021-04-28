@@ -15,9 +15,33 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <item>
+      <widget class="QCheckBox" name="chDisplayTranscriptions">
+       <property name="text">
+        <string>Display Transcriptions</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_5">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QCheckBox" name="chDisplayAnserStatus">
+      <widget class="QCheckBox" name="chDisplayAnswerStatus">
        <property name="text">
         <string>Display Answer Status</string>
        </property>
@@ -41,9 +65,9 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
-      <widget class="QCheckBox" name="chRandomiizeWords">
+      <widget class="QCheckBox" name="chRandomizeWords">
        <property name="text">
-        <string>Randomiize Words</string>
+        <string>Randomize Words</string>
        </property>
       </widget>
      </item>

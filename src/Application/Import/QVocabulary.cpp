@@ -76,8 +76,9 @@ bool QVocabulary::parseWords()
 
 		voc->group_id		= vocg->id;	// To can Move Groups( I dont know how to do this with related object)
 
-		voc->language_1	= query.value( "language_1" ).toString();
-		voc->language_2	= query.value( "language_2" ).toString();
+		voc->language_1		= query.value( "language_1" ).toString();
+		voc->transcription	= query.value( "transcription" ).toString();
+		voc->language_2		= query.value( "language_2" ).toString();
 
 		daoError		= qx::dao::insert( voc );
 	}

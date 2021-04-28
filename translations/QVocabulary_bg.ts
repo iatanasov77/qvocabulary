@@ -350,7 +350,7 @@
     </message>
     <message>
         <source>E&amp;nglish to Bulgarian</source>
-        <translation type="obsolete">Английски на Българси</translation>
+        <translation type="unfinished">Английски на Българси</translation>
     </message>
     <message>
         <source>Bulgarian to English</source>
@@ -371,6 +371,14 @@
     <message>
         <source>English to Bulgarian</source>
         <translation type="unfinished">Английски на Българси</translation>
+    </message>
+    <message>
+        <source>Display Transcription</source>
+        <translation type="unfinished">Показвай Транскрипциите</translation>
+    </message>
+    <message>
+        <source>GroupBox</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -465,7 +473,7 @@
     </message>
     <message>
         <source>Randomiize Words</source>
-        <translation type="unfinished">Рандъм ред на думите</translation>
+        <translation type="obsolete">Рандъм ред на думите</translation>
     </message>
     <message>
         <source>Display Timer</source>
@@ -478,6 +486,14 @@
     <message>
         <source>HH:mm</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Transcriptions</source>
+        <translation type="unfinished">Показвай транскрипциите</translation>
+    </message>
+    <message>
+        <source>Randomize Words</source>
+        <translation type="unfinished">Рандъм ред на думите</translation>
     </message>
 </context>
 <context>

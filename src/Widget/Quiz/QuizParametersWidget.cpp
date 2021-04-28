@@ -21,10 +21,14 @@ QuizParametersWidget::QuizParametersWidget( QWidget *parent ) :
     ui( new Ui::QuizParametersWidget )
 {
     ui->setupUi( this );
-    quizSettings		= VsSettings::instance()->quizSettings();
-    bool displayTimer	= quizSettings["displayQuizAnswerStatus"].toBool();
+    // Hide GroupBox Title
+    ui->grpGroups->setStyleSheet( "QGroupBox{padding-top:15px; margin-top:-15px; border:0;}" );
 
-    ui->chkRandomize->setChecked( quizSettings["randomiizeWords"].toBool() );
+    quizSettings		= VsSettings::instance()->quizSettings();
+    bool displayTimer	= quizSettings["displayTimer"].toBool();
+
+    ui->chkDisplayTranscription->setChecked( quizSettings["displayTranscriptions"].toBool() );
+    ui->chkRandomize->setChecked( quizSettings["randomizeWords"].toBool() );
     ui->chkTimer->setChecked( displayTimer );
 
     initGroups();
@@ -83,6 +87,7 @@ void QuizParametersWidget::initGroups()
 	for ( int i = 0; i < pModelVocabularyGroup->rowCount(); ++i ) {
 		int groupId		= pModelVocabularyGroup->data( pModelVocabularyGroup->index( i, 0 ) ).toInt();
 		QString groupName	= pModelVocabularyGroup->data( pModelVocabularyGroup->index( i, 1 ) ).toString();
+		//qDebug() << "Added Group: " << groupName;
 
 		QCheckBox* chk		= new QCheckBox( groupName, ui->grpGroups );
 		chk->setProperty( "groupId", QVariant( groupId ) );
@@ -118,6 +123,11 @@ QList<QCheckBox*> QuizParametersWidget::getChkGroups()
 EnumDirection QuizParametersWidget::getDirection()
 {
 	return direction;
+}
+
+QCheckBox* QuizParametersWidget::getChkDisplayTranscriptions()
+{
+	return ui->chkDisplayTranscription;
 }
 
 QCheckBox* QuizParametersWidget::getChkRandomize()

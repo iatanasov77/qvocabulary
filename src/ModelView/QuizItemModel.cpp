@@ -23,7 +23,7 @@ QuizItemModel::~QuizItemModel()
 
 Qt::ItemFlags QuizItemModel::flags( const QModelIndex & index ) const
 {
-	if ( index.column() == 4 )
+	if ( index.column() == 5 )
 		return Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
 	else
 		return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
