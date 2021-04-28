@@ -16,11 +16,11 @@ RenameVocabularyGroupDialog::RenameVocabularyGroupDialog( QString oldGroupName, 
 {
     ui->setupUi( this );
 
-    this->setWindowTitle( "Rename Vocabulary Group" );
+    this->setWindowTitle( tr( "Rename Vocabulary Group" ) );
     ui->leName->setText( oldGroupName );
 
     QPushButton *renameButton = ui->buttonBox->button( QDialogButtonBox::Save );
-    renameButton->setText( "Rename" );
+    renameButton->setText( tr( "Rename" ) );
 }
 
 RenameVocabularyGroupDialog::~RenameVocabularyGroupDialog()

@@ -420,6 +420,17 @@
     </message>
 </context>
 <context>
+    <name>RenameVocabularyGroupDialog</name>
+    <message>
+        <source>Rename Vocabulary Group</source>
+        <translation type="unfinished">Преименувай Група</translation>
+    </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished">Преименувай</translation>
+    </message>
+</context>
+<context>
     <name>SettingsMenu</name>
     <message>
         <source>General</source>
@@ -701,6 +712,10 @@ Done, over and out.
     <message>
         <source>Transcription</source>
         <translation type="obsolete">Транскрипция</translation>
+    </message>
+    <message>
+        <source>Move to Group</source>
+        <translation type="unfinished">Премести в Група|Раздел|</translation>
     </message>
 </context>
 </TS>

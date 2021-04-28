@@ -175,7 +175,7 @@ void VocabularyWordsWidget::onDataChanged( const QModelIndex& topLeft, const QMo
 void VocabularyWordsWidget::displayContextMenu( QPoint pos )
 {
 	QMenu* menu				= new QMenu( this );
-	QMenu* menuMoveToGroup	= menu->addMenu( "Move to Group" );
+	QMenu* menuMoveToGroup	= menu->addMenu( tr( "Move to Group" ) );
 
 	QAction* actDeleteWord		= new QAction( this );
 	actDeleteWord->setText( tr( "Delete Word" ) );

@@ -39,8 +39,7 @@ VocabularyWidget::VocabularyWidget( QWidget *parent ) :
     // Load Current Group by settings or first loaded
     int currentGroup	= VsSettings::instance()->value( "currentGroup", "Vocabulary" ).toInt();
     if ( currentGroup ) {
-    	loadGroup( currentGroup );
-    	wdgGroups->setCurrentGroup( currentGroup );
+    	setCurrentGroup( currentGroup );
     } else {
     	loadGroup( wdgGroups->currentGroup() );
     }
@@ -142,4 +141,10 @@ void VocabularyWidget::changeEvent( QEvent* event )
 void VocabularyWidget::updateSpeaker()
 {
 	wdgWords->updateSpeaker();
+}
+
+void VocabularyWidget::setCurrentGroup( int groupId )
+{
+	loadGroup( groupId );
+	wdgGroups->setCurrentGroup( groupId );
 }
