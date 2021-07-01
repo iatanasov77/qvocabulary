@@ -250,7 +250,14 @@ void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searc
 	QTreeWidgetItem* childItem;
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	QStringList headTitles			= viewHeaders( metaInfo );
-	ui->treeWidget->setHeaderLabels( QStringList() << "\t" + headTitles.at( 0 ) << headTitles.at( 1 ) );
+
+	QStringList headerLabels;
+	headerLabels << "\t" + headTitles.at( 0 );
+	if ( ui->chkShowTranscriptions->isChecked() ) {
+		headerLabels << headTitles.at( 2 );
+	}
+	headerLabels << headTitles.at( 1 );
+	ui->treeWidget->setHeaderLabels( headerLabels );
 
 	for ( int i = 0; i < searchModel->rowCount(); ++i ) {
 		groupId	= searchModel->data( searchModel->index( i, 4 ) ).toInt();
@@ -267,8 +274,19 @@ void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searc
 		}
 
 		childItem = new QTreeWidgetItem();
+
 		childItem->setText( 0, searchModel->data( searchModel->index( i, 1 ) ).toString() );
-		childItem->setText( 1, searchModel->data( searchModel->index( i, 3 ) ).toString() );
+		if ( ui->chkShowTranscriptions->isChecked() ) {
+			QFont font;
+			font.setBold( true );
+			childItem->setText( 1, searchModel->data( searchModel->index( i, 2 ) ).toString() );
+			childItem->setFont( 1, font );
+
+			childItem->setText( 2, searchModel->data( searchModel->index( i, 3 ) ).toString() );
+		} else {
+			childItem->setText( 1, searchModel->data( searchModel->index( i, 3 ) ).toString() );
+		}
+
 		groups[groupId]->addChild( childItem );
 	}
 
