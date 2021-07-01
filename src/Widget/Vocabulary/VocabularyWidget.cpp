@@ -7,6 +7,8 @@
 #include <QSplitter>
 #include <QMenu>
 #include <QSettings>
+#include <QMap>
+#include <QVariant>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -147,4 +149,20 @@ void VocabularyWidget::setCurrentGroup( int groupId )
 {
 	loadGroup( groupId );
 	wdgGroups->setCurrentGroup( groupId );
+}
+
+QMap<QString, QVariant> VocabularyWidget::getState()
+{
+	QMap<QString, QVariant> widgetState;
+
+	// Can to be merged with states of other widgets if needed
+	widgetState	= wdgWords->getState();
+	//qDebug() << "DEBUG WIDGET STATE: " << widgetState["showTranscriptions"].toString();
+
+	return widgetState;
+}
+
+void VocabularyWidget::setState( QMap<QString, QVariant> state )
+{
+	wdgWords->setState( state );
 }

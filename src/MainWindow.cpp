@@ -31,6 +31,9 @@ MainWindow::MainWindow( QWidget *parent ) :
 {
     ui->setupUi( this );
 
+    // The Trick ;)
+    wdgVocabulary = 0;
+
     // Load Current Language
     QString currentLanguage = VsSettings::instance()->value( "language", "General" ).toString();
     if ( ! currentLanguage.isEmpty() ) {
@@ -58,8 +61,19 @@ MainWindow::~MainWindow()
 
 void MainWindow::initWidgets()
 {
+	QMap<QString, QVariant> widgetState;
+
+	if ( wdgVocabulary ) {
+		widgetState	= wdgVocabulary->getState();
+	}
+
 	wdgVocabulary	= new VocabularyWidget( this );
-	wdgVocabulary->setAcceptDrops( true ) ;
+
+	if ( ! widgetState.isEmpty() ) {
+		wdgVocabulary->setState( widgetState );
+	}
+
+	wdgVocabulary->setAcceptDrops( true );
 	setCentralWidget( wdgVocabulary );
 }
 

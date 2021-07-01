@@ -31,6 +31,8 @@ class VocabularyWordsWidget : public QWidget
 		void loadGroup( int groupId );
 		int deleteGroup( int groupId );
 		void refreshView( QModelIndex topLeft, QModelIndex bottomRight );
+		QMap<QString, QVariant> getState();
+		void setState( QMap<QString, QVariant> state );
 
 	public slots:
 		void onDataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );

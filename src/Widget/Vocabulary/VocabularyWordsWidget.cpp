@@ -337,3 +337,20 @@ QStringList VocabularyWordsWidget::viewHeaders( VocabularyMetaInfoPtr metaInfo )
 
 	return headTitles;
 }
+
+QMap<QString, QVariant> VocabularyWordsWidget::getState()
+{
+	QMap<QString, QVariant> widgetState;
+
+	widgetState["showTranscriptions"]	= QVariant( ui->chkShowTranscriptions->isChecked() );
+	//widgetState["showTranscriptions"]	= QVariant( true );
+
+	return widgetState;
+}
+
+void VocabularyWordsWidget::setState( QMap<QString, QVariant> state )
+{
+	if ( state.contains( "showTranscriptions" ) ) {
+		ui->chkShowTranscriptions->setChecked( state["showTranscriptions"].toBool() );
+	}
+}
