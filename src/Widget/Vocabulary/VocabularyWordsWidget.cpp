@@ -18,17 +18,22 @@
 
 #include "VocabularyWidget.h"
 #include "ModelView/Helper.h"
+#include "ModelView/VocabularyTableView.h"
 #include "ModelView/VocabularyTableViewDelegate.h"
 #include "ModelView/VocabularyWordsModel.h"
+#include "Dialog/AddDescriptionDialog.h"
 
 VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     QWidget( parent ),
     ui( new Ui::VocabularyWordsWidget )
 {
     ui->setupUi( this );
+    initView();
+
+    //QVBoxLayout *tableLayout	= new QVBoxLayout( ui->tableView );
 
     currentGroup 	= 1;
-    hideColumns 	= {0, 2, 4};
+    hideColumns 	= {0, 2, 4, 5};
 
     initModel();
     adjustRowSelection();
@@ -185,6 +190,14 @@ void VocabularyWordsWidget::displayContextMenu( QPoint pos )
 	menu->addSeparator();
 	menu->addAction( actDeleteWord );
 
+	QAction* actAddDescription	= new QAction( this );
+	actAddDescription->setText( tr( "Add Word Description" ) );
+	actAddDescription->setIcon( QIcon( ":/Resources/icons/mail-message-new.svg" ) );
+	connect( actAddDescription, &QAction::triggered, this, &VocabularyWordsWidget::addWordDescription );
+
+	menu->addSeparator();
+	menu->addAction( actAddDescription );
+
 	QAction* actMove;
 	QMap<int, QString> groups	= Helper::getAllGroups();
 	QMapIterator<int, QString> i(groups);
@@ -250,7 +263,14 @@ void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searc
 	QTreeWidgetItem* childItem;
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	QStringList headTitles			= viewHeaders( metaInfo );
-	ui->treeWidget->setHeaderLabels( QStringList() << "\t" + headTitles.at( 0 ) << headTitles.at( 1 ) );
+
+	QStringList headerLabels;
+	headerLabels << "\t" + headTitles.at( 0 );
+	if ( ui->chkShowTranscriptions->isChecked() ) {
+		headerLabels << headTitles.at( 2 );
+	}
+	headerLabels << headTitles.at( 1 );
+	ui->treeWidget->setHeaderLabels( headerLabels );
 
 	for ( int i = 0; i < searchModel->rowCount(); ++i ) {
 		groupId	= searchModel->data( searchModel->index( i, 4 ) ).toInt();
@@ -267,8 +287,19 @@ void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searc
 		}
 
 		childItem = new QTreeWidgetItem();
+
 		childItem->setText( 0, searchModel->data( searchModel->index( i, 1 ) ).toString() );
-		childItem->setText( 1, searchModel->data( searchModel->index( i, 3 ) ).toString() );
+		if ( ui->chkShowTranscriptions->isChecked() ) {
+			QFont font;
+			font.setBold( true );
+			childItem->setText( 1, searchModel->data( searchModel->index( i, 2 ) ).toString() );
+			childItem->setFont( 1, font );
+
+			childItem->setText( 2, searchModel->data( searchModel->index( i, 3 ) ).toString() );
+		} else {
+			childItem->setText( 1, searchModel->data( searchModel->index( i, 3 ) ).toString() );
+		}
+
 		groups[groupId]->addChild( childItem );
 	}
 
@@ -336,4 +367,45 @@ QStringList VocabularyWordsWidget::viewHeaders( VocabularyMetaInfoPtr metaInfo )
 		<< qApp->translate( "Vocabulary", "Transcription" );
 
 	return headTitles;
+}
+
+QMap<QString, QVariant> VocabularyWordsWidget::getState()
+{
+	QMap<QString, QVariant> widgetState;
+
+	widgetState["showTranscriptions"]	= QVariant( ui->chkShowTranscriptions->isChecked() );
+	//widgetState["showTranscriptions"]	= QVariant( true );
+
+	return widgetState;
+}
+
+void VocabularyWordsWidget::setState( QMap<QString, QVariant> state )
+{
+	if ( state.contains( "showTranscriptions" ) ) {
+		ui->chkShowTranscriptions->setChecked( state["showTranscriptions"].toBool() );
+	}
+}
+
+void VocabularyWordsWidget::addWordDescription()
+{
+	QList<QModelIndex> selectedRows	= ui->tableView->selectionModel()->selectedRows();
+	if ( selectedRows.size() > 1 ) {
+		// Show Error Message
+		return;
+	}
+
+	AddDescriptionDialog *dlg	= new AddDescriptionDialog( pModel->data( selectedRows[0].siblingAtColumn( 1 ) ).toString(), this );
+	dlg->setModal( true );
+	dlg->show();
+	if ( dlg->exec() == QDialog::Accepted ) {
+		pModel->setData( selectedRows[0].siblingAtColumn( 5 ), QVariant( dlg->getDescription() ) );
+		pModel->qxSave();
+	}
+}
+
+void VocabularyWordsWidget::initView()
+{
+	ui->verticalLayout_3->removeWidget( ui->tableView );
+	ui->tableView	= new VocabularyTableView( ui->pageVocabulary );
+	ui->verticalLayout_3->addWidget( ui->tableView );
 }

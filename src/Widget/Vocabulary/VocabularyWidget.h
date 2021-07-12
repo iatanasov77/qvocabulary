@@ -6,6 +6,8 @@
 #include <QTableView>
 #include <QSplitter>
 #include <QModelIndex>
+#include <QMap>
+#include <QVariant>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -35,6 +37,8 @@ class VocabularyWidget : public QWidget
 		void setCurrentGroupName( QString groupName );
 		void refreshWidgets();
 		void setCurrentGroup( int groupId );
+		QMap<QString, QVariant> getState();
+		void setState( QMap<QString, QVariant> state );
 
 	public slots:
 		void loadGroup( const QModelIndex &index );
