@@ -42,6 +42,7 @@ class VocabularyWordsWidget : public QWidget
 		void search();
 		void showTranscriptions( int state );
 		void sayWord( const QModelIndex &index );
+		void addWordDescription();
 
 		void modelRowsInserted( const QModelIndex & parent, int start, int end );
 		void updateSpeaker();
@@ -53,6 +54,7 @@ class VocabularyWordsWidget : public QWidget
 
 	private:
 		QStringList viewHeaders( VocabularyMetaInfoPtr metaInfo );
+		void initView();
 		void initModel();
 		void initContextMenu();
 		void initTextToSpeech();
