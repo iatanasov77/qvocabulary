@@ -17,6 +17,8 @@ class Vocabulary
 
 		long group_id;	// To can Move Groups( I dont know how to do this with related object)
 		//VocabularyGroupPtr group;
+
+		QString description;
 };
 
 QX_REGISTER_HPP_QX_VOCABULARY(Vocabulary, qx::trait::no_base_class_defined, 0)

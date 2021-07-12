@@ -28,7 +28,7 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     ui->setupUi( this );
 
     currentGroup 	= 1;
-    hideColumns 	= {0, 2, 4};
+    hideColumns 	= {0, 2, 4, 5};
 
     initModel();
     adjustRowSelection();

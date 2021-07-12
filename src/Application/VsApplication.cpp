@@ -12,7 +12,7 @@
 
 #include "Application/VsSettings.h"
 
-const QString VsApplication::DB_VERSION = "20210428";
+const QString VsApplication::DB_VERSION = "20210712";
 
 /*
  * This one did the trick!
