@@ -1,3 +1,12 @@
+0.16.0	|	Release date: **12.07.2021**
+============================================
+* New Features:
+  - Add VocabularyWord Popup with Description.
+  - Add field description on Words Table and Change DB VERSION.
+  - Show Transcriptions in Search Results if is Checked.
+  - Save The VocabularyWidget State When Create New Group.
+
+
 0.15.1	|	Release date: **28.04.2021**
 ============================================
 * New Features:
