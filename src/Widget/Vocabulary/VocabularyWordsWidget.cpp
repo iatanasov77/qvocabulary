@@ -18,17 +18,22 @@
 
 #include "VocabularyWidget.h"
 #include "ModelView/Helper.h"
+#include "ModelView/VocabularyTableView.h"
 #include "ModelView/VocabularyTableViewDelegate.h"
 #include "ModelView/VocabularyWordsModel.h"
+#include "Dialog/AddDescriptionDialog.h"
 
 VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     QWidget( parent ),
     ui( new Ui::VocabularyWordsWidget )
 {
     ui->setupUi( this );
+    initView();
+
+    //QVBoxLayout *tableLayout	= new QVBoxLayout( ui->tableView );
 
     currentGroup 	= 1;
-    hideColumns 	= {0, 2, 4};
+    hideColumns 	= {0, 2, 4, 5};
 
     initModel();
     adjustRowSelection();
@@ -184,6 +189,14 @@ void VocabularyWordsWidget::displayContextMenu( QPoint pos )
 
 	menu->addSeparator();
 	menu->addAction( actDeleteWord );
+
+	QAction* actAddDescription	= new QAction( this );
+	actAddDescription->setText( tr( "Add Word Description" ) );
+	actAddDescription->setIcon( QIcon( ":/Resources/icons/mail-message-new.svg" ) );
+	connect( actAddDescription, &QAction::triggered, this, &VocabularyWordsWidget::addWordDescription );
+
+	menu->addSeparator();
+	menu->addAction( actAddDescription );
 
 	QAction* actMove;
 	QMap<int, QString> groups	= Helper::getAllGroups();
@@ -371,4 +384,28 @@ void VocabularyWordsWidget::setState( QMap<QString, QVariant> state )
 	if ( state.contains( "showTranscriptions" ) ) {
 		ui->chkShowTranscriptions->setChecked( state["showTranscriptions"].toBool() );
 	}
+}
+
+void VocabularyWordsWidget::addWordDescription()
+{
+	QList<QModelIndex> selectedRows	= ui->tableView->selectionModel()->selectedRows();
+	if ( selectedRows.size() > 1 ) {
+		// Show Error Message
+		return;
+	}
+
+	AddDescriptionDialog *dlg	= new AddDescriptionDialog( pModel->data( selectedRows[0].siblingAtColumn( 1 ) ).toString(), this );
+	dlg->setModal( true );
+	dlg->show();
+	if ( dlg->exec() == QDialog::Accepted ) {
+		pModel->setData( selectedRows[0].siblingAtColumn( 5 ), QVariant( dlg->getDescription() ) );
+		pModel->qxSave();
+	}
+}
+
+void VocabularyWordsWidget::initView()
+{
+	ui->verticalLayout_3->removeWidget( ui->tableView );
+	ui->tableView	= new VocabularyTableView( ui->pageVocabulary );
+	ui->verticalLayout_3->addWidget( ui->tableView );
 }
