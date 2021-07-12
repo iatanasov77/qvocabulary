@@ -56,12 +56,15 @@ bool VocabularyTableView::eventFilter( QObject *watched, QEvent *event )
 
 void VocabularyTableView::showPopup( const QModelIndex &index ) const
 {
+	// May be should get the column width
+	int popupWidth	= 300;
+
 	if ( index.column() == 1 ) {
 		QString description	= index.siblingAtColumn( 5 ).data( Qt::DisplayRole ).toString();
 		if ( description.size() > 0 ) {
 			QRect r	= visualRect( index );
 			popup->move( viewport()->mapToGlobal( r.bottomLeft() ) );
-			popup->setFixedSize( 100, popup->heightForWidth( 100 ) );
+			popup->setFixedSize( popupWidth, popup->heightForWidth( popupWidth ) );
 
 			// Sibling(5) = description
 			popupLabel->setText( description );
