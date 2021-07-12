@@ -1,3 +1,9 @@
+0.16.1	|	Release date: **12.07.2021**
+============================================
+* Bug-Fixes:
+  - Add New Database Structure Resource.
+
+
 0.16.0	|	Release date: **12.07.2021**
 ============================================
 * New Features:
