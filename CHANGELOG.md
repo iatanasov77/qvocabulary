@@ -1,3 +1,10 @@
+0.16.2	|	Release date: **13.07.2021**
+============================================
+* New Features:
+  - Add Opurtunity to Can Edit Word Description.
+  - Adjust Size of Vocabulary Word Description Popup.
+
+
 0.16.1	|	Release date: **12.07.2021**
 ============================================
 * Bug-Fixes:
