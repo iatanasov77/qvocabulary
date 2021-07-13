@@ -79,7 +79,7 @@ bool QVocabulary::parseWords()
 		voc->language_1		= query.value( "language_1" ).toString();
 		voc->transcription	= query.value( "transcription" ).toString();
 		voc->language_2		= query.value( "language_2" ).toString();
-		voc->description	= QString( "" );
+		voc->description	= query.value( "description" ).toString();
 
 		daoError		= qx::dao::insert( voc );
 	}

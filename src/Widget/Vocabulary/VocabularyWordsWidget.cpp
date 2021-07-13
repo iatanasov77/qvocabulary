@@ -394,7 +394,13 @@ void VocabularyWordsWidget::addWordDescription()
 		return;
 	}
 
-	AddDescriptionDialog *dlg	= new AddDescriptionDialog( pModel->data( selectedRows[0].siblingAtColumn( 1 ) ).toString(), this );
+	QMap<QString, QString> firstWord;
+	QList<QMap<QString, QString>> selectedWords;
+	firstWord["word"]			= pModel->data( selectedRows[0].siblingAtColumn( 1 ) ).toString();
+	firstWord["description"]	= pModel->data( selectedRows[0].siblingAtColumn( 5 ) ).toString();
+	selectedWords << firstWord;
+
+	AddDescriptionDialog *dlg	= new AddDescriptionDialog( selectedWords, this );
 	dlg->setModal( true );
 	dlg->show();
 	if ( dlg->exec() == QDialog::Accepted ) {

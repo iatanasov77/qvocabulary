@@ -3,6 +3,9 @@
 
 #include <QWidget>
 #include <QDialog>
+#include <QList>
+#include <QMap>
+#include <QString>
 
 namespace Ui {
     class AddDescriptionDialog;
@@ -13,7 +16,7 @@ class AddDescriptionDialog : public QDialog
     Q_OBJECT
 
 	public:
-		explicit AddDescriptionDialog( QString selectedWord, QWidget *parent = 0 );
+		explicit AddDescriptionDialog( QList<QMap<QString, QString>> selectedWords, QWidget *parent = 0 );
 		~AddDescriptionDialog();
 
 		QString getDescription();
