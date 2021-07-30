@@ -27,7 +27,7 @@ class VocabularyWidget : public QWidget
     Q_OBJECT
 
 	public:
-		explicit VocabularyWidget( QWidget *parent = 0 );
+		VocabularyWidget( QWidget *parent = 0 );
 		~VocabularyWidget();
 
 		void initModels();

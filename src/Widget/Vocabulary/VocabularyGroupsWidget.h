@@ -20,7 +20,7 @@ class VocabularyGroupsWidget : public QWidget
     Q_OBJECT
 
 	public:
-		explicit VocabularyGroupsWidget( QWidget *parent = 0 );
+		VocabularyGroupsWidget( QWidget *parent = 0 );
 		~VocabularyGroupsWidget();
 
 		void refreshView( QModelIndex topLeft, QModelIndex bottomRight );
@@ -29,9 +29,6 @@ class VocabularyGroupsWidget : public QWidget
 		int groupRow( int groupId );
 		void setCurrentGroup( int groupId );
 
-	signals:
-		void currentGroupChanged( const QModelIndex &index );
-
 	public slots:
 		void setCurrentGroup( const QModelIndex &index );
 		void displayContextMenu( QPoint pos );
@@ -39,6 +36,9 @@ class VocabularyGroupsWidget : public QWidget
 		void deleteGroup();
 
 		void modelRowsInserted( const QModelIndex & parent, int start, int end );
+
+	signals:
+		void currentGroupChanged( const QModelIndex &index );
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed

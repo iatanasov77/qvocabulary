@@ -23,6 +23,8 @@ VocabularyGroupsWidget::VocabularyGroupsWidget( QWidget *parent ) :
     initModel();
     initContextMenu();
 
+    ui->listView->setSelectionBehavior( QAbstractItemView::SelectRows );
+
     int currentGroupRow = 0;
     int currentGroup	= VsSettings::instance()->value( "currentGroup", "Vocabulary" ).toInt();
     if ( currentGroup ) {
@@ -39,9 +41,9 @@ VocabularyGroupsWidget::VocabularyGroupsWidget( QWidget *parent ) :
      * Connect Slots
      */
 	VocabularyWidget *wdgVocabulary	= qobject_cast<VocabularyWidget *>( parent ); // parent() if not in constructor
+	connect( this, SIGNAL( currentGroupChanged( QModelIndex ) ), itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ) );
 	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), wdgVocabulary, SLOT( loadGroup( QModelIndex ) ) );
 	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), this, SLOT( setCurrentGroup( QModelIndex ) ) );
-	connect( this, SIGNAL( currentGroupChanged( QModelIndex ) ), itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ) );
 
 	wdgVocabulary->setCurrentGroupName( ui->listView->model()->data( ui->listView->model()->index( 0, 1 ) ).toString() );
 }
@@ -112,12 +114,19 @@ void VocabularyGroupsWidget::setCurrentGroup( int groupId )
 		currentGroupRow	= groupRow( groupId );
 	}
 
+	//qDebug() << "Set Current Group: " << currentGroupRow;
 	emit currentGroupChanged( pModel->index( currentGroupRow, 0 ) );
+	refreshView();
+	//ui->listView->update();
+	//setCurrentGroup( pModel->index( currentGroupRow, 0 ) );
+	//initModel();
 }
 
 void VocabularyGroupsWidget::setCurrentGroup( const QModelIndex &index )
 {
 	ui->listView->setCurrentIndex( index );
+	ui->listView->setModel( nullptr );
+	ui->listView->setModel( pModel );
 }
 
 void VocabularyGroupsWidget::displayContextMenu( QPoint pos )
