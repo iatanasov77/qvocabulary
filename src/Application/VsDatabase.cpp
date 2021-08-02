@@ -177,3 +177,46 @@ void VsDatabase::executeImportNonTransaction( QString queryStr, QSqlDatabase &db
 
 	qDebug() << "End Non-Transactional Import";
 }
+
+QString VsDatabase::getTableCreateSql( QString tableName )
+{
+	QString fileName = QString( ":/Resources/sql/qvocabulary-%1.sql" ).arg( VsApplication::DB_VERSION );
+	QFile file( fileName );
+
+	file.open( QIODevice::ReadOnly );
+	QString queryStr( file.readAll() );
+	file.close();
+
+	queryStr	= queryStr.replace(
+					QRegularExpression(
+						"(\\/\\*(.|\\n)*?\\*\\/|^--.*\\n|\\t|\\n)",
+						QRegularExpression::CaseInsensitiveOption | QRegularExpression::MultilineOption
+					),
+					" "
+				);
+
+	queryStr = queryStr.trimmed();
+
+	//Extracting queries
+	QStringList qList = queryStr.split( ';', QString::SkipEmptyParts );
+
+	//Table Create Query
+	QString tableCreateSql	= qList.at( 0 );
+	if ( tableName == "Vocabulary" ) {
+		tableCreateSql	= qList.at( 1 );
+	}
+
+	if ( tableName == "VVocabularyGroup" ) {
+		tableCreateSql	= qList.at( 2 );
+	}
+
+	if ( tableName == "Quiz" ) {
+		tableCreateSql	= qList.at( 3 );
+	}
+
+	if ( tableName == "QuizItem" ) {
+		tableCreateSql	= qList.at( 4 );
+	}
+
+	return tableCreateSql;
+}

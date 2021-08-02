@@ -37,7 +37,6 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     hideColumns 	= {0, 2, 4, 5};
 
     initModel();
-    adjustRowSelection();
     initContextMenu();
     initTextToSpeech();
 
@@ -418,6 +417,14 @@ void VocabularyWordsWidget::initView()
 	ui->verticalLayout_3->removeWidget( ui->tableView );
 	ui->tableView	= new VocabularyTableView( ui->pageVocabulary );
 	ui->verticalLayout_3->addWidget( ui->tableView );
+
+	// Enable Drag and Drop
+	ui->tableView->setDragEnabled( true );
+	ui->tableView->setAcceptDrops( true );
+	ui->tableView->setDropIndicatorShown( true );
+	ui->tableView->setDefaultDropAction( Qt::MoveAction );
+
+	adjustRowSelection();
 }
 
 void VocabularyWordsWidget::showWord( QTreeWidgetItem* item, int column )

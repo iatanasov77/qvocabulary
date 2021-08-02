@@ -30,6 +30,7 @@ class VsApplication
 		void loadLanguage( const QString& rLanguage );
 		QString appAboutBody();
 
+		QMap<QString, int> dbTableSqlLines();
 		static const QString DB_VERSION;
 };
 

@@ -13,6 +13,18 @@
 #include "Application/VsSettings.h"
 
 const QString VsApplication::DB_VERSION = "20210712";
+QMap<QString, int> VsApplication::dbTableSqlLines()
+{
+	QMap<QString, int> sqlLines;
+
+	sqlLines["VocabularyMetaInfo"]	= 1;
+//	sqlLines['VocabularyMetaInfo']	= 2;
+//	sqlLines['VocabularyMetaInfo']	= 3;
+//	sqlLines['VocabularyMetaInfo']	= 1;
+//	sqlLines['VocabularyMetaInfo']	= 1;
+
+	return sqlLines;
+}
 
 /*
  * This one did the trick!

@@ -7,6 +7,7 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 #include "Entity/Vocabulary.h"
+#include "Application/VsDatabase.h"
 
 VocabularyWordsModel::VocabularyWordsModel( QObject* parent ) : QxModel<Vocabulary>( parent )
 {
@@ -117,9 +118,13 @@ void VocabularyWordsModel::_myMoveRows( int sourceRow, int destinationRow, int c
 	int id;
 	QVector<int> srcIds;
 	QString queryInsert;
+	QString tempQueryInsert;
 	QSqlDatabase db				= qx::QxSqlDatabase::getDatabase();
 	QSqlQuery *query 			= new QSqlQuery( db );
 	QSqlQuery *tempTableQuery	= new QSqlQuery( db );
+	VsDatabase *vsDb			= VsDatabase::instance();
+	QString vocabularyTableSql	= vsDb->getTableCreateSql( "Vocabulary" );
+	QString tempTableSql		= vsDb->getTableCreateSql( "Vocabulary" ).replace( "Vocabulary", "TempVocabulary" );
 
 	for ( int i = 0; i < countRows; i++ ) {
 		srcIds	<< data( index( sourceRow + i, 0 ) ).toInt();
@@ -127,9 +132,13 @@ void VocabularyWordsModel::_myMoveRows( int sourceRow, int destinationRow, int c
 	int destId					= data( index( destinationRow, 0 ) ).toInt();
 
 	query->exec( "DROP TABLE IF EXISTS TempVocabulary" );
-	query->exec( "CREATE TABLE TempVocabulary( id integer primary key, language_1 varchar(255), transcription varchar(255), language_2 varchar(255), group_id integer )" );
+	query->exec( tempTableSql );
+	//qDebug() << "Table Create SQL: " << vocabularyTableSql;
 
 	query->exec( "SELECT * FROM Vocabulary" );
+	//qDebug() << "Vocabulary Words Count: " << query->size();
+	//return;
+
 	while ( query->next() ) {
 		id	= query->value( "id" ).toInt();
 
@@ -139,11 +148,13 @@ void VocabularyWordsModel::_myMoveRows( int sourceRow, int destinationRow, int c
 			id	= id + countRows;
 		}
 
-		queryInsert	= "INSERT INTO TempVocabulary( id, language_1, transcription, language_2, group_id ) VALUES( " + QString::number( id ) + ", '" + query->value( "language_1" ).toString() + "', '" + query->value( "transcription" ).toString() + "', '" + query->value( "language_2" ).toString() + "', " + query->value( "group_id" ).toString() + " )";
-		tempTableQuery->exec( queryInsert );
+		tempQueryInsert	= "INSERT INTO TempVocabulary( id, language_1, transcription, language_2, group_id, description ) VALUES( " + QString::number( id ) + ", '" + query->value( "language_1" ).toString() + "', '" + query->value( "transcription" ).toString() + "', '" + query->value( "language_2" ).toString() + "', " + query->value( "group_id" ).toString() + ", '" + query->value( "description" ).toString() + "' )";
+		tempTableQuery->exec( tempQueryInsert );
 	}
 
 	query->exec( "DROP TABLE IF EXISTS Vocabulary" );
-	query->exec( "CREATE TABLE Vocabulary( id integer primary key, language_1 varchar(255), transcription varchar(255), language_2 varchar(255), group_id integer )" );
-	query->exec( "INSERT INTO Vocabulary( id, language_1, transcription, language_2, group_id ) SELECT id, language_1, transcription, language_2, group_id FROM TempVocabulary" );
+	query->exec( vocabularyTableSql );
+
+	queryInsert	= "INSERT INTO Vocabulary( id, language_1, transcription, language_2, group_id, description ) SELECT id, language_1, transcription, language_2, group_id, description FROM TempVocabulary";
+	query->exec( queryInsert );
 }
