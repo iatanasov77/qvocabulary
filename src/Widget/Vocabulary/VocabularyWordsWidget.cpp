@@ -16,7 +16,7 @@
 #include "Entity/Vocabulary.h"
 #include "Entity/VocabularyGroup.h"
 
-#include "VocabularyWidget.h"
+#include "Widget/Vocabulary/VocabularyWidget.h"
 #include "ModelView/Helper.h"
 #include "ModelView/VocabularyTableView.h"
 #include "ModelView/VocabularyTableViewDelegate.h"
@@ -29,20 +29,23 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
 {
     ui->setupUi( this );
     initView();
+    wdgVocabulary	= parent;
 
     //QVBoxLayout *tableLayout	= new QVBoxLayout( ui->tableView );
 
     currentGroup 	= 1;
     hideColumns 	= {0, 2, 4, 5};
 
-    initModel();
     adjustRowSelection();
+    initModel();
     initContextMenu();
     initTextToSpeech();
 
     connect( ui->chkShowTranscriptions, SIGNAL( stateChanged( int ) ), this, SLOT( showTranscriptions( int ) ) );
     connect( ui->leSearch, SIGNAL( returnPressed() ), ui->btnSearch, SIGNAL( released() ) );
     connect( ui->btnSearch, SIGNAL( released() ), this, SLOT( search() ) );
+
+    connect( ui->treeWidget, SIGNAL( itemDoubleClicked( QTreeWidgetItem*, int ) ), this, SLOT( showWord( QTreeWidgetItem*, int ) ) );
 }
 
 VocabularyWordsWidget::~VocabularyWordsWidget()
@@ -53,6 +56,8 @@ VocabularyWordsWidget::~VocabularyWordsWidget()
 void VocabularyWordsWidget::initModel()
 {
 	pModel	= new VocabularyWordsModel();
+	// QxModelView module : new feature available to add automatically an empty row at the end of the table to insert quickly new items (setShowEmptyLine() method)
+	pModel->setShowEmptyLine( true );
 
 	VocabularyTableViewDelegate* itemDelegate	= new VocabularyTableViewDelegate( ui->tableView );
 	ui->tableView->setItemDelegateForColumn( 2, itemDelegate );
@@ -120,9 +125,12 @@ void VocabularyWordsWidget::setViewHeader( VocabularyMetaInfoPtr metaInfo )
 	pModel->setHeaderData( 3, Qt::Horizontal, headTitles.at( 1 ), Qt::DisplayRole );
 }
 
-void VocabularyWordsWidget::insertWord()
+int VocabularyWordsWidget::insertWord()
 {
-	pModel->insertRow( pModel->rowCount( QModelIndex() ) );
+	int row	= pModel->rowCount( QModelIndex() );
+	pModel->insertRow( row );
+
+	return row;
 }
 
 /**
@@ -172,8 +180,16 @@ void VocabularyWordsWidget::onDataChanged( const QModelIndex& topLeft, const QMo
 		topLeft == bottomRight &&
 		( topLeft.column() == 2 || ! hideColumns.contains( topLeft.column() ) ) // Transcription column or Hidden Column :)
 	) { // Because cannot be edited(Moved to another group)
-		pModel->setData( topLeft.siblingAtColumn( 4 ), QVariant( currentGroup ) );
-		pModel->qxSave();
+		bool hasId	= pModel->data( topLeft.siblingAtColumn( 0 ) ).toBool();
+		if ( hasId ) {
+			pModel->setData( topLeft.siblingAtColumn( 4 ), QVariant( currentGroup ) );
+			pModel->qxSave();
+		} else {
+			insertFromEmptyRow( topLeft );
+
+			refreshView( topLeft.siblingAtColumn( 0 ), topLeft.siblingAtColumn( 5 ) );
+			ui->tableView->scrollToBottom();
+		}
 	}
 }
 
@@ -243,9 +259,9 @@ void VocabularyWordsWidget::deleteWord()
 
 void VocabularyWordsWidget::search()
 {
-	qx::QxModel<Vocabulary>* searchModel	= new qx::QxModel<Vocabulary>();
-	QString searchWord						= ui->leSearch->text();
-	QString query							= QString( "WHERE language_1 LIKE '%%1%' OR language_2 LIKE '%%1%'" ).arg( searchWord );
+	searchModel			= new qx::QxModel<Vocabulary>();
+	QString searchWord	= ui->leSearch->text();
+	QString query		= QString( "WHERE language_1 LIKE '%%1%' OR language_2 LIKE '%%1%'" ).arg( searchWord );
 	searchModel->qxFetchByQuery( query );
 
 	displaySearchResults( searchModel );
@@ -289,6 +305,7 @@ void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searc
 		childItem = new QTreeWidgetItem();
 
 		childItem->setText( 0, searchModel->data( searchModel->index( i, 1 ) ).toString() );
+		childItem->setData( 0, Qt::UserRole, searchModel->data( searchModel->index( i, 0 ) ) );
 		if ( ui->chkShowTranscriptions->isChecked() ) {
 			QFont font;
 			font.setBold( true );
@@ -414,4 +431,57 @@ void VocabularyWordsWidget::initView()
 	ui->verticalLayout_3->removeWidget( ui->tableView );
 	ui->tableView	= new VocabularyTableView( ui->pageVocabulary );
 	ui->verticalLayout_3->addWidget( ui->tableView );
+
+	// Enable Drag and Drop
+	ui->tableView->setDragEnabled( true );
+	ui->tableView->setAcceptDrops( true );
+	ui->tableView->setDropIndicatorShown( true );
+	ui->tableView->setDefaultDropAction( Qt::MoveAction );
+}
+
+void VocabularyWordsWidget::showWord( QTreeWidgetItem* item, int column )
+{
+	Q_UNUSED( column );
+
+	if ( ! searchModel ) {
+		return;
+	}
+
+	int wordId						= item->data( 0, Qt::UserRole ).toInt();
+	int groupId						= 1;
+	for ( int i = 0; i < searchModel->rowCount(); ++i ) {
+		searchModel->data( searchModel->index( i, 0 ) ).toInt();
+		if ( searchModel->data( searchModel->index( i, 0 ) ).toInt() == wordId ) {
+			groupId	= searchModel->data( searchModel->index( i, 4 ) ).toInt();
+			//qDebug() << "Search Model Word Founded. Group ID: " << groupId;
+		}
+	}
+
+	qobject_cast<VocabularyWidget *>( wdgVocabulary )->setCurrentGroup( groupId );
+	//updateView();
+
+	QModelIndex	wordsModelIndex	= QModelIndex();
+	for ( int i = 0; i < pModel->rowCount(); ++i ) {
+		if ( pModel->data( pModel->index( i, 0 ) ).toInt() == wordId ) {
+			wordsModelIndex	= pModel->index( i, 1 );
+			//qDebug() << "Words Model Index Found";
+		}
+	}
+
+	ui->tableView->setCurrentIndex( wordsModelIndex );
+	ui->tableView->scrollTo( wordsModelIndex );
+}
+
+bool VocabularyWordsWidget::insertFromEmptyRow( QModelIndex index )
+{
+	VocabularyPtr oVocabulary	= VocabularyPtr( new Vocabulary() );
+
+	oVocabulary->language_1		= pModel->data( index.siblingAtColumn( 1 ) ).toString();
+	oVocabulary->language_2		= pModel->data( index.siblingAtColumn( 3 ) ).toString();
+	oVocabulary->transcription	= pModel->data( index.siblingAtColumn( 2 ) ).toString();
+	oVocabulary->group_id		= currentGroup;
+
+	QSqlError daoError			= qx::dao::insert( oVocabulary );
+
+	return true;
 }

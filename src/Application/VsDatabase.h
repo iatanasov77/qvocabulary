@@ -30,6 +30,8 @@ class VsDatabase
         VocabularyMetaInfoPtr metaInfo();
 
         friend void NewDatabaseDialog::save();
+
+        QString getTableCreateSql( QString tableName );
 };
 
 #endif // VS_DATABASE_H

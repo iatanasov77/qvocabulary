@@ -5,6 +5,7 @@
 #include <QListView>
 #include <QModelIndex>
 #include <QTextToSpeech>
+#include <QTreeWidgetItem>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -23,11 +24,11 @@ class VocabularyWordsWidget : public QWidget
     Q_OBJECT
 
 	public:
-		explicit VocabularyWordsWidget( QWidget *parent = 0 );
+		VocabularyWordsWidget( QWidget *parent );
 		~VocabularyWordsWidget();
 
 		void setViewHeader( VocabularyMetaInfoPtr metaInfo );
-		void insertWord();
+		int insertWord();
 		void loadGroup( int groupId );
 		int deleteGroup( int groupId );
 		void refreshView( QModelIndex topLeft, QModelIndex bottomRight );
@@ -40,6 +41,7 @@ class VocabularyWordsWidget : public QWidget
 		void moveToGroup();
 		void deleteWord();
 		void search();
+		void showWord( QTreeWidgetItem* item, int column );
 		void showTranscriptions( int state );
 		void sayWord( const QModelIndex &index );
 		void addWordDescription();
@@ -60,12 +62,16 @@ class VocabularyWordsWidget : public QWidget
 		void initTextToSpeech();
 		void adjustRowSelection();
 		void displaySearchResults( qx::QxModel<Vocabulary> *searchModel );
+		bool insertFromEmptyRow( QModelIndex index );
 
 		int currentGroup;
 		Ui::VocabularyWordsWidget *ui;
 		qx::QxModel<Vocabulary> *pModel;
 		QList<int> hideColumns;
 		VsSpeaker* speeker;
+
+		qx::QxModel<Vocabulary>* searchModel;
+		QWidget* wdgVocabulary;
 };
 
 #endif // WIDGET_VOCABULARYWORDS_H
