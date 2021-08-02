@@ -56,6 +56,8 @@ VocabularyWordsWidget::~VocabularyWordsWidget()
 void VocabularyWordsWidget::initModel()
 {
 	pModel	= new VocabularyWordsModel();
+	// QxModelView module : new feature available to add automatically an empty row at the end of the table to insert quickly new items (setShowEmptyLine() method)
+	pModel->setShowEmptyLine( true );
 
 	VocabularyTableViewDelegate* itemDelegate	= new VocabularyTableViewDelegate( ui->tableView );
 	ui->tableView->setItemDelegateForColumn( 2, itemDelegate );
@@ -123,9 +125,12 @@ void VocabularyWordsWidget::setViewHeader( VocabularyMetaInfoPtr metaInfo )
 	pModel->setHeaderData( 3, Qt::Horizontal, headTitles.at( 1 ), Qt::DisplayRole );
 }
 
-void VocabularyWordsWidget::insertWord()
+int VocabularyWordsWidget::insertWord()
 {
-	pModel->insertRow( pModel->rowCount( QModelIndex() ) );
+	int row	= pModel->rowCount( QModelIndex() );
+	pModel->insertRow( row );
+
+	return row;
 }
 
 /**
@@ -175,8 +180,16 @@ void VocabularyWordsWidget::onDataChanged( const QModelIndex& topLeft, const QMo
 		topLeft == bottomRight &&
 		( topLeft.column() == 2 || ! hideColumns.contains( topLeft.column() ) ) // Transcription column or Hidden Column :)
 	) { // Because cannot be edited(Moved to another group)
-		pModel->setData( topLeft.siblingAtColumn( 4 ), QVariant( currentGroup ) );
-		pModel->qxSave();
+		bool hasId	= pModel->data( topLeft.siblingAtColumn( 0 ) ).toBool();
+		if ( hasId ) {
+			pModel->setData( topLeft.siblingAtColumn( 4 ), QVariant( currentGroup ) );
+			pModel->qxSave();
+		} else {
+			insertFromEmptyRow( topLeft );
+
+			refreshView( topLeft.siblingAtColumn( 0 ), topLeft.siblingAtColumn( 5 ) );
+			ui->tableView->scrollToBottom();
+		}
 	}
 }
 
@@ -457,4 +470,18 @@ void VocabularyWordsWidget::showWord( QTreeWidgetItem* item, int column )
 
 	ui->tableView->setCurrentIndex( wordsModelIndex );
 	ui->tableView->scrollTo( wordsModelIndex );
+}
+
+bool VocabularyWordsWidget::insertFromEmptyRow( QModelIndex index )
+{
+	VocabularyPtr oVocabulary	= VocabularyPtr( new Vocabulary() );
+
+	oVocabulary->language_1		= pModel->data( index.siblingAtColumn( 1 ) ).toString();
+	oVocabulary->language_2		= pModel->data( index.siblingAtColumn( 3 ) ).toString();
+	oVocabulary->transcription	= pModel->data( index.siblingAtColumn( 2 ) ).toString();
+	oVocabulary->group_id		= currentGroup;
+
+	QSqlError daoError			= qx::dao::insert( oVocabulary );
+
+	return true;
 }

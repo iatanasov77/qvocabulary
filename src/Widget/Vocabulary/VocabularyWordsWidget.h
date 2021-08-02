@@ -28,7 +28,7 @@ class VocabularyWordsWidget : public QWidget
 		~VocabularyWordsWidget();
 
 		void setViewHeader( VocabularyMetaInfoPtr metaInfo );
-		void insertWord();
+		int insertWord();
 		void loadGroup( int groupId );
 		int deleteGroup( int groupId );
 		void refreshView( QModelIndex topLeft, QModelIndex bottomRight );
@@ -62,6 +62,7 @@ class VocabularyWordsWidget : public QWidget
 		void initTextToSpeech();
 		void adjustRowSelection();
 		void displaySearchResults( qx::QxModel<Vocabulary> *searchModel );
+		bool insertFromEmptyRow( QModelIndex index );
 
 		int currentGroup;
 		Ui::VocabularyWordsWidget *ui;
