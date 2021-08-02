@@ -1,3 +1,12 @@
+0.17.0	|	Release date: **02.08.2021**
+============================================
+* New Features:
+  - Add automatically an empty row at the end of the table to insert quickly new items.
+  - Add Double Click on Search Results Widget.
+* Bug-Fixes:
+  - Fix Extended Words TableView to  Enable Drag and Drop.
+
+
 0.16.2	|	Release date: **13.07.2021**
 ============================================
 * New Features:
