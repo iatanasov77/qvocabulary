@@ -164,6 +164,7 @@ void VocabularyWordsWidget::refreshView( QModelIndex topLeft, QModelIndex bottom
 
 	emit pModel->dataChanged( topLeft, bottomRight );
 	initModel();
+	setViewHeader( VsDatabase::instance()->metaInfo() );
 
 	loadGroup( currentGroup );
 	showTranscriptions( showTranscriptionsState );
