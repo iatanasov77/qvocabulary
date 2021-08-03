@@ -10,6 +10,7 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "Application/VsSettings.h"
 #include "Application/VsDatabase.h"
 #include "Application/VsSpeaker.h"
 #include "Entity/VocabularyMetaInfo.h"
@@ -40,6 +41,12 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     initModel();
     initContextMenu();
     initTextToSpeech();
+
+    int displayTranscriptionsState	= VsSettings::instance()->value( "displayTranscriptions", "Vocabulary" ).toInt();
+    if ( displayTranscriptionsState && displayTranscriptionsState == Qt::Checked ) {
+    	ui->chkShowTranscriptions->setCheckState( Qt::Checked );
+    	showTranscriptions( displayTranscriptionsState );
+    }
 
     connect( ui->chkShowTranscriptions, SIGNAL( stateChanged( int ) ), this, SLOT( showTranscriptions( int ) ) );
     connect( ui->leSearch, SIGNAL( returnPressed() ), ui->btnSearch, SIGNAL( released() ) );
@@ -357,6 +364,8 @@ void VocabularyWordsWidget::showTranscriptions( int state )
 	} else {
 		ui->tableView->hideColumn( 2 );
 	}
+
+	VsSettings::instance()->setValue( "displayTranscriptions", QVariant( state ), "Vocabulary" );
 }
 
 void VocabularyWordsWidget::adjustRowSelection()
