@@ -1,3 +1,13 @@
+0.17.1	|	Release date: **03.08.2021**
+============================================
+* Bug-Fixes and Improvements:
+  - Save and Restore VocabularyWords Table Header Sizes.
+  - Save and Restore Words Transcriptions CheckBox State.
+  - Save and Restore MainWindow Size from Settings.
+  - Scroll ListView to Current Group when Program Start.
+  - When Add New Word save Transcriptions CheckBox State.
+
+
 0.17.0	|	Release date: **02.08.2021**
 ============================================
 * New Features:
