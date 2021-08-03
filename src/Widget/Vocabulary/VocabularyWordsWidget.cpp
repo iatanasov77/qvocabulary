@@ -48,6 +48,8 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     	showTranscriptions( displayTranscriptionsState );
     }
 
+    connect( ui->tableView->horizontalHeader(), SIGNAL( sectionResized ( int, int, int ) ), this, SLOT( saveHeaderSizes( int, int, int ) ) );
+
     connect( ui->chkShowTranscriptions, SIGNAL( stateChanged( int ) ), this, SLOT( showTranscriptions( int ) ) );
     connect( ui->leSearch, SIGNAL( returnPressed() ), ui->btnSearch, SIGNAL( released() ) );
     connect( ui->btnSearch, SIGNAL( released() ), this, SLOT( search() ) );
@@ -77,6 +79,8 @@ void VocabularyWordsWidget::initModel()
 	for( int i = 0; i < hideColumns.size(); i++ ) {
 		ui->tableView->hideColumn( hideColumns[i] );
 	}
+
+	restoreHeaderSizes(); // From Settings
 
 	connect(
 		pModel,
@@ -496,4 +500,23 @@ bool VocabularyWordsWidget::insertFromEmptyRow( QModelIndex index )
 	QSqlError daoError			= qx::dao::insert( oVocabulary );
 
 	return true;
+}
+
+void VocabularyWordsWidget::saveHeaderSizes( int logicalIndex, int oldSize, int newSize )
+{
+	Q_UNUSED( oldSize );
+
+	QMap<QString, QVariant> headerSizes	= VsSettings::instance()->value( "tableHeaderSizes", "Vocabulary" ).toMap();
+	headerSizes[QString::number( logicalIndex )]	= QVariant( newSize );
+
+	VsSettings::instance()->setValue( "tableHeaderSizes", headerSizes, "Vocabulary" );
+}
+
+void VocabularyWordsWidget::restoreHeaderSizes()
+{
+	QMap<QString, QVariant> headerSizes	= VsSettings::instance()->value( "tableHeaderSizes", "Vocabulary" ).toMap();
+	foreach ( QString key, headerSizes.keys() ) {
+		qDebug() << "Vocabulary Header Size: " << headerSizes[key].toInt();
+		ui->tableView->horizontalHeader()->resizeSection( key.toInt(), headerSizes[key].toInt() );
+	}
 }

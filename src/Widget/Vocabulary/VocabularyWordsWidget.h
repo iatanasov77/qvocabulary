@@ -49,6 +49,7 @@ class VocabularyWordsWidget : public QWidget
 		void modelRowsInserted( const QModelIndex & parent, int start, int end );
 		void updateSpeaker();
 		void updateView();
+		void saveHeaderSizes( int logicalIndex, int oldSize, int newSize );
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
@@ -63,6 +64,7 @@ class VocabularyWordsWidget : public QWidget
 		void adjustRowSelection();
 		void displaySearchResults( qx::QxModel<Vocabulary> *searchModel );
 		bool insertFromEmptyRow( QModelIndex index );
+		void restoreHeaderSizes();
 
 		int currentGroup;
 		Ui::VocabularyWordsWidget *ui;
