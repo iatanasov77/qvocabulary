@@ -107,6 +107,16 @@ int VocabularyGroupsWidget::groupRow( int groupId )
 	return 0;
 }
 
+void VocabularyGroupsWidget::scrollTo( int groupId )
+{
+	for ( int i = 0; i < pModel->rowCount(); i++ ) {
+		if ( pModel->index( i, 0 ).data().toInt() == groupId ) {
+			ui->listView->scrollTo( pModel->index( i, 0 ), QAbstractItemView::EnsureVisible );
+			//qDebug() << "Scroll To Group ID: " << groupId;
+		}
+	}
+}
+
 void VocabularyGroupsWidget::setCurrentGroup( int groupId )
 {
 	int currentGroupRow = 0;

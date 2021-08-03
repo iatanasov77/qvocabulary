@@ -31,6 +31,7 @@ class VocabularyGroupsWidget : public QWidget
 
 	public slots:
 		void setCurrentGroup( const QModelIndex &index );
+		void scrollTo( int groupId );
 		void displayContextMenu( QPoint pos );
 		void renameGroup();
 		void deleteGroup();
