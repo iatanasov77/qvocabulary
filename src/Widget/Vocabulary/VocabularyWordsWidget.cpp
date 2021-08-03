@@ -163,9 +163,12 @@ int VocabularyWordsWidget::deleteGroup( int groupId )
 
 void VocabularyWordsWidget::refreshView( QModelIndex topLeft, QModelIndex bottomRight )
 {
+	int showTranscriptionsState	= ui->chkShowTranscriptions->isChecked() ? Qt::Checked : Qt::Unchecked;
+
 	emit pModel->dataChanged( topLeft, bottomRight );
 	initModel();
 	loadGroup( currentGroup );
+	showTranscriptions( showTranscriptionsState );
 }
 
 void VocabularyWordsWidget::updateView()
