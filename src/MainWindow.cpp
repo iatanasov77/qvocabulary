@@ -46,6 +46,14 @@ MainWindow::MainWindow( QWidget *parent ) :
     initDatabase();
     initMenuLanguages();
 
+    // Set MainWindow Size Previous Set In Settings
+    VsSettings* settings	= VsSettings::instance();
+    int mwWidth			= settings->value( "mainWindowWidth", "MainWindow" ).toInt();
+    int mwHeight		= settings->value( "mainWindowHeight", "MainWindow" ).toInt();
+    if ( mwWidth && mwHeight ) {
+    	resize( mwWidth, mwHeight );
+    }
+
     connect( ui->actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
 
     //connect( exitAction, &QAction::triggered, qApp, &QApplication::closeAllWindows, Qt::QueuedConnection );
@@ -483,4 +491,15 @@ void MainWindow::loadLanguage()
 void MainWindow::setCurrentGroup( int groupId )
 {
 	wdgVocabulary->setCurrentGroup( groupId );
+}
+
+void MainWindow::resizeEvent( QResizeEvent* event )
+{
+	QMainWindow::resizeEvent( event );
+
+	VsSettings* settings	= VsSettings::instance();
+	QSize mwSize		= event->size(); // Returns the new size of the widget. This is the same as QWidget::size().
+
+	settings->setValue( "mainWindowWidth", QVariant( mwSize.width() ), "MainWindow" );
+	settings->setValue( "mainWindowHeight", QVariant( mwSize.height() ), "MainWindow" );
 }

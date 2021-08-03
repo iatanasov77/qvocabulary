@@ -45,6 +45,9 @@ VocabularyWidget::VocabularyWidget( QWidget *parent ) :
     } else {
     	loadGroup( wdgGroups->currentGroup() );
     }
+
+    // Scroll to selected Group
+    wdgGroups->scrollTo( currentGroup );
 }
 
 VocabularyWidget::~VocabularyWidget()

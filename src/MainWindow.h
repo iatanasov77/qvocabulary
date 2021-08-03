@@ -34,6 +34,7 @@ class MainWindow : public QMainWindow
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
 		void changeEvent(QEvent*);
+		virtual void resizeEvent( QResizeEvent* event );
 
 	private slots:
 		void on_actionNew_DB_triggered();

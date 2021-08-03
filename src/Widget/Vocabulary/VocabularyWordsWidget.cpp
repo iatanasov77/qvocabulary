@@ -10,6 +10,7 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "Application/VsSettings.h"
 #include "Application/VsDatabase.h"
 #include "Application/VsSpeaker.h"
 #include "Entity/VocabularyMetaInfo.h"
@@ -41,6 +42,19 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     initContextMenu();
     initTextToSpeech();
 
+    for( int i = 0; i < hideColumns.size(); i++ ) {
+		ui->tableView->hideColumn( hideColumns[i] );
+	}
+    int displayTranscriptionsState	= VsSettings::instance()->value( "displayTranscriptions", "Vocabulary" ).toInt();
+    if ( displayTranscriptionsState && displayTranscriptionsState == Qt::Checked ) {
+    	ui->chkShowTranscriptions->setCheckState( Qt::Checked );
+    	showTranscriptions( displayTranscriptionsState );
+    }
+	restoreHeaderSizes(); // From Settings
+    ui->tableView->scrollToBottom();
+
+    connect( ui->tableView->horizontalHeader(), SIGNAL( sectionResized ( int, int, int ) ), this, SLOT( saveHeaderSizes( int, int, int ) ) );
+
     connect( ui->chkShowTranscriptions, SIGNAL( stateChanged( int ) ), this, SLOT( showTranscriptions( int ) ) );
     connect( ui->leSearch, SIGNAL( returnPressed() ), ui->btnSearch, SIGNAL( released() ) );
     connect( ui->btnSearch, SIGNAL( released() ), this, SLOT( search() ) );
@@ -56,20 +70,10 @@ VocabularyWordsWidget::~VocabularyWordsWidget()
 void VocabularyWordsWidget::initModel()
 {
 	pModel	= new VocabularyWordsModel();
+	ui->tableView->setModel( pModel );
+
 	// QxModelView module : new feature available to add automatically an empty row at the end of the table to insert quickly new items (setShowEmptyLine() method)
 	pModel->setShowEmptyLine( true );
-
-	VocabularyTableViewDelegate* itemDelegate	= new VocabularyTableViewDelegate( ui->tableView );
-	ui->tableView->setItemDelegateForColumn( 2, itemDelegate );
-	//ui->tableView->setItemDelegate( itemDelegate );
-
-	ui->tableView->setModel( pModel );
-	//ui->tableView->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
-	ui->tableView->horizontalHeader()->resizeSections( QHeaderView::ResizeToContents );
-	ui->tableView->horizontalHeader()->setStretchLastSection( true );
-	for( int i = 0; i < hideColumns.size(); i++ ) {
-		ui->tableView->hideColumn( hideColumns[i] );
-	}
 
 	connect(
 		pModel,
@@ -90,13 +94,6 @@ void VocabularyWordsWidget::initModel()
 		SIGNAL( modelUpdated() ),
 		this,
 		SLOT( updateView() )
-	);
-
-	connect(
-		itemDelegate,
-		SIGNAL( buttonClicked( QModelIndex ) ),
-		this,
-		SLOT( sayWord( QModelIndex ) )
 	);
 }
 
@@ -163,9 +160,14 @@ int VocabularyWordsWidget::deleteGroup( int groupId )
 
 void VocabularyWordsWidget::refreshView( QModelIndex topLeft, QModelIndex bottomRight )
 {
+	int showTranscriptionsState	= ui->chkShowTranscriptions->isChecked() ? Qt::Checked : Qt::Unchecked;
+
 	emit pModel->dataChanged( topLeft, bottomRight );
 	initModel();
+
 	loadGroup( currentGroup );
+	showTranscriptions( showTranscriptionsState );
+	//restoreHeaderSizes();
 }
 
 void VocabularyWordsWidget::updateView()
@@ -354,6 +356,8 @@ void VocabularyWordsWidget::showTranscriptions( int state )
 	} else {
 		ui->tableView->hideColumn( 2 );
 	}
+
+	VsSettings::instance()->setValue( "displayTranscriptions", QVariant( state ), "Vocabulary" );
 }
 
 void VocabularyWordsWidget::adjustRowSelection()
@@ -437,6 +441,21 @@ void VocabularyWordsWidget::initView()
 	ui->tableView->setAcceptDrops( true );
 	ui->tableView->setDropIndicatorShown( true );
 	ui->tableView->setDefaultDropAction( Qt::MoveAction );
+
+	VocabularyTableViewDelegate* itemDelegate	= new VocabularyTableViewDelegate( ui->tableView );
+	ui->tableView->setItemDelegateForColumn( 2, itemDelegate );
+	//ui->tableView->setItemDelegate( itemDelegate );
+
+	//ui->tableView->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
+	ui->tableView->horizontalHeader()->resizeSections( QHeaderView::ResizeToContents );
+	ui->tableView->horizontalHeader()->setStretchLastSection( true );
+
+	connect(
+		itemDelegate,
+		SIGNAL( buttonClicked( QModelIndex ) ),
+		this,
+		SLOT( sayWord( QModelIndex ) )
+	);
 }
 
 void VocabularyWordsWidget::showWord( QTreeWidgetItem* item, int column )
@@ -484,4 +503,23 @@ bool VocabularyWordsWidget::insertFromEmptyRow( QModelIndex index )
 	QSqlError daoError			= qx::dao::insert( oVocabulary );
 
 	return true;
+}
+
+void VocabularyWordsWidget::saveHeaderSizes( int logicalIndex, int oldSize, int newSize )
+{
+	Q_UNUSED( oldSize );
+
+	QMap<QString, QVariant> headerSizes	= VsSettings::instance()->value( "tableHeaderSizes", "Vocabulary" ).toMap();
+	headerSizes[QString::number( logicalIndex )]	= QVariant( newSize );
+
+	VsSettings::instance()->setValue( "tableHeaderSizes", headerSizes, "Vocabulary" );
+}
+
+void VocabularyWordsWidget::restoreHeaderSizes()
+{
+	QMap<QString, QVariant> headerSizes	= VsSettings::instance()->value( "tableHeaderSizes", "Vocabulary" ).toMap();
+	foreach ( QString key, headerSizes.keys() ) {
+		qDebug() << "Vocabulary Header Size: " << headerSizes[key].toInt();
+		ui->tableView->horizontalHeader()->resizeSection( key.toInt(), headerSizes[key].toInt() );
+	}
 }
