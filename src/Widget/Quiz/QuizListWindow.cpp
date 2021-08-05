@@ -14,6 +14,7 @@
 #include "GlobalTypes.h"
 #include "Entity/Quiz.h"
 #include "Entity/QuizItem.h"
+#include "Application/VsSettings.h"
 
 QuizListWindow::QuizListWindow( QWidget *parent ) :
     QWidget( parent ),
@@ -24,6 +25,14 @@ QuizListWindow::QuizListWindow( QWidget *parent ) :
 
     hideItemColumns = {0, 3};
     initQuizList();
+
+    // Set QuizListWindow Size Previous Set In Settings
+	VsSettings* settings	= VsSettings::instance();
+	int qwWidth			= settings->value( "quizListWindowWidth", "Quiz" ).toInt();
+	int qwHeight		= settings->value( "quizListWindowHeight", "Quiz" ).toInt();
+	if ( qwWidth && qwHeight ) {
+		resize( qwWidth, qwHeight );
+	}
 }
 
 QuizListWindow::~QuizListWindow()
@@ -175,4 +184,15 @@ void QuizListWindow::changeEvent( QEvent* event )
 
     // remember to call base class implementation
     QWidget::changeEvent( event );
+}
+
+void QuizListWindow::resizeEvent( QResizeEvent* event )
+{
+	QWidget::resizeEvent( event );
+
+	VsSettings* settings	= VsSettings::instance();
+	QSize qwSize		= event->size(); // Returns the new size of the widget. This is the same as QWidget::size().
+
+	settings->setValue( "quizListWindowWidth", QVariant( qwSize.width() ), "Quiz" );
+	settings->setValue( "quizListWindowHeight", QVariant( qwSize.height() ), "Quiz" );
 }

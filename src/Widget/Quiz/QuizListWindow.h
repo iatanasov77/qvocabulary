@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QTreeWidgetItem>
 #include <QGroupBox>
+#include <QResizeEvent>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -26,6 +27,7 @@ class QuizListWindow : public QWidget
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
 		void changeEvent( QEvent* );
+		virtual void resizeEvent( QResizeEvent* event );
 
 	private:
 		void initQuizList();
