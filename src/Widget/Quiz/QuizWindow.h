@@ -2,6 +2,7 @@
 #define WIDGET_QUIZ_WINDOW_H
 
 #include <QWidget>
+#include <QResizeEvent>
 
 #include "Widget/Quiz/QuizParametersWidget.h"
 #include "Widget/Quiz/QuizWidget.h"
@@ -27,6 +28,7 @@ class QuizWindow : public QWidget
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
 		void changeEvent( QEvent* );
+		virtual void resizeEvent( QResizeEvent* event );
 
 	private:
 		void init();

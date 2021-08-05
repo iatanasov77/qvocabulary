@@ -4,6 +4,7 @@
 #include <QSplitter>
 #include <QMessageBox>
 
+#include "Application/VsSettings.h"
 #include "Application/VsDatabase.h"
 #include "Widget/Quiz/QuizParametersWidget.h"
 #include "Widget/Quiz/QuizWidget.h"
@@ -20,6 +21,14 @@ QuizWindow::QuizWindow( QWidget *parent ) :
     init();
     initConnections();
     initModels();
+
+    // Set QuizWindow Size Previous Set In Settings
+	VsSettings* settings	= VsSettings::instance();
+	int qwWidth			= settings->value( "quizWindowWidth", "Quiz" ).toInt();
+	int qwHeight		= settings->value( "quizWindowHeight", "Quiz" ).toInt();
+	if ( qwWidth && qwHeight ) {
+		resize( qwWidth, qwHeight );
+	}
 }
 
 QuizWindow::~QuizWindow()
@@ -131,4 +140,15 @@ void QuizWindow::changeEvent( QEvent* event )
 
     // remember to call base class implementation
     QWidget::changeEvent( event );
+}
+
+void QuizWindow::resizeEvent( QResizeEvent* event )
+{
+	QWidget::resizeEvent( event );
+
+	VsSettings* settings	= VsSettings::instance();
+	QSize qwSize		= event->size(); // Returns the new size of the widget. This is the same as QWidget::size().
+
+	settings->setValue( "quizWindowWidth", QVariant( qwSize.width() ), "Quiz" );
+	settings->setValue( "quizWindowHeight", QVariant( qwSize.height() ), "Quiz" );
 }
