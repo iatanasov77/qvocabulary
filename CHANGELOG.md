@@ -1,3 +1,13 @@
+0.17.2	|	Release date: **06.08.2021**
+============================================
+* Bug-Fixes and Imrovements:
+  - Scroll to Bottom of Vocabulary When Click on Group.
+  - Save/Restore QuizListWindow Size.
+  - Save/Restore QuizWindow Size.
+  - Adjust Size of Help Window.
+  - Save Table Header Translated After Add New Word.
+
+
 0.17.1	|	Release date: **03.08.2021**
 ============================================
 * Bug-Fixes and Improvements:
