@@ -39,7 +39,7 @@
    </property>
    <widget class="QMenu" name="menuDatabase">
     <property name="title">
-     <string>&amp;Vocabulary</string>
+     <string>Vocab&amp;ulary</string>
     </property>
     <widget class="QMenu" name="menu_Open_Database_Recent">
      <property name="title">
@@ -66,6 +66,9 @@
     <addaction name="actionInsertGroup"/>
     <addaction name="actionInsertWord"/>
     <addaction name="separator"/>
+    <addaction name="actionShow_Archive"/>
+    <addaction name="actionShow_Vocabulary"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -76,14 +79,6 @@
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
     <addaction name="actionAboutQt"/>
-   </widget>
-   <widget class="QMenu" name="menuQuiz">
-    <property name="title">
-     <string>&amp;Quiz</string>
-    </property>
-    <addaction name="actionSimpleExam"/>
-    <addaction name="separator"/>
-    <addaction name="actionCompletedExams"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -107,7 +102,6 @@
    </widget>
    <addaction name="menuDatabase"/>
    <addaction name="menuArchive"/>
-   <addaction name="menuQuiz"/>
    <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -131,6 +125,8 @@
    <addaction name="actionInsertGroup"/>
    <addaction name="actionInsertWord"/>
    <addaction name="separator"/>
+   <addaction name="actionShow_Archive"/>
+   <addaction name="actionShow_Vocabulary"/>
   </widget>
   <action name="actionOpen_DB">
    <property name="text">
@@ -257,6 +253,11 @@
   <action name="actionAdd_to_Archive">
    <property name="text">
     <string>Add to Archive</string>
+   </property>
+  </action>
+  <action name="actionShow_Vocabulary">
+   <property name="text">
+    <string>Show Vocabulary</string>
    </property>
   </action>
  </widget>

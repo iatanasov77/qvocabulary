@@ -84,6 +84,8 @@ void MainWindow::initWidgets()
 
 	wdgVocabulary->setAcceptDrops( true );
 	setCentralWidget( wdgVocabulary );
+
+	wdgArchive	= new ArchiveWidget( this );
 }
 
 void MainWindow::initIcons()
@@ -114,6 +116,7 @@ void MainWindow::initIcons()
 
 	ui->actionPreferences->setIcon( QIcon( ":/Resources/icons/settings.svg" ) );
 
+	ui->actionShow_Vocabulary->setIcon( QIcon( ":/Resources/icons/dictionary.svg" ) );
 	ui->actionShow_Archive->setIcon( QIcon( ":/Resources/icons/archive.svg" ) );
 	ui->actionAdd_to_Archive->setIcon( QIcon( ":/Resources/icons/add_archive.svg" ) );
 }
@@ -508,9 +511,14 @@ void MainWindow::resizeEvent( QResizeEvent* event )
 	settings->setValue( "mainWindowHeight", QVariant( mwSize.height() ), "MainWindow" );
 }
 
+void MainWindow::on_actionShow_Vocabulary_triggered()
+{
+	setCentralWidget( wdgVocabulary );
+}
+
 void MainWindow::on_actionShow_Archive_triggered()
 {
-
+	setCentralWidget( wdgArchive );
 }
 
 void MainWindow::on_actionAdd_to_Archive_triggered()
