@@ -98,7 +98,15 @@
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
    </widget>
+   <widget class="QMenu" name="menuArchive">
+    <property name="title">
+     <string>Archive</string>
+    </property>
+    <addaction name="actionShow_Archive"/>
+    <addaction name="actionAdd_to_Archive"/>
+   </widget>
    <addaction name="menuDatabase"/>
+   <addaction name="menuArchive"/>
    <addaction name="menuQuiz"/>
    <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
@@ -238,7 +246,17 @@
   </action>
   <action name="actionImportVankoSoftQVocabulary">
    <property name="text">
-    <string>Import from VankoSoft QVocabulary (*.db)</string>
+    <string>Import &amp;from VankoSoft QVocabulary (*.db)</string>
+   </property>
+  </action>
+  <action name="actionShow_Archive">
+   <property name="text">
+    <string>Show Archive</string>
+   </property>
+  </action>
+  <action name="actionAdd_to_Archive">
+   <property name="text">
+    <string>Add to Archive</string>
    </property>
   </action>
  </widget>

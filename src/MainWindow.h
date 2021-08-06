@@ -56,6 +56,9 @@ class MainWindow : public QMainWindow
 		void on_actionSimpleExam_triggered();
 		void on_actionCompletedExams_triggered();
 
+		void on_actionShow_Archive_triggered();
+		void on_actionAdd_to_Archive_triggered();
+
 		void loadLanguage();
 
 	private:

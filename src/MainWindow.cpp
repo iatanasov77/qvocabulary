@@ -24,6 +24,7 @@
 #include "Dialog/InitDatabaseDialog.h"
 #include "Dialog/NewDatabaseDialog.h"
 #include "Dialog/NewVocabularyGroupDialog.h"
+#include "Dialog/AddToArchiveDialog.h"
 
 MainWindow::MainWindow( QWidget *parent ) :
 	QMainWindow( parent ),
@@ -112,6 +113,9 @@ void MainWindow::initIcons()
 	ui->actionAboutQt->setIcon( QIcon( ":/Resources/icons/QtProject-designer.svg" ) );
 
 	ui->actionPreferences->setIcon( QIcon( ":/Resources/icons/settings.svg" ) );
+
+	ui->actionShow_Archive->setIcon( QIcon( ":/Resources/icons/archive.svg" ) );
+	ui->actionAdd_to_Archive->setIcon( QIcon( ":/Resources/icons/add_archive.svg" ) );
 }
 
 void MainWindow::on_actionInsertGroup_triggered()
@@ -502,4 +506,18 @@ void MainWindow::resizeEvent( QResizeEvent* event )
 
 	settings->setValue( "mainWindowWidth", QVariant( mwSize.width() ), "MainWindow" );
 	settings->setValue( "mainWindowHeight", QVariant( mwSize.height() ), "MainWindow" );
+}
+
+void MainWindow::on_actionShow_Archive_triggered()
+{
+
+}
+
+void MainWindow::on_actionAdd_to_Archive_triggered()
+{
+	AddToArchiveDialog* dlgAddArchive	= new AddToArchiveDialog( this );
+	dlgAddArchive->setModal( true );
+	if ( dlgAddArchive->exec() == QDialog::Accepted ) {
+		// return dlgNewDatabase->database();
+	}
 }
