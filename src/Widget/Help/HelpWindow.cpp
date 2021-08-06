@@ -16,6 +16,7 @@ HelpWindow::HelpWindow( QWidget *parent ) :
     setWindowIcon( QIcon( ":/Resources/icons/system-help.svg" ) );
 
     initHelp();
+    resize( 800, 400 );
 }
 
 HelpWindow::~HelpWindow()
