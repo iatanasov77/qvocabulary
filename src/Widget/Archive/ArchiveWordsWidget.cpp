@@ -90,6 +90,9 @@ int ArchiveWordsWidget::deleteGroup( int groupId )
 
 void ArchiveWordsWidget::refreshView( QModelIndex topLeft, QModelIndex bottomRight )
 {
+	Q_UNUSED( topLeft );
+	Q_UNUSED( bottomRight );
+
 	initModel();
 
 	loadGroup( currentGroup );

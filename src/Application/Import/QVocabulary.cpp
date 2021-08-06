@@ -66,6 +66,7 @@ bool QVocabulary::parseWords()
 	QSqlQuery query( "SELECT * FROM Vocabulary", db );
 	while ( query.next() ) {
 		if ( currentGroup != query.value( "group_id" ).toInt() ) {
+			//qDebug() << "Current Group: " << currentGroup << " | Query Group: " << query.value( "group_id" ).toInt();
 			QSqlQuery queryGroup( QString( "SELECT * FROM VocabularyGroup WHERE id = %1" ).arg( query.value( "group_id" ).toString() ), db );
 			queryGroup.next();
 			vocg	= createGroup( "Imported " + queryGroup.value( "name" ).toString() );

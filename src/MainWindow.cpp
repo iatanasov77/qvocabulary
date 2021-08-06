@@ -65,6 +65,7 @@ MainWindow::MainWindow( QWidget *parent ) :
 MainWindow::~MainWindow()
 {
 	delete wdgVocabulary;
+	delete wdgArchive;
     delete ui;
 }
 
@@ -77,15 +78,21 @@ void MainWindow::initWidgets()
 	}
 
 	wdgVocabulary	= new VocabularyWidget( this );
-
 	if ( ! widgetState.isEmpty() ) {
 		wdgVocabulary->setState( widgetState );
 	}
-
 	wdgVocabulary->setAcceptDrops( true );
-	setCentralWidget( wdgVocabulary );
 
 	wdgArchive	= new ArchiveWidget( this );
+
+	// Be Sure Widgets Not Exists Already
+	ui->verticalLayout_4->removeWidget( wdgArchive );
+	ui->verticalLayout_5->removeWidget( wdgVocabulary );
+
+	// Add Widgets Into the StackedWidget
+	ui->verticalLayout_4->addWidget( wdgArchive );
+	ui->verticalLayout_5->addWidget( wdgVocabulary );
+	ui->stackedWidget->setCurrentWidget( ui->pageVocabulary );
 }
 
 void MainWindow::initIcons()
@@ -513,12 +520,12 @@ void MainWindow::resizeEvent( QResizeEvent* event )
 
 void MainWindow::on_actionShow_Vocabulary_triggered()
 {
-	setCentralWidget( wdgVocabulary );
+	ui->stackedWidget->setCurrentWidget( ui->pageVocabulary );
 }
 
 void MainWindow::on_actionShow_Archive_triggered()
 {
-	setCentralWidget( wdgArchive );
+	ui->stackedWidget->setCurrentWidget( ui->pageArchive );
 }
 
 void MainWindow::on_actionAdd_to_Archive_triggered()
