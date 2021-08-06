@@ -143,6 +143,8 @@ void VocabularyWordsWidget::loadGroup( int groupId )
 	ui->stackedWidget->setCurrentWidget( ui->pageVocabulary );
 
 	currentGroup = groupId;
+
+	ui->tableView->scrollToBottom();
 }
 
 int VocabularyWordsWidget::deleteGroup( int groupId )
@@ -191,7 +193,6 @@ void VocabularyWordsWidget::onDataChanged( const QModelIndex& topLeft, const QMo
 			insertFromEmptyRow( topLeft );
 
 			refreshView( topLeft.siblingAtColumn( 0 ), topLeft.siblingAtColumn( 5 ) );
-			ui->tableView->scrollToBottom();
 		}
 	}
 }
