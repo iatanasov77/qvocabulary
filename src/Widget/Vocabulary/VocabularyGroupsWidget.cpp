@@ -34,7 +34,7 @@ VocabularyGroupsWidget::VocabularyGroupsWidget( QWidget *parent ) :
 	/*
 	 * Init view delegate
 	 */
-    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( currentGroupRow, ui->listView );
+    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( currentGroupRow, false, ui->listView );
     ui->listView->setItemDelegate( itemDelegate );
 
     /*

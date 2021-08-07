@@ -12,7 +12,7 @@ class SideBarListViewDelegate : public QItemDelegate
     Q_OBJECT
 
 	public:
-		SideBarListViewDelegate( int currRow = 0, QObject *parent = 0 );
+		SideBarListViewDelegate( int currRow = 0, bool inArchive = false, QObject *parent = 0 );
 		virtual void paint( QPainter* painter, const QStyleOptionViewItem& option, const QModelIndex& index ) const;
 		virtual QSize sizeHint( const QStyleOptionViewItem& option, const QModelIndex& index ) const;
 		bool editorEvent( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index );
@@ -21,6 +21,7 @@ class SideBarListViewDelegate : public QItemDelegate
 		void buttonClicked( const QModelIndex &index );
 
 	private:
+		bool _inArchive;
 		int _currRow;
 		int _event;	// 1 for right click
 };

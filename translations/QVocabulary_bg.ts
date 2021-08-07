@@ -2,6 +2,59 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="bg_BG" sourcelanguage="en_US">
 <context>
+    <name>AddDescriptionDialog</name>
+    <message>
+        <source>Add Word Description</source>
+        <translation type="unfinished">Добави Описание на Дума</translation>
+    </message>
+    <message>
+        <source>Description of Word: </source>
+        <translation type="unfinished">Описание на Дума</translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AddToArchiveDialog</name>
+    <message>
+        <source>Add Database to Archive</source>
+        <translation type="unfinished">Добави База Данни към Архив</translation>
+    </message>
+    <message>
+        <source>DB File</source>
+        <translation type="unfinished">ДБ Файл</translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">Файл Брауз</translation>
+    </message>
+    <message>
+        <source>Add to Group</source>
+        <translation type="unfinished">Добави към Група</translation>
+    </message>
+    <message>
+        <source>Add To Archive</source>
+        <translation type="unfinished">Добави към Архив</translation>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation type="unfinished">Отвори БД</translation>
+    </message>
+    <message>
+        <source>Db Files (*.db)</source>
+        <translation type="unfinished">ДБ Файлове (*.db)</translation>
+    </message>
+</context>
+<context>
+    <name>ArchiveWidget</name>
+    <message>
+        <source>Archive</source>
+        <translation type="unfinished">Архив:</translation>
+    </message>
+</context>
+<context>
     <name>HelpWindow</name>
     <message>
         <source>QVocabulary - Help</source>
@@ -35,7 +88,7 @@
     </message>
     <message>
         <source>&amp;Vocabulary</source>
-        <translation type="unfinished">Речник</translation>
+        <translation type="obsolete">Речник</translation>
     </message>
     <message>
         <source>Open &amp;Database Recent</source>
@@ -47,7 +100,7 @@
     </message>
     <message>
         <source>&amp;Quiz</source>
-        <translation type="unfinished">Тестове</translation>
+        <translation type="obsolete">Тестове</translation>
     </message>
     <message>
         <source>He&amp;lp</source>
@@ -247,7 +300,7 @@
     </message>
     <message>
         <source>Import from VankoSoft QVocabulary (*.db)</source>
-        <translation type="unfinished">Импорт от VankoSoft QVocabulary (*.db)</translation>
+        <translation type="obsolete">Импорт от VankoSoft QVocabulary (*.db)</translation>
     </message>
     <message>
         <source>Open VankoSoft QVocabulary Database</source>
@@ -256,6 +309,30 @@
     <message>
         <source>VankoSoft QVocabulary Database (*.db)</source>
         <translation type="unfinished">VankoSoft QVocabulary ДБ (*.db)</translation>
+    </message>
+    <message>
+        <source>Vocab&amp;ulary</source>
+        <translation type="unfinished">Речник</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation type="unfinished">Архив</translation>
+    </message>
+    <message>
+        <source>Import &amp;from VankoSoft QVocabulary (*.db)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Archive</source>
+        <translation type="unfinished">Покажи Архив</translation>
+    </message>
+    <message>
+        <source>Add to Archive</source>
+        <translation type="unfinished">Добави към Архив</translation>
+    </message>
+    <message>
+        <source>Show Vocabulary</source>
+        <translation type="unfinished">Покажи Речник</translation>
     </message>
 </context>
 <context>
@@ -635,6 +712,10 @@ Done, over and out.
         <source>Answer</source>
         <translation type="unfinished">Отговор</translation>
     </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Описание</translation>
+    </message>
 </context>
 <context>
     <name>VocabularyGroupsWidget</name>
@@ -678,6 +759,14 @@ Done, over and out.
         <source>Current Group:</source>
         <translation type="unfinished">Текуща Група:</translation>
     </message>
+    <message>
+        <source>words</source>
+        <translation type="unfinished">думи</translation>
+    </message>
+    <message>
+        <source>Vocabulary</source>
+        <translation type="unfinished">Речник:</translation>
+    </message>
 </context>
 <context>
     <name>VocabularyWordsWidget</name>
@@ -703,7 +792,7 @@ Done, over and out.
     </message>
     <message>
         <source>Vocabulary Words:</source>
-        <translation type="unfinished">Речник:</translation>
+        <translation type="obsolete">Речник:</translation>
     </message>
     <message>
         <source>Show Transcriptions</source>
@@ -716,6 +805,10 @@ Done, over and out.
     <message>
         <source>Move to Group</source>
         <translation type="unfinished">Премести в Група|Раздел|</translation>
+    </message>
+    <message>
+        <source>Add Word Description</source>
+        <translation type="unfinished">Добави Описание на Дума</translation>
     </message>
 </context>
 </TS>

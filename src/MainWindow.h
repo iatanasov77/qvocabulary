@@ -7,6 +7,7 @@
 #include "Widget/Quiz/QuizListWindow.h"
 #include "Widget/Quiz/QuizWindow.h"
 #include "Widget/Help/HelpWindow.h"
+#include "Widget/Archive/ArchiveWidget.h"
 #include "Widget/Vocabulary/VocabularyWidget.h"
 #include "Widget/Settings/SettingsWindow.h"
 #include "Dialog/NewDatabaseDialog.h"
@@ -56,10 +57,15 @@ class MainWindow : public QMainWindow
 		void on_actionSimpleExam_triggered();
 		void on_actionCompletedExams_triggered();
 
+		void on_actionShow_Vocabulary_triggered();
+		void on_actionShow_Archive_triggered();
+		void on_actionAdd_to_Archive_triggered();
+
 		void loadLanguage();
 
 	private:
 		// Methods
+		void clearWidgets();
 		void initIcons();
 		void initDatabase();
 		void initMenuLanguages();
@@ -80,6 +86,7 @@ class MainWindow : public QMainWindow
 		SettingsWindow* wdgSettings;
 		QuizListWindow* wdgQuizList;
 		QuizWindow* wdgQuiz;
+		ArchiveWidget* wdgArchive;
 
 		QAction* actClearRecentDatabases;
 		QAction* actClearRecentDatabasesWithoutCurrent;

@@ -23,6 +23,8 @@
 	    <file>Resources/icons/settings.svg</file>
 	    <file>Resources/icons/speaker.svg</file>
 	    <file>Resources/icons/speaker.png</file>
+	    <file>Resources/icons/archive.svg</file>
+	    <file>Resources/icons/add_archive.svg</file>
 	    
 	    <file>Resources/sql/qvocabulary-20201216.sql</file>
 	    <file>Resources/sql/qvocabulary-20201217.sql</file>
@@ -31,6 +33,7 @@
 	    <file>Resources/sql/qvocabulary-20210105.sql</file>
 	    <file>Resources/sql/qvocabulary-20210428.sql</file>
 	    <file>Resources/sql/qvocabulary-20210712.sql</file>
+	    <file>Resources/sql/qvocabulary-20210806.sql</file>
 	    
 	    <file>Resources/html/about_en.html</file>
 	    <file>Resources/html/about_bg.html</file>
