@@ -7,6 +7,7 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "Application/VsSettings.h"
 #include "Entity/ArchiveGroup.h"
 #include "ModelView/SideBarListViewDelegate.h"
 #include "ArchiveWidget.h"
@@ -22,22 +23,26 @@ ArchiveGroupsWidget::ArchiveGroupsWidget( QWidget *parent ) :
     ui->listView->setSelectionBehavior( QAbstractItemView::SelectRows );
 
     int currentGroupRow = 0;
+    int currentGroup	= VsSettings::instance()->value( "currentGroup", "Archive" ).toInt();
+	if ( currentGroup ) {
+		currentGroupRow	= groupRow( currentGroup );
+	}
 
 	/*
 	 * Init view delegate
 	 */
-    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( currentGroupRow, ui->listView );
+    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( currentGroupRow, true, ui->listView );
     ui->listView->setItemDelegate( itemDelegate );
 
     /*
      * Connect Slots
      */
-    ArchiveWidget *wdgVocabulary	= qobject_cast<ArchiveWidget *>( parent ); // parent() if not in constructor
-	connect( this, SIGNAL( currentGroupChanged( QModelIndex ) ), itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ) );
-	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), wdgVocabulary, SLOT( loadGroup( QModelIndex ) ) );
+    ArchiveWidget *wdgArchive	= qobject_cast<ArchiveWidget *>( parent ); // parent() if not in constructor
+	//connect( this, SIGNAL( currentGroupChanged( QModelIndex ) ), itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ) );
+	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), wdgArchive, SLOT( loadGroup( QModelIndex ) ) );
 	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), this, SLOT( setCurrentGroup( QModelIndex ) ) );
 
-	wdgVocabulary->setCurrentGroupName( ui->listView->model()->data( ui->listView->model()->index( 0, 1 ) ).toString() );
+	wdgArchive->setCurrentGroupName( ui->listView->model()->data( ui->listView->model()->index( 0, 1 ) ).toString() );
 }
 
 ArchiveGroupsWidget::~ArchiveGroupsWidget()
@@ -55,13 +60,6 @@ void ArchiveGroupsWidget::initModel()
 	pModel	= new qx::QxModel<ArchiveGroup>();
 	pModel->qxFetchAll();
 	ui->listView->setModel( pModel );
-
-	connect(
-		pModel,
-		SIGNAL( rowsInserted( const QModelIndex&, int, int ) ),
-		this,
-		SLOT( modelRowsInserted( const QModelIndex&, int, int ) )
-	);
 }
 
 int ArchiveGroupsWidget::groupRow( int groupId )

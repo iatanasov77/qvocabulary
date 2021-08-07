@@ -30,12 +30,17 @@ ArchiveWordsWidget::ArchiveWordsWidget( QWidget *parent ) :
     //QVBoxLayout *tableLayout	= new QVBoxLayout( ui->tableView );
 
     currentGroup 	= 1;
+    hideColumns 	= {0, 4};
 
     initModel();
     initTextToSpeech();
 
-    ui->chkShowTranscriptions->hide();
+    setViewHeader( VsDatabase::instance()->metaInfo() );
     ui->tableView->scrollToBottom();
+    ui->chkShowTranscriptions->hide();
+    for( int i = 0; i < hideColumns.size(); i++ ) {
+		ui->tableView->hideColumn( hideColumns[i] );
+	}
 
     connect( ui->leSearch, SIGNAL( returnPressed() ), ui->btnSearch, SIGNAL( released() ) );
     connect( ui->btnSearch, SIGNAL( released() ), this, SLOT( search() ) );
@@ -58,6 +63,28 @@ void ArchiveWordsWidget::initTextToSpeech()
 	speeker = new VsSpeaker( this );
 }
 
+void ArchiveWordsWidget::setViewHeader( VocabularyMetaInfoPtr metaInfo )
+{
+	QStringList headTitles	= viewHeaders( metaInfo );
+
+	pModel->setHeaderData( 1, Qt::Horizontal, headTitles.at( 0 ), Qt::DisplayRole );
+	pModel->setHeaderData( 2, Qt::Horizontal, headTitles.at( 2 ), Qt::DisplayRole );
+	pModel->setHeaderData( 3, Qt::Horizontal, headTitles.at( 1 ), Qt::DisplayRole );
+	pModel->setHeaderData( 5, Qt::Horizontal, headTitles.at( 3 ), Qt::DisplayRole );
+}
+
+QStringList ArchiveWordsWidget::viewHeaders( VocabularyMetaInfoPtr metaInfo )
+{
+	QStringList headTitles;
+	headTitles
+		<< qApp->translate( "Vocabulary", metaInfo->language1.toStdString().c_str() )
+		<< qApp->translate( "Vocabulary", metaInfo->language2.toStdString().c_str() )
+		<< qApp->translate( "Vocabulary", "Transcription" )
+		<< qApp->translate( "Vocabulary", "Description" );
+
+	return headTitles;
+}
+
 /**
  * NOTE: Dont call this function. It is called in VocabularyWidget::loadGroup( int groupId )
  * 		 There is functionality to remember current group into the settings.
@@ -67,8 +94,6 @@ void ArchiveWordsWidget::loadGroup( int groupId )
 	ui->leSearch->setText( "" );	// Clear Serch Field
 	QString query	= QString( "WHERE group_id=%1" ).arg( groupId );
 	pModel->qxFetchByQuery( query );
-	//ui->stackedWidget->setCurrentWidget( ui->tableView );
-	ui->stackedWidget->setCurrentWidget( ui->pageVocabulary );
 
 	currentGroup = groupId;
 
@@ -94,6 +119,7 @@ void ArchiveWordsWidget::refreshView( QModelIndex topLeft, QModelIndex bottomRig
 	Q_UNUSED( bottomRight );
 
 	initModel();
+	setViewHeader( VsDatabase::instance()->metaInfo() );
 
 	loadGroup( currentGroup );
 }

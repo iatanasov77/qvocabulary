@@ -89,7 +89,12 @@ void VocabularyWidget::initModels()
 	// Init VocabularyMetaInfo
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	if ( metaInfo ) {
-		ui->databaseName->setText( QString( "%1 ( %2 words )" ).arg( metaInfo->name ).arg( QString::number( qx::dao::count<Vocabulary>() ) ) );
+		QString trWords	= qApp->translate( "VocabularyWidget", "words" );
+		ui->databaseName->setText( QString( "%1 ( %2 %3 )" )
+									.arg( metaInfo->name )
+									.arg( QString::number( qx::dao::count<Vocabulary>() ) )
+									.arg( trWords )
+								);
 	}
 
 	wdgWords->setViewHeader( metaInfo );

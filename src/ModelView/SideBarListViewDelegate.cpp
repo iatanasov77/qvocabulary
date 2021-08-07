@@ -8,10 +8,12 @@
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
 #include "Entity/Vocabulary.h"
+#include "Entity/ArchiveWord.h"
 
-SideBarListViewDelegate::SideBarListViewDelegate( int currRow, QObject *parent ) :
+SideBarListViewDelegate::SideBarListViewDelegate( int currRow, bool inArchive, QObject *parent ) :
     QItemDelegate( parent )
 {
+	_inArchive	= inArchive;
 	_currRow	= currRow;
 	_event		= 0;
 }
@@ -35,7 +37,12 @@ void SideBarListViewDelegate::paint(
 
 	// Set Button Text
 	QString query	= QString( "WHERE group_id=%1" ).arg( index.siblingAtColumn( 0 ).data().toInt() );
-	long wordsCount	= qx::dao::count<Vocabulary>( qx::QxSqlQuery( query ) );
+	long wordsCount	= 0;
+	if ( _inArchive ) {
+		wordsCount	= qx::dao::count<ArchiveWord>( qx::QxSqlQuery( query ) );
+	} else {
+		wordsCount	= qx::dao::count<Vocabulary>( qx::QxSqlQuery( query ) );
+	}
 	button.text 	= QString( "%1 (%2)" ).arg( index.siblingAtColumn( 1 ).data().toString() ).arg( wordsCount );
 
 	if( _currRow == index.row() && _event != 1 )

@@ -13,6 +13,7 @@
 
 #include "ui_VocabularyWordsWidget.h"
 
+#include "Entity/VocabularyMetaInfo.h"
 #include "Entity/ArchiveWord.h"
 #include "Application/VsSpeaker.h"
 
@@ -28,6 +29,7 @@ class ArchiveWordsWidget : public QWidget
 		ArchiveWordsWidget( QWidget *parent );
 		~ArchiveWordsWidget();
 
+		void setViewHeader( VocabularyMetaInfoPtr metaInfo );
 		void loadGroup( int groupId );
 		int deleteGroup( int groupId );
 		void refreshView( QModelIndex topLeft, QModelIndex bottomRight );
@@ -45,6 +47,7 @@ class ArchiveWordsWidget : public QWidget
 		void changeEvent( QEvent* );
 
 	private:
+		QStringList viewHeaders( VocabularyMetaInfoPtr metaInfo );
 		void initView();
 		void initModel();
 		void initTextToSpeech();
@@ -53,6 +56,7 @@ class ArchiveWordsWidget : public QWidget
 		int currentGroup;
 		Ui::VocabularyWordsWidget *ui;
 		qx::QxModel<ArchiveWord> *pModel;
+		QList<int> hideColumns;
 		VsSpeaker* speeker;
 
 		qx::QxModel<ArchiveWord>* searchModel;
