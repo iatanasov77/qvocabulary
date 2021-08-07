@@ -2,6 +2,7 @@
 #define DIALOG_ADD_TO_ARCHIVE_H
 
 #include <QDialog>
+#include <QSqlDatabase>
 
 namespace Ui {
 	class AddToArchiveDialog;
@@ -16,7 +17,8 @@ class AddToArchiveDialog : public QDialog
 		~AddToArchiveDialog();
 
 	private:
-		void _addToArchive();
+		int _createArchiveGroup( QString groupName );
+		void _addToArchive( QSqlDatabase db, int archiveGroupId );
 
 		QWidget *mw;	// parent MainWindow
 	    Ui::AddToArchiveDialog *ui;

@@ -50,7 +50,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="leDefaultGroupName">
+        <widget class="QLineEdit" name="leArchiveGroupName">
          <property name="text">
           <string/>
          </property>

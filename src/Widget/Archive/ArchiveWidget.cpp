@@ -37,7 +37,7 @@ ArchiveWidget::ArchiveWidget( QWidget *parent ) :
     }
 
     // Load Current Group by settings or first loaded
-    int currentGroup	= VsSettings::instance()->value( "currentGroup", "Vocabulary" ).toInt();
+    int currentGroup	= VsSettings::instance()->value( "currentGroup", "Archive" ).toInt();
     if ( currentGroup ) {
     	setCurrentGroup( currentGroup );
     } else {
@@ -92,7 +92,7 @@ void ArchiveWidget::loadGroup( int groupId )
 	currentGroup		= groupId;
 	wdgWords->loadGroup( groupId );
 
-	VsSettings::instance()->setValue( "currentGroup", currentGroup, "Vocabulary" );
+	VsSettings::instance()->setValue( "currentGroup", currentGroup, "Archive" );
 }
 
 void ArchiveWidget::loadGroup( const QModelIndex &index )
