@@ -27,11 +27,6 @@ NewVocabularyGroupDialog::~NewVocabularyGroupDialog()
     delete ui;
 }
 
-void NewVocabularyGroupDialog::reloadWidgets()
-{
-	mw->initWidgets();
-}
-
 void NewVocabularyGroupDialog::save()
 {
 	qx::QxModel<VocabularyGroup> *pModelVocabularyGroup	= new qx::QxModel<VocabularyGroup>();
@@ -40,10 +35,9 @@ void NewVocabularyGroupDialog::save()
 	pModelVocabularyGroup->insertRow( row );
 	pModelVocabularyGroup->setData( pModelVocabularyGroup->index( row, 1 ), ui->leName->text() );
 	pModelVocabularyGroup->qxSave();
-	reloadWidgets();
 
 	// Set Current group to the new created group
 	int newGroupId	= pModelVocabularyGroup->data( pModelVocabularyGroup->index( row, 0 ) ).toInt();
+	mw->initWidgets();
 	mw->setCurrentGroup( newGroupId );
-	reloadWidgets();
 }
