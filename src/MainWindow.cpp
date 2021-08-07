@@ -33,7 +33,8 @@ MainWindow::MainWindow( QWidget *parent ) :
     ui->setupUi( this );
 
     // The Trick ;)
-    wdgVocabulary = 0;
+    wdgVocabulary	= 0;
+    wdgArchive		= 0;
 
     // Load Current Language
     QString currentLanguage = VsSettings::instance()->value( "language", "General" ).toString();
@@ -69,9 +70,23 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::clearWidgets()
+{
+	while( ! ui->verticalLayout_4->isEmpty() ) {
+		QWidget *w = ui->verticalLayout_4->takeAt( 0 )->widget();
+		delete w;
+	}
+
+	while( ! ui->verticalLayout_5->isEmpty() ) {
+		QWidget *w = ui->verticalLayout_5->takeAt( 0 )->widget();
+		delete w;
+	}
+}
+
 void MainWindow::initWidgets()
 {
 	QMap<QString, QVariant> widgetState;
+	clearWidgets(); // Be Sure Widgets Not Exists Already
 
 	if ( wdgVocabulary ) {
 		widgetState	= wdgVocabulary->getState();
@@ -84,10 +99,6 @@ void MainWindow::initWidgets()
 	wdgVocabulary->setAcceptDrops( true );
 
 	wdgArchive	= new ArchiveWidget( this );
-
-	// Be Sure Widgets Not Exists Already
-	ui->verticalLayout_4->removeWidget( wdgArchive );
-	ui->verticalLayout_5->removeWidget( wdgVocabulary );
 
 	// Add Widgets Into the StackedWidget
 	ui->verticalLayout_4->addWidget( wdgArchive );
