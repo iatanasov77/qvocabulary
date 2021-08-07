@@ -173,6 +173,7 @@ void MainWindow::on_actionAbout_triggered()
 	aboutBody["version"]		= VsApplication::appVersion();
 	aboutBody["build"]			= VsApplication::appBuildTime();
 	//aboutBody["copySign"] 		= QString::fromUtf8( "\u00A9" );
+	aboutBody["currentYear"]	= QDate::currentDate().year();
 
 	Mustache::Renderer renderer;
 	Mustache::QtVariantContext context( aboutBody );
