@@ -2,6 +2,59 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US" sourcelanguage="en_US">
 <context>
+    <name>AddDescriptionDialog</name>
+    <message>
+        <source>Add Word Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description of Word: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AddToArchiveDialog</name>
+    <message>
+        <source>Add Database to Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DB File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add to Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add To Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Db Files (*.db)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ArchiveWidget</name>
+    <message>
+        <source>Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HelpWindow</name>
     <message>
         <source>QVocabulary - Help</source>
@@ -34,19 +87,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Vocabulary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Open &amp;Database Recent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>I&amp;mport / Export</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Quiz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -234,15 +279,35 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Import from VankoSoft QVocabulary (*.db)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Open VankoSoft QVocabulary Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>VankoSoft QVocabulary Database (*.db)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vocab&amp;ulary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import &amp;from VankoSoft QVocabulary (*.db)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add to Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Vocabulary</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -587,6 +652,10 @@ Done, over and out.
         <source>Answer</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VocabularyGroupsWidget</name>
@@ -629,6 +698,14 @@ Done, over and out.
         <source>Current Group:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>words</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vocabulary</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VocabularyWordsWidget</name>
@@ -649,15 +726,15 @@ Done, over and out.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Vocabulary Words:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show Transcriptions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Move to Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add Word Description</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

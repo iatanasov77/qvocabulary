@@ -26,7 +26,26 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout"/>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="QWidget" name="pageVocabulary">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_5"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="pageArchive">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_4"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -39,7 +58,7 @@
    </property>
    <widget class="QMenu" name="menuDatabase">
     <property name="title">
-     <string>&amp;Vocabulary</string>
+     <string>Vocab&amp;ulary</string>
     </property>
     <widget class="QMenu" name="menu_Open_Database_Recent">
      <property name="title">
@@ -66,6 +85,9 @@
     <addaction name="actionInsertGroup"/>
     <addaction name="actionInsertWord"/>
     <addaction name="separator"/>
+    <addaction name="actionShow_Archive"/>
+    <addaction name="actionShow_Vocabulary"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
@@ -76,14 +98,6 @@
     <addaction name="separator"/>
     <addaction name="actionAbout"/>
     <addaction name="actionAboutQt"/>
-   </widget>
-   <widget class="QMenu" name="menuQuiz">
-    <property name="title">
-     <string>&amp;Quiz</string>
-    </property>
-    <addaction name="actionSimpleExam"/>
-    <addaction name="separator"/>
-    <addaction name="actionCompletedExams"/>
    </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
@@ -98,8 +112,15 @@
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
    </widget>
+   <widget class="QMenu" name="menuArchive">
+    <property name="title">
+     <string>Archive</string>
+    </property>
+    <addaction name="actionShow_Archive"/>
+    <addaction name="actionAdd_to_Archive"/>
+   </widget>
    <addaction name="menuDatabase"/>
-   <addaction name="menuQuiz"/>
+   <addaction name="menuArchive"/>
    <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -123,6 +144,8 @@
    <addaction name="actionInsertGroup"/>
    <addaction name="actionInsertWord"/>
    <addaction name="separator"/>
+   <addaction name="actionShow_Archive"/>
+   <addaction name="actionShow_Vocabulary"/>
   </widget>
   <action name="actionOpen_DB">
    <property name="text">
@@ -238,7 +261,22 @@
   </action>
   <action name="actionImportVankoSoftQVocabulary">
    <property name="text">
-    <string>Import from VankoSoft QVocabulary (*.db)</string>
+    <string>Import &amp;from VankoSoft QVocabulary (*.db)</string>
+   </property>
+  </action>
+  <action name="actionShow_Archive">
+   <property name="text">
+    <string>Show Archive</string>
+   </property>
+  </action>
+  <action name="actionAdd_to_Archive">
+   <property name="text">
+    <string>Add to Archive</string>
+   </property>
+  </action>
+  <action name="actionShow_Vocabulary">
+   <property name="text">
+    <string>Show Vocabulary</string>
    </property>
   </action>
  </widget>

@@ -1,5 +1,4 @@
-#include "VocabularyWidget.h"
-#include "ui_VocabularyWidget.h"
+#include "ArchiveWidget.h"
 
 #include <QListView>
 #include <QTableView>
@@ -16,15 +15,14 @@
 
 #include "Application/VsDatabase.h"
 #include "Application/VsSettings.h"
-#include "Entity/VocabularyMetaInfo.h"
-#include "Entity/Vocabulary.h"
-#include "Entity/VocabularyGroup.h"
+#include "Entity/ArchiveWord.h"
+#include "Entity/ArchiveGroup.h"
 #include "ModelView/SideBarListViewDelegate.h"
 
-#include "Widget/Vocabulary/VocabularyGroupsWidget.h"
-#include "Widget/Vocabulary/VocabularyWordsWidget.h"
+#include "Widget/Archive/ArchiveGroupsWidget.h"
+#include "Widget/Archive/ArchiveWordsWidget.h"
 
-VocabularyWidget::VocabularyWidget( QWidget *parent ) :
+ArchiveWidget::ArchiveWidget( QWidget *parent ) :
     QWidget( parent ),
     ui( new Ui::VocabularyWidget )
 {
@@ -39,7 +37,7 @@ VocabularyWidget::VocabularyWidget( QWidget *parent ) :
     }
 
     // Load Current Group by settings or first loaded
-    int currentGroup	= VsSettings::instance()->value( "currentGroup", "Vocabulary" ).toInt();
+    int currentGroup	= VsSettings::instance()->value( "currentGroup", "Archive" ).toInt();
     if ( currentGroup ) {
     	setCurrentGroup( currentGroup );
     } else {
@@ -50,19 +48,19 @@ VocabularyWidget::VocabularyWidget( QWidget *parent ) :
     wdgGroups->scrollTo( currentGroup );
 }
 
-VocabularyWidget::~VocabularyWidget()
+ArchiveWidget::~ArchiveWidget()
 {
     delete ui;
 }
 
-void VocabularyWidget::init()
+void ArchiveWidget::init()
 {
 	/*
 	 * Init widgets in the QSplitter
 	 */
 	QSplitter* horizSplitter 	= new QSplitter( Qt::Horizontal );
-	wdgGroups					= new VocabularyGroupsWidget( this );
-	wdgWords					= new VocabularyWordsWidget( this );
+	wdgGroups					= new ArchiveGroupsWidget( this );
+	wdgWords					= new ArchiveWordsWidget( this );
 
 	wdgGroups->setMaximumWidth( 400 );
 	wdgGroups->adjustSize();
@@ -84,47 +82,34 @@ void VocabularyWidget::init()
 	ui->horizontalLayout->addWidget( horizSplitter );
 }
 
-void VocabularyWidget::initModels()
+void ArchiveWidget::initModels()
 {
-	// Init VocabularyMetaInfo
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	if ( metaInfo ) {
-		ui->databaseLabel->setText( tr( "Vocabulary" ) );
+		ui->databaseLabel->setText( tr( "Archive" ) );
 		QString trWords	= qApp->translate( "VocabularyWidget", "words" );
 		ui->databaseName->setText( QString( "%1 ( %2 %3 )" )
 									.arg( metaInfo->name )
-									.arg( QString::number( qx::dao::count<Vocabulary>() ) )
+									.arg( QString::number( qx::dao::count<ArchiveWord>() ) )
 									.arg( trWords )
 								);
 	}
-
-	wdgWords->setViewHeader( metaInfo );
 }
 
-void VocabularyWidget::setCurrentGroupName( QString groupName )
+void ArchiveWidget::setCurrentGroupName( QString groupName )
 {
 	ui->groupName->setText( groupName );
 }
 
-void VocabularyWidget::insertWord()
-{
-	wdgWords->insertWord();
-}
-
-void VocabularyWidget::loadGroup( int groupId )
+void ArchiveWidget::loadGroup( int groupId )
 {
 	currentGroup		= groupId;
 	wdgWords->loadGroup( groupId );
 
-	VsSettings::instance()->setValue( "currentGroup", currentGroup, "Vocabulary" );
+	VsSettings::instance()->setValue( "currentGroup", currentGroup, "Archive" );
 }
 
-void VocabularyWidget::deleteGroup( int groupId )
-{
-	currentGroup	= wdgWords->deleteGroup( groupId );
-}
-
-void VocabularyWidget::loadGroup( const QModelIndex &index )
+void ArchiveWidget::loadGroup( const QModelIndex &index )
 {
     int groupId			= index.siblingAtColumn( 0 ).data().toInt();
     QString groupName	= index.siblingAtColumn( 1 ).data().toString();
@@ -133,12 +118,12 @@ void VocabularyWidget::loadGroup( const QModelIndex &index )
     loadGroup( groupId );
 }
 
-void VocabularyWidget::refreshWidgets()
+void ArchiveWidget::refreshWidgets()
 {
 	init();
 }
 
-void VocabularyWidget::changeEvent( QEvent* event )
+void ArchiveWidget::changeEvent( QEvent* event )
 {
     if ( event->type() == QEvent::LanguageChange )
     {
@@ -149,30 +134,14 @@ void VocabularyWidget::changeEvent( QEvent* event )
     QWidget::changeEvent( event );
 }
 
-void VocabularyWidget::updateSpeaker()
+void ArchiveWidget::updateSpeaker()
 {
 	wdgWords->updateSpeaker();
 }
 
-void VocabularyWidget::setCurrentGroup( int groupId )
+void ArchiveWidget::setCurrentGroup( int groupId )
 {
 	loadGroup( groupId );
 	wdgGroups->setCurrentGroup( groupId );
 	//wdgGroups->repaint();
-}
-
-QMap<QString, QVariant> VocabularyWidget::getState()
-{
-	QMap<QString, QVariant> widgetState;
-
-	// Can to be merged with states of other widgets if needed
-	widgetState	= wdgWords->getState();
-	//qDebug() << "DEBUG WIDGET STATE: " << widgetState["showTranscriptions"].toString();
-
-	return widgetState;
-}
-
-void VocabularyWidget::setState( QMap<QString, QVariant> state )
-{
-	wdgWords->setState( state );
 }

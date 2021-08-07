@@ -24,6 +24,7 @@
 #include "Dialog/InitDatabaseDialog.h"
 #include "Dialog/NewDatabaseDialog.h"
 #include "Dialog/NewVocabularyGroupDialog.h"
+#include "Dialog/AddToArchiveDialog.h"
 
 MainWindow::MainWindow( QWidget *parent ) :
 	QMainWindow( parent ),
@@ -32,7 +33,8 @@ MainWindow::MainWindow( QWidget *parent ) :
     ui->setupUi( this );
 
     // The Trick ;)
-    wdgVocabulary = 0;
+    wdgVocabulary	= 0;
+    wdgArchive		= 0;
 
     // Load Current Language
     QString currentLanguage = VsSettings::instance()->value( "language", "General" ).toString();
@@ -64,25 +66,44 @@ MainWindow::MainWindow( QWidget *parent ) :
 MainWindow::~MainWindow()
 {
 	delete wdgVocabulary;
+	delete wdgArchive;
     delete ui;
+}
+
+void MainWindow::clearWidgets()
+{
+	while( ! ui->verticalLayout_4->isEmpty() ) {
+		QWidget *w = ui->verticalLayout_4->takeAt( 0 )->widget();
+		delete w;
+	}
+
+	while( ! ui->verticalLayout_5->isEmpty() ) {
+		QWidget *w = ui->verticalLayout_5->takeAt( 0 )->widget();
+		delete w;
+	}
 }
 
 void MainWindow::initWidgets()
 {
 	QMap<QString, QVariant> widgetState;
+	clearWidgets(); // Be Sure Widgets Not Exists Already
 
 	if ( wdgVocabulary ) {
 		widgetState	= wdgVocabulary->getState();
 	}
 
 	wdgVocabulary	= new VocabularyWidget( this );
-
 	if ( ! widgetState.isEmpty() ) {
 		wdgVocabulary->setState( widgetState );
 	}
-
 	wdgVocabulary->setAcceptDrops( true );
-	setCentralWidget( wdgVocabulary );
+
+	wdgArchive	= new ArchiveWidget( this );
+
+	// Add Widgets Into the StackedWidget
+	ui->verticalLayout_4->addWidget( wdgArchive );
+	ui->verticalLayout_5->addWidget( wdgVocabulary );
+	ui->stackedWidget->setCurrentWidget( ui->pageVocabulary );
 }
 
 void MainWindow::initIcons()
@@ -112,6 +133,10 @@ void MainWindow::initIcons()
 	ui->actionAboutQt->setIcon( QIcon( ":/Resources/icons/QtProject-designer.svg" ) );
 
 	ui->actionPreferences->setIcon( QIcon( ":/Resources/icons/settings.svg" ) );
+
+	ui->actionShow_Vocabulary->setIcon( QIcon( ":/Resources/icons/dictionary.svg" ) );
+	ui->actionShow_Archive->setIcon( QIcon( ":/Resources/icons/archive.svg" ) );
+	ui->actionAdd_to_Archive->setIcon( QIcon( ":/Resources/icons/add_archive.svg" ) );
 }
 
 void MainWindow::on_actionInsertGroup_triggered()
@@ -502,4 +527,23 @@ void MainWindow::resizeEvent( QResizeEvent* event )
 
 	settings->setValue( "mainWindowWidth", QVariant( mwSize.width() ), "MainWindow" );
 	settings->setValue( "mainWindowHeight", QVariant( mwSize.height() ), "MainWindow" );
+}
+
+void MainWindow::on_actionShow_Vocabulary_triggered()
+{
+	ui->stackedWidget->setCurrentWidget( ui->pageVocabulary );
+}
+
+void MainWindow::on_actionShow_Archive_triggered()
+{
+	ui->stackedWidget->setCurrentWidget( ui->pageArchive );
+}
+
+void MainWindow::on_actionAdd_to_Archive_triggered()
+{
+	AddToArchiveDialog* dlgAddArchive	= new AddToArchiveDialog( this );
+	dlgAddArchive->setModal( true );
+	if ( dlgAddArchive->exec() == QDialog::Accepted ) {
+		// return dlgNewDatabase->database();
+	}
 }
