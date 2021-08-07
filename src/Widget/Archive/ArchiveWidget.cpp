@@ -29,7 +29,7 @@ ArchiveWidget::ArchiveWidget( QWidget *parent ) :
     ui->setupUi( this );
 
     init();
-    //initModels();
+    initModels();
 
     // Hide Current group Display in Header Frame
     for( int i = 0; i < ui->horizontalLayout_3->count(); ++i ) {
@@ -80,6 +80,20 @@ void ArchiveWidget::init()
 	horizSplitter->setStyleSheet( splitterSheet );
 
 	ui->horizontalLayout->addWidget( horizSplitter );
+}
+
+void ArchiveWidget::initModels()
+{
+	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
+	if ( metaInfo ) {
+		ui->databaseLabel->setText( tr( "Archive" ) );
+		QString trWords	= qApp->translate( "VocabularyWidget", "words" );
+		ui->databaseName->setText( QString( "%1 ( %2 %3 )" )
+									.arg( metaInfo->name )
+									.arg( QString::number( qx::dao::count<ArchiveWord>() ) )
+									.arg( trWords )
+								);
+	}
 }
 
 void ArchiveWidget::setCurrentGroupName( QString groupName )

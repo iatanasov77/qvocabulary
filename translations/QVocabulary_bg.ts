@@ -48,6 +48,13 @@
     </message>
 </context>
 <context>
+    <name>ArchiveWidget</name>
+    <message>
+        <source>Archive</source>
+        <translation type="unfinished">Архив:</translation>
+    </message>
+</context>
+<context>
     <name>HelpWindow</name>
     <message>
         <source>QVocabulary - Help</source>
@@ -755,6 +762,10 @@ Done, over and out.
     <message>
         <source>words</source>
         <translation type="unfinished">думи</translation>
+    </message>
+    <message>
+        <source>Vocabulary</source>
+        <translation type="unfinished">Речник:</translation>
     </message>
 </context>
 <context>

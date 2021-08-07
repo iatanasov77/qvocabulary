@@ -46,6 +46,7 @@ class ArchiveWidget : public QWidget
 
 	private:
 		void init();
+		void initModels();
 
 		Ui::VocabularyWidget *ui;
 		ArchiveGroupsWidget* wdgGroups;
