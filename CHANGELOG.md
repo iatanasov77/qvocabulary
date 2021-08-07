@@ -1,3 +1,15 @@
+0.18.0	|	Release date: **07.08.2021**
+============================================
+* New Features:
+  - Complete Clear Archive and Vocabulary Widgets.
+  - Show Search Archive Properly on ArchiveWordsWidget.
+  - Fix SideBar Delegate instantiation in VocabularyGroupsWidget.
+  - Set Archive Info.
+  - Add New Translations
+  - Create Archive Widget.
+  - Create Add To Archive Dialog.
+
+
 0.17.2	|	Release date: **06.08.2021**
 ============================================
 * Bug-Fixes and Imrovements:
