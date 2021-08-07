@@ -94,9 +94,9 @@ void ArchiveWordsWidget::loadGroup( int groupId )
 	ui->leSearch->setText( "" );	// Clear Serch Field
 	QString query	= QString( "WHERE group_id=%1" ).arg( groupId );
 	pModel->qxFetchByQuery( query );
+	ui->stackedWidget->setCurrentWidget( ui->pageVocabulary );
 
 	currentGroup = groupId;
-
 	ui->tableView->scrollToBottom();
 }
 
@@ -150,12 +150,15 @@ void ArchiveWordsWidget::displaySearchResults( qx::QxModel<ArchiveWord>* searchM
 	ui->treeWidget->clear();
 
 	QTreeWidgetItem* childItem;
+	QString translation;
+	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
+	QStringList headTitles			= viewHeaders( metaInfo );
 
-//	QStringList headerLabels;
-//	headerLabels << "\t" + headTitles.at( 0 );
-//	headerLabels << headTitles.at( 2 );
-//	headerLabels << headTitles.at( 1 );
-//	ui->treeWidget->setHeaderLabels( headerLabels );
+	QStringList headerLabels;
+	headerLabels << "\t" + headTitles.at( 0 );
+	headerLabels << headTitles.at( 2 );
+	headerLabels << headTitles.at( 1 );
+	ui->treeWidget->setHeaderLabels( headerLabels );
 
 	for ( int i = 0; i < searchModel->rowCount(); ++i ) {
 		groupId	= searchModel->data( searchModel->index( i, 4 ) ).toInt();
@@ -182,7 +185,9 @@ void ArchiveWordsWidget::displaySearchResults( qx::QxModel<ArchiveWord>* searchM
 		childItem->setText( 1, searchModel->data( searchModel->index( i, 2 ) ).toString() );
 		childItem->setFont( 1, font );
 
-		childItem->setText( 2, searchModel->data( searchModel->index( i, 3 ) ).toString() );
+		translation	= searchModel->data( searchModel->index( i, 3 ) ).toString();
+		childItem->setText( 2, translation );
+		qDebug() << "Search Translation: " << translation;
 
 		groups[groupId]->addChild( childItem );
 	}

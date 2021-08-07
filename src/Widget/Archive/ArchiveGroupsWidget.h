@@ -33,6 +33,9 @@ class ArchiveGroupsWidget : public QWidget
 		void setCurrentGroup( const QModelIndex &index );
 		void scrollTo( int groupId );
 
+	signals:
+			void currentGroupChanged( const QModelIndex &index );
+
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
 		void changeEvent( QEvent* );
