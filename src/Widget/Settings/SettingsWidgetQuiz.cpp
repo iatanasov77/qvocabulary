@@ -5,7 +5,7 @@
 #include <QDebug>
 
 #include "Application/VsApplication.h"
-#include "Application/VsSettings.h"
+#include "Application/QVocabularySettings.h"
 #include "AbstractSettingsWidget.h"
 
 SettingsWidgetQuiz::SettingsWidgetQuiz( QWidget *parent ) :
@@ -24,7 +24,7 @@ SettingsWidgetQuiz::~SettingsWidgetQuiz()
 
 void SettingsWidgetQuiz::init()
 {
-	quizSettings	= VsSettings::instance()->quizSettings();
+	quizSettings	= QVocabularySettings::instance()->quizSettings();
 
 	ui->chDisplayTranscriptions->setChecked( quizSettings["displayTranscriptions"].toBool() );
 	ui->chDisplayAnswerStatus->setChecked( quizSettings["displayQuizAnswerStatus"].toBool() );

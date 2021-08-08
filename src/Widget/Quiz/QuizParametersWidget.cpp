@@ -14,7 +14,7 @@
 #include "GlobalTypes.h"
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/VocabularyGroup.h"
-#include "Application/VsSettings.h"
+#include "Application/QVocabularySettings.h"
 
 QuizParametersWidget::QuizParametersWidget( QWidget *parent ) :
 	QWidget( parent ),
@@ -24,7 +24,7 @@ QuizParametersWidget::QuizParametersWidget( QWidget *parent ) :
     // Hide GroupBox Title
     ui->grpGroups->setStyleSheet( "QGroupBox{padding-top:15px; margin-top:-15px; border:0;}" );
 
-    quizSettings		= VsSettings::instance()->quizSettings();
+    quizSettings		= QVocabularySettings::instance()->quizSettings();
     bool displayTimer	= quizSettings["displayTimer"].toBool();
 
     ui->chkDisplayTranscription->setChecked( quizSettings["displayTranscriptions"].toBool() );

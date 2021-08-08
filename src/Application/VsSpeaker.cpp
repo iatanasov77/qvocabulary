@@ -4,7 +4,7 @@
 #include <QDebug>
 #include <QTextToSpeech>
 
-#include "Application/VsSettings.h"
+#include "Application/QVocabularySettings.h"
 
 VsSpeaker::VsSpeaker( QObject* parent ) : QObject( parent )
 {
@@ -23,7 +23,7 @@ QTextToSpeech* VsSpeaker::tts()
 
 void VsSpeaker::loadTts()
 {
-	ttsSettings	= VsSettings::instance()->speakerSettings();
+	ttsSettings	= QVocabularySettings::instance()->speakerSettings();
 
 	QString engineName	= ttsSettings["engine"].toString();
 

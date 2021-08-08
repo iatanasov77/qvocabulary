@@ -9,7 +9,7 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
-#include "Application/VsSettings.h"
+#include "Application/QVocabularySettings.h"
 #include "Application/VsDatabase.h"
 #include "Application/VsAssessment.h"
 #include "Entity/VocabularyMetaInfo.h"
@@ -79,7 +79,7 @@ void QuizWidget::updateTimer()
 
 void QuizWidget::initModel()
 {
-	QMap<QString, QVariant> quizSettings	= VsSettings::instance()->quizSettings();
+	QMap<QString, QVariant> quizSettings	= QVocabularySettings::instance()->quizSettings();
 
 	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate(
 		ui->tableView,
