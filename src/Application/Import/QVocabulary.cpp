@@ -15,6 +15,11 @@
 #include "Entity/VocabularyGroup.h"
 #include "Entity/Vocabulary.h"
 
+#include "Entity/Quiz.h"
+#include "Entity/QuizItem.h"
+#include "Entity/ArchiveGroup.h"
+#include "Entity/ArchiveWord.h"
+
 QSqlDatabase QVocabulary::db;
 
 bool QVocabulary::importFromDb( QString dbName, bool importQuizes, bool importArchive )
@@ -31,6 +36,14 @@ bool QVocabulary::importFromDb( QString dbName, bool importQuizes, bool importAr
 		qDebug() << "DB is Opened.";
 		parseMeta();
 		parseWords();
+
+		if ( importQuizes ) {
+			_importQuizes();
+		}
+
+		if ( importArchive ) {
+			_importArchive();
+		}
 
 		db.close();
 	} else {
@@ -97,6 +110,69 @@ bool QVocabulary::parseWords()
 			voc->description	= query.value( "description" ).toString();
 
 			daoError			= qx::dao::insert( voc );
+		}
+	}
+
+	return true;
+}
+
+bool QVocabulary::_importQuizes()
+{
+	QSqlError daoError;
+	QuizPtr quiz;
+	QuizItemPtr quizItem;
+	QString strQuizItemQuery;
+
+	QSqlQuery quizQuery( "SELECT * FROM Quiz", db );
+	while ( quizQuery.next() ) {
+		quiz				= QuizPtr( new Quiz() );
+		quiz->direction		= quizQuery.value( "direction" ).value<EnumDirection>();
+		quiz->randomize		= quizQuery.value( "randomize" ).toBool();
+		quiz->groups		= quizQuery.value( "groups" ).toString();
+		quiz->assessment	= quizQuery.value( "assessment" ).toInt();
+		quiz->startedAt		= quizQuery.value( "started_at" ).toDateTime();
+		quiz->finishedAt	= quizQuery.value( "finished_at" ).toDateTime();
+		daoError			= qx::dao::insert( quiz );
+
+		strQuizItemQuery	= QString( "SELECT * FROM QuizItem WHERE quiz_id=%1" ).arg( QString::number( quizQuery.value( "id" ).toInt() ) );
+		QSqlQuery quizItemQuery( strQuizItemQuery, db );
+		while ( quizItemQuery.next() ) {
+			quizItem				= QuizItemPtr( new QuizItem() );
+			quizItem->quiz_id		= quiz->id;
+			quizItem->language_1	= quizItemQuery.value( "language_1" ).toString();
+			quizItem->language_2	= quizItemQuery.value( "language_2" ).toString();
+			quizItem->answer		= quizItemQuery.value( "answer" ).toString();
+			quizItem->rightAnswer	= quizItemQuery.value( "right_answer" ).toBool();
+			daoError				= qx::dao::insert( quizItem );
+		}
+	}
+
+	return true;
+}
+
+bool QVocabulary::_importArchive()
+{
+	QSqlError daoError;
+	ArchiveGroupPtr archiveGroup;
+	ArchiveWordPtr archiveWord;
+	QString strArchiveWordQuery;
+
+	QSqlQuery archiveGroupQuery( "SELECT * FROM ArchiveGroup", db );
+	while ( archiveGroupQuery.next() ) {
+		archiveGroup		= ArchiveGroupPtr( new ArchiveGroup() );
+		archiveGroup->name	= archiveGroupQuery.value( "name" ).toString();
+		daoError			= qx::dao::insert( archiveGroup );
+
+		strArchiveWordQuery	= QString( "SELECT * FROM ArchiveWord WHERE group_id=%1" ).arg( QString::number( archiveGroupQuery.value( "id" ).toInt() ) );
+		QSqlQuery archiveWordQuery( strArchiveWordQuery, db );
+		while ( archiveWordQuery.next() ) {
+			archiveWord					= ArchiveWordPtr( new ArchiveWord() );
+			archiveWord->group_id		= archiveGroup->id;
+			archiveWord->language_1		= archiveWordQuery.value( "language_1" ).toString();
+			archiveWord->language_2		= archiveWordQuery.value( "language_2" ).toString();
+			archiveWord->transcription	= archiveWordQuery.value( "transcription" ).toString();
+			archiveWord->description	= archiveWordQuery.value( "description" ).toString();
+			daoError					= qx::dao::insert( archiveWord );
 		}
 	}
 

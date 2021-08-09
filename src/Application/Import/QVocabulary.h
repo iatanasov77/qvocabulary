@@ -19,6 +19,8 @@ class QVocabulary : public Import
 	private:
 		static bool parseMeta();
 		static bool parseWords();
+		static bool _importQuizes();
+		static bool _importArchive();
 
 		static QSqlDatabase db;
 };
