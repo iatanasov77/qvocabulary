@@ -17,7 +17,7 @@
 
 QSqlDatabase QVocabulary::db;
 
-bool QVocabulary::importFromDb( QString dbName )
+bool QVocabulary::importFromDb( QString dbName, bool importQuizes, bool importArchive )
 {
 	qDebug() << "Import DB: " << dbName;
 	db	= QSqlDatabase::addDatabase( "QSQLITE", "import_source" );

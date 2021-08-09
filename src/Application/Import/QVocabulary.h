@@ -14,7 +14,7 @@
 class QVocabulary : public Import
 {
 	public:
-		static bool importFromDb( QString dbName );
+		static bool importFromDb( QString dbName, bool importQuizes = false, bool importArchive = false );
 
 	private:
 		static bool parseMeta();
