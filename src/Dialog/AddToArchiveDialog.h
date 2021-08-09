@@ -17,6 +17,7 @@ class AddToArchiveDialog : public QDialog
 		~AddToArchiveDialog();
 
 	private:
+		void initGroupsCombo();
 		int _createArchiveGroup( QString groupName );
 		void _addToArchive( QSqlDatabase db, int archiveGroupId );
 
@@ -28,6 +29,7 @@ class AddToArchiveDialog : public QDialog
 	private slots:
 		void addToArchive();
 		void setDatabase();
+		void onGroupsComboChanged( int index );
 };
 
 #endif // DIALOG_ADD_TO_ARCHIVE_H

@@ -22,6 +22,7 @@ AddToArchiveDialog::AddToArchiveDialog( QWidget *parent ) :
     ui( new Ui::AddToArchiveDialog )
 {
     ui->setupUi( this );
+    initGroupsCombo();
 
     mw = parent;
 
@@ -30,6 +31,8 @@ AddToArchiveDialog::AddToArchiveDialog( QWidget *parent ) :
     QPushButton *saveButton = ui->buttonBox->button( QDialogButtonBox::Save );
     saveButton->setText( tr( "Add To Archive" ) );
     connect( saveButton, SIGNAL( clicked() ), this, SLOT( addToArchive() ) );
+
+    connect( ui->cbArchiveGroup, SIGNAL( currentIndexChanged( int ) ), this, SLOT( onGroupsComboChanged( int ) ) );
 }
 
 AddToArchiveDialog::~AddToArchiveDialog()
@@ -58,9 +61,12 @@ void AddToArchiveDialog::addToArchive()
 	db.setUserName( "root" );
 	db.setPassword( "root" );
 
+	int groupId			= ui->cbArchiveGroup->currentData().toInt();
 	QString groupName	= ui->leArchiveGroupName->text();
-	if ( db.open() && groupName.length() ) {
-		int groupId	= _createArchiveGroup( groupName );
+	if ( groupId <= 0 && groupName.length() ) {
+		groupId	= _createArchiveGroup( groupName );
+	}
+	if ( db.open() && groupId ) {
 		_addToArchive( db, groupId );
 		db.close();
 	} else {
@@ -96,5 +102,25 @@ void AddToArchiveDialog::_addToArchive( QSqlDatabase db, int archiveGroupId )
 		aw->description		= query.value( "description" ).toString();
 
 		daoError			= qx::dao::insert( aw );
+	}
+}
+
+void AddToArchiveDialog::initGroupsCombo()
+{
+	ui->cbArchiveGroup->addItem( "-- Select Existing Group --", QVariant( -1 ) );
+
+	QSqlQuery archiveGroupQuery( "SELECT * FROM ArchiveGroup",  qx::QxSqlDatabase::getDatabase() );
+	while ( archiveGroupQuery.next() ) {
+		ui->cbArchiveGroup->addItem( archiveGroupQuery.value( "name" ).toString(), archiveGroupQuery.value( "id" ) );
+	}
+}
+
+void AddToArchiveDialog::onGroupsComboChanged( int index )
+{
+	int groupId	= ui->cbArchiveGroup->itemData( index ).toInt();
+	if ( groupId > 0 ) {
+		ui->frmNewGroup->hide();
+	} else {
+		ui->frmNewGroup->show();
 	}
 }
