@@ -93,15 +93,13 @@ void AddToArchiveDialog::_addToArchive( QSqlDatabase db, int archiveGroupId )
 
 	QSqlQuery query( "SELECT * FROM Vocabulary", db );
 	while ( query.next() ) {
-		aw					= ArchiveWordPtr( new ArchiveWord() );
+		aw					= getArchiveWord( query.value( "language_1" ).toString(), archiveGroupId );
 
-		aw->group_id		= archiveGroupId;
-		aw->language_1		= query.value( "language_1" ).toString();
 		aw->transcription	= query.value( "transcription" ).toString();
 		aw->language_2		= query.value( "language_2" ).toString();
 		aw->description		= query.value( "description" ).toString();
 
-		daoError			= qx::dao::insert( aw );
+		daoError			= qx::dao::save( aw );
 	}
 }
 
@@ -123,4 +121,22 @@ void AddToArchiveDialog::onGroupsComboChanged( int index )
 	} else {
 		ui->frmNewGroup->show();
 	}
+}
+
+ArchiveWordPtr AddToArchiveDialog::getArchiveWord( QString word, int archiveGroupId )
+{
+	ArchiveWordPtr aw;
+	QString checkQuery	= QString( "SELECT * FROM ArchiveWord WHERE language_1='%1' AND group_id=%2" )
+							.arg( word )
+							.arg( archiveGroupId );
+	QSqlQuery query( checkQuery, qx::QxSqlDatabase::getDatabase() );
+
+	aw					= ArchiveWordPtr( new ArchiveWord() );
+	if ( query.next() ) {
+		aw->id	= query.value( "id" ).toInt();
+	}
+	aw->group_id		= archiveGroupId;
+	aw->language_1		= word;
+
+	return aw;
 }
