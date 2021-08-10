@@ -70,39 +70,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::clearWidgets()
-{
-	while( ! ui->verticalLayout_4->isEmpty() ) {
-		QWidget *w = ui->verticalLayout_4->takeAt( 0 )->widget();
-		delete w;
-	}
-
-	while( ! ui->verticalLayout_5->isEmpty() ) {
-		QWidget *w = ui->verticalLayout_5->takeAt( 0 )->widget();
-		delete w;
-	}
-}
-
 void MainWindow::initWidgets()
 {
-	QMap<QString, QVariant> widgetState;
-	clearWidgets(); // Be Sure Widgets Not Exists Already
+	initVocabularyWidget();
+	initArchiveWidget();
 
-	if ( wdgVocabulary ) {
-		widgetState	= wdgVocabulary->getState();
-	}
-
-	wdgVocabulary	= new VocabularyWidget( this );
-	if ( ! widgetState.isEmpty() ) {
-		wdgVocabulary->setState( widgetState );
-	}
-	wdgVocabulary->setAcceptDrops( true );
-
-	wdgArchive	= new ArchiveWidget( this );
-
-	// Add Widgets Into the StackedWidget
-	ui->verticalLayout_4->addWidget( wdgArchive );
-	ui->verticalLayout_5->addWidget( wdgVocabulary );
 	ui->stackedWidget->setCurrentWidget( ui->pageVocabulary );
 }
 
@@ -538,6 +510,50 @@ void MainWindow::on_actionAdd_to_Archive_triggered()
 	AddToArchiveDialog* dlgAddArchive	= new AddToArchiveDialog( this );
 	dlgAddArchive->setModal( true );
 	if ( dlgAddArchive->exec() == QDialog::Accepted ) {
-		// return dlgNewDatabase->database();
+		initArchiveWidget();
 	}
+}
+
+void MainWindow::clearVocabularyWidget()
+{
+	while( ! ui->verticalLayout_5->isEmpty() ) {
+		QWidget *w = ui->verticalLayout_5->takeAt( 0 )->widget();
+		delete w;
+	}
+}
+
+void MainWindow::clearArchiveWidget()
+{
+	while( ! ui->verticalLayout_4->isEmpty() ) {
+		QWidget *w = ui->verticalLayout_4->takeAt( 0 )->widget();
+		delete w;
+	}
+}
+
+void MainWindow::initVocabularyWidget()
+{
+	QMap<QString, QVariant> widgetState;
+
+	clearVocabularyWidget();
+
+	if ( wdgVocabulary ) {
+		widgetState	= wdgVocabulary->getState();
+	}
+
+	wdgVocabulary	= new VocabularyWidget( this );
+	if ( ! widgetState.isEmpty() ) {
+		wdgVocabulary->setState( widgetState );
+	}
+	wdgVocabulary->setAcceptDrops( true );
+
+	ui->verticalLayout_5->addWidget( wdgVocabulary );
+}
+
+void MainWindow::initArchiveWidget()
+{
+	clearArchiveWidget();
+
+	wdgArchive	= new ArchiveWidget( this );
+
+	ui->verticalLayout_4->addWidget( wdgArchive );
 }

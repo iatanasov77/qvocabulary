@@ -65,10 +65,13 @@ class MainWindow : public QMainWindow
 
 	private:
 		// Methods
-		void clearWidgets();
 		void initIcons();
 		void initDatabase();
 		void initMenuLanguages();
+		void clearVocabularyWidget();
+		void clearArchiveWidget();
+		void initVocabularyWidget();
+		void initArchiveWidget();
 
 		void createReccentDatabaseActions();
 
