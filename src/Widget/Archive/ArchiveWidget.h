@@ -35,6 +35,7 @@ class ArchiveWidget : public QWidget
 		void setCurrentGroupName( QString groupName );
 		void refreshWidgets();
 		void setCurrentGroup( int groupId );
+		void showWord( int wordId, int groupId );
 
 	public slots:
 		void loadGroup( const QModelIndex &index );

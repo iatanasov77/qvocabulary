@@ -468,16 +468,20 @@ void VocabularyWordsWidget::showWord( QTreeWidgetItem* item, int column )
 		return;
 	}
 
-	int wordId						= item->data( 0, Qt::UserRole ).toInt();
-	int groupId						= 1;
+	int groupId	= 1;
+	int wordId	= item->data( 0, Qt::UserRole ).toInt();
 	for ( int i = 0; i < searchModel->rowCount(); ++i ) {
-		searchModel->data( searchModel->index( i, 0 ) ).toInt();
 		if ( searchModel->data( searchModel->index( i, 0 ) ).toInt() == wordId ) {
 			groupId	= searchModel->data( searchModel->index( i, 4 ) ).toInt();
 			//qDebug() << "Search Model Word Founded. Group ID: " << groupId;
 		}
 	}
 
+	showWord( wordId, groupId );
+}
+
+void VocabularyWordsWidget::showWord( int wordId, int groupId )
+{
 	qobject_cast<VocabularyWidget *>( wdgVocabulary )->setCurrentGroup( groupId );
 	//updateView();
 

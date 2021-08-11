@@ -8,6 +8,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QStringList>
+#include <QSqlQueryModel>
 
 #include "mustache.h"
 
@@ -109,6 +110,7 @@ void MainWindow::initIcons()
 	ui->actionShow_Vocabulary->setIcon( QIcon( ":/Resources/icons/dictionary.svg" ) );
 	ui->actionShow_Archive->setIcon( QIcon( ":/Resources/icons/archive.svg" ) );
 	ui->actionAdd_to_Archive->setIcon( QIcon( ":/Resources/icons/add_archive.svg" ) );
+	ui->actionCompair_Vocabulary_Archive->setIcon( QIcon( ":/Resources/icons/compare.svg" ) );
 }
 
 void MainWindow::on_actionInsertGroup_triggered()
@@ -556,4 +558,55 @@ void MainWindow::initArchiveWidget()
 	wdgArchive	= new ArchiveWidget( this );
 
 	ui->verticalLayout_4->addWidget( wdgArchive );
+}
+
+void MainWindow::on_actionCompair_Vocabulary_Archive_triggered()
+{
+	while( ! ui->verticalLayout_7->isEmpty() ) {
+		QWidget *w = ui->verticalLayout_7->takeAt( 0 )->widget();
+		delete w;
+	}
+
+	QString strCompairQuery	= QString( "SELECT VG.name AS VocabularyGroup, VW.language_1 AS VocabularyWord, AG.name AS ArchiveGroup, AW.language_1 AS ArchiveWord"
+										", VG.id as VgId, VW.id as VwId, AG.id as AgId, AW.id as AwId "
+										"FROM Vocabulary VW "
+										"LEFT JOIN VocabularyGroup VG ON VW.group_id = VG.id "
+										"LEFT JOIN ArchiveWord AW ON VW.language_1 = AW.language_1 "
+										"LEFT JOIN ArchiveGroup AG ON AW.group_id = AG.id "
+										"WHERE AwId IS NOT NULL" );
+	QSqlQuery compairQuery	= QSqlQuery( strCompairQuery, qx::QxSqlDatabase::getDatabase() );
+	compairQuery.exec();
+
+	modelCompair			= new QSqlQueryModel();
+	//modelCompair			= new QSqlTableModel();
+	modelCompair->setQuery( compairQuery );
+
+	wdgCompair	= new QTableView( this );
+	wdgCompair->setModel( modelCompair );
+	QList<int> hideColumns	= {4, 5, 6, 7};
+	for( int i = 0; i < hideColumns.size(); i++ ) {
+		wdgCompair->hideColumn( hideColumns[i] );
+	}
+
+	ui->verticalLayout_7->addWidget( wdgCompair );
+	ui->stackedWidget->setCurrentWidget( ui->pageCompairArchive );
+
+	connect( wdgCompair, SIGNAL( doubleClicked( QModelIndex ) ), this, SLOT( openWordFromCompairWidget( QModelIndex ) ) );
+}
+
+void MainWindow::openWordFromCompairWidget( QModelIndex index )
+{
+	if ( index.column() == 0 || index.column() == 1 ) {
+		on_actionShow_Vocabulary_triggered();
+		int groupId	= modelCompair->data( index.siblingAtColumn( 4 ) ).toInt();
+		int wordId	= modelCompair->data( index.siblingAtColumn( 5 ) ).toInt();
+		wdgVocabulary->showWord( wordId, groupId );
+	}
+
+	if ( index.column() == 2 || index.column() == 3 ) {
+		on_actionShow_Archive_triggered();
+		int archiveGroupId	= modelCompair->data( index.siblingAtColumn( 6 ) ).toInt();
+		int archiveWordId	= modelCompair->data( index.siblingAtColumn( 7 ) ).toInt();
+		wdgArchive->showWord( archiveWordId, archiveGroupId  );
+	}
 }

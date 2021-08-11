@@ -231,6 +231,9 @@ void ArchiveWordsWidget::initView()
 	ui->tableView->horizontalHeader()->resizeSections( QHeaderView::ResizeToContents );
 	ui->tableView->horizontalHeader()->setStretchLastSection( true );
 
+	ui->tableView->setSelectionBehavior( QAbstractItemView::SelectRows );
+	ui->tableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
+
 	connect(
 		itemDelegate,
 		SIGNAL( buttonClicked( QModelIndex ) ),
@@ -257,6 +260,11 @@ void ArchiveWordsWidget::showWord( QTreeWidgetItem* item, int column )
 		}
 	}
 
+	showWord( wordId, groupId );
+}
+
+void ArchiveWordsWidget::showWord( int wordId, int groupId )
+{
 	qobject_cast<ArchiveWidget *>( wdgVocabulary )->setCurrentGroup( groupId );
 	//updateView();
 

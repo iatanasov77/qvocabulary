@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
+#include <QSqlQueryModel>
+#include <QSqlTableModel>
 
 #include "Widget/Quiz/QuizListWindow.h"
 #include "Widget/Quiz/QuizWindow.h"
@@ -60,6 +62,8 @@ class MainWindow : public QMainWindow
 		void on_actionShow_Vocabulary_triggered();
 		void on_actionShow_Archive_triggered();
 		void on_actionAdd_to_Archive_triggered();
+		void on_actionCompair_Vocabulary_Archive_triggered();
+		void openWordFromCompairWidget( QModelIndex index );
 
 		void loadLanguage();
 
@@ -90,6 +94,9 @@ class MainWindow : public QMainWindow
 		QuizListWindow* wdgQuizList;
 		QuizWindow* wdgQuiz;
 		ArchiveWidget* wdgArchive;
+		QTableView* wdgCompair;
+		QSqlQueryModel* modelCompair;
+		//QSqlTableModel* modelCompair;
 
 		QAction* actClearRecentDatabases;
 		QAction* actClearRecentDatabasesWithoutCurrent;

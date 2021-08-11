@@ -43,6 +43,13 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="pageCompairArchive">
+       <layout class="QVBoxLayout" name="verticalLayout_8">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_7"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -114,10 +121,11 @@
    </widget>
    <widget class="QMenu" name="menuArchive">
     <property name="title">
-     <string>Archive</string>
+     <string>A&amp;rchive</string>
     </property>
     <addaction name="actionShow_Archive"/>
     <addaction name="actionAdd_to_Archive"/>
+    <addaction name="actionCompair_Vocabulary_Archive"/>
    </widget>
    <addaction name="menuDatabase"/>
    <addaction name="menuArchive"/>
@@ -266,17 +274,22 @@
   </action>
   <action name="actionShow_Archive">
    <property name="text">
-    <string>Show Archive</string>
+    <string>S&amp;how Archive</string>
    </property>
   </action>
   <action name="actionAdd_to_Archive">
    <property name="text">
-    <string>Add to Archive</string>
+    <string>&amp;Add to Archive</string>
    </property>
   </action>
   <action name="actionShow_Vocabulary">
    <property name="text">
-    <string>Show Vocabulary</string>
+    <string>Show &amp;Vocabulary</string>
+   </property>
+  </action>
+  <action name="actionCompair_Vocabulary_Archive">
+   <property name="text">
+    <string>Compair Vocabulary|Archive</string>
    </property>
   </action>
  </widget>

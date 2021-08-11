@@ -33,6 +33,7 @@ class ArchiveWordsWidget : public QWidget
 		void loadGroup( int groupId );
 		int deleteGroup( int groupId );
 		void refreshView( QModelIndex topLeft, QModelIndex bottomRight );
+		void showWord( int wordId, int groupId );
 
 	public slots:
 		void search();

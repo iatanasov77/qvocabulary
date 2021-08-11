@@ -34,6 +34,7 @@ class VocabularyWordsWidget : public QWidget
 		void refreshView( QModelIndex topLeft, QModelIndex bottomRight );
 		QMap<QString, QVariant> getState();
 		void setState( QMap<QString, QVariant> state );
+		void showWord( int wordId, int groupId );
 
 	public slots:
 		void onDataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
