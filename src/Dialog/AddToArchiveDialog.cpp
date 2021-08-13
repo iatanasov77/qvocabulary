@@ -22,6 +22,7 @@ AddToArchiveDialog::AddToArchiveDialog( QWidget *parent ) :
     ui( new Ui::AddToArchiveDialog )
 {
     ui->setupUi( this );
+    initGroupsCombo();
 
     mw = parent;
 
@@ -30,6 +31,8 @@ AddToArchiveDialog::AddToArchiveDialog( QWidget *parent ) :
     QPushButton *saveButton = ui->buttonBox->button( QDialogButtonBox::Save );
     saveButton->setText( tr( "Add To Archive" ) );
     connect( saveButton, SIGNAL( clicked() ), this, SLOT( addToArchive() ) );
+
+    connect( ui->cbArchiveGroup, SIGNAL( currentIndexChanged( int ) ), this, SLOT( onGroupsComboChanged( int ) ) );
 }
 
 AddToArchiveDialog::~AddToArchiveDialog()
@@ -58,9 +61,12 @@ void AddToArchiveDialog::addToArchive()
 	db.setUserName( "root" );
 	db.setPassword( "root" );
 
+	int groupId			= ui->cbArchiveGroup->currentData().toInt();
 	QString groupName	= ui->leArchiveGroupName->text();
-	if ( db.open() && groupName.length() ) {
-		int groupId	= _createArchiveGroup( groupName );
+	if ( groupId <= 0 && groupName.length() ) {
+		groupId	= _createArchiveGroup( groupName );
+	}
+	if ( db.open() && groupId ) {
 		_addToArchive( db, groupId );
 		db.close();
 	} else {
@@ -87,14 +93,50 @@ void AddToArchiveDialog::_addToArchive( QSqlDatabase db, int archiveGroupId )
 
 	QSqlQuery query( "SELECT * FROM Vocabulary", db );
 	while ( query.next() ) {
-		aw					= ArchiveWordPtr( new ArchiveWord() );
+		aw					= getArchiveWord( query.value( "language_1" ).toString(), archiveGroupId );
 
-		aw->group_id		= archiveGroupId;
-		aw->language_1		= query.value( "language_1" ).toString();
 		aw->transcription	= query.value( "transcription" ).toString();
 		aw->language_2		= query.value( "language_2" ).toString();
 		aw->description		= query.value( "description" ).toString();
 
-		daoError			= qx::dao::insert( aw );
+		daoError			= qx::dao::save( aw );
 	}
+}
+
+void AddToArchiveDialog::initGroupsCombo()
+{
+	ui->cbArchiveGroup->addItem( "-- Select Existing Group --", QVariant( -1 ) );
+
+	QSqlQuery archiveGroupQuery( "SELECT * FROM ArchiveGroup",  qx::QxSqlDatabase::getDatabase() );
+	while ( archiveGroupQuery.next() ) {
+		ui->cbArchiveGroup->addItem( archiveGroupQuery.value( "name" ).toString(), archiveGroupQuery.value( "id" ) );
+	}
+}
+
+void AddToArchiveDialog::onGroupsComboChanged( int index )
+{
+	int groupId	= ui->cbArchiveGroup->itemData( index ).toInt();
+	if ( groupId > 0 ) {
+		ui->frmNewGroup->hide();
+	} else {
+		ui->frmNewGroup->show();
+	}
+}
+
+ArchiveWordPtr AddToArchiveDialog::getArchiveWord( QString word, int archiveGroupId )
+{
+	ArchiveWordPtr aw;
+	QString checkQuery	= QString( "SELECT * FROM ArchiveWord WHERE language_1='%1' AND group_id=%2" )
+							.arg( word )
+							.arg( archiveGroupId );
+	QSqlQuery query( checkQuery, qx::QxSqlDatabase::getDatabase() );
+
+	aw					= ArchiveWordPtr( new ArchiveWord() );
+	if ( query.next() ) {
+		aw->id	= query.value( "id" ).toInt();
+	}
+	aw->group_id		= archiveGroupId;
+	aw->language_1		= word;
+
+	return aw;
 }

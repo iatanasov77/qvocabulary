@@ -6,7 +6,7 @@
 #include <QTextToSpeech>
 #include <QStatusBar>
 
-#include "Application/VsSettings.h"
+#include "Application/QVocabularySettings.h"
 #include "AbstractSettingsWidget.h"
 #include "Application/VsApplication.h"
 #include "Application/VsSpeaker.h"
@@ -31,7 +31,7 @@ void SettingsWidgetSpeaker::init()
 	statusbar		= new QStatusBar();
 	ui->layoutStatus->addWidget( statusbar );
 
-	speakerSettings	= VsSettings::instance()->speakerSettings();
+	speakerSettings	= QVocabularySettings::instance()->speakerSettings();
 	ui->slRate->setValue( speakerSettings["rate"].toInt() );
 	ui->slPitch->setValue( speakerSettings["pitch"].toInt() );
 	ui->slVolume->setValue( speakerSettings["volume"].toInt() );

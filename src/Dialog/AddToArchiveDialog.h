@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QSqlDatabase>
 
+#include "Entity/ArchiveWord.h"
+
 namespace Ui {
 	class AddToArchiveDialog;
 }
@@ -17,6 +19,8 @@ class AddToArchiveDialog : public QDialog
 		~AddToArchiveDialog();
 
 	private:
+		void initGroupsCombo();
+		ArchiveWordPtr getArchiveWord( QString word, int archiveGroupId );
 		int _createArchiveGroup( QString groupName );
 		void _addToArchive( QSqlDatabase db, int archiveGroupId );
 
@@ -28,6 +32,7 @@ class AddToArchiveDialog : public QDialog
 	private slots:
 		void addToArchive();
 		void setDatabase();
+		void onGroupsComboChanged( int index );
 };
 
 #endif // DIALOG_ADD_TO_ARCHIVE_H

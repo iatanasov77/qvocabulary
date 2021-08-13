@@ -8,6 +8,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QStringList>
+#include <QSqlQueryModel>
 
 #include "mustache.h"
 
@@ -15,7 +16,6 @@
 #include "Application/VsSettings.h"
 #include "Application/VsDatabase.h"
 #include "Application/Import/MicrosoftVocabulary.h"
-#include "Application/Import/QVocabulary.h"
 #include "Widget/Help/HelpWindow.h"
 #include "Widget/Quiz/QuizListWindow.h"
 #include "Widget/Quiz/QuizWindow.h"
@@ -25,6 +25,7 @@
 #include "Dialog/NewDatabaseDialog.h"
 #include "Dialog/NewVocabularyGroupDialog.h"
 #include "Dialog/AddToArchiveDialog.h"
+#include "Dialog/QVocabularyImportDialog.h"
 
 MainWindow::MainWindow( QWidget *parent ) :
 	QMainWindow( parent ),
@@ -70,39 +71,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::clearWidgets()
-{
-	while( ! ui->verticalLayout_4->isEmpty() ) {
-		QWidget *w = ui->verticalLayout_4->takeAt( 0 )->widget();
-		delete w;
-	}
-
-	while( ! ui->verticalLayout_5->isEmpty() ) {
-		QWidget *w = ui->verticalLayout_5->takeAt( 0 )->widget();
-		delete w;
-	}
-}
-
 void MainWindow::initWidgets()
 {
-	QMap<QString, QVariant> widgetState;
-	clearWidgets(); // Be Sure Widgets Not Exists Already
+	initVocabularyWidget();
+	initArchiveWidget();
 
-	if ( wdgVocabulary ) {
-		widgetState	= wdgVocabulary->getState();
-	}
-
-	wdgVocabulary	= new VocabularyWidget( this );
-	if ( ! widgetState.isEmpty() ) {
-		wdgVocabulary->setState( widgetState );
-	}
-	wdgVocabulary->setAcceptDrops( true );
-
-	wdgArchive	= new ArchiveWidget( this );
-
-	// Add Widgets Into the StackedWidget
-	ui->verticalLayout_4->addWidget( wdgArchive );
-	ui->verticalLayout_5->addWidget( wdgVocabulary );
 	ui->stackedWidget->setCurrentWidget( ui->pageVocabulary );
 }
 
@@ -137,6 +110,7 @@ void MainWindow::initIcons()
 	ui->actionShow_Vocabulary->setIcon( QIcon( ":/Resources/icons/dictionary.svg" ) );
 	ui->actionShow_Archive->setIcon( QIcon( ":/Resources/icons/archive.svg" ) );
 	ui->actionAdd_to_Archive->setIcon( QIcon( ":/Resources/icons/add_archive.svg" ) );
+	ui->actionCompair_Vocabulary_Archive->setIcon( QIcon( ":/Resources/icons/compare.svg" ) );
 }
 
 void MainWindow::on_actionInsertGroup_triggered()
@@ -173,6 +147,7 @@ void MainWindow::on_actionAbout_triggered()
 	aboutBody["version"]		= VsApplication::appVersion();
 	aboutBody["build"]			= VsApplication::appBuildTime();
 	//aboutBody["copySign"] 		= QString::fromUtf8( "\u00A9" );
+	aboutBody["currentYear"]	= QDate::currentDate().year();
 
 	Mustache::Renderer renderer;
 	Mustache::QtVariantContext context( aboutBody );
@@ -440,16 +415,9 @@ void MainWindow::on_actionExportMicrosoftVocabulary_triggered()
 
 void MainWindow::on_actionImportVankoSoftQVocabulary_triggered()
 {
-	QString dbFile = QFileDialog::getOpenFileName(
-		this,
-		tr( "Open VankoSoft QVocabulary Database" ),
-		QDir::homePath(),
-		tr( "VankoSoft QVocabulary Database (*.db)" )
-	);
-
-	if ( ! dbFile.isEmpty() ) {
-		QVocabulary::importFromDb( dbFile );
-
+	QVocabularyImportDialog* dlgImport	= new QVocabularyImportDialog( this );
+	dlgImport->setModal( true );
+	if ( dlgImport->exec() == QDialog::Accepted ) {
 		initWidgets();
 		wdgVocabulary->initModels();
 		statusBar()->showMessage( tr( "Database imported" ), 2000 );
@@ -544,6 +512,75 @@ void MainWindow::on_actionAdd_to_Archive_triggered()
 	AddToArchiveDialog* dlgAddArchive	= new AddToArchiveDialog( this );
 	dlgAddArchive->setModal( true );
 	if ( dlgAddArchive->exec() == QDialog::Accepted ) {
-		// return dlgNewDatabase->database();
+		initArchiveWidget();
 	}
+}
+
+void MainWindow::clearVocabularyWidget()
+{
+	while( ! ui->verticalLayout_5->isEmpty() ) {
+		QWidget *w = ui->verticalLayout_5->takeAt( 0 )->widget();
+		delete w;
+	}
+}
+
+void MainWindow::clearArchiveWidget()
+{
+	while( ! ui->verticalLayout_4->isEmpty() ) {
+		QWidget *w = ui->verticalLayout_4->takeAt( 0 )->widget();
+		delete w;
+	}
+}
+
+void MainWindow::initVocabularyWidget()
+{
+	QMap<QString, QVariant> widgetState;
+
+	clearVocabularyWidget();
+
+	if ( wdgVocabulary ) {
+		widgetState	= wdgVocabulary->getState();
+	}
+
+	wdgVocabulary	= new VocabularyWidget( this );
+	if ( ! widgetState.isEmpty() ) {
+		wdgVocabulary->setState( widgetState );
+	}
+	wdgVocabulary->setAcceptDrops( true );
+
+	ui->verticalLayout_5->addWidget( wdgVocabulary );
+}
+
+void MainWindow::initArchiveWidget()
+{
+	clearArchiveWidget();
+
+	wdgArchive	= new ArchiveWidget( this );
+
+	ui->verticalLayout_4->addWidget( wdgArchive );
+}
+
+void MainWindow::on_actionCompair_Vocabulary_Archive_triggered()
+{
+	while( ! ui->verticalLayout_7->isEmpty() ) {
+		QWidget *w = ui->verticalLayout_7->takeAt( 0 )->widget();
+		delete w;
+	}
+
+	wdgCompair	= new ArchiveCompareWidget( this );
+	ui->verticalLayout_7->addWidget( wdgCompair );
+	ui->stackedWidget->setCurrentWidget( ui->pageCompairArchive );
+}
+
+void MainWindow::showVocabularyWord( int wordId, int groupId )
+{
+	on_actionShow_Vocabulary_triggered();
+	//qDebug() << "ECHO MAIN WINDOW !";
+	wdgVocabulary->showWord( wordId, groupId );
+}
+
+void MainWindow::showArchiveWord( int wordId, int groupId )
+{
+	on_actionShow_Archive_triggered();
+	wdgArchive->showWord( wordId, groupId  );
 }

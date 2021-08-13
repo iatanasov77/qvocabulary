@@ -5,7 +5,7 @@
 
 class VsSettings
 {
-	private:
+	protected:
 		VsSettings();
         static VsSettings* createInstance();
 
@@ -19,9 +19,6 @@ class VsSettings
 
         QVariant value( QString key, QString group, QVariant defaultValue = QVariant() );
         void setValue( QString key, QVariant value, QString group );
-
-        QMap<QString, QVariant> speakerSettings();
-        QMap<QString, QVariant> quizSettings();
 };
 
 #endif // VS_SETTINGS_H

@@ -3,11 +3,13 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
+#include <QSqlTableModel>
 
 #include "Widget/Quiz/QuizListWindow.h"
 #include "Widget/Quiz/QuizWindow.h"
 #include "Widget/Help/HelpWindow.h"
 #include "Widget/Archive/ArchiveWidget.h"
+#include "Widget/Archive/ArchiveCompareWidget.h"
 #include "Widget/Vocabulary/VocabularyWidget.h"
 #include "Widget/Settings/SettingsWindow.h"
 #include "Dialog/NewDatabaseDialog.h"
@@ -31,6 +33,9 @@ class MainWindow : public QMainWindow
 		void initWidgets();
 		//friend void NewVocabularyGroupDialog::reloadWidgets();
 		//friend void RenameVocabularyGroupDialog::reloadWidgets();
+
+		void showVocabularyWord( int wordId, int groupId );
+		void showArchiveWord( int wordId, int groupId );
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
@@ -60,15 +65,19 @@ class MainWindow : public QMainWindow
 		void on_actionShow_Vocabulary_triggered();
 		void on_actionShow_Archive_triggered();
 		void on_actionAdd_to_Archive_triggered();
+		void on_actionCompair_Vocabulary_Archive_triggered();
 
 		void loadLanguage();
 
 	private:
 		// Methods
-		void clearWidgets();
 		void initIcons();
 		void initDatabase();
 		void initMenuLanguages();
+		void clearVocabularyWidget();
+		void clearArchiveWidget();
+		void initVocabularyWidget();
+		void initArchiveWidget();
 
 		void createReccentDatabaseActions();
 
@@ -87,6 +96,8 @@ class MainWindow : public QMainWindow
 		QuizListWindow* wdgQuizList;
 		QuizWindow* wdgQuiz;
 		ArchiveWidget* wdgArchive;
+		ArchiveCompareWidget* wdgCompair;
+		//QSqlTableModel* modelCompair;
 
 		QAction* actClearRecentDatabases;
 		QAction* actClearRecentDatabasesWithoutCurrent;

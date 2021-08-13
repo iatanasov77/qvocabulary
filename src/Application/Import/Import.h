@@ -11,6 +11,8 @@ class Import
 		static bool importFromDb( QString dbName );
 
 	protected:
+		static QMap<QString, QVariant> importSettings;
+
 		static VocabularyGroupPtr createGroup( QString groupName = "Imported" );
 
 	private:

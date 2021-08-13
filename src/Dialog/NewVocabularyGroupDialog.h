@@ -18,8 +18,6 @@ class NewVocabularyGroupDialog : public QDialog
 		explicit NewVocabularyGroupDialog( QWidget *parent = 0 );
 		~NewVocabularyGroupDialog();
 
-		void reloadWidgets();
-
 	public slots:
 		void save();
 

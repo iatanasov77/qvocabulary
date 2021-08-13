@@ -7,16 +7,19 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "Application/QVocabularySettings.h"
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/VocabularyGroup.h"
 #include "Entity/Vocabulary.h"
+
+QMap<QString, QVariant> Import::importSettings;
 
 /*
  * Tutorial: https://lucidar.me/en/dev-c-cpp/reading-xml-files-with-qt/
  */
 Import::Import()
 {
-
+	importSettings	= QVocabularySettings::instance()->importSettings();
 }
 
 Import::~Import()

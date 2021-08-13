@@ -25,6 +25,7 @@
 	    <file>Resources/icons/speaker.png</file>
 	    <file>Resources/icons/archive.svg</file>
 	    <file>Resources/icons/add_archive.svg</file>
+	    <file>Resources/icons/compare.svg</file>
 	    
 	    <file>Resources/sql/qvocabulary-20201216.sql</file>
 	    <file>Resources/sql/qvocabulary-20201217.sql</file>

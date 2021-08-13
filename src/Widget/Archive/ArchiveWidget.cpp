@@ -145,3 +145,8 @@ void ArchiveWidget::setCurrentGroup( int groupId )
 	wdgGroups->setCurrentGroup( groupId );
 	//wdgGroups->repaint();
 }
+
+void ArchiveWidget::showWord( int wordId, int groupId )
+{
+	wdgWords->showWord( wordId, groupId );
+}
