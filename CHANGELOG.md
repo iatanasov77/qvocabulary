@@ -1,3 +1,21 @@
+0.18.1	|	Release date: **13.08.2021**
+============================================
+* New Features:
+  - Create Widget for ArchiveCompare.
+  - Create Compare Between Vocabulary and Archive.
+  - Make Add to Archive to can Updating Existing Words in Existing Group.Make Add to Archive to can Updating Existing Words in Existing Group.
+  - Add to Archive Import to can Import to existing Group.
+  - Add to QVocabulary Import Quizes and Archive.
+  - Create Dialog for Import from QVocabulary.
+   - Separate Custom Application Settings Methods into Derived from VsSettings Class.
+  - Add Settings Widget for Imports.
+  - Update Application About Box.
+* Bug-Fixes:
+  - Reload ArchiveWidget after Adding to It.
+  - Fix Import from QVocabulary DB.
+  - Fix on Submit of NewVocabularyGroupDialog.
+
+
 0.18.0	|	Release date: **07.08.2021**
 ============================================
 * New Features:
