@@ -179,5 +179,6 @@ void VocabularyWidget::setState( QMap<QString, QVariant> state )
 
 void VocabularyWidget::showWord( int wordId, int groupId )
 {
+	//qDebug() << "ECHO VOCABULARY WIDGET !";
 	wdgWords->showWord( wordId, groupId );
 }

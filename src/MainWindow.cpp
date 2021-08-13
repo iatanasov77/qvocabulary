@@ -567,46 +567,20 @@ void MainWindow::on_actionCompair_Vocabulary_Archive_triggered()
 		delete w;
 	}
 
-	QString strCompairQuery	= QString( "SELECT VG.name AS VocabularyGroup, VW.language_1 AS VocabularyWord, AG.name AS ArchiveGroup, AW.language_1 AS ArchiveWord"
-										", VG.id as VgId, VW.id as VwId, AG.id as AgId, AW.id as AwId "
-										"FROM Vocabulary VW "
-										"LEFT JOIN VocabularyGroup VG ON VW.group_id = VG.id "
-										"LEFT JOIN ArchiveWord AW ON VW.language_1 = AW.language_1 "
-										"LEFT JOIN ArchiveGroup AG ON AW.group_id = AG.id "
-										"WHERE AwId IS NOT NULL" );
-	QSqlQuery compairQuery	= QSqlQuery( strCompairQuery, qx::QxSqlDatabase::getDatabase() );
-	compairQuery.exec();
-
-	modelCompair			= new QSqlQueryModel();
-	//modelCompair			= new QSqlTableModel();
-	modelCompair->setQuery( compairQuery );
-
-	wdgCompair	= new QTableView( this );
-	wdgCompair->setModel( modelCompair );
-	QList<int> hideColumns	= {4, 5, 6, 7};
-	for( int i = 0; i < hideColumns.size(); i++ ) {
-		wdgCompair->hideColumn( hideColumns[i] );
-	}
-
+	wdgCompair	= new ArchiveCompareWidget( this );
 	ui->verticalLayout_7->addWidget( wdgCompair );
 	ui->stackedWidget->setCurrentWidget( ui->pageCompairArchive );
-
-	connect( wdgCompair, SIGNAL( doubleClicked( QModelIndex ) ), this, SLOT( openWordFromCompairWidget( QModelIndex ) ) );
 }
 
-void MainWindow::openWordFromCompairWidget( QModelIndex index )
+void MainWindow::showVocabularyWord( int wordId, int groupId )
 {
-	if ( index.column() == 0 || index.column() == 1 ) {
-		on_actionShow_Vocabulary_triggered();
-		int groupId	= modelCompair->data( index.siblingAtColumn( 4 ) ).toInt();
-		int wordId	= modelCompair->data( index.siblingAtColumn( 5 ) ).toInt();
-		wdgVocabulary->showWord( wordId, groupId );
-	}
+	on_actionShow_Vocabulary_triggered();
+	//qDebug() << "ECHO MAIN WINDOW !";
+	wdgVocabulary->showWord( wordId, groupId );
+}
 
-	if ( index.column() == 2 || index.column() == 3 ) {
-		on_actionShow_Archive_triggered();
-		int archiveGroupId	= modelCompair->data( index.siblingAtColumn( 6 ) ).toInt();
-		int archiveWordId	= modelCompair->data( index.siblingAtColumn( 7 ) ).toInt();
-		wdgArchive->showWord( archiveWordId, archiveGroupId  );
-	}
+void MainWindow::showArchiveWord( int wordId, int groupId )
+{
+	on_actionShow_Archive_triggered();
+	wdgArchive->showWord( wordId, groupId  );
 }
