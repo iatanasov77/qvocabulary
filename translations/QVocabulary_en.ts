@@ -31,10 +31,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add to Group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Add To Archive</source>
         <translation type="unfinished"></translation>
     </message>
@@ -44,6 +40,25 @@
     </message>
     <message>
         <source>Db Files (*.db)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add to Existing Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add to New Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ArchiveCompareWidget</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archive Compare</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -279,19 +294,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open VankoSoft QVocabulary Database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>VankoSoft QVocabulary Database (*.db)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Vocab&amp;ulary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -299,15 +302,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show Archive</source>
+        <source>A&amp;rchive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add to Archive</source>
+        <source>S&amp;how Archive</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show Vocabulary</source>
+        <source>&amp;Add to Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show &amp;Vocabulary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Compair Vocabulary|Archive</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -357,6 +368,53 @@
     <name>QObject</name>
     <message>
         <source>About QVocabulary</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QVocabularyImportDialog</name>
+    <message>
+        <source>Create New Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group Prefix</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import Quizes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge to Existing Archive Groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open VankoSoft QVocabulary Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VankoSoft QVocabulary Database (*.db)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -498,6 +556,17 @@
     </message>
     <message>
         <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsWidgetImport</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group Prefix: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
