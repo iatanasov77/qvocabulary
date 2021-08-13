@@ -575,7 +575,6 @@ void MainWindow::on_actionCompair_Vocabulary_Archive_triggered()
 void MainWindow::showVocabularyWord( int wordId, int groupId )
 {
 	on_actionShow_Vocabulary_triggered();
-	//qDebug() << "ECHO MAIN WINDOW !";
 	wdgVocabulary->showWord( wordId, groupId );
 }
 

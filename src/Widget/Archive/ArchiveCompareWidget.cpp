@@ -77,7 +77,6 @@ void ArchiveCompareWidget::setSelection( QModelIndex index )
 
 void ArchiveCompareWidget::openWord( QModelIndex index )
 {
-	qDebug() << "ECHO ARCHIVE COMPARE WIDGET !";
 	if ( index.column() == 0 || index.column() == 1 ) {
 		int groupId	= pModel->data( index.siblingAtColumn( 4 ) ).toInt();
 		int wordId	= pModel->data( index.siblingAtColumn( 5 ) ).toInt();
