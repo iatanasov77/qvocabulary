@@ -17,9 +17,13 @@
 ##############################
 /*/*.autosave
 /build/
+/release/
 /.qmake.stash
 /Makefile
 /Makefile.Debug
 /Makefile.Release
 /Help/*.qhc
 /Help/*.qch
+/iORxYw.json
+/translations/*.qm
+
