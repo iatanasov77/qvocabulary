@@ -27,13 +27,8 @@ void SideBarListViewDelegate::paint(
 	if ( ! index.isValid() )
 		return;
 
-	QRect rect = option.rect.adjusted( 1, 1, -1, -1 );
-
-	QRect buttonRect( rect );
-	buttonRect.setHeight( 30 );
-
 	QStyleOptionButton button;
-	button.rect 	= buttonRect;
+	button.rect 	= option.rect;
 
 	// Set Button Text
 	QString query	= QString( "WHERE group_id=%1" ).arg( index.siblingAtColumn( 0 ).data().toInt() );
@@ -45,6 +40,7 @@ void SideBarListViewDelegate::paint(
 	}
 	button.text 	= QString( "%1 (%2)" ).arg( index.siblingAtColumn( 1 ).data().toString() ).arg( wordsCount );
 
+	// Set Button State
 	if( _currRow == index.row() && _event != 1 )
 		button.state	= QStyle::State_Sunken | QStyle::State_Enabled;
 	else
@@ -60,7 +56,7 @@ QSize SideBarListViewDelegate::sizeHint( const QStyleOptionViewItem &option, con
 	// Different Size Policy at Different OS
 	#if ( defined (_WIN32) || defined (_WIN64) )
 		//result.setWidth( 1 );
-		result.setHeight( result.height() * 1.5 );
+		result.setHeight( result.height() * 1.8 );
     #elif ( defined (LINUX) || defined (__linux__) )
 		//result.setWidth( 1 );
 		result.setHeight( result.height() * 2 );

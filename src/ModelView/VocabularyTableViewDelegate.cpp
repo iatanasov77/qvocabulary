@@ -89,7 +89,7 @@ QStyleOptionButton VocabularyTableViewDelegate::createButton( QRect buttonRect  
 
 QRect VocabularyTableViewDelegate::textRect( QRect cellRect ) const
 {
-	int btnSize	= cellRect.height();
+	int btnSize	= cellRect.height();	// Button rect should be a square
 
 	int x 		= cellRect.left();
 	int y 		= cellRect.top();
@@ -101,7 +101,7 @@ QRect VocabularyTableViewDelegate::textRect( QRect cellRect ) const
 
 QRect VocabularyTableViewDelegate::buttonRect( QRect cellRect ) const
 {
-	int btnSize	= cellRect.height();
+	int btnSize	= cellRect.height();	// Button rect should be a square
 
 	int x = cellRect.left() + cellRect.width() - btnSize;
 	int y = cellRect.top();
