@@ -547,6 +547,10 @@
         <source>Quiz</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetGeneral</name>

@@ -339,7 +339,7 @@
     </message>
     <message>
         <source>Import &amp;from VankoSoft QVocabulary (*.db)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Импорт от VankoSoft QVocabulary (*.db)</translation>
     </message>
     <message>
         <source>Show Archive</source>
@@ -439,7 +439,7 @@
     </message>
     <message>
         <source>Database</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">База Данни</translation>
     </message>
     <message>
         <source>Browse</source>
@@ -447,27 +447,27 @@
     </message>
     <message>
         <source>Group Prefix</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Префикс на Групи</translation>
     </message>
     <message>
         <source>Import Quizes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Импортирай Тестове</translation>
     </message>
     <message>
         <source>Archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Архив</translation>
     </message>
     <message>
         <source>Import Archive</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Импортирай Архив</translation>
     </message>
     <message>
         <source>Merge to Existing Archive Groups</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Прибавяй към Съществуващи Архив Групи</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Импорт</translation>
     </message>
     <message>
         <source>Open VankoSoft QVocabulary Database</source>
@@ -606,6 +606,10 @@
     <message>
         <source>Quiz</source>
         <translation type="unfinished">Тест</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished">Импорт</translation>
     </message>
 </context>
 <context>
