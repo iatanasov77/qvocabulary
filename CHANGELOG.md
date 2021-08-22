@@ -1,3 +1,12 @@
+0.18.3	|	Release date: **22.08.2021**
+============================================
+* View Style Improvements:
+  - Styling MainWindow Menu Separators.
+  - Styling MainWindow ToolBar Separators.
+  - Adjust Size of SideBar Buttons QVocabularyGroupsWidget.
+  - Adjust Speeker Button Size on QVocabularyWordsWidget
+
+
 0.18.2	|	Release date: **22.08.2021**
 ============================================
 * Bug-Fixes and Improvements:
