@@ -84,6 +84,7 @@ void MainWindow::stylingMenu()
 {
 	// https://doc.qt.io/qt-5/stylesheet-examples.html
 	ui->toolBar->setStyleSheet( "QToolBar::separator { width: 1px; background: black; margin: 2px 10px 2px 10px; }" );
+	ui->menuBar->setStyleSheet( "QMenu::separator { height: 1px; background: black; margin: 7px 3px 7px 3px; }" );
 }
 
 void MainWindow::initIcons()
