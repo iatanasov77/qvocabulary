@@ -302,10 +302,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A&amp;rchive</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>S&amp;how Archive</source>
         <translation type="unfinished"></translation>
     </message>
@@ -318,7 +314,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Compair Vocabulary|Archive</source>
+        <source>&amp;Quizes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ar&amp;chive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Compair Vocabulary|Archive</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

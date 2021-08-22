@@ -355,7 +355,7 @@
     </message>
     <message>
         <source>A&amp;rchive</source>
-        <translation type="unfinished">Архив</translation>
+        <translation type="obsolete">Архив</translation>
     </message>
     <message>
         <source>S&amp;how Archive</source>
@@ -371,6 +371,18 @@
     </message>
     <message>
         <source>Compair Vocabulary|Archive</source>
+        <translation type="obsolete">Сравни Речник|Архив</translation>
+    </message>
+    <message>
+        <source>&amp;Quizes</source>
+        <translation type="unfinished">Тестове</translation>
+    </message>
+    <message>
+        <source>Ar&amp;chive</source>
+        <translation type="unfinished">Архив</translation>
+    </message>
+    <message>
+        <source>&amp;Compair Vocabulary|Archive</source>
         <translation type="unfinished">Сравни Речник|Архив</translation>
     </message>
 </context>
