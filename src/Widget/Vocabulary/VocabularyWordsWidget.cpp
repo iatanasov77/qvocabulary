@@ -525,7 +525,7 @@ void VocabularyWordsWidget::restoreHeaderSizes()
 {
 	QMap<QString, QVariant> headerSizes	= VsSettings::instance()->value( "tableHeaderSizes", "Vocabulary" ).toMap();
 	foreach ( QString key, headerSizes.keys() ) {
-		qDebug() << "Vocabulary Header Size: " << headerSizes[key].toInt();
+		//qDebug() << "Vocabulary Header Size: " << headerSizes[key].toInt();
 		ui->tableView->horizontalHeader()->resizeSection( key.toInt(), headerSizes[key].toInt() );
 	}
 }
