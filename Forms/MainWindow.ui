@@ -106,6 +106,14 @@
     <addaction name="actionAbout"/>
     <addaction name="actionAboutQt"/>
    </widget>
+   <widget class="QMenu" name="menuQuiz">
+    <property name="title">
+     <string>&amp;Quizes</string>
+    </property>
+    <addaction name="actionSimpleExam"/>
+    <addaction name="separator"/>
+    <addaction name="actionCompletedExams"/>
+   </widget>
    <widget class="QMenu" name="menuSettings">
     <property name="title">
      <string>Setti&amp;ngs</string>
@@ -121,7 +129,7 @@
    </widget>
    <widget class="QMenu" name="menuArchive">
     <property name="title">
-     <string>A&amp;rchive</string>
+     <string>Ar&amp;chive</string>
     </property>
     <addaction name="actionShow_Archive"/>
     <addaction name="actionAdd_to_Archive"/>
@@ -129,6 +137,7 @@
    </widget>
    <addaction name="menuDatabase"/>
    <addaction name="menuArchive"/>
+   <addaction name="menuQuiz"/>
    <addaction name="menuSettings"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -289,7 +298,7 @@
   </action>
   <action name="actionCompair_Vocabulary_Archive">
    <property name="text">
-    <string>Compair Vocabulary|Archive</string>
+    <string>&amp;Compair Vocabulary|Archive</string>
    </property>
   </action>
  </widget>

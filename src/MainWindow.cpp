@@ -446,6 +446,7 @@ void MainWindow::changeEvent( QEvent* event )
     {
         // retranslate designer form (single inheritance approach)
         ui->retranslateUi( this );
+        initMenuLanguages();
 
         //QString languageName	= QLocale::languageToString( QLocale().language() );
         statusBar()->showMessage( tr( "Current Language changed to %1" ).arg( QLocale().nativeLanguageName() ), 2000 );
@@ -459,9 +460,10 @@ void MainWindow::initMenuLanguages()
 {
 	QMap<QString, QString> languages	= VsApplication::instance()->languages();
 
+	ui->menuLanguages->clear();
 	foreach ( QString key, languages.keys() ) {
 		QAction* act	= new QAction( this );
-		act->setText( languages[key] );
+		act->setText( qApp->translate( "Vocabulary", languages[key].toStdString().c_str() ) );
 		act->setData( QVariant( key ) );
 
 		connect( act, SIGNAL( triggered() ), this, SLOT( loadLanguage() ) );
@@ -575,7 +577,6 @@ void MainWindow::on_actionCompair_Vocabulary_Archive_triggered()
 void MainWindow::showVocabularyWord( int wordId, int groupId )
 {
 	on_actionShow_Vocabulary_triggered();
-	//qDebug() << "ECHO MAIN WINDOW !";
 	wdgVocabulary->showWord( wordId, groupId );
 }
 

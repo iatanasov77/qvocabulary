@@ -32,7 +32,7 @@
     </message>
     <message>
         <source>Add to Group</source>
-        <translation type="unfinished">Добави към Група</translation>
+        <translation type="obsolete">Добави към Група</translation>
     </message>
     <message>
         <source>Add To Archive</source>
@@ -45,6 +45,25 @@
     <message>
         <source>Db Files (*.db)</source>
         <translation type="unfinished">ДБ Файлове (*.db)</translation>
+    </message>
+    <message>
+        <source>Add to Existing Group</source>
+        <translation type="unfinished">Добави към Съществуваща Група</translation>
+    </message>
+    <message>
+        <source>Add to New Group</source>
+        <translation type="unfinished">Добави към Нова Група</translation>
+    </message>
+</context>
+<context>
+    <name>ArchiveCompareWidget</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Фрейм</translation>
+    </message>
+    <message>
+        <source>Archive Compare</source>
+        <translation type="unfinished">Сравняване на Архив</translation>
     </message>
 </context>
 <context>
@@ -304,11 +323,11 @@
     </message>
     <message>
         <source>Open VankoSoft QVocabulary Database</source>
-        <translation type="unfinished">Отвори VankoSoft QVocabulary ДБ</translation>
+        <translation type="obsolete">Отвори VankoSoft QVocabulary ДБ</translation>
     </message>
     <message>
         <source>VankoSoft QVocabulary Database (*.db)</source>
-        <translation type="unfinished">VankoSoft QVocabulary ДБ (*.db)</translation>
+        <translation type="obsolete">VankoSoft QVocabulary ДБ (*.db)</translation>
     </message>
     <message>
         <source>Vocab&amp;ulary</source>
@@ -316,23 +335,55 @@
     </message>
     <message>
         <source>Archive</source>
-        <translation type="unfinished">Архив</translation>
+        <translation type="obsolete">Архив</translation>
     </message>
     <message>
         <source>Import &amp;from VankoSoft QVocabulary (*.db)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Импорт от VankoSoft QVocabulary (*.db)</translation>
     </message>
     <message>
         <source>Show Archive</source>
-        <translation type="unfinished">Покажи Архив</translation>
+        <translation type="obsolete">Покажи Архив</translation>
     </message>
     <message>
         <source>Add to Archive</source>
-        <translation type="unfinished">Добави към Архив</translation>
+        <translation type="obsolete">Добави към Архив</translation>
     </message>
     <message>
         <source>Show Vocabulary</source>
+        <translation type="obsolete">Покажи Речник</translation>
+    </message>
+    <message>
+        <source>A&amp;rchive</source>
+        <translation type="obsolete">Архив</translation>
+    </message>
+    <message>
+        <source>S&amp;how Archive</source>
+        <translation type="unfinished">Покажи Архив</translation>
+    </message>
+    <message>
+        <source>&amp;Add to Archive</source>
+        <translation type="unfinished">Добави към Архив</translation>
+    </message>
+    <message>
+        <source>Show &amp;Vocabulary</source>
         <translation type="unfinished">Покажи Речник</translation>
+    </message>
+    <message>
+        <source>Compair Vocabulary|Archive</source>
+        <translation type="obsolete">Сравни Речник|Архив</translation>
+    </message>
+    <message>
+        <source>&amp;Quizes</source>
+        <translation type="unfinished">Тестове</translation>
+    </message>
+    <message>
+        <source>Ar&amp;chive</source>
+        <translation type="unfinished">Архив</translation>
+    </message>
+    <message>
+        <source>&amp;Compair Vocabulary|Archive</source>
+        <translation type="unfinished">Сравни Речник|Архив</translation>
     </message>
 </context>
 <context>
@@ -390,6 +441,53 @@
     <message>
         <source>About QVocabulary</source>
         <translation>Относно QVocabulary</translation>
+    </message>
+</context>
+<context>
+    <name>QVocabularyImportDialog</name>
+    <message>
+        <source>Create New Database</source>
+        <translation type="unfinished">Създай Нова БД</translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation type="unfinished">База Данни</translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">Файл Брауз</translation>
+    </message>
+    <message>
+        <source>Group Prefix</source>
+        <translation type="unfinished">Префикс на Групи</translation>
+    </message>
+    <message>
+        <source>Import Quizes</source>
+        <translation type="unfinished">Импортирай Тестове</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation type="unfinished">Архив</translation>
+    </message>
+    <message>
+        <source>Import Archive</source>
+        <translation type="unfinished">Импортирай Архив</translation>
+    </message>
+    <message>
+        <source>Merge to Existing Archive Groups</source>
+        <translation type="unfinished">Прибавяй към Съществуващи Архив Групи</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished">Импорт</translation>
+    </message>
+    <message>
+        <source>Open VankoSoft QVocabulary Database</source>
+        <translation type="unfinished">Отвори VankoSoft QVocabulary ДБ</translation>
+    </message>
+    <message>
+        <source>VankoSoft QVocabulary Database (*.db)</source>
+        <translation type="unfinished">VankoSoft QVocabulary ДБ (*.db)</translation>
     </message>
 </context>
 <context>
@@ -521,6 +619,10 @@
         <source>Quiz</source>
         <translation type="unfinished">Тест</translation>
     </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished">Импорт</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWidgetGeneral</name>
@@ -547,6 +649,17 @@
     <message>
         <source>Bulgarian</source>
         <translation type="obsolete">Български</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsWidgetImport</name>
+    <message>
+        <source>Frame</source>
+        <translation type="unfinished">Фрейм</translation>
+    </message>
+    <message>
+        <source>Group Prefix: </source>
+        <translation type="unfinished">Префикс на Група</translation>
     </message>
 </context>
 <context>

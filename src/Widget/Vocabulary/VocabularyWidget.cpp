@@ -70,17 +70,6 @@ void VocabularyWidget::init()
 	horizSplitter->insertWidget( 0, wdgGroups );
 	horizSplitter->insertWidget( 1, wdgWords );
 
-	/*
- 	 * Styling QSplitter
- 	 */
-	const QString splitterSheet =  \
-		"QSplitter::handle:horizontal { \
-			border: 1px solid black; \
-			margin: 0px; \
-			padding: 0px; \
-		}";
-	horizSplitter->setStyleSheet( splitterSheet );
-
 	ui->horizontalLayout->addWidget( horizSplitter );
 }
 
@@ -179,6 +168,5 @@ void VocabularyWidget::setState( QMap<QString, QVariant> state )
 
 void VocabularyWidget::showWord( int wordId, int groupId )
 {
-	//qDebug() << "ECHO VOCABULARY WIDGET !";
 	wdgWords->showWord( wordId, groupId );
 }
