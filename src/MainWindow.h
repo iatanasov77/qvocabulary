@@ -71,6 +71,7 @@ class MainWindow : public QMainWindow
 
 	private:
 		// Methods
+		void stylingMenu();
 		void initIcons();
 		void initDatabase();
 		void initMenuLanguages();
