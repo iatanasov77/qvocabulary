@@ -1,3 +1,12 @@
+0.18.2	|	Release date: **22.08.2021**
+============================================
+* Bug-Fixes and Improvements:
+  - Add Retranslation of Menu Languages.
+  - Remove Unneeded files.
+  - Remove VocabularyWidget Border of Spliter.
+  - Add New Translations.
+
+
 0.18.1	|	Release date: **13.08.2021**
 ============================================
 * New Features:
