@@ -15,7 +15,7 @@ SideBarListViewDelegate::SideBarListViewDelegate( int currRow, bool inArchive, Q
 {
 	_inArchive	= inArchive;
 	_currRow	= currRow;
-	_event		= 0;
+	_event		= QEvent::None;
 }
 
 void SideBarListViewDelegate::paint(
@@ -31,20 +31,16 @@ void SideBarListViewDelegate::paint(
 	button.rect 	= option.rect;
 
 	// Set Button Text
-	QString query	= QString( "WHERE group_id=%1" ).arg( index.siblingAtColumn( 0 ).data().toInt() );
-	long wordsCount	= 0;
-	if ( _inArchive ) {
-		wordsCount	= qx::dao::count<ArchiveWord>( qx::QxSqlQuery( query ) );
-	} else {
-		wordsCount	= qx::dao::count<Vocabulary>( qx::QxSqlQuery( query ) );
-	}
+	long wordsCount	= groupWordsCount( index.siblingAtColumn( 0 ).data().toInt() );
 	button.text 	= QString( "%1 (%2)" ).arg( index.siblingAtColumn( 1 ).data().toString() ).arg( wordsCount );
 
 	// Set Button State
-	if( _currRow == index.row() && _event != 1 )
+	qDebug() << "Event Type: " << _event;
+	if( _currRow == index.row() ) {
 		button.state	= QStyle::State_Sunken | QStyle::State_Enabled;
-	else
+	} else {
 		button.state	= QStyle::State_Raised | QStyle::State_Enabled;
+	}
 
 	QApplication::style()->drawControl( QStyle::CE_PushButton, &button, painter );
 }
@@ -81,21 +77,22 @@ bool SideBarListViewDelegate::editorEvent(
 	switch ( event->type() ) {
 		case QEvent::MouseButtonPress:
 			{
-				//qDebug() << "MouseButtonPress: " << _currRow;
-				_currRow	= index.row();
 				QMouseEvent* me = static_cast<QMouseEvent *>(event);
-				//int currRow	= _currRow;
-				_currRow	= index.row();
 				if ( me->button() == Qt::RightButton )
 				{
-					_event	= 1;
+					//qDebug() << "MouseButtonPress on Row: " << _currRow;
+					_event		= -1;
+				} else {
+					_currRow	= index.row();
+					_event		= QEvent::MouseButtonPress;
+					emit buttonClicked( index );
 				}
 			}
 			break;
 		case QEvent::MouseButtonRelease:
-			//qDebug() << "MouseButtonRelease: " << _currRow;
-			_event	= 0;
-			//_currRow	= index.row();
+			//qDebug() << "MouseButtonRelease on Row: " << _currRow;
+			_event	= QEvent::MouseButtonRelease;
+			_currRow	= index.row();
 			emit buttonClicked( index );
 			break;
 
@@ -106,4 +103,15 @@ bool SideBarListViewDelegate::editorEvent(
 	}
 
 	return true;
+}
+
+long SideBarListViewDelegate::groupWordsCount( int groupId ) const
+{
+	QString query	= QString( "WHERE group_id=%1" ).arg( groupId );
+
+	if ( _inArchive ) {
+		return qx::dao::count<ArchiveWord>( qx::QxSqlQuery( query ) );
+	} else {
+		return qx::dao::count<Vocabulary>( qx::QxSqlQuery( query ) );
+	}
 }

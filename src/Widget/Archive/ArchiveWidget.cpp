@@ -52,6 +52,8 @@ ArchiveWidget::~ArchiveWidget()
 {
 	VsSettings::instance()->setValue( "splitterSizes", horizSplitter->saveState(), "Archive" );
 
+	delete wdgWords;
+	delete wdgGroups;
 	delete horizSplitter;
     delete ui;
 }

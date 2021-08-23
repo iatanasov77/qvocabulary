@@ -25,16 +25,10 @@ VocabularyGroupsWidget::VocabularyGroupsWidget( QWidget *parent ) :
 
     ui->listView->setSelectionBehavior( QAbstractItemView::SelectRows );
 
-    int currentGroupRow = 0;
-    int currentGroup	= VsSettings::instance()->value( "currentGroup", "Vocabulary" ).toInt();
-    if ( currentGroup ) {
-    	currentGroupRow	= groupRow( currentGroup );
-    }
-
-	/*
+    /*
 	 * Init view delegate
 	 */
-    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( currentGroupRow, false, ui->listView );
+    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( setCurrentGroup(), false, ui->listView );
     ui->listView->setItemDelegate( itemDelegate );
 
     /*
@@ -231,4 +225,16 @@ void VocabularyGroupsWidget::modelRowsInserted( const QModelIndex & parent, int 
 
 	//ui->listView->scrollTo( pModel->index( start, 0 ) );
 	ui->listView->scrollToBottom();
+}
+
+int VocabularyGroupsWidget::setCurrentGroup()
+{
+	int currentGroupRow = 0;
+	int currentGroup	= VsSettings::instance()->value( "currentGroup", "Vocabulary" ).toInt();
+	if ( currentGroup ) {
+		currentGroupRow	= groupRow( currentGroup );
+	}
+	setCurrentGroup( currentGroup );
+
+	return currentGroupRow;
 }

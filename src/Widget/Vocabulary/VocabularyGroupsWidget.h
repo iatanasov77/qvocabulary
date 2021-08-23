@@ -28,6 +28,7 @@ class VocabularyGroupsWidget : public QWidget
 		int currentGroup();
 		int groupRow( int groupId );
 		void setCurrentGroup( int groupId );
+		int setCurrentGroup();
 
 	public slots:
 		void setCurrentGroup( const QModelIndex &index );

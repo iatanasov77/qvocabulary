@@ -21,9 +21,11 @@ class SideBarListViewDelegate : public QItemDelegate
 		void buttonClicked( const QModelIndex &index );
 
 	private:
+		long groupWordsCount( int groupId ) const;
+
 		bool _inArchive;
 		int _currRow;
-		int _event;	// 1 for right click
+		int _event;	// Store: QEvent::Type
 };
 
 #endif	// VIEW_SIDEBARLISTVIEWDELEGATE_H
