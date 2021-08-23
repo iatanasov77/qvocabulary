@@ -1,3 +1,10 @@
+0.18.4	|	Release date: **23.08.2021**
+============================================
+* New Features and Improvements:
+  - Save/Restore Splitter Sizes of Vocabulary and Archive Widgets.
+  - Save/Restore TableView Header Sizes of Archive.
+
+
 0.18.3	|	Release date: **22.08.2021**
 ============================================
 * View Style Improvements:

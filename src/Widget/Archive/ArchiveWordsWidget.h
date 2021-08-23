@@ -42,6 +42,7 @@ class ArchiveWordsWidget : public QWidget
 
 		void updateSpeaker();
 		void updateView();
+		void saveHeaderSizes( int logicalIndex, int oldSize, int newSize );
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
@@ -53,6 +54,7 @@ class ArchiveWordsWidget : public QWidget
 		void initModel();
 		void initTextToSpeech();
 		void displaySearchResults( qx::QxModel<ArchiveWord> *searchModel );
+		void restoreHeaderSizes();
 
 		int currentGroup;
 		Ui::VocabularyWordsWidget *ui;

@@ -2,6 +2,7 @@
 
 #include <QListView>
 #include <QMessageBox>
+#include <QResizeEvent>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"

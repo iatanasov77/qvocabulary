@@ -53,6 +53,7 @@ class VocabularyWidget : public QWidget
 		void init();
 
 		Ui::VocabularyWidget *ui;
+		QSplitter* horizSplitter;
 		VocabularyGroupsWidget* wdgGroups;
 		VocabularyWordsWidget* wdgWords;
 

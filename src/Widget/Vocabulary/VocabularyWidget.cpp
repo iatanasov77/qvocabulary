@@ -52,6 +52,11 @@ VocabularyWidget::VocabularyWidget( QWidget *parent ) :
 
 VocabularyWidget::~VocabularyWidget()
 {
+	VsSettings::instance()->setValue( "splitterSizes", horizSplitter->saveState(), "Vocabulary" );
+
+	delete wdgWords;
+	delete wdgGroups;
+	delete horizSplitter;
     delete ui;
 }
 
@@ -60,9 +65,9 @@ void VocabularyWidget::init()
 	/*
 	 * Init widgets in the QSplitter
 	 */
-	QSplitter* horizSplitter 	= new QSplitter( Qt::Horizontal );
-	wdgGroups					= new VocabularyGroupsWidget( this );
-	wdgWords					= new VocabularyWordsWidget( this );
+	horizSplitter 	= new QSplitter( Qt::Horizontal );
+	wdgGroups		= new VocabularyGroupsWidget( this );
+	wdgWords		= new VocabularyWordsWidget( this );
 
 	wdgGroups->setMaximumWidth( 400 );
 	wdgGroups->adjustSize();
@@ -71,6 +76,9 @@ void VocabularyWidget::init()
 	horizSplitter->insertWidget( 1, wdgWords );
 
 	ui->horizontalLayout->addWidget( horizSplitter );
+
+	QByteArray	splitterSizes	= VsSettings::instance()->value( "splitterSizes", "Vocabulary" ).toByteArray();
+	horizSplitter->restoreState( splitterSizes );
 }
 
 void VocabularyWidget::initModels()

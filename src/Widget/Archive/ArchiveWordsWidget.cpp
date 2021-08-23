@@ -36,11 +36,14 @@ ArchiveWordsWidget::ArchiveWordsWidget( QWidget *parent ) :
     initTextToSpeech();
 
     setViewHeader( VsDatabase::instance()->metaInfo() );
+    restoreHeaderSizes(); // From Settings
     ui->tableView->scrollToBottom();
     ui->chkShowTranscriptions->hide();
     for( int i = 0; i < hideColumns.size(); i++ ) {
 		ui->tableView->hideColumn( hideColumns[i] );
 	}
+
+    connect( ui->tableView->horizontalHeader(), SIGNAL( sectionResized ( int, int, int ) ), this, SLOT( saveHeaderSizes( int, int, int ) ) );
 
     connect( ui->leSearch, SIGNAL( returnPressed() ), ui->btnSearch, SIGNAL( released() ) );
     connect( ui->btnSearch, SIGNAL( released() ), this, SLOT( search() ) );
@@ -278,4 +281,23 @@ void ArchiveWordsWidget::showWord( int wordId, int groupId )
 
 	ui->tableView->setCurrentIndex( wordsModelIndex );
 	ui->tableView->scrollTo( wordsModelIndex );
+}
+
+void ArchiveWordsWidget::saveHeaderSizes( int logicalIndex, int oldSize, int newSize )
+{
+	Q_UNUSED( oldSize );
+
+	QMap<QString, QVariant> headerSizes	= VsSettings::instance()->value( "tableHeaderSizes", "Archive" ).toMap();
+	headerSizes[QString::number( logicalIndex )]	= QVariant( newSize );
+
+	VsSettings::instance()->setValue( "tableHeaderSizes", headerSizes, "Archive" );
+}
+
+void ArchiveWordsWidget::restoreHeaderSizes()
+{
+	QMap<QString, QVariant> headerSizes	= VsSettings::instance()->value( "tableHeaderSizes", "Archive" ).toMap();
+	foreach ( QString key, headerSizes.keys() ) {
+		//qDebug() << "Vocabulary Header Size: " << headerSizes[key].toInt();
+		ui->tableView->horizontalHeader()->resizeSection( key.toInt(), headerSizes[key].toInt() );
+	}
 }

@@ -50,6 +50,7 @@ class ArchiveWidget : public QWidget
 		void initModels();
 
 		Ui::VocabularyWidget *ui;
+		QSplitter* horizSplitter;
 		ArchiveGroupsWidget* wdgGroups;
 		ArchiveWordsWidget* wdgWords;
 
