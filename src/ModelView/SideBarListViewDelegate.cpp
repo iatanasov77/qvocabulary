@@ -88,25 +88,28 @@ bool SideBarListViewDelegate::editorEvent(
 				QMouseEvent* me = static_cast<QMouseEvent *>(event);
 				if ( me->button() == Qt::RightButton )
 				{
-					//qDebug() << "MouseButtonPress on Row: " << _currRow;
 					_event		= -1;
 				} else {
+					_event		= QEvent::MouseButtonRelease;
 					_currRow	= index.row();
-					_event		= QEvent::MouseButtonPress;
-					emit buttonClicked( index );
 				}
 			}
 			break;
 		case QEvent::None:
 		case QEvent::MouseButtonRelease:
-			//qDebug() << "MouseButtonRelease on Row: " << _currRow;
-			_event	= QEvent::MouseButtonRelease;
-			_currRow	= index.row();
-			emit buttonClicked( index );
-			break;
+			{
+				_event	= QEvent::MouseButtonRelease;
 
+				if ( _currRow == index.row() ) {
+					emit buttonClicked( index );
+				} else {
+					QModelIndex oldIndex 	= model->index( _currRow, 1 );
+					_currRow	= index.row();
+					emit model->dataChanged( oldIndex, oldIndex );
+				}
+			}
+			break;
 		default:
-			//qDebug() << "Default Event: " << _currRow;
 			_currRow	= -1;
 			break;
 	}
