@@ -48,6 +48,7 @@ void SideBarListViewDelegate::paint(
 		button.state	= QStyle::State_Raised | QStyle::State_Enabled;
 	}
 
+	qDebug() << "Draw Button at row " << index.row() << " with state " << QString::number( button.state );
 	QApplication::style()->drawControl( QStyle::CE_PushButton, &button, painter );
 	painter->restore();
 }
@@ -91,7 +92,7 @@ bool SideBarListViewDelegate::editorEvent(
 					_event		= -1;
 				} else {
 					_event		= QEvent::MouseButtonRelease;
-					_currRow	= index.row();
+					//_currRow	= index.row();
 				}
 			}
 			break;
@@ -101,16 +102,19 @@ bool SideBarListViewDelegate::editorEvent(
 				_event	= QEvent::MouseButtonRelease;
 
 				if ( _currRow == index.row() ) {
+					QModelIndex newIndex 	= model->index( index.row(), 1 );
 					emit buttonClicked( index );
+					emit model->dataChanged( newIndex, newIndex );
 				} else {
 					QModelIndex oldIndex 	= model->index( _currRow, 1 );
 					_currRow	= index.row();
 					emit model->dataChanged( oldIndex, oldIndex );
+					emit buttonClicked( index );
 				}
 			}
 			break;
 		default:
-			_currRow	= -1;
+			//_currRow	= -1;
 			break;
 	}
 

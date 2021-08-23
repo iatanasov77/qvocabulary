@@ -35,8 +35,9 @@ VocabularyGroupsWidget::VocabularyGroupsWidget( QWidget *parent ) :
     /*
      * Connect Slots
      */
+    //qobject_cast<SideBarListViewDelegate*>( ui->listView->itemDelegate() )
 	VocabularyWidget *wdgVocabulary	= qobject_cast<VocabularyWidget *>( parent ); // parent() if not in constructor
-	connect( this, SIGNAL( currentGroupChanged( QModelIndex ) ), itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ) );
+	connect( this, SIGNAL( currentGroupChanged( QModelIndex ) ), ui->listView->itemDelegate(), SIGNAL( buttonClicked( QModelIndex ) ) );
 	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), wdgVocabulary, SLOT( loadGroup( QModelIndex ) ) );
 	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), this, SLOT( setCurrentGroup( QModelIndex ) ) );
 
@@ -131,6 +132,7 @@ void VocabularyGroupsWidget::setCurrentGroup( int groupId )
 		delegate->setEvent( QEvent::MouseButtonRelease );
 	}
 	emit currentGroupChanged( groupButtonIndex );
+	refreshView();
 }
 
 void VocabularyGroupsWidget::setCurrentGroup( const QModelIndex &index )
