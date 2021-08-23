@@ -50,6 +50,9 @@ ArchiveWidget::ArchiveWidget( QWidget *parent ) :
 
 ArchiveWidget::~ArchiveWidget()
 {
+	VsSettings::instance()->setValue( "splitterSizes", horizSplitter->saveState(), "Archive" );
+
+	delete horizSplitter;
     delete ui;
 }
 
@@ -58,9 +61,9 @@ void ArchiveWidget::init()
 	/*
 	 * Init widgets in the QSplitter
 	 */
-	QSplitter* horizSplitter 	= new QSplitter( Qt::Horizontal );
-	wdgGroups					= new ArchiveGroupsWidget( this );
-	wdgWords					= new ArchiveWordsWidget( this );
+	horizSplitter 	= new QSplitter( Qt::Horizontal );
+	wdgGroups		= new ArchiveGroupsWidget( this );
+	wdgWords		= new ArchiveWordsWidget( this );
 
 	wdgGroups->setMaximumWidth( 400 );
 	wdgGroups->adjustSize();
@@ -69,6 +72,9 @@ void ArchiveWidget::init()
 	horizSplitter->insertWidget( 1, wdgWords );
 
 	ui->horizontalLayout->addWidget( horizSplitter );
+
+	QByteArray	splitterSizes	= VsSettings::instance()->value( "splitterSizes", "Archive" ).toByteArray();
+	horizSplitter->restoreState( splitterSizes );
 }
 
 void ArchiveWidget::initModels()
