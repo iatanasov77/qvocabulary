@@ -17,6 +17,8 @@ class SideBarListViewDelegate : public QItemDelegate
 		virtual QSize sizeHint( const QStyleOptionViewItem& option, const QModelIndex& index ) const;
 		bool editorEvent( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index );
 
+		void setEvent( int event );
+
 	signals:
 		void buttonClicked( const QModelIndex &index );
 

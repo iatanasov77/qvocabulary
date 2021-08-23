@@ -18,6 +18,11 @@ SideBarListViewDelegate::SideBarListViewDelegate( int currRow, bool inArchive, Q
 	_event		= QEvent::None;
 }
 
+void SideBarListViewDelegate::setEvent( int event )	// Pass a valid QEvent::Type
+{
+	_event	= event;
+}
+
 void SideBarListViewDelegate::paint(
 	QPainter *painter,
 	const QStyleOptionViewItem &option,
@@ -35,7 +40,7 @@ void SideBarListViewDelegate::paint(
 	button.text 	= QString( "%1 (%2)" ).arg( index.siblingAtColumn( 1 ).data().toString() ).arg( wordsCount );
 
 	// Set Button State
-	qDebug() << "Event Type: " << _event;
+	qDebug() << "Event Type 1: " << _event;
 	if( _currRow == index.row() ) {
 		button.state	= QStyle::State_Sunken | QStyle::State_Enabled;
 	} else {
@@ -74,6 +79,7 @@ bool SideBarListViewDelegate::editorEvent(
 	Q_UNUSED( model );
 	Q_UNUSED( option );
 
+	qDebug() << "Event Type 2: " << event->type();
 	switch ( event->type() ) {
 		case QEvent::MouseButtonPress:
 			{
@@ -89,6 +95,7 @@ bool SideBarListViewDelegate::editorEvent(
 				}
 			}
 			break;
+		case QEvent::None:
 		case QEvent::MouseButtonRelease:
 			//qDebug() << "MouseButtonRelease on Row: " << _currRow;
 			_event	= QEvent::MouseButtonRelease;

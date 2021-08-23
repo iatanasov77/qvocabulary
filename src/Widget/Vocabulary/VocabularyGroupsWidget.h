@@ -45,6 +45,7 @@ class VocabularyGroupsWidget : public QWidget
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
 		void changeEvent( QEvent* );
+		QRect rectForIndex( const QModelIndex &index ) const;
 
 	private:
 		void initModel();

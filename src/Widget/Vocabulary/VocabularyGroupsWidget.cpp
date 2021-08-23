@@ -4,6 +4,7 @@
 #include <QListView>
 #include <QMenu>
 #include <QMessageBox>
+//#include <QtTest/QtTest>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -88,6 +89,7 @@ void VocabularyGroupsWidget::refreshView( QModelIndex topLeft, QModelIndex botto
 void VocabularyGroupsWidget::refreshView()
 {
 	initModel();
+	repaint();
 }
 
 int VocabularyGroupsWidget::groupRow( int groupId )
@@ -118,12 +120,17 @@ void VocabularyGroupsWidget::setCurrentGroup( int groupId )
 		currentGroupRow	= groupRow( groupId );
 	}
 
+	QModelIndex groupButtonIndex	= pModel->index( currentGroupRow, 1 );
+	setCurrentGroup( groupButtonIndex );
+	scrollTo( groupId );
 	//qDebug() << "Set Current Group: " << currentGroupRow;
-	emit currentGroupChanged( pModel->index( currentGroupRow, 0 ) );
-	refreshView();
-	//ui->listView->update();
-	//setCurrentGroup( pModel->index( currentGroupRow, 0 ) );
-	//initModel();
+
+	// Ne iska i ne iska be maika mu deeba da smeni butona
+	SideBarListViewDelegate* delegate	= qobject_cast<SideBarListViewDelegate*>( ui->listView->itemDelegate() );
+	if ( delegate ) {
+		delegate->setEvent( QEvent::MouseButtonRelease );
+	}
+	emit currentGroupChanged( groupButtonIndex );
 }
 
 void VocabularyGroupsWidget::setCurrentGroup( const QModelIndex &index )
@@ -237,4 +244,9 @@ int VocabularyGroupsWidget::setCurrentGroup()
 	setCurrentGroup( currentGroup );
 
 	return currentGroupRow;
+}
+
+QRect QListView::rectForIndex(const QModelIndex &index) const
+{
+	return QListView::rectForIndex( index );
 }
