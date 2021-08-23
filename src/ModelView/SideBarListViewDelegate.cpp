@@ -32,6 +32,7 @@ void SideBarListViewDelegate::paint(
 	if ( ! index.isValid() )
 		return;
 
+	painter->save();
 	QStyleOptionButton button;
 	button.rect 	= option.rect;
 
@@ -48,6 +49,7 @@ void SideBarListViewDelegate::paint(
 	}
 
 	QApplication::style()->drawControl( QStyle::CE_PushButton, &button, painter );
+	painter->restore();
 }
 
 QSize SideBarListViewDelegate::sizeHint( const QStyleOptionViewItem &option, const QModelIndex &index ) const
