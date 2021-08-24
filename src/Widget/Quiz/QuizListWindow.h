@@ -34,7 +34,8 @@ class QuizListWindow : public QWidget
 		void initQuizList();
 		QGroupBox* quizButtons( QMap<QString, QVariant> properties );
 		QToolButton* createToolButton( const QString &toolTip, const QIcon &icon, const char *member, QMap<QString, QVariant> properties );
-		void initQuizListProperties( QTreeWidgetItem* parent, int quizRow );
+		void initQuizListItem( QTreeWidgetItem* parent, int quizRow, QMap<QString, QVariant> properties );
+		void initQuizListDetails( QTreeWidgetItem* parent, int quizRow );
 
 		Ui::QuizListWindow* ui;
 		QList<int> hideItemColumns;

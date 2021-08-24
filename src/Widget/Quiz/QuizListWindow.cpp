@@ -61,21 +61,19 @@ void QuizListWindow::initQuizList()
 	pModel->qxFetchAll();
 
 	ui->treeWidget->setColumnCount( 2 );
-	ui->treeWidget->setHeaderLabels( { tr( "Attribute" ), tr( "Value" ) } );
+	ui->treeWidget->setHeaderLabels( { tr( "Quiz" ), tr( "Assessment" ), tr( "Date" ), tr( "Attributes" ) } );
 
 	QTreeWidgetItem *treeItem;
 	for ( int i = 0; i < pModel->rowCount(); ++i ) {
 
-		treeItem	= new QTreeWidgetItem( ui->treeWidget );
-		quizId		= pModel->data( pModel->index( i, 0 ) ).toInt();
-		quizTitle	= "Quiz " + QString::number( quizId );
-
-		treeItem->setText( 0, quizTitle );
-		initQuizListProperties( treeItem, i );
-
+		treeItem				= new QTreeWidgetItem( ui->treeWidget );
+		quizId					= pModel->data( pModel->index( i, 0 ) ).toInt();
+		quizTitle				= "Quiz " + QString::number( quizId );
 		properties["quizId"]	= QVariant( quizId );
 		properties["quizTitle"]	= QVariant( quizTitle );
-		ui->treeWidget->setItemWidget( treeItem, 1, quizButtons( properties ) );
+
+		initQuizListItem( treeItem, i, properties );
+		ui->treeWidget->setItemWidget( treeItem, 3, quizButtons( properties ) );
 	}
 }
 
@@ -107,19 +105,35 @@ QGroupBox* QuizListWindow::quizButtons( QMap<QString, QVariant> properties )
 	return btnGroup;
 }
 
-void QuizListWindow::initQuizListProperties( QTreeWidgetItem* parent, int quizRow )
+void QuizListWindow::initQuizListItem( QTreeWidgetItem* parent, int quizRow, QMap<QString, QVariant> properties )
 {
-	QTreeWidgetItem* treeItem;
+	QString assessment		= pModel->data( pModel->index( quizRow, 4 ) ).toString();
+	QString date			= pModel->data( pModel->index( quizRow, 5 ) ).toDateTime().toString ( "dd.MM.yyyy" );
 
+	QFont itemFont			= QFont( "" , 9 , QFont::Bold );
+	QBrush itemBrush		= assessment.toInt() < 3 ? QBrush( Qt::red ) : QBrush( Qt::green );
+
+	parent->setForeground( 0 , itemBrush );
+	parent->setFont( 0,  itemFont );
+	parent->setForeground( 1 , itemBrush );
+	parent->setFont( 1,  itemFont );
+	parent->setForeground( 2 , itemBrush );
+	parent->setFont( 2,  itemFont );
+
+	parent->setText( 0, properties["quizTitle"].toString() );
+	parent->setText( 1, assessment );
+	parent->setText( 2, date );
+
+	initQuizListDetails( parent, quizRow );
+}
+
+void QuizListWindow::initQuizListDetails( QTreeWidgetItem* parent, int quizRow )
+{
 	EnumDirection direction	= pModel->data( pModel->index( quizRow, 1 ) ).value<EnumDirection>();
 	QDateTime startedAt		= pModel->data( pModel->index( quizRow, 5 ) ).toDateTime();
 	QDateTime finishedAt	= pModel->data( pModel->index( quizRow, 6 ) ).toDateTime();
 
-	// Date
-	treeItem = new QTreeWidgetItem();
-	treeItem->setText( 0, "Date" );
-	treeItem->setText( 1, pModel->data( pModel->index( quizRow, 5 ) ).toDateTime().toString ( "dd.MM.yyyy" ) );
-	parent->addChild( treeItem );
+	QTreeWidgetItem* treeItem;
 
 	// Direction
 	treeItem = new QTreeWidgetItem();
@@ -137,12 +151,6 @@ void QuizListWindow::initQuizListProperties( QTreeWidgetItem* parent, int quizRo
 	treeItem = new QTreeWidgetItem();
 	treeItem->setText( 0, "Groups" );
 	treeItem->setText( 1, pModel->data( pModel->index( quizRow, 3 ) ).toString() );
-	parent->addChild( treeItem );
-
-	// Assessment
-	treeItem = new QTreeWidgetItem();
-	treeItem->setText( 0, "Assessment" );
-	treeItem->setText( 1, pModel->data( pModel->index( quizRow, 4 ) ).toString() );
 	parent->addChild( treeItem );
 
 	// Duration
@@ -175,11 +183,11 @@ void QuizListWindow::deleteQuiz()
 {
 	QMessageBox::StandardButton reply;
 	reply = QMessageBox::question(
-								this,
-								tr( "Delete Quiz" ),
-								tr( "This will erase the quiz with all its items. Do you agree?" ),
-								QMessageBox::Yes|QMessageBox::No
-							);
+		this,
+		tr( "Delete Quiz" ),
+		tr( "This will erase the quiz with all its items. Do you agree?" ),
+		QMessageBox::Yes|QMessageBox::No
+	);
 
 	if ( reply == QMessageBox::Yes ) {
 		QToolButton* button	= qobject_cast<QToolButton *>( sender() );
