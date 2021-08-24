@@ -32,23 +32,13 @@ void SideBarListViewDelegate::paint(
 	if ( ! index.isValid() )
 		return;
 
+	long wordsCount				= groupWordsCount( index.siblingAtColumn( 0 ).data().toInt() );
+	QString buttonText 			= QString( "%1 (%2)" ).arg( index.siblingAtColumn( 1 ).data().toString() ).arg( wordsCount );
+
+	QStyleOptionButton button	= createButton( index.row(), option.rect, buttonText );
+	//qDebug() << "Draw Button at row " << index.row() << " with state " << QString::number( button.state );
+
 	painter->save();
-	QStyleOptionButton button;
-	button.rect 	= option.rect;
-
-	// Set Button Text
-	long wordsCount	= groupWordsCount( index.siblingAtColumn( 0 ).data().toInt() );
-	button.text 	= QString( "%1 (%2)" ).arg( index.siblingAtColumn( 1 ).data().toString() ).arg( wordsCount );
-
-	// Set Button State
-	qDebug() << "Event Type 1: " << _event;
-	if( _currRow == index.row() ) {
-		button.state	= QStyle::State_Sunken | QStyle::State_Enabled;
-	} else {
-		button.state	= QStyle::State_Raised | QStyle::State_Enabled;
-	}
-
-	qDebug() << "Draw Button at row " << index.row() << " with state " << QString::number( button.state );
 	QApplication::style()->drawControl( QStyle::CE_PushButton, &button, painter );
 	painter->restore();
 }
@@ -119,6 +109,24 @@ bool SideBarListViewDelegate::editorEvent(
 	}
 
 	return true;
+}
+
+QStyleOptionButton SideBarListViewDelegate::createButton( int indexRow, QRect rect, QString text ) const
+{
+	QStyleOptionButton button;
+	button.rect 	= rect;
+	//button.setCursor( QCursor( Qt::PointingHandCursor ) );
+	button.text 	= text;
+
+	// Set Button State
+	//qDebug() << "Event Type 1: " << _event;
+	if( _currRow == indexRow ) {
+		button.state	= QStyle::State_Sunken | QStyle::State_Enabled;
+	} else {
+		button.state	= QStyle::State_Raised | QStyle::State_Enabled;
+	}
+
+	return button;
 }
 
 long SideBarListViewDelegate::groupWordsCount( int groupId ) const

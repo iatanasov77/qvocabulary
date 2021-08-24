@@ -23,6 +23,7 @@ class SideBarListViewDelegate : public QItemDelegate
 		void buttonClicked( const QModelIndex &index );
 
 	private:
+		QStyleOptionButton createButton( int indexRow, QRect rect, QString text ) const;
 		long groupWordsCount( int groupId ) const;
 
 		bool _inArchive;

@@ -6,6 +6,7 @@
 #include <QToolButton>
 #include <QIcon>
 #include <QMessageBox>
+#include <QCursor>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -110,7 +111,7 @@ void QuizListWindow::initQuizListItem( QTreeWidgetItem* parent, int quizRow, QMa
 	QString assessment		= pModel->data( pModel->index( quizRow, 4 ) ).toString();
 	QString date			= pModel->data( pModel->index( quizRow, 5 ) ).toDateTime().toString ( "dd.MM.yyyy" );
 
-	QFont itemFont			= QFont( "" , 8 , QFont::Bold );
+	QFont itemFont			= QFont( "" , 7 , QFont::Bold );
 	QBrush itemBrush;
 	switch ( assessment.toInt() ) {
 		case 3:
@@ -242,6 +243,7 @@ QToolButton* QuizListWindow::createToolButton( const QString &toolTip, const QIc
     button->setToolTip( toolTip );
     button->setIcon( icon );
     button->setIconSize( QSize( 24, 24 ) );
+    button->setCursor( QCursor( Qt::PointingHandCursor ) );
 
     foreach ( QString key, properties.keys() ) {
     	button->setProperty( key.toStdString().c_str(), properties[key] );
