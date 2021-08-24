@@ -36,6 +36,7 @@ QuizWidget::QuizWidget( QWidget *parent ) :
 		SLOT( insertWord() )
 	);
 
+    ui->frmAssessment->hide();
     ui->frmTimer->hide();
 }
 
@@ -164,8 +165,10 @@ void QuizWidget::setQuiz( int quizId, QList<QString> groupIds, bool randomize, b
 
 void QuizWidget::insertWord()
 {
-	if ( ! itemsRange.count() )
+	if ( ! itemsRange.count() ) {
+		emit quizFinished();
 		return;
+	}
 
 	int targetRow		= pModel->rowCount( QModelIndex() );
 	int randomRow		= itemsRange.takeFirst();
@@ -182,6 +185,7 @@ void QuizWidget::insertWord()
 	pModel->setData( pModel->index( targetRow, 2 ), wordTranscription );
 	pModel->setData( pModel->index( targetRow, 3 ), wordLang2 );
 	pModel->setData( pModel->index( targetRow, 4 ), QVariant::fromValue( quiz->id ) );
+
 	pModel->setData( pModel->index( targetRow, 6 ), false );
 }
 
@@ -192,27 +196,31 @@ void QuizWidget::onDataChanged( const QModelIndex& topLeft, const QModelIndex& b
 		QString answer	= pModel->data( topLeft.siblingAtColumn( 5 ) ).toString();
 
 		// Detect if answer is right
-//		QRegExp rx( "(?i)\b" + lang2 + "\b" );
-//		bool found	= answer.indexOf ( rx ) >= 0;
 		bool found	= answer.size() && lang2.contains( answer, Qt::CaseInsensitive );
 		if ( found )
 			rightAnswers++;
 
-		//qDebug() << "Lang2: " << lang2 << " Answer: " << answer << " Right: " << found;
 		pModel->setData( topLeft.siblingAtColumn( 6 ), found );
+
+		if ( topLeft.row() == pModel->rowCount() -1 ) {
+			insertWord();
+		}
 	}
 }
 
 void QuizWidget::finishQuiz()
 {
 	int questionsNumber	= pModel->rowCount();
+	int assessment		= VsAssessment::evaluate( questionsNumber, rightAnswers );
 
-	quiz->assessment	= VsAssessment::evaluate( questionsNumber, rightAnswers );
+	quiz->assessment	= assessment;
 	quiz->finishedAt	= QDateTime::currentDateTime();
 	QSqlError daoError	= qx::dao::update( quiz );
 
 	disconnect( this, SIGNAL( quizFinished() ), 0, 0 );
+	ui->lcdAssessment->display( assessment );
 	ui->frmTimer->hide();
+	ui->frmAssessment->show();
 
 	pModel->qxSave();
 }
