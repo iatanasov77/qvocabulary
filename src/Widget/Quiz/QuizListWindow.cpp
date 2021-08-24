@@ -23,6 +23,7 @@ QuizListWindow::QuizListWindow( QWidget *parent ) :
     ui->setupUi( this );
     setWindowIcon( QIcon( ":/Resources/icons/quiz-list.svg" ) );
 
+    ui->quizTitle->hide();
     hideItemColumns = {0, 3};
     initQuizList();
 
@@ -33,6 +34,14 @@ QuizListWindow::QuizListWindow( QWidget *parent ) :
 	if ( qwWidth && qwHeight ) {
 		resize( qwWidth, qwHeight );
 	}
+
+	if ( ! qwWidth ) {
+		qwWidth = 800;
+	}
+	// 30% | 70%
+	int leftWidth	= 30.0 / 100 * qwWidth;
+	int rightWidth	= 70.0 / 100 * qwWidth;
+	ui->splitter->setSizes( { leftWidth, rightWidth } );
 }
 
 QuizListWindow::~QuizListWindow()
@@ -46,44 +55,50 @@ void QuizListWindow::initQuizList()
 	ui->treeWidget->clear();
 
 	int quizId;
+	QString quizTitle;
+	QMap<QString, QVariant> properties;
 	pModel	= new qx::QxModel<Quiz>();
 	pModel->qxFetchAll();
 
 	ui->treeWidget->setColumnCount( 2 );
+	ui->treeWidget->setHeaderLabels( { tr( "Attribute" ), tr( "Value" ) } );
+
 	QTreeWidgetItem *treeItem;
 	for ( int i = 0; i < pModel->rowCount(); ++i ) {
 
 		treeItem	= new QTreeWidgetItem( ui->treeWidget );
 		quizId		= pModel->data( pModel->index( i, 0 ) ).toInt();
+		quizTitle	= "Quiz " + QString::number( quizId );
 
-		treeItem->setText( 0, "Quiz " + QString::number( quizId ) );
+		treeItem->setText( 0, quizTitle );
 		initQuizListProperties( treeItem, i );
 
-		ui->treeWidget->setItemWidget( treeItem, 1, quizButtons( quizId ) );
+		properties["quizId"]	= QVariant( quizId );
+		properties["quizTitle"]	= QVariant( quizTitle );
+		ui->treeWidget->setItemWidget( treeItem, 1, quizButtons( properties ) );
 	}
 }
 
-QGroupBox* QuizListWindow::quizButtons( int quizId )
+QGroupBox* QuizListWindow::quizButtons( QMap<QString, QVariant> properties )
 {
-	QToolButton* button;
 	QGroupBox* btnGroup	= new QGroupBox( ui->treeWidget );
 	QHBoxLayout* hbox 	= new QHBoxLayout;
 
 	// Display Items Button
-	button = new QToolButton();
-	button->setIcon( QIcon( ":/Resources/icons/download-later.svg" ) );
-	button->setText( "Display Items" );
-	button->setProperty( "quizId", QVariant( quizId ) );
-	connect( button, SIGNAL( released() ), this, SLOT( displayItems() ) );
-	hbox->addWidget( button );
+	hbox->addWidget( createToolButton(
+		tr( "Display Quiz" ),
+		QIcon( ":/Resources/icons/download-later.svg" ),
+		SLOT( displayItems() ),
+		properties
+	));
 
 	// Delete Quiz Button
-	button = new QToolButton();
-	button->setIcon( QIcon( ":/Resources/icons/amarok_cart_remove.svg" ) );
-	button->setText( "Delete Quiz" );
-	button->setProperty( "quizId", QVariant( quizId ) );
-	connect( button, SIGNAL( released() ), this, SLOT( deleteQuiz() ) );
-	hbox->addWidget( button );
+	hbox->addWidget( createToolButton(
+		tr( "Delete Quiz" ),
+		QIcon( ":/Resources/icons/amarok_cart_remove.svg" ),
+		SLOT( deleteQuiz() ),
+		properties
+	));
 
 	// Pack Button group
 	hbox->addStretch( 1 );
@@ -141,10 +156,14 @@ void QuizListWindow::displayItems()
 {
 	QToolButton* button	= qobject_cast<QToolButton *>( sender() );
 	int quizId			= button->property( "quizId" ).toInt();
+	QString quizTitle	= button->property( "quizTitle" ).toString();
 
 	QString query					= QString( "WHERE quiz_id = %1" ).arg( QString::number( quizId ) );
 	qx::QxModel<QuizItem>* model	= new qx::QxModel<QuizItem>();
 	model->qxFetchByQuery( query );
+
+	ui->quizTitle->setText( quizTitle );
+	ui->quizTitle->show();
 
 	ui->tableView->setModel( model );
 	for( int i = 0; i < hideItemColumns.size(); i++ ) {
@@ -195,4 +214,20 @@ void QuizListWindow::resizeEvent( QResizeEvent* event )
 
 	settings->setValue( "quizListWindowWidth", QVariant( qwSize.width() ), "Quiz" );
 	settings->setValue( "quizListWindowHeight", QVariant( qwSize.height() ), "Quiz" );
+}
+
+QToolButton* QuizListWindow::createToolButton( const QString &toolTip, const QIcon &icon, const char *member, QMap<QString, QVariant> properties )
+{
+    QToolButton *button = new QToolButton( this );
+    button->setToolTip( toolTip );
+    button->setIcon( icon );
+    button->setIconSize( QSize( 24, 24 ) );
+
+    foreach ( QString key, properties.keys() ) {
+    	button->setProperty( key.toStdString().c_str(), properties[key] );
+    }
+
+    connect( button, SIGNAL( clicked() ), this, member );
+
+    return button;
 }

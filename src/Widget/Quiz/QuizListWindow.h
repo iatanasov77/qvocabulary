@@ -5,6 +5,7 @@
 #include <QTreeWidgetItem>
 #include <QGroupBox>
 #include <QResizeEvent>
+#include <QToolButton>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -31,7 +32,8 @@ class QuizListWindow : public QWidget
 
 	private:
 		void initQuizList();
-		QGroupBox* quizButtons( int quizId );
+		QGroupBox* quizButtons( QMap<QString, QVariant> properties );
+		QToolButton* createToolButton( const QString &toolTip, const QIcon &icon, const char *member, QMap<QString, QVariant> properties );
 		void initQuizListProperties( QTreeWidgetItem* parent, int quizRow );
 
 		Ui::QuizListWindow* ui;
