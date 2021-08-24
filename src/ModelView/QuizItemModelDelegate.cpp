@@ -5,9 +5,14 @@
 #include <QIcon>
 #include <QDebug>
 
-QuizItemModelDelegate::QuizItemModelDelegate( QObject *parent, bool displayAnswerStatus ) : QStyledItemDelegate( parent )
+/**
+ * NOTE: Used in QuizQidget and in QuizListWindow
+ */
+QuizItemModelDelegate::QuizItemModelDelegate( QObject *parent, int statusColumn, bool displayAnswerStatus, bool displayAnswerText ) : QStyledItemDelegate( parent )
 {
+	_statusColumn			= statusColumn;
 	_displayAnswerStatus	= displayAnswerStatus;
+	_displayAnswerText		= displayAnswerText;
 	_iconSize 				= 16;
 	_rightPadding			= 16;
 }
@@ -21,7 +26,7 @@ void QuizItemModelDelegate::paint(
 	QStyleOptionViewItem op( option );
 	initStyleOption( &op, index );
 
-	if ( index.column() == 5 && _displayAnswerStatus ) {
+	if ( index.column() == _statusColumn && _displayAnswerStatus ) {
 		//QIcon icon = qvariant_cast<QIcon>(index.data(Qt::DecorationRole));
 		if ( index.siblingAtColumn( 6 ).data().toBool() ) {
 			icon	= QIcon( ":/Resources/icons/Symbol_OK.svg" );
@@ -37,6 +42,16 @@ void QuizItemModelDelegate::paint(
 
 	op.rect	= _textRect( option.rect );
 	QStyledItemDelegate::paint( painter, op, index );
+}
+
+void QuizItemModelDelegate::initStyleOption( QStyleOptionViewItem *option, const QModelIndex &index ) const
+{
+	QStyledItemDelegate::initStyleOption( option, index );
+	// to hide the display role all we need to do is remove the HasDisplay feature
+	if ( ! _displayAnswerText ) {
+		qDebug() << "DISPLAY ANSWER TEXT IS FALSE !!!";
+		option->features &= ~QStyleOptionViewItem::HasDisplay;
+	}
 }
 
 QRect QuizItemModelDelegate::_textRect( QRect cellRect ) const

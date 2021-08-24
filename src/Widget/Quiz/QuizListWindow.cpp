@@ -16,6 +16,7 @@
 #include "Entity/Quiz.h"
 #include "Entity/QuizItem.h"
 #include "Application/VsSettings.h"
+#include "ModelView/QuizItemModelDelegate.h"
 
 QuizListWindow::QuizListWindow( QWidget *parent ) :
     QWidget( parent ),
@@ -211,6 +212,10 @@ void QuizListWindow::displayItems()
 			ui->tableView->hideColumn( i );
 		}
 	}
+
+	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate( ui->tableView, 6, true, false );
+	ui->tableView->setItemDelegateForColumn( 6, itemDelegate );
+	//ui->tableView->setItemDelegate( itemDelegate );
 }
 
 void QuizListWindow::deleteQuiz()

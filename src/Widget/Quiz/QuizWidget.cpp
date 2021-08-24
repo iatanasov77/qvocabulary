@@ -84,6 +84,7 @@ void QuizWidget::initModel()
 
 	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate(
 		ui->tableView,
+		5,
 		quizSettings["displayQuizAnswerStatus"].toBool()
 	);
 	ui->tableView->setItemDelegateForColumn( 5, itemDelegate );
