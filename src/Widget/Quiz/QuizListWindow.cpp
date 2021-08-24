@@ -220,8 +220,7 @@ void QuizListWindow::displayItems()
 
 void QuizListWindow::deleteQuiz()
 {
-	QMessageBox::StandardButton reply;
-	reply = QMessageBox::question(
+	QMessageBox::StandardButton reply	= QMessageBox::question(
 		this,
 		tr( "Delete Quiz" ),
 		tr( "This will erase the quiz with all its items. Do you agree?" ),
