@@ -38,9 +38,9 @@ QuizListWindow::QuizListWindow( QWidget *parent ) :
 	if ( ! qwWidth ) {
 		qwWidth = 800;
 	}
-	// 30% | 70%
-	int leftWidth	= 30.0 / 100 * qwWidth;
-	int rightWidth	= 70.0 / 100 * qwWidth;
+	// 35% | 65%
+	int leftWidth	= 35.0 / 100 * qwWidth;
+	int rightWidth	= 65.0 / 100 * qwWidth;
 	ui->splitter->setSizes( { leftWidth, rightWidth } );
 }
 
@@ -110,8 +110,20 @@ void QuizListWindow::initQuizListItem( QTreeWidgetItem* parent, int quizRow, QMa
 	QString assessment		= pModel->data( pModel->index( quizRow, 4 ) ).toString();
 	QString date			= pModel->data( pModel->index( quizRow, 5 ) ).toDateTime().toString ( "dd.MM.yyyy" );
 
-	QFont itemFont			= QFont( "" , 9 , QFont::Bold );
-	QBrush itemBrush		= assessment.toInt() < 3 ? QBrush( Qt::red ) : QBrush( Qt::green );
+	QFont itemFont			= QFont( "" , 8 , QFont::Bold );
+	QBrush itemBrush;
+	switch ( assessment.toInt() ) {
+		case 3:
+		case 4:
+			itemBrush	= QBrush( Qt::yellow );
+			break;
+		case 5:
+		case 6:
+			itemBrush	= QBrush( Qt::green );
+			break;
+		default:
+			itemBrush	= QBrush( Qt::red );
+	}
 
 	parent->setForeground( 0 , itemBrush );
 	parent->setFont( 0,  itemFont );
