@@ -6,6 +6,7 @@
 #include <QGroupBox>
 #include <QResizeEvent>
 #include <QToolButton>
+#include <QSortFilterProxyModel>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -32,13 +33,14 @@ class QuizListWindow : public QWidget
 
 	private:
 		void initQuizList();
+		QStringList quizItemHeaders();
+		QSortFilterProxyModel* createItemsModel( int quizId );
 		QGroupBox* quizButtons( QMap<QString, QVariant> properties );
 		QToolButton* createToolButton( const QString &toolTip, const QIcon &icon, const char *member, QMap<QString, QVariant> properties );
 		void initQuizListItem( QTreeWidgetItem* parent, int quizRow, QMap<QString, QVariant> properties );
 		void initQuizListDetails( QTreeWidgetItem* parent, int quizRow );
 
 		Ui::QuizListWindow* ui;
-		QList<int> hideItemColumns;
 		qx::QxModel<Quiz>* pModel;
 
 	private slots:

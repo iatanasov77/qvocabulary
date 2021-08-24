@@ -24,7 +24,9 @@ class SettingsWidgetQuiz : public AbstractSettingsWidget
 		void changeEvent( QEvent* );
 
 	private:
-		void init();
+		void initExamParameters();
+		void initDisplayItemColumn();
+		QList<QVariant> displayItemColumns();
 
 	    Ui::SettingsWidgetQuiz* ui;
 	    QMap<QString, QVariant> quizSettings;

@@ -25,7 +25,6 @@ QuizListWindow::QuizListWindow( QWidget *parent ) :
     setWindowIcon( QIcon( ":/Resources/icons/quiz-list.svg" ) );
 
     ui->quizTitle->hide();
-    hideItemColumns = {0, 3};
     initQuizList();
 
     // Set QuizListWindow Size Previous Set In Settings
@@ -173,22 +172,44 @@ void QuizListWindow::initQuizListDetails( QTreeWidgetItem* parent, int quizRow )
 	parent->addChild( treeItem );
 }
 
-void QuizListWindow::displayItems()
+QSortFilterProxyModel* QuizListWindow::createItemsModel( int quizId )
 {
-	QToolButton* button	= qobject_cast<QToolButton *>( sender() );
-	int quizId			= button->property( "quizId" ).toInt();
-	QString quizTitle	= button->property( "quizTitle" ).toString();
-
 	QString query					= QString( "WHERE quiz_id = %1" ).arg( QString::number( quizId ) );
 	qx::QxModel<QuizItem>* model	= new qx::QxModel<QuizItem>();
 	model->qxFetchByQuery( query );
 
+	QSortFilterProxyModel *proxy	= new QSortFilterProxyModel( this );
+	proxy->setDynamicSortFilter( true );
+	proxy->setSourceModel( model );
+
+	return proxy;
+}
+
+void QuizListWindow::displayItems()
+{
+	QToolButton* button			= qobject_cast<QToolButton *>( sender() );
+	int quizId					= button->property( "quizId" ).toInt();
+	QString quizTitle			= button->property( "quizTitle" ).toString();
+	QStringList itemHeadTitles	= quizItemHeaders();
+
+	QSortFilterProxyModel *model= createItemsModel( quizId );
+
 	ui->quizTitle->setText( quizTitle );
 	ui->quizTitle->show();
-
 	ui->tableView->setModel( model );
+	ui->tableView->setSortingEnabled( true );
+
+	model->setHeaderData( 1, Qt::Horizontal, itemHeadTitles.at( 0 ), Qt::DisplayRole );
+	model->setHeaderData( 2, Qt::Horizontal, itemHeadTitles.at( 1 ), Qt::DisplayRole );
+	model->setHeaderData( 3, Qt::Horizontal, itemHeadTitles.at( 2 ), Qt::DisplayRole );
+	model->setHeaderData( 5, Qt::Horizontal, itemHeadTitles.at( 3 ), Qt::DisplayRole );
+	model->setHeaderData( 6, Qt::Horizontal, itemHeadTitles.at( 4 ), Qt::DisplayRole );
+
+	QList<QVariant> hideItemColumns	= VsSettings::instance()->value( "displayItemColumns", "Quiz" ).toList();
 	for( int i = 0; i < hideItemColumns.size(); i++ ) {
-		ui->tableView->hideColumn( hideItemColumns[i] );
+		if ( ! hideItemColumns[i].toBool() ) {
+			ui->tableView->hideColumn( i );
+		}
 	}
 }
 
@@ -253,3 +274,17 @@ QToolButton* QuizListWindow::createToolButton( const QString &toolTip, const QIc
 
     return button;
 }
+
+QStringList QuizListWindow::quizItemHeaders()
+{
+	QStringList headTitles;
+	headTitles
+		<< qApp->translate( "Quiz", "Word" )
+		<< qApp->translate( "Vocabulary", "Transcription" )
+		<< qApp->translate( "Quiz", "Translation" )
+		<< qApp->translate( "Quiz", "Answer" )
+		<< qApp->translate( "Quiz", "Right" );
+
+	return headTitles;
+}
+
