@@ -176,7 +176,7 @@ void QuizListWindow::initQuizListDetails( QTreeWidgetItem* parent, int quizRow )
 QSortFilterProxyModel* QuizListWindow::createItemsModel( int quizId )
 {
 	QString query					= QString( "WHERE quiz_id = %1" ).arg( QString::number( quizId ) );
-	qx::QxModel<QuizItem>* model	= new qx::QxModel<QuizItem>();
+	qx::QxModel<QuizItem> *model	= new qx::QxModel<QuizItem>();
 	model->qxFetchByQuery( query );
 
 	QSortFilterProxyModel *proxy	= new QSortFilterProxyModel( this );
@@ -192,7 +192,6 @@ void QuizListWindow::displayItems()
 	int quizId					= button->property( "quizId" ).toInt();
 	QString quizTitle			= button->property( "quizTitle" ).toString();
 	QStringList itemHeadTitles	= quizItemHeaders();
-
 	QSortFilterProxyModel *model= createItemsModel( quizId );
 
 	ui->quizTitle->setText( quizTitle );
@@ -216,6 +215,10 @@ void QuizListWindow::displayItems()
 	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate( ui->tableView, 6, true, false );
 	ui->tableView->setItemDelegateForColumn( 6, itemDelegate );
 	//ui->tableView->setItemDelegate( itemDelegate );
+
+	ui->tableView->setEditTriggers( QAbstractItemView::NoEditTriggers );	// Quiz Items to be not Editable
+	ui->tableView->setSelectionBehavior( QAbstractItemView::SelectRows );
+	ui->tableView->setSelectionMode( QAbstractItemView::SingleSelection );
 }
 
 void QuizListWindow::deleteQuiz()

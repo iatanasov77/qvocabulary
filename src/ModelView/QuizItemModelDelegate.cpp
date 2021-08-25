@@ -40,8 +40,10 @@ void QuizItemModelDelegate::paint(
 		}
 	}
 
-	op.rect	= _textRect( option.rect );
-	QStyledItemDelegate::paint( painter, op, index );
+	if ( ( index.column() == _statusColumn && _displayAnswerText ) || index.column() != _statusColumn ) {
+		op.rect	= _textRect( option.rect );
+		QStyledItemDelegate::paint( painter, op, index );
+	}
 }
 
 void QuizItemModelDelegate::initStyleOption( QStyleOptionViewItem *option, const QModelIndex &index ) const
@@ -49,7 +51,7 @@ void QuizItemModelDelegate::initStyleOption( QStyleOptionViewItem *option, const
 	QStyledItemDelegate::initStyleOption( option, index );
 	// to hide the display role all we need to do is remove the HasDisplay feature
 	if ( ! _displayAnswerText ) {
-		qDebug() << "DISPLAY ANSWER TEXT IS FALSE !!!";
+		//qDebug() << "DISPLAY ANSWER TEXT IS FALSE !!!";
 		option->features &= ~QStyleOptionViewItem::HasDisplay;
 	}
 }
@@ -66,10 +68,14 @@ QRect QuizItemModelDelegate::_textRect( QRect cellRect ) const
 
 QRect QuizItemModelDelegate::_iconRect( QRect cellRect ) const
 {
-	int x = cellRect.left() + cellRect.width() - _iconSize - _rightPadding;
-	int y = cellRect.top();
-	int w = _iconSize;
-	int h = _iconSize;
+	if ( _displayAnswerText ) {
+		int x = cellRect.left() + cellRect.width() - _iconSize - _rightPadding;
+		int y = cellRect.top();
+		int w = _iconSize;
+		int h = _iconSize;
 
-	return QRect( x, y, w, h );
+		return QRect( x, y, w, h );
+	} else {
+		return cellRect;
+	}
 }
