@@ -9,6 +9,8 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "Widget/Quiz/QuizWindow.h"
+
 #include "Application/QVocabularySettings.h"
 #include "Application/VsDatabase.h"
 #include "Application/VsAssessment.h"
@@ -25,6 +27,7 @@ QuizWidget::QuizWidget( QWidget *parent ) :
     ui( new Ui::QuizWidget )
 {
     ui->setupUi( this );
+    qw			= parent;
 
     hideColumns = {0, 2, 3, 4, 6};
     initModel();
@@ -34,6 +37,14 @@ QuizWidget::QuizWidget( QWidget *parent ) :
 		SIGNAL( released() ),
 		this,
 		SLOT( insertWord() )
+	);
+
+    ui->btnOpenQuiz->hide();
+    connect(
+		ui->btnOpenQuiz,
+		SIGNAL( released() ),
+		this,
+		SLOT( openQuiz() )
 	);
 
     ui->frmAssessment->hide();
@@ -48,6 +59,11 @@ QuizWidget::~QuizWidget()
 QPushButton* QuizWidget::btnStopQuiz()
 {
 	return ui->btnStopQuiz;
+}
+
+QPushButton* QuizWidget::btnOpenQuiz()
+{
+	return ui->btnOpenQuiz;
 }
 
 void QuizWidget::initTimer( int time )
@@ -209,8 +225,20 @@ void QuizWidget::onDataChanged( const QModelIndex& topLeft, const QModelIndex& b
 	}
 }
 
+void QuizWidget::startQuiz()
+{
+	//qDebug() << "QuizWidget::startQuiz CALLED !!!";
+
+	ui->tableView->setEnabled( true );
+	ui->btnNextQuestion->setEnabled( true );
+	ui->btnStopQuiz->setEnabled( true );
+	ui->btnOpenQuiz->hide();
+}
+
 void QuizWidget::finishQuiz()
 {
+	//qDebug() << "QuizWidget::finishQuiz() CALLED !!!";
+
 	int questionsNumber	= pModel->rowCount();
 	int assessment		= VsAssessment::evaluate( questionsNumber, rightAnswers );
 
@@ -224,6 +252,17 @@ void QuizWidget::finishQuiz()
 	ui->frmAssessment->show();
 
 	pModel->qxSave();
+
+	ui->tableView->setEnabled( false );
+	ui->btnNextQuestion->setEnabled( false );
+	ui->btnStopQuiz->setEnabled( false );
+
+	ui->btnOpenQuiz->show();
+}
+
+void QuizWidget::openQuiz()
+{
+	qobject_cast<QuizWindow *>( qw )->openQuiz( quiz->id, "Opened Quiz ;)" );
 }
 
 void QuizWidget::changeEvent( QEvent* event )

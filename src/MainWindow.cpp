@@ -448,6 +448,16 @@ void MainWindow::on_actionCompletedExams_triggered()
 	wdgQuizList->show();
 }
 
+void MainWindow::openQuiz( int quizId, QString quizTitle )
+{
+	// Be Sure That wdgQuiz is Opened
+	wdgQuiz->hide();
+	delete wdgQuiz;
+
+	on_actionCompletedExams_triggered();
+	wdgQuizList->displayItems( quizId, quizTitle );
+}
+
 void MainWindow::changeEvent( QEvent* event )
 {
     if ( event->type() == QEvent::LanguageChange )

@@ -28,8 +28,10 @@ class QuizWidget : public QWidget
 		~QuizWidget();
 
 		QPushButton* btnStopQuiz();
+		QPushButton* btnOpenQuiz();
 
 		void setQuiz( int quizId, QList<QString> groups, bool randomize = false, bool displayTranscriptions = false, int time = 0 );
+		void startQuiz();
 		void finishQuiz();
 
 	signals:
@@ -40,6 +42,7 @@ class QuizWidget : public QWidget
 		void onDataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
 		void updateTimer();
 		void modelRowsInserted( const QModelIndex & parent, int start, int end );
+		void openQuiz();
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
@@ -50,6 +53,7 @@ class QuizWidget : public QWidget
 		void initModel();
 
 		Ui::QuizWidget* ui;
+		QWidget *qw;
 		QList<int> hideColumns;
 
 		VocabularyMetaInfoPtr metaInfo;

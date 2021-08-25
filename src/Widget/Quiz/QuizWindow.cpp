@@ -4,6 +4,7 @@
 #include <QSplitter>
 #include <QMessageBox>
 
+#include "MainWindow.h"
 #include "Application/VsSettings.h"
 #include "Application/VsDatabase.h"
 #include "Widget/Quiz/QuizParametersWidget.h"
@@ -17,6 +18,7 @@ QuizWindow::QuizWindow( QWidget *parent ) :
 {
     ui->setupUi( this );
     setWindowIcon( QIcon( ":/Resources/icons/quiz.svg" ) );
+    mw	= parent;
 
     init();
     initConnections();
@@ -121,6 +123,7 @@ void QuizWindow::startQuiz()
 	bool diplayTranscriptions	= wdgParameters->getChkDisplayTranscriptions()->isChecked();
 	wdgQuiz->setQuiz( quiz->id, groupIds, quiz->randomize, diplayTranscriptions, wdgParameters->time() );
 	wdgQuiz->setEnabled( true );
+	wdgQuiz->startQuiz();
 }
 
 void QuizWindow::stopQuiz()
@@ -128,7 +131,12 @@ void QuizWindow::stopQuiz()
 	wdgQuiz->finishQuiz();
 
 	wdgParameters->setEnabled( true );
-	wdgQuiz->setEnabled( false );
+	//wdgQuiz->setEnabled( false );
+}
+
+void QuizWindow::openQuiz( int quizId, QString quizTitle )
+{
+	qobject_cast<MainWindow *>( mw )->openQuiz( quizId, quizTitle );
 }
 
 void QuizWindow::changeEvent( QEvent* event )

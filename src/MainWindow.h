@@ -36,6 +36,7 @@ class MainWindow : public QMainWindow
 
 		void showVocabularyWord( int wordId, int groupId );
 		void showArchiveWord( int wordId, int groupId );
+		void openQuiz( int quizId, QString quizTitle );
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed

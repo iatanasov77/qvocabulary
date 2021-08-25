@@ -87,7 +87,7 @@ QGroupBox* QuizListWindow::quizButtons( QMap<QString, QVariant> properties )
 	hbox->addWidget( createToolButton(
 		tr( "Display Quiz" ),
 		QIcon( ":/Resources/icons/download-later.svg" ),
-		SLOT( displayItems() ),
+		SLOT( openQuiz() ),
 		properties
 	));
 
@@ -186,11 +186,17 @@ QSortFilterProxyModel* QuizListWindow::createItemsModel( int quizId )
 	return proxy;
 }
 
-void QuizListWindow::displayItems()
+void QuizListWindow::openQuiz()
 {
 	QToolButton* button			= qobject_cast<QToolButton *>( sender() );
 	int quizId					= button->property( "quizId" ).toInt();
 	QString quizTitle			= button->property( "quizTitle" ).toString();
+
+	displayItems( quizId, quizTitle );
+}
+
+void QuizListWindow::displayItems( int quizId, QString quizTitle )
+{
 	QStringList itemHeadTitles	= quizItemHeaders();
 	QSortFilterProxyModel *model= createItemsModel( quizId );
 

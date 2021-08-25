@@ -26,6 +26,9 @@ class QuizListWindow : public QWidget
 		explicit QuizListWindow( QWidget *parent = 0 );
 		~QuizListWindow();
 
+		void displayItems( int quizId, QString quizTitle );
+		void openQuiz( int quizId, QString quizTitle );
+
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
 		void changeEvent( QEvent* );
@@ -40,11 +43,12 @@ class QuizListWindow : public QWidget
 		void initQuizListItem( QTreeWidgetItem* parent, int quizRow, QMap<QString, QVariant> properties );
 		void initQuizListDetails( QTreeWidgetItem* parent, int quizRow );
 
-		Ui::QuizListWindow* ui;
-		qx::QxModel<Quiz>* pModel;
+		Ui::QuizListWindow *ui;
+		qx::QxModel<Quiz> *pModel;
+		QWidget *mw;
 
 	private slots:
-		void displayItems();
+		void openQuiz();
 		void deleteQuiz();
 };
 
