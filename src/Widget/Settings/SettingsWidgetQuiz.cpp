@@ -14,7 +14,8 @@ SettingsWidgetQuiz::SettingsWidgetQuiz( QWidget *parent ) :
 {
     ui->setupUi( this );
 
-    init();
+    initExamParameters();
+    initDisplayItemColumn();
 }
 
 SettingsWidgetQuiz::~SettingsWidgetQuiz()
@@ -22,7 +23,7 @@ SettingsWidgetQuiz::~SettingsWidgetQuiz()
     delete ui;
 }
 
-void SettingsWidgetQuiz::init()
+void SettingsWidgetQuiz::initExamParameters()
 {
 	quizSettings	= QVocabularySettings::instance()->quizSettings();
 
@@ -35,16 +36,49 @@ void SettingsWidgetQuiz::init()
 	ui->teTimerDefaultTime->setTime( timerDefaultTime.addSecs( quizSettings["timerDefaultTime"].toInt() ) );
 }
 
+void SettingsWidgetQuiz::initDisplayItemColumn()
+{
+	QList<QVariant> displayItemColumns	= VsSettings::instance()->value( "displayItemColumns", "Quiz" ).toList();
+	for( int i = 0; i < displayItemColumns.size(); i++ ) {
+		switch ( i ) {
+			case 1:
+				// language_1
+				ui->chDisplayColumnLanguage_1->setChecked( displayItemColumns[i].toBool() );
+				break;
+			case 2:
+				// transcription
+				ui->chDisplayColumnTranscription->setChecked( displayItemColumns[i].toBool() );
+				break;
+			case 3:
+				// language_2
+				ui->chDisplayColumnTranslation->setChecked( displayItemColumns[i].toBool() );
+				break;
+			case 5:
+				// answer
+				ui->chDisplayColumnAnswer->setChecked( displayItemColumns[i].toBool() );
+				break;
+			case 6:
+				// right_answer
+				ui->chDisplayColumnIsRight->setChecked( displayItemColumns[i].toBool() );
+				break;
+		}
+	}
+}
+
 void SettingsWidgetQuiz::apply()
 {
-	VsSettings::instance()->setValue( "displayTranscriptions", QVariant( ui->chDisplayTranscriptions->isChecked() ), "Quiz" );
-	VsSettings::instance()->setValue( "displayQuizAnswerStatus", QVariant( ui->chDisplayAnswerStatus->isChecked() ), "Quiz" );
-	VsSettings::instance()->setValue( "randomizeWords", QVariant( ui->chRandomizeWords->isChecked() ), "Quiz" );
-	VsSettings::instance()->setValue( "displayTimer", QVariant( ui->chDisplayTimer->isChecked() ), "Quiz" );
+	VsSettings *settings	= VsSettings::instance();
+
+	settings->setValue( "displayTranscriptions", QVariant( ui->chDisplayTranscriptions->isChecked() ), "Quiz" );
+	settings->setValue( "displayQuizAnswerStatus", QVariant( ui->chDisplayAnswerStatus->isChecked() ), "Quiz" );
+	settings->setValue( "randomizeWords", QVariant( ui->chRandomizeWords->isChecked() ), "Quiz" );
+	settings->setValue( "displayTimer", QVariant( ui->chDisplayTimer->isChecked() ), "Quiz" );
 
 	QTime tdt				= ui->teTimerDefaultTime->time();
 	int timerDefaultTime	= ( tdt.hour() * 3600 ) + ( tdt.minute() * 60 ) + tdt.second();
-	VsSettings::instance()->setValue( "timerDefaultTime", QVariant( timerDefaultTime ), "Quiz" );
+	settings->setValue( "timerDefaultTime", QVariant( timerDefaultTime ), "Quiz" );
+
+	settings->setValue( "displayItemColumns", QVariant( displayItemColumns() ), "Quiz" );
 }
 
 void SettingsWidgetQuiz::changeEvent( QEvent* event )
@@ -58,3 +92,17 @@ void SettingsWidgetQuiz::changeEvent( QEvent* event )
     QWidget::changeEvent( event );
 }
 
+QList<QVariant> SettingsWidgetQuiz::displayItemColumns()
+{
+	QList<QVariant> columns;
+
+	columns << false;											// id
+	columns << ui->chDisplayColumnLanguage_1->isChecked();		// language_1
+	columns << ui->chDisplayColumnTranscription->isChecked();	// transcription
+	columns << ui->chDisplayColumnTranslation->isChecked();		// language_2
+	columns << false;											// quiz_id
+	columns << ui->chDisplayColumnAnswer->isChecked();			// answer
+	columns << ui->chDisplayColumnIsRight->isChecked();			// right_answer
+
+	return columns;
+}

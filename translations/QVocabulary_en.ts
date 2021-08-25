@@ -423,6 +423,25 @@
     </message>
 </context>
 <context>
+    <name>Quiz</name>
+    <message>
+        <source>Word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Answer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QuizListWindow</name>
     <message>
         <source>QVocabulary Quizes List</source>
@@ -434,6 +453,38 @@
     </message>
     <message>
         <source>This will erase the quiz with all its items. Do you agree?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quizes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quiz: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quiz</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assessment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Quiz</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -508,6 +559,10 @@
     </message>
     <message>
         <source>Stop Quiz!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assessment:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -606,6 +661,34 @@
     </message>
     <message>
         <source>Randomize Words</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quiz Exam Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quizes List - Display Item Columns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Word</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Transcription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Answer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display Is Right</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

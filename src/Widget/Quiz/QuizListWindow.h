@@ -5,6 +5,8 @@
 #include <QTreeWidgetItem>
 #include <QGroupBox>
 #include <QResizeEvent>
+#include <QToolButton>
+#include <QSortFilterProxyModel>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -24,6 +26,9 @@ class QuizListWindow : public QWidget
 		explicit QuizListWindow( QWidget *parent = 0 );
 		~QuizListWindow();
 
+		void displayItems( int quizId, QString quizTitle );
+		void openQuiz( int quizId, QString quizTitle );
+
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
 		void changeEvent( QEvent* );
@@ -31,15 +36,19 @@ class QuizListWindow : public QWidget
 
 	private:
 		void initQuizList();
-		QGroupBox* quizButtons( int quizId );
-		void initQuizListProperties( QTreeWidgetItem* parent, int quizRow );
+		QStringList quizItemHeaders();
+		QSortFilterProxyModel* createItemsModel( int quizId );
+		QGroupBox* quizButtons( QMap<QString, QVariant> properties );
+		QToolButton* createToolButton( const QString &toolTip, const QIcon &icon, const char *member, QMap<QString, QVariant> properties );
+		void initQuizListItem( QTreeWidgetItem* parent, int quizRow, QMap<QString, QVariant> properties );
+		void initQuizListDetails( QTreeWidgetItem* parent, int quizRow );
 
-		Ui::QuizListWindow* ui;
-		QList<int> hideItemColumns;
-		qx::QxModel<Quiz>* pModel;
+		Ui::QuizListWindow *ui;
+		qx::QxModel<Quiz> *pModel;
+		QWidget *mw;
 
 	private slots:
-		void displayItems();
+		void openQuiz();
 		void deleteQuiz();
 };
 

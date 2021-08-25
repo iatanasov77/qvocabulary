@@ -20,6 +20,7 @@ class QuizWindow : public QWidget
 	public:
 		explicit QuizWindow( QWidget *parent = 0 );
 		~QuizWindow();
+		void openQuiz( int quizId, QString quizTitle );
 
 	public slots:
 		void startQuiz();
@@ -35,6 +36,7 @@ class QuizWindow : public QWidget
 		void initConnections();
 		void initModels();
 
+		QWidget *mw;
 	    Ui::QuizWindow* ui;
 	    QuizParametersWidget* wdgParameters;
 	    QuizWidget* wdgQuiz;

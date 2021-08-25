@@ -155,7 +155,6 @@ void VocabularyWidget::setCurrentGroup( int groupId )
 {
 	loadGroup( groupId );
 	wdgGroups->setCurrentGroup( groupId );
-	//wdgGroups->repaint();
 }
 
 QMap<QString, QVariant> VocabularyWidget::getState()

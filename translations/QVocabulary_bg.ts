@@ -491,6 +491,25 @@
     </message>
 </context>
 <context>
+    <name>Quiz</name>
+    <message>
+        <source>Word</source>
+        <translation type="unfinished">Дума</translation>
+    </message>
+    <message>
+        <source>Translation</source>
+        <translation type="unfinished">Превод</translation>
+    </message>
+    <message>
+        <source>Answer</source>
+        <translation type="unfinished">Отговор</translation>
+    </message>
+    <message>
+        <source>Right</source>
+        <translation type="unfinished">Правилен</translation>
+    </message>
+</context>
+<context>
     <name>QuizListWindow</name>
     <message>
         <source>QVocabulary Quizes List</source>
@@ -503,6 +522,38 @@
     <message>
         <source>This will erase the quiz with all its items. Do you agree?</source>
         <translation type="unfinished">Ще бъде изтрит теста и всички негови въпроси/отговори</translation>
+    </message>
+    <message>
+        <source>Quizes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quiz: </source>
+        <translation type="unfinished">Тест</translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quiz</source>
+        <translation type="unfinished">Тест</translation>
+    </message>
+    <message>
+        <source>Assessment</source>
+        <translation type="unfinished">Оценка</translation>
+    </message>
+    <message>
+        <source>Date</source>
+        <translation type="unfinished">Дата</translation>
+    </message>
+    <message>
+        <source>Attributes</source>
+        <translation type="unfinished">Атрибути</translation>
+    </message>
+    <message>
+        <source>Display Quiz</source>
+        <translation type="unfinished">Покажи Тест</translation>
     </message>
 </context>
 <context>
@@ -577,6 +628,10 @@
     <message>
         <source>Stop Quiz!</source>
         <translation type="unfinished">Стоп Тест!</translation>
+    </message>
+    <message>
+        <source>Assessment:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -695,6 +750,34 @@
     <message>
         <source>Randomize Words</source>
         <translation type="unfinished">Рандъм ред на думите</translation>
+    </message>
+    <message>
+        <source>Quiz Exam Parameters</source>
+        <translation type="unfinished">Тест Параметри</translation>
+    </message>
+    <message>
+        <source>Quizes List - Display Item Columns</source>
+        <translation type="unfinished">Тестове - Покажи Колони на Тест</translation>
+    </message>
+    <message>
+        <source>Display Word</source>
+        <translation type="unfinished">Покажи Дума</translation>
+    </message>
+    <message>
+        <source>Display Transcription</source>
+        <translation type="unfinished">Показвай Транскрипциите</translation>
+    </message>
+    <message>
+        <source>Display Translation</source>
+        <translation type="unfinished">Покажи Превод</translation>
+    </message>
+    <message>
+        <source>Display Answer</source>
+        <translation type="unfinished">Покажи Отговор</translation>
+    </message>
+    <message>
+        <source>Display Is Right</source>
+        <translation type="unfinished">Покажи Правилен</translation>
     </message>
 </context>
 <context>

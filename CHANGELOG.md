@@ -1,3 +1,16 @@
+0.18.5	|	Release date: **25.08.2021**
+============================================
+* New Features and Improvements:
+  - Add to can Open QuizItems After Finish the Quiz Exam.
+  - QuizItems List Remove Text From Right Answer FIeld. Show Only Icon.
+  - Update Translations.
+  - Add Quiz Items List Headers and Reordering by Header Click.
+  - Other Improvements.
+  - Improve QuizListWindow.
+  - Quiz Show Assessment on finish. Finish Quiz after last word.
+  - Not change group buton state on context menu.
+
+
 0.18.4	|	Release date: **23.08.2021**
 ============================================
 * New Features and Improvements:

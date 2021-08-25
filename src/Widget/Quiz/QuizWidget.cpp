@@ -9,6 +9,8 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "Widget/Quiz/QuizWindow.h"
+
 #include "Application/QVocabularySettings.h"
 #include "Application/VsDatabase.h"
 #include "Application/VsAssessment.h"
@@ -25,6 +27,7 @@ QuizWidget::QuizWidget( QWidget *parent ) :
     ui( new Ui::QuizWidget )
 {
     ui->setupUi( this );
+    qw			= parent;
 
     hideColumns = {0, 2, 3, 4, 6};
     initModel();
@@ -36,6 +39,15 @@ QuizWidget::QuizWidget( QWidget *parent ) :
 		SLOT( insertWord() )
 	);
 
+    ui->btnOpenQuiz->hide();
+    connect(
+		ui->btnOpenQuiz,
+		SIGNAL( released() ),
+		this,
+		SLOT( openQuiz() )
+	);
+
+    ui->frmAssessment->hide();
     ui->frmTimer->hide();
 }
 
@@ -47,6 +59,11 @@ QuizWidget::~QuizWidget()
 QPushButton* QuizWidget::btnStopQuiz()
 {
 	return ui->btnStopQuiz;
+}
+
+QPushButton* QuizWidget::btnOpenQuiz()
+{
+	return ui->btnOpenQuiz;
 }
 
 void QuizWidget::initTimer( int time )
@@ -83,6 +100,7 @@ void QuizWidget::initModel()
 
 	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate(
 		ui->tableView,
+		5,
 		quizSettings["displayQuizAnswerStatus"].toBool()
 	);
 	ui->tableView->setItemDelegateForColumn( 5, itemDelegate );
@@ -164,8 +182,10 @@ void QuizWidget::setQuiz( int quizId, QList<QString> groupIds, bool randomize, b
 
 void QuizWidget::insertWord()
 {
-	if ( ! itemsRange.count() )
+	if ( ! itemsRange.count() ) {
+		emit quizFinished();
 		return;
+	}
 
 	int targetRow		= pModel->rowCount( QModelIndex() );
 	int randomRow		= itemsRange.takeFirst();
@@ -182,6 +202,7 @@ void QuizWidget::insertWord()
 	pModel->setData( pModel->index( targetRow, 2 ), wordTranscription );
 	pModel->setData( pModel->index( targetRow, 3 ), wordLang2 );
 	pModel->setData( pModel->index( targetRow, 4 ), QVariant::fromValue( quiz->id ) );
+
 	pModel->setData( pModel->index( targetRow, 6 ), false );
 }
 
@@ -192,29 +213,56 @@ void QuizWidget::onDataChanged( const QModelIndex& topLeft, const QModelIndex& b
 		QString answer	= pModel->data( topLeft.siblingAtColumn( 5 ) ).toString();
 
 		// Detect if answer is right
-//		QRegExp rx( "(?i)\b" + lang2 + "\b" );
-//		bool found	= answer.indexOf ( rx ) >= 0;
 		bool found	= answer.size() && lang2.contains( answer, Qt::CaseInsensitive );
 		if ( found )
 			rightAnswers++;
 
-		//qDebug() << "Lang2: " << lang2 << " Answer: " << answer << " Right: " << found;
 		pModel->setData( topLeft.siblingAtColumn( 6 ), found );
+
+		if ( topLeft.row() == pModel->rowCount() -1 ) {
+			insertWord();
+		}
 	}
+}
+
+void QuizWidget::startQuiz()
+{
+	//qDebug() << "QuizWidget::startQuiz CALLED !!!";
+
+	ui->tableView->setEnabled( true );
+	ui->btnNextQuestion->setEnabled( true );
+	ui->btnStopQuiz->setEnabled( true );
+	ui->btnOpenQuiz->hide();
 }
 
 void QuizWidget::finishQuiz()
 {
-	int questionsNumber	= pModel->rowCount();
+	//qDebug() << "QuizWidget::finishQuiz() CALLED !!!";
 
-	quiz->assessment	= VsAssessment::evaluate( questionsNumber, rightAnswers );
+	int questionsNumber	= pModel->rowCount();
+	int assessment		= VsAssessment::evaluate( questionsNumber, rightAnswers );
+
+	quiz->assessment	= assessment;
 	quiz->finishedAt	= QDateTime::currentDateTime();
 	QSqlError daoError	= qx::dao::update( quiz );
 
 	disconnect( this, SIGNAL( quizFinished() ), 0, 0 );
+	ui->lcdAssessment->display( assessment );
 	ui->frmTimer->hide();
+	ui->frmAssessment->show();
 
 	pModel->qxSave();
+
+	ui->tableView->setEnabled( false );
+	ui->btnNextQuestion->setEnabled( false );
+	ui->btnStopQuiz->setEnabled( false );
+
+	ui->btnOpenQuiz->show();
+}
+
+void QuizWidget::openQuiz()
+{
+	qobject_cast<QuizWindow *>( qw )->openQuiz( quiz->id, "Opened Quiz ;)" );
 }
 
 void QuizWidget::changeEvent( QEvent* event )

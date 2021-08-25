@@ -19,4 +19,10 @@ const char* Description		= QT_TRANSLATE_NOOP( "Vocabulary", "Description" );
 const char* English2Bulgarian	= QT_TRANSLATE_NOOP( "QuizParametersWidget", "English to Bulgarian" );
 const char* Bulgarian2English	= QT_TRANSLATE_NOOP( "QuizParametersWidget", "Bulgarian to English" );
 
+// QuizItem Table Head Titles
+const char* Word		= QT_TRANSLATE_NOOP( "Quiz", "Word" );
+const char* Translation	= QT_TRANSLATE_NOOP( "Quiz", "Translation" );
+const char* Answer		= QT_TRANSLATE_NOOP( "Quiz", "Answer" );
+const char* Right		= QT_TRANSLATE_NOOP( "Quiz", "Right" );
+
 #endif	// DYNAMICTRANSLATIONS_H

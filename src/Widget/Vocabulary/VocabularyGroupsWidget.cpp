@@ -4,6 +4,7 @@
 #include <QListView>
 #include <QMenu>
 #include <QMessageBox>
+//#include <QtTest/QtTest>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -25,23 +26,18 @@ VocabularyGroupsWidget::VocabularyGroupsWidget( QWidget *parent ) :
 
     ui->listView->setSelectionBehavior( QAbstractItemView::SelectRows );
 
-    int currentGroupRow = 0;
-    int currentGroup	= VsSettings::instance()->value( "currentGroup", "Vocabulary" ).toInt();
-    if ( currentGroup ) {
-    	currentGroupRow	= groupRow( currentGroup );
-    }
-
-	/*
+    /*
 	 * Init view delegate
 	 */
-    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( currentGroupRow, false, ui->listView );
+    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( setCurrentGroup(), false, ui->listView );
     ui->listView->setItemDelegate( itemDelegate );
 
     /*
      * Connect Slots
      */
+    //qobject_cast<SideBarListViewDelegate*>( ui->listView->itemDelegate() )
 	VocabularyWidget *wdgVocabulary	= qobject_cast<VocabularyWidget *>( parent ); // parent() if not in constructor
-	connect( this, SIGNAL( currentGroupChanged( QModelIndex ) ), itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ) );
+	connect( this, SIGNAL( currentGroupChanged( QModelIndex ) ), ui->listView->itemDelegate(), SIGNAL( buttonClicked( QModelIndex ) ) );
 	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), wdgVocabulary, SLOT( loadGroup( QModelIndex ) ) );
 	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), this, SLOT( setCurrentGroup( QModelIndex ) ) );
 
@@ -94,6 +90,7 @@ void VocabularyGroupsWidget::refreshView( QModelIndex topLeft, QModelIndex botto
 void VocabularyGroupsWidget::refreshView()
 {
 	initModel();
+	repaint();
 }
 
 int VocabularyGroupsWidget::groupRow( int groupId )
@@ -124,12 +121,18 @@ void VocabularyGroupsWidget::setCurrentGroup( int groupId )
 		currentGroupRow	= groupRow( groupId );
 	}
 
+	QModelIndex groupButtonIndex	= pModel->index( currentGroupRow, 1 );
+	setCurrentGroup( groupButtonIndex );
+	scrollTo( groupId );
 	//qDebug() << "Set Current Group: " << currentGroupRow;
-	emit currentGroupChanged( pModel->index( currentGroupRow, 0 ) );
+
+	// Ne iska i ne iska be maika mu deeba da smeni butona
+	SideBarListViewDelegate* delegate	= qobject_cast<SideBarListViewDelegate*>( ui->listView->itemDelegate() );
+	if ( delegate ) {
+		delegate->setEvent( QEvent::MouseButtonRelease );
+	}
+	emit currentGroupChanged( groupButtonIndex );
 	refreshView();
-	//ui->listView->update();
-	//setCurrentGroup( pModel->index( currentGroupRow, 0 ) );
-	//initModel();
 }
 
 void VocabularyGroupsWidget::setCurrentGroup( const QModelIndex &index )
@@ -182,13 +185,12 @@ void VocabularyGroupsWidget::renameGroup()
 
 void VocabularyGroupsWidget::deleteGroup()
 {
-	QMessageBox::StandardButton reply;
-	reply = QMessageBox::question(
-									this,
-									tr( "Delete Group" ),
-									tr( "This will erase all Words associated with this Group. Do you agree?" ),
-									QMessageBox::Yes|QMessageBox::No
-								);
+	QMessageBox::StandardButton reply	= QMessageBox::question(
+		this,
+		tr( "Delete Vocabulary Group" ),
+		tr( "This will erase all Words associated with this Group. Do you agree?" ),
+		QMessageBox::Yes|QMessageBox::No
+	);
 
 	if ( reply == QMessageBox::Yes ) {
 		QModelIndex indexId				= ui->listView->currentIndex().siblingAtColumn( 0 );
@@ -231,4 +233,21 @@ void VocabularyGroupsWidget::modelRowsInserted( const QModelIndex & parent, int 
 
 	//ui->listView->scrollTo( pModel->index( start, 0 ) );
 	ui->listView->scrollToBottom();
+}
+
+int VocabularyGroupsWidget::setCurrentGroup()
+{
+	int currentGroupRow = 0;
+	int currentGroup	= VsSettings::instance()->value( "currentGroup", "Vocabulary" ).toInt();
+	if ( currentGroup ) {
+		currentGroupRow	= groupRow( currentGroup );
+	}
+	setCurrentGroup( currentGroup );
+
+	return currentGroupRow;
+}
+
+QRect QListView::rectForIndex(const QModelIndex &index) const
+{
+	return QListView::rectForIndex( index );
 }

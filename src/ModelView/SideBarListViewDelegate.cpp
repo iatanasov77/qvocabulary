@@ -15,7 +15,12 @@ SideBarListViewDelegate::SideBarListViewDelegate( int currRow, bool inArchive, Q
 {
 	_inArchive	= inArchive;
 	_currRow	= currRow;
-	_event		= 0;
+	_event		= QEvent::None;
+}
+
+void SideBarListViewDelegate::setEvent( int event )	// Pass a valid QEvent::Type
+{
+	_event	= event;
 }
 
 void SideBarListViewDelegate::paint(
@@ -27,26 +32,15 @@ void SideBarListViewDelegate::paint(
 	if ( ! index.isValid() )
 		return;
 
-	QStyleOptionButton button;
-	button.rect 	= option.rect;
+	long wordsCount				= groupWordsCount( index.siblingAtColumn( 0 ).data().toInt() );
+	QString buttonText 			= QString( "%1 (%2)" ).arg( index.siblingAtColumn( 1 ).data().toString() ).arg( wordsCount );
 
-	// Set Button Text
-	QString query	= QString( "WHERE group_id=%1" ).arg( index.siblingAtColumn( 0 ).data().toInt() );
-	long wordsCount	= 0;
-	if ( _inArchive ) {
-		wordsCount	= qx::dao::count<ArchiveWord>( qx::QxSqlQuery( query ) );
-	} else {
-		wordsCount	= qx::dao::count<Vocabulary>( qx::QxSqlQuery( query ) );
-	}
-	button.text 	= QString( "%1 (%2)" ).arg( index.siblingAtColumn( 1 ).data().toString() ).arg( wordsCount );
+	QStyleOptionButton button	= createButton( index.row(), option.rect, buttonText );
+	//qDebug() << "Draw Button at row " << index.row() << " with state " << QString::number( button.state );
 
-	// Set Button State
-	if( _currRow == index.row() && _event != 1 )
-		button.state	= QStyle::State_Sunken | QStyle::State_Enabled;
-	else
-		button.state	= QStyle::State_Raised | QStyle::State_Enabled;
-
+	painter->save();
 	QApplication::style()->drawControl( QStyle::CE_PushButton, &button, painter );
+	painter->restore();
 }
 
 QSize SideBarListViewDelegate::sizeHint( const QStyleOptionViewItem &option, const QModelIndex &index ) const
@@ -78,32 +72,70 @@ bool SideBarListViewDelegate::editorEvent(
 	Q_UNUSED( model );
 	Q_UNUSED( option );
 
+	qDebug() << "Event Type 2: " << event->type();
 	switch ( event->type() ) {
 		case QEvent::MouseButtonPress:
 			{
-				//qDebug() << "MouseButtonPress: " << _currRow;
-				_currRow	= index.row();
 				QMouseEvent* me = static_cast<QMouseEvent *>(event);
-				//int currRow	= _currRow;
-				_currRow	= index.row();
 				if ( me->button() == Qt::RightButton )
 				{
-					_event	= 1;
+					_event		= -1;
+				} else {
+					_event		= QEvent::MouseButtonRelease;
+					//_currRow	= index.row();
 				}
 			}
 			break;
+		case QEvent::None:
 		case QEvent::MouseButtonRelease:
-			//qDebug() << "MouseButtonRelease: " << _currRow;
-			_event	= 0;
-			//_currRow	= index.row();
-			emit buttonClicked( index );
-			break;
+			{
+				_event	= QEvent::MouseButtonRelease;
 
+				if ( _currRow == index.row() ) {
+					QModelIndex newIndex 	= model->index( index.row(), 1 );
+					emit buttonClicked( index );
+					emit model->dataChanged( newIndex, newIndex );
+				} else {
+					QModelIndex oldIndex 	= model->index( _currRow, 1 );
+					_currRow	= index.row();
+					emit model->dataChanged( oldIndex, oldIndex );
+					emit buttonClicked( index );
+				}
+			}
+			break;
 		default:
-			//qDebug() << "Default Event: " << _currRow;
-			_currRow	= -1;
+			//_currRow	= -1;
 			break;
 	}
 
 	return true;
+}
+
+QStyleOptionButton SideBarListViewDelegate::createButton( int indexRow, QRect rect, QString text ) const
+{
+	QStyleOptionButton button;
+	button.rect 	= rect;
+	//button.setCursor( QCursor( Qt::PointingHandCursor ) );
+	button.text 	= text;
+
+	// Set Button State
+	//qDebug() << "Event Type 1: " << _event;
+	if( _currRow == indexRow ) {
+		button.state	= QStyle::State_Sunken | QStyle::State_Enabled;
+	} else {
+		button.state	= QStyle::State_Raised | QStyle::State_Enabled;
+	}
+
+	return button;
+}
+
+long SideBarListViewDelegate::groupWordsCount( int groupId ) const
+{
+	QString query	= QString( "WHERE group_id=%1" ).arg( groupId );
+
+	if ( _inArchive ) {
+		return qx::dao::count<ArchiveWord>( qx::QxSqlQuery( query ) );
+	} else {
+		return qx::dao::count<Vocabulary>( qx::QxSqlQuery( query ) );
+	}
 }

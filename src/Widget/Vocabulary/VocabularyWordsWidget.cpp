@@ -5,6 +5,7 @@
 #include <QTableView>
 #include <QMenu>
 #include <QTextToSpeech>
+#include <QMessageBox>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -255,10 +256,19 @@ void VocabularyWordsWidget::deleteWord()
 {
 	QList<QModelIndex> selectedRows	= ui->tableView->selectionModel()->selectedRows();
 
-	for ( int i = 0; i < selectedRows.size(); ++i ) {
-		pModel->qxDeleteById( pModel->data( selectedRows[i].siblingAtColumn( 0 ) ) );
+	QMessageBox::StandardButton reply	= QMessageBox::question(
+		this,
+		tr( "Delete Vocabulary Words" ),
+		tr( "This will erase the selected words. Do you agree?" ),
+		QMessageBox::Yes|QMessageBox::No
+	);
+
+	if ( reply == QMessageBox::Yes ) {
+		for ( int i = 0; i < selectedRows.size(); ++i ) {
+			pModel->qxDeleteById( pModel->data( selectedRows[i].siblingAtColumn( 0 ) ) );
+		}
+		refreshView( selectedRows[0].siblingAtColumn( 0 ), selectedRows[selectedRows.size()-1].siblingAtColumn( 4 ) );
 	}
-	refreshView( selectedRows[0].siblingAtColumn( 0 ), selectedRows[selectedRows.size()-1].siblingAtColumn( 4 ) );
 }
 
 void VocabularyWordsWidget::search()

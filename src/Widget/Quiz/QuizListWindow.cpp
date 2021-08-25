@@ -6,6 +6,7 @@
 #include <QToolButton>
 #include <QIcon>
 #include <QMessageBox>
+#include <QCursor>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -15,6 +16,7 @@
 #include "Entity/Quiz.h"
 #include "Entity/QuizItem.h"
 #include "Application/VsSettings.h"
+#include "ModelView/QuizItemModelDelegate.h"
 
 QuizListWindow::QuizListWindow( QWidget *parent ) :
     QWidget( parent ),
@@ -23,7 +25,7 @@ QuizListWindow::QuizListWindow( QWidget *parent ) :
     ui->setupUi( this );
     setWindowIcon( QIcon( ":/Resources/icons/quiz-list.svg" ) );
 
-    hideItemColumns = {0, 3};
+    ui->quizTitle->hide();
     initQuizList();
 
     // Set QuizListWindow Size Previous Set In Settings
@@ -33,6 +35,14 @@ QuizListWindow::QuizListWindow( QWidget *parent ) :
 	if ( qwWidth && qwHeight ) {
 		resize( qwWidth, qwHeight );
 	}
+
+	if ( ! qwWidth ) {
+		qwWidth = 800;
+	}
+	// 35% | 65%
+	int leftWidth	= 35.0 / 100 * qwWidth;
+	int rightWidth	= 65.0 / 100 * qwWidth;
+	ui->splitter->setSizes( { leftWidth, rightWidth } );
 }
 
 QuizListWindow::~QuizListWindow()
@@ -46,44 +56,48 @@ void QuizListWindow::initQuizList()
 	ui->treeWidget->clear();
 
 	int quizId;
+	QString quizTitle;
+	QMap<QString, QVariant> properties;
 	pModel	= new qx::QxModel<Quiz>();
 	pModel->qxFetchAll();
 
 	ui->treeWidget->setColumnCount( 2 );
+	ui->treeWidget->setHeaderLabels( { tr( "Quiz" ), tr( "Assessment" ), tr( "Date" ), tr( "Attributes" ) } );
+
 	QTreeWidgetItem *treeItem;
 	for ( int i = 0; i < pModel->rowCount(); ++i ) {
 
-		treeItem	= new QTreeWidgetItem( ui->treeWidget );
-		quizId		= pModel->data( pModel->index( i, 0 ) ).toInt();
+		treeItem				= new QTreeWidgetItem( ui->treeWidget );
+		quizId					= pModel->data( pModel->index( i, 0 ) ).toInt();
+		quizTitle				= "Quiz " + QString::number( quizId );
+		properties["quizId"]	= QVariant( quizId );
+		properties["quizTitle"]	= QVariant( quizTitle );
 
-		treeItem->setText( 0, "Quiz " + QString::number( quizId ) );
-		initQuizListProperties( treeItem, i );
-
-		ui->treeWidget->setItemWidget( treeItem, 1, quizButtons( quizId ) );
+		initQuizListItem( treeItem, i, properties );
+		ui->treeWidget->setItemWidget( treeItem, 3, quizButtons( properties ) );
 	}
 }
 
-QGroupBox* QuizListWindow::quizButtons( int quizId )
+QGroupBox* QuizListWindow::quizButtons( QMap<QString, QVariant> properties )
 {
-	QToolButton* button;
 	QGroupBox* btnGroup	= new QGroupBox( ui->treeWidget );
 	QHBoxLayout* hbox 	= new QHBoxLayout;
 
 	// Display Items Button
-	button = new QToolButton();
-	button->setIcon( QIcon( ":/Resources/icons/download-later.svg" ) );
-	button->setText( "Display Items" );
-	button->setProperty( "quizId", QVariant( quizId ) );
-	connect( button, SIGNAL( released() ), this, SLOT( displayItems() ) );
-	hbox->addWidget( button );
+	hbox->addWidget( createToolButton(
+		tr( "Display Quiz" ),
+		QIcon( ":/Resources/icons/download-later.svg" ),
+		SLOT( openQuiz() ),
+		properties
+	));
 
 	// Delete Quiz Button
-	button = new QToolButton();
-	button->setIcon( QIcon( ":/Resources/icons/amarok_cart_remove.svg" ) );
-	button->setText( "Delete Quiz" );
-	button->setProperty( "quizId", QVariant( quizId ) );
-	connect( button, SIGNAL( released() ), this, SLOT( deleteQuiz() ) );
-	hbox->addWidget( button );
+	hbox->addWidget( createToolButton(
+		tr( "Delete Quiz" ),
+		QIcon( ":/Resources/icons/amarok_cart_remove.svg" ),
+		SLOT( deleteQuiz() ),
+		properties
+	));
 
 	// Pack Button group
 	hbox->addStretch( 1 );
@@ -92,19 +106,47 @@ QGroupBox* QuizListWindow::quizButtons( int quizId )
 	return btnGroup;
 }
 
-void QuizListWindow::initQuizListProperties( QTreeWidgetItem* parent, int quizRow )
+void QuizListWindow::initQuizListItem( QTreeWidgetItem* parent, int quizRow, QMap<QString, QVariant> properties )
 {
-	QTreeWidgetItem* treeItem;
+	QString assessment		= pModel->data( pModel->index( quizRow, 4 ) ).toString();
+	QString date			= pModel->data( pModel->index( quizRow, 5 ) ).toDateTime().toString ( "dd.MM.yyyy" );
 
+	QFont itemFont			= QFont( "" , 7 , QFont::Bold );
+	QBrush itemBrush;
+	switch ( assessment.toInt() ) {
+		case 3:
+		case 4:
+			itemBrush	= QBrush( Qt::yellow );
+			break;
+		case 5:
+		case 6:
+			itemBrush	= QBrush( Qt::green );
+			break;
+		default:
+			itemBrush	= QBrush( Qt::red );
+	}
+
+	parent->setForeground( 0 , itemBrush );
+	parent->setFont( 0,  itemFont );
+	parent->setForeground( 1 , itemBrush );
+	parent->setFont( 1,  itemFont );
+	parent->setForeground( 2 , itemBrush );
+	parent->setFont( 2,  itemFont );
+
+	parent->setText( 0, properties["quizTitle"].toString() );
+	parent->setText( 1, assessment );
+	parent->setText( 2, date );
+
+	initQuizListDetails( parent, quizRow );
+}
+
+void QuizListWindow::initQuizListDetails( QTreeWidgetItem* parent, int quizRow )
+{
 	EnumDirection direction	= pModel->data( pModel->index( quizRow, 1 ) ).value<EnumDirection>();
 	QDateTime startedAt		= pModel->data( pModel->index( quizRow, 5 ) ).toDateTime();
 	QDateTime finishedAt	= pModel->data( pModel->index( quizRow, 6 ) ).toDateTime();
 
-	// Date
-	treeItem = new QTreeWidgetItem();
-	treeItem->setText( 0, "Date" );
-	treeItem->setText( 1, pModel->data( pModel->index( quizRow, 5 ) ).toDateTime().toString ( "dd.MM.yyyy" ) );
-	parent->addChild( treeItem );
+	QTreeWidgetItem* treeItem;
 
 	// Direction
 	treeItem = new QTreeWidgetItem();
@@ -124,12 +166,6 @@ void QuizListWindow::initQuizListProperties( QTreeWidgetItem* parent, int quizRo
 	treeItem->setText( 1, pModel->data( pModel->index( quizRow, 3 ) ).toString() );
 	parent->addChild( treeItem );
 
-	// Assessment
-	treeItem = new QTreeWidgetItem();
-	treeItem->setText( 0, "Assessment" );
-	treeItem->setText( 1, pModel->data( pModel->index( quizRow, 4 ) ).toString() );
-	parent->addChild( treeItem );
-
 	// Duration
 	treeItem = new QTreeWidgetItem();
 	treeItem->setText( 0, "Duration (s)" );
@@ -137,30 +173,68 @@ void QuizListWindow::initQuizListProperties( QTreeWidgetItem* parent, int quizRo
 	parent->addChild( treeItem );
 }
 
-void QuizListWindow::displayItems()
+QSortFilterProxyModel* QuizListWindow::createItemsModel( int quizId )
 {
-	QToolButton* button	= qobject_cast<QToolButton *>( sender() );
-	int quizId			= button->property( "quizId" ).toInt();
-
 	QString query					= QString( "WHERE quiz_id = %1" ).arg( QString::number( quizId ) );
-	qx::QxModel<QuizItem>* model	= new qx::QxModel<QuizItem>();
+	qx::QxModel<QuizItem> *model	= new qx::QxModel<QuizItem>();
 	model->qxFetchByQuery( query );
 
+	QSortFilterProxyModel *proxy	= new QSortFilterProxyModel( this );
+	proxy->setDynamicSortFilter( true );
+	proxy->setSourceModel( model );
+
+	return proxy;
+}
+
+void QuizListWindow::openQuiz()
+{
+	QToolButton* button			= qobject_cast<QToolButton *>( sender() );
+	int quizId					= button->property( "quizId" ).toInt();
+	QString quizTitle			= button->property( "quizTitle" ).toString();
+
+	displayItems( quizId, quizTitle );
+}
+
+void QuizListWindow::displayItems( int quizId, QString quizTitle )
+{
+	QStringList itemHeadTitles	= quizItemHeaders();
+	QSortFilterProxyModel *model= createItemsModel( quizId );
+
+	ui->quizTitle->setText( quizTitle );
+	ui->quizTitle->show();
 	ui->tableView->setModel( model );
+	ui->tableView->setSortingEnabled( true );
+
+	model->setHeaderData( 1, Qt::Horizontal, itemHeadTitles.at( 0 ), Qt::DisplayRole );
+	model->setHeaderData( 2, Qt::Horizontal, itemHeadTitles.at( 1 ), Qt::DisplayRole );
+	model->setHeaderData( 3, Qt::Horizontal, itemHeadTitles.at( 2 ), Qt::DisplayRole );
+	model->setHeaderData( 5, Qt::Horizontal, itemHeadTitles.at( 3 ), Qt::DisplayRole );
+	model->setHeaderData( 6, Qt::Horizontal, itemHeadTitles.at( 4 ), Qt::DisplayRole );
+
+	QList<QVariant> hideItemColumns	= VsSettings::instance()->value( "displayItemColumns", "Quiz" ).toList();
 	for( int i = 0; i < hideItemColumns.size(); i++ ) {
-		ui->tableView->hideColumn( hideItemColumns[i] );
+		if ( ! hideItemColumns[i].toBool() ) {
+			ui->tableView->hideColumn( i );
+		}
 	}
+
+	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate( ui->tableView, 6, true, false );
+	ui->tableView->setItemDelegateForColumn( 6, itemDelegate );
+	//ui->tableView->setItemDelegate( itemDelegate );
+
+	ui->tableView->setEditTriggers( QAbstractItemView::NoEditTriggers );	// Quiz Items to be not Editable
+	ui->tableView->setSelectionBehavior( QAbstractItemView::SelectRows );
+	ui->tableView->setSelectionMode( QAbstractItemView::SingleSelection );
 }
 
 void QuizListWindow::deleteQuiz()
 {
-	QMessageBox::StandardButton reply;
-	reply = QMessageBox::question(
-								this,
-								tr( "Delete Quiz" ),
-								tr( "This will erase the quiz with all its items. Do you agree?" ),
-								QMessageBox::Yes|QMessageBox::No
-							);
+	QMessageBox::StandardButton reply	= QMessageBox::question(
+		this,
+		tr( "Delete Quiz" ),
+		tr( "This will erase the quiz with all its items. Do you agree?" ),
+		QMessageBox::Yes|QMessageBox::No
+	);
 
 	if ( reply == QMessageBox::Yes ) {
 		QToolButton* button	= qobject_cast<QToolButton *>( sender() );
@@ -196,3 +270,34 @@ void QuizListWindow::resizeEvent( QResizeEvent* event )
 	settings->setValue( "quizListWindowWidth", QVariant( qwSize.width() ), "Quiz" );
 	settings->setValue( "quizListWindowHeight", QVariant( qwSize.height() ), "Quiz" );
 }
+
+QToolButton* QuizListWindow::createToolButton( const QString &toolTip, const QIcon &icon, const char *member, QMap<QString, QVariant> properties )
+{
+    QToolButton *button = new QToolButton( this );
+    button->setToolTip( toolTip );
+    button->setIcon( icon );
+    button->setIconSize( QSize( 24, 24 ) );
+    button->setCursor( QCursor( Qt::PointingHandCursor ) );
+
+    foreach ( QString key, properties.keys() ) {
+    	button->setProperty( key.toStdString().c_str(), properties[key] );
+    }
+
+    connect( button, SIGNAL( clicked() ), this, member );
+
+    return button;
+}
+
+QStringList QuizListWindow::quizItemHeaders()
+{
+	QStringList headTitles;
+	headTitles
+		<< qApp->translate( "Quiz", "Word" )
+		<< qApp->translate( "Vocabulary", "Transcription" )
+		<< qApp->translate( "Quiz", "Translation" )
+		<< qApp->translate( "Quiz", "Answer" )
+		<< qApp->translate( "Quiz", "Right" );
+
+	return headTitles;
+}
+

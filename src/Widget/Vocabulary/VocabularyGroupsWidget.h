@@ -28,6 +28,7 @@ class VocabularyGroupsWidget : public QWidget
 		int currentGroup();
 		int groupRow( int groupId );
 		void setCurrentGroup( int groupId );
+		int setCurrentGroup();
 
 	public slots:
 		void setCurrentGroup( const QModelIndex &index );
@@ -44,6 +45,7 @@ class VocabularyGroupsWidget : public QWidget
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
 		void changeEvent( QEvent* );
+		QRect rectForIndex( const QModelIndex &index ) const;
 
 	private:
 		void initModel();

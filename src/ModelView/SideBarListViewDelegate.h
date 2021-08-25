@@ -17,13 +17,18 @@ class SideBarListViewDelegate : public QItemDelegate
 		virtual QSize sizeHint( const QStyleOptionViewItem& option, const QModelIndex& index ) const;
 		bool editorEvent( QEvent* event, QAbstractItemModel* model, const QStyleOptionViewItem& option, const QModelIndex& index );
 
+		void setEvent( int event );
+
 	signals:
 		void buttonClicked( const QModelIndex &index );
 
 	private:
+		QStyleOptionButton createButton( int indexRow, QRect rect, QString text ) const;
+		long groupWordsCount( int groupId ) const;
+
 		bool _inArchive;
 		int _currRow;
-		int _event;	// 1 for right click
+		int _event;	// Store: QEvent::Type
 };
 
 #endif	// VIEW_SIDEBARLISTVIEWDELEGATE_H
