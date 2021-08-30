@@ -594,7 +594,7 @@ void VocabularyWordsWidget::restoreHeaderSizes()
 void VocabularyWordsWidget::editSynonyms( const QModelIndex &index )
 {
     int wordId	= index.siblingAtColumn( 0 ).data().toInt();
-    qDebug() << "EDIT SYNONYMS FOR WORD: " << wordId;
+    //qDebug() << "EDIT SYNONYMS FOR WORD: " << wordId;
 
     SynonymsDialog *dlgSynonyms	= new SynonymsDialog( wordId, this );
     dlgSynonyms->setModal( true );

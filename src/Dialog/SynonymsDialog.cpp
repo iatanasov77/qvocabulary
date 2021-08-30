@@ -56,7 +56,6 @@ void SynonymsDialog::initVocabularyCombo()
 	VocabularyWordsModel *model	= new VocabularyWordsModel();
 	model->qxFetchAll();
 	QList<int> synonyms			= getVocabularySynonyms();
-	qDebug() << "DEBUG !!!";
 	for( int r = 0; r < model->rowCount(); ++r ) {
 		id 		= model->data( model->index( r, 0 ) ).toInt();
 		word	= model->data( model->index( r, 1 ) ).toString();
