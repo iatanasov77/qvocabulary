@@ -53,16 +53,25 @@ void SynonymsDialog::initVocabularyCombo()
 	cmbVocabulary	= new MultiSelectComboBox( this );
 	cmbVocabulary->setDisplayText( tr( "-- Select Vocabulary Words --" ) );
 
-	VocabularyWordsModel *model	= new VocabularyWordsModel();
-	model->qxFetchAll();
-	QList<int> synonyms			= getVocabularySynonyms();
-	for( int r = 0; r < model->rowCount(); ++r ) {
-		id 		= model->data( model->index( r, 0 ) ).toInt();
-		word	= model->data( model->index( r, 1 ) ).toString();
+//	VocabularyWordsModel *model	= new VocabularyWordsModel();
+//	model->qxFetchAll();
+//	QList<int> synonyms			= getVocabularySynonyms();
+//	for( int r = 0; r < model->rowCount(); ++r ) {
+//		id 		= model->data( model->index( r, 0 ) ).toInt();
+//		word	= model->data( model->index( r, 1 ) ).toString();
+//
+//		cmbVocabulary->addItem( word, id );
+//		cmbVocabulary->setItemData( r, synonyms.contains( id ), Qt::CheckStateRole );
+//	}
 
-		cmbVocabulary->addItem( word, id );
-		cmbVocabulary->setItemData( r, synonyms.contains( id ), Qt::CheckStateRole );
-	}
+
+
+
+
+
+
+
+
 
 //	QCompleter *completear					= new QCompleter( this );
 //	QSortFilterProxyModel *completerModel	= new QSortFilterProxyModel( this );
@@ -78,6 +87,57 @@ void SynonymsDialog::initVocabularyCombo()
 //
 //	cmbVocabulary->setEditable( true );
 //	cmbVocabulary->setCompleter( completear );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	QStringListModel *model = new QStringListModel;
+	for ( int x = 0; x < 1000; x++ )
+	{
+		model->insertRow( model->rowCount() );
+		model->setData( model->index( model->rowCount() - 1, 0 ), QString( "hello %1" ).arg( x ), Qt::DisplayRole );
+	}
+
+	QSortFilterProxyModel *proxy = new QSortFilterProxyModel;
+	proxy->setSourceModel( model );
+
+	cmbVocabulary->setModel( proxy );
+	cmbVocabulary->setEditable( true );
+	cmbVocabulary->setCompleter( 0 );
+
+	// When the edit text changes, use it to filter the proxy model.
+	connect( cmbVocabulary, SIGNAL( editTextChanged( QString ) ), proxy, SLOT( setFilterWildcard( QString ) ) );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	ui->formLayout->replaceWidget( ui->cbVocabularyWords, cmbVocabulary );
 	ui->cbVocabularyWords->hide();	// Should Remove It
