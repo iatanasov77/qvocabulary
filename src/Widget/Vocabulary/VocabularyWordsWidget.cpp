@@ -21,9 +21,11 @@
 #include "Widget/Vocabulary/VocabularyWidget.h"
 #include "ModelView/Helper.h"
 #include "ModelView/VocabularyTableView.h"
-#include "ModelView/VocabularyTableViewDelegate.h"
+#include "ModelView/ViewDelegate/VocabularyTranscriptionsDelegate.h"
+#include "ModelView/ViewDelegate/VocabularySynonymsDelegate.h"
 #include "ModelView/VocabularyWordsModel.h"
 #include "Dialog/AddDescriptionDialog.h"
+#include "Dialog/SynonymsDialog.h"
 
 VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     QWidget( parent ),
@@ -51,12 +53,18 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     	ui->chkShowTranscriptions->setCheckState( Qt::Checked );
     	showTranscriptions( displayTranscriptionsState );
     }
+    if ( ! hideColumns.contains( 6 ) ) {
+		ui->chkShowSynonyms->setCheckState( Qt::Checked );
+	}
 	restoreHeaderSizes(); // From Settings
     ui->tableView->scrollToBottom();
+
+    //emit pModel->dataChanged( pModel->index( 0, 0 ), pModel->index( pModel->rowCount(), 6 ) );
 
     connect( ui->tableView->horizontalHeader(), SIGNAL( sectionResized ( int, int, int ) ), this, SLOT( saveHeaderSizes( int, int, int ) ) );
 
     connect( ui->chkShowTranscriptions, SIGNAL( stateChanged( int ) ), this, SLOT( showTranscriptions( int ) ) );
+    connect( ui->chkShowSynonyms, SIGNAL( stateChanged( int ) ), this, SLOT( showSynonyms( int ) ) );
     connect( ui->leSearch, SIGNAL( returnPressed() ), ui->btnSearch, SIGNAL( released() ) );
     connect( ui->btnSearch, SIGNAL( released() ), this, SLOT( search() ) );
 
@@ -372,6 +380,17 @@ void VocabularyWordsWidget::showTranscriptions( int state )
 	VsSettings::instance()->setValue( "displayTranscriptions", QVariant( state ), "Vocabulary" );
 }
 
+void VocabularyWordsWidget::showSynonyms( int state )
+{
+	if ( state == Qt::Checked ) {
+		ui->tableView->showColumn( 6 );
+	} else {
+		ui->tableView->hideColumn( 6 );
+	}
+
+	VsSettings::instance()->setValue( "displaySynonyms", QVariant( state ), "Vocabulary" );
+}
+
 void VocabularyWordsWidget::adjustRowSelection()
 {
 	ui->tableView->setSelectionBehavior( QAbstractItemView::SelectRows );
@@ -454,20 +473,52 @@ void VocabularyWordsWidget::initView()
 	ui->tableView->setDropIndicatorShown( true );
 	ui->tableView->setDefaultDropAction( Qt::MoveAction );
 
-	VocabularyTableViewDelegate* itemDelegate	= new VocabularyTableViewDelegate( ui->tableView );
-	ui->tableView->setItemDelegateForColumn( 2, itemDelegate );
-	//ui->tableView->setItemDelegate( itemDelegate );
+	VocabularyTranscriptionsDelegate *transcriptionsDelegate	= new VocabularyTranscriptionsDelegate( ui->tableView );
+	ui->tableView->setItemDelegateForColumn( 2, transcriptionsDelegate );
+
+	VocabularySynonymsDelegate *synonymsDelegate	= new VocabularySynonymsDelegate( ui->tableView );
+	ui->tableView->setItemDelegateForColumn( 6, synonymsDelegate );
 
 	//ui->tableView->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
 	ui->tableView->horizontalHeader()->resizeSections( QHeaderView::ResizeToContents );
 	ui->tableView->horizontalHeader()->setStretchLastSection( true );
 
 	connect(
-		itemDelegate,
+		transcriptionsDelegate,
 		SIGNAL( buttonClicked( QModelIndex ) ),
 		this,
 		SLOT( sayWord( QModelIndex ) )
 	);
+
+	connect(
+		synonymsDelegate,
+		SIGNAL( buttonClicked( QModelIndex ) ),
+		this,
+		SLOT( editSynonyms( QModelIndex ) )
+	);
+
+	connect(
+		synonymsDelegate,
+		SIGNAL( synonymClicked( int ) ),
+		this,
+		SLOT( showWord( int ) )
+	);
+}
+
+void VocabularyWordsWidget::showWord( int wordId )
+{
+	QSqlDatabase db		= qx::QxSqlDatabase::getDatabase();
+	QSqlQuery *query	= new QSqlQuery( db );
+
+	QString strQuery	= QString(
+			"SELECT v.group_id AS groupId "
+			"FROM Vocabulary v "
+			"WHERE v.id = %1"
+	).arg( wordId );
+	query->exec( strQuery );
+	query->next();
+
+	showWord( wordId, query->value( "groupId" ).toInt() );
 }
 
 void VocabularyWordsWidget::showWord( QTreeWidgetItem* item, int column )
@@ -537,5 +588,17 @@ void VocabularyWordsWidget::restoreHeaderSizes()
 	foreach ( QString key, headerSizes.keys() ) {
 		//qDebug() << "Vocabulary Header Size: " << headerSizes[key].toInt();
 		ui->tableView->horizontalHeader()->resizeSection( key.toInt(), headerSizes[key].toInt() );
+	}
+}
+
+void VocabularyWordsWidget::editSynonyms( const QModelIndex &index )
+{
+    int wordId	= index.siblingAtColumn( 0 ).data().toInt();
+    qDebug() << "EDIT SYNONYMS FOR WORD: " << wordId;
+
+    SynonymsDialog *dlgSynonyms	= new SynonymsDialog( wordId, this );
+    dlgSynonyms->setModal( true );
+	if ( dlgSynonyms->exec() == QDialog::Accepted ) {
+		//initArchiveWidget();
 	}
 }

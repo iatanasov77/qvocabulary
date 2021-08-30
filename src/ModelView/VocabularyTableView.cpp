@@ -8,6 +8,7 @@
 #include <QTableView>
 #include <QVBoxLayout>
 #include <QHeaderView>
+#include <QMessageBox>
 
 /**
  * Tutorial: https://stackoverflow.com/questions/46431491/qtableview-to-show-the-content-of-table-item-when-mouse-hover/53199540
@@ -75,4 +76,12 @@ void VocabularyTableView::showPopup( const QModelIndex &index ) const
 	else {
 		popup->hide();
 	}
+}
+
+void VocabularyTableView::displayWord( QVariant wordId )
+{
+	QMessageBox::warning( this, tr( "Debug Message" ),
+		tr( "Word ID: %1." )
+		.arg( QString::number( wordId.toInt() ) )
+	);
 }

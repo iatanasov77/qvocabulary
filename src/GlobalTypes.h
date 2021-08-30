@@ -15,4 +15,11 @@ Q_DECLARE_METATYPE(ItemDataRole)
 enum ItemDataSource { Txt, Xml };
 Q_DECLARE_METATYPE(ItemDataSource)
 
+#include <QMap>
+#include <QString>
+static QMap<QString, QString> SynonymTargets{
+	{"VOCABULARY", "VOCABULARY"},
+	{"ARCHIVE", "ARCHIVE"}
+};
+
 #endif	// GLOBALTYPES_H

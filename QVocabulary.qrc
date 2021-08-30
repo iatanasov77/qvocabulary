@@ -26,6 +26,7 @@
 	    <file>Resources/icons/archive.svg</file>
 	    <file>Resources/icons/add_archive.svg</file>
 	    <file>Resources/icons/compare.svg</file>
+	    <file>Resources/icons/column-management.svg</file>
 	    
 	    <file>Resources/sql/qvocabulary-20201216.sql</file>
 	    <file>Resources/sql/qvocabulary-20201217.sql</file>
@@ -35,6 +36,7 @@
 	    <file>Resources/sql/qvocabulary-20210428.sql</file>
 	    <file>Resources/sql/qvocabulary-20210712.sql</file>
 	    <file>Resources/sql/qvocabulary-20210806.sql</file>
+	    <file>Resources/sql/qvocabulary-20210825.sql</file>
 	    
 	    <file>Resources/html/about_en.html</file>
 	    <file>Resources/html/about_bg.html</file>
