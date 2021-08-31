@@ -42,8 +42,10 @@ class VocabularyWordsWidget : public QWidget
 		void moveToGroup();
 		void deleteWord();
 		void search();
+		void showWord( int wordId );
 		void showWord( QTreeWidgetItem* item, int column );
 		void showTranscriptions( int state );
+		void showSynonyms( int state );
 		void sayWord( const QModelIndex &index );
 		void addWordDescription();
 
@@ -51,6 +53,7 @@ class VocabularyWordsWidget : public QWidget
 		void updateSpeaker();
 		void updateView();
 		void saveHeaderSizes( int logicalIndex, int oldSize, int newSize );
+		void editSynonyms( const QModelIndex &index );
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed

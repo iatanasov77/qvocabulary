@@ -38,6 +38,9 @@ class VocabularyWordsModel : public qx::QxModel<Vocabulary>
 			int destinationRow
 		);
 
+		QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;	// Added for Synonyms
+		QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;	// Added for Synonyms
+
 	private:
 		void _myMoveRows( int sourceRow, int destinationRow, int countRows );
 
