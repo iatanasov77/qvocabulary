@@ -28,8 +28,11 @@ void VsMultiSelectComboBoxDelegate::paint( QPainter *painter, const QStyleOption
 	//QMessageBox::information(0,"Info",text);
 }
 
-QWidget* VsMultiSelectComboBoxDelegate::createEditor( QWidget *parent, const QStyleOptionViewItem & option, const QModelIndex & index ) const
+QWidget* VsMultiSelectComboBoxDelegate::createEditor( QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index ) const
 {
+	Q_UNUSED( option );
+	Q_UNUSED( index );
+
 	// create check box as our editor
 	 QCheckBox *editor = new QCheckBox( parent );
 
@@ -59,5 +62,7 @@ void VsMultiSelectComboBoxDelegate::setModelData( QWidget *editor, QAbstractItem
 
 void VsMultiSelectComboBoxDelegate::updateEditorGeometry( QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index ) const
 {
+	Q_UNUSED( index );
+
 	editor->setGeometry( option.rect );
 }
