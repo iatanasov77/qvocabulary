@@ -14,6 +14,9 @@
 static int countWords;
 QMap<int, QMap<int, QRect>> VocabularySynonymsDelegate::wordRects;
 
+/*
+ * Change Mouse Cursor: https://stackoverflow.com/questions/9131727/how-can-i-change-the-mouse-pointer-when-mouse-over-text-with-qstyleditemdelegate
+ */
 VocabularySynonymsDelegate::VocabularySynonymsDelegate( QObject *parent ) : QStyledItemDelegate( parent )
 {
 	view	= parent;
