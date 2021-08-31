@@ -1,16 +1,16 @@
-#ifndef MULTISELECTCOMBOBOX_H
-#define MULTISELECTCOMBOBOX_H
+#ifndef VS_WIDGET_MULTISELECTCOMBOBOX_H
+#define VS_WIDGET_MULTISELECTCOMBOBOX_H
 
 #include <QComboBox>
 #include <QPaintEvent>
 
-class MultiSelectComboBox : public QComboBox
+class VsMultiSelectComboBox : public QComboBox
 {
     Q_OBJECT;
 
 	public:
-		MultiSelectComboBox( QWidget *widget = 0 );
-		virtual ~MultiSelectComboBox();
+		VsMultiSelectComboBox( QWidget *widget = 0 );
+		virtual ~VsMultiSelectComboBox();
 
 		bool eventFilter( QObject *object, QEvent *event );
 		virtual void paintEvent( QPaintEvent * );
@@ -28,4 +28,4 @@ class MultiSelectComboBox : public QComboBox
 		void setFilterText( const QString &text );
 };
 
-#endif // MULTISELECTCOMBOBOX_H
+#endif // VS_WIDGET_MULTISELECTCOMBOBOX_H

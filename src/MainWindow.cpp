@@ -10,7 +10,8 @@
 #include <QStringList>
 #include <QSqlQueryModel>
 
-#include "mustache.h"
+// From: https://github.com/robertknight/qt-mustache
+#include "../lib/QtMustache/mustache.h"
 
 #include "Application/VsApplication.h"
 #include "Application/VsSettings.h"
@@ -374,7 +375,16 @@ void MainWindow::initDatabase()
 
 QString MainWindow::openDatabase()
 {
-	return QFileDialog::getOpenFileName( this, tr( "Open Database" ), QDir::homePath(), tr( "Db Files (*.db)" ) );
+	QString dbPath;
+
+	QStringList files	= VsSettings::instance()->value( "recentDatabaseList", "MainWindow" ).toStringList();
+	if ( files.size() && QFile::exists( files.at( 0 ) ) ) {
+		dbPath	= QFileInfo( files.at( 0 ) ).absolutePath();
+	} else {
+		dbPath	= QDir::homePath();
+	}
+
+	return QFileDialog::getOpenFileName( this, tr( "Open Database" ), dbPath, tr( "Db Files (*.db)" ) );
 }
 
 QString MainWindow::createNewDatabase()

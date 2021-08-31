@@ -9,11 +9,14 @@
 #include <QTextDocument>
 
 #include "ModelView/VocabularyTableView.h"
-#include "Widget/ClickableLabel.h"
+#include "../lib/VankoSoft/Widget/VsClickableLabel.h"
 
 static int countWords;
 QMap<int, QMap<int, QRect>> VocabularySynonymsDelegate::wordRects;
 
+/*
+ * Change Mouse Cursor: https://stackoverflow.com/questions/9131727/how-can-i-change-the-mouse-pointer-when-mouse-over-text-with-qstyleditemdelegate
+ */
 VocabularySynonymsDelegate::VocabularySynonymsDelegate( QObject *parent ) : QStyledItemDelegate( parent )
 {
 	view	= parent;
@@ -119,11 +122,13 @@ QWidget* VocabularySynonymsDelegate::createEditor(
 
 void VocabularySynonymsDelegate::createWord( QPainter *painter, QStyleOptionViewItem op, QModelIndex index, QString text, int wordId ) const
 {
+	Q_UNUSED( index );
+
 	op.font.setBold( true );
 	op.font.setUnderline( true );
 
 	//const QWidget *widget = option.widget;
-	ClickableLabel *widget = new ClickableLabel();
+	VsClickableLabel *widget = new VsClickableLabel();
 	widget->setText(  text );
 	widget->setProperty( "labelData", wordId );
 	widget->setStyleSheet( "QLabel { border: 1px solid gray; border-radius: 2px; background-color: white; padding: 0px 5px 10px 15px; margin: 20px; }");
@@ -134,10 +139,6 @@ void VocabularySynonymsDelegate::createWord( QPainter *painter, QStyleOptionView
 
 	QStyle *style	= widget ? widget->style() : QApplication::style();
 	style->drawControl( QStyle::CE_ItemViewItem, &op, painter, widget );
-	//style->drawControl( QStyle::CE_ItemViewItem, widget, painter, &op.widget );
-
-	//style->drawControl( QStyle::CE_PushButton, &op, painter, widget );
-	//style->drawControl( QStyle::CE_ShapedFrame, &op, painter, widget );
 }
 
 QStyleOptionButton VocabularySynonymsDelegate::createButton( QRect buttonRect  ) const

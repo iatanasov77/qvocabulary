@@ -18,7 +18,7 @@
 #include "Application/VsApplication.h"
 #include "Application/VsDatabase.h"
 #include "ModelView/VocabularyWordsModel.h"
-#include "ModelView/WordsListModel.h"
+#include "../lib/VankoSoft/Model/VsComboBoxModel.h"
 
 SynonymsDialog::SynonymsDialog( int wordId, QWidget *parent ) :
     QDialog( parent ),
@@ -62,7 +62,7 @@ void SynonymsDialog::initVocabularyComboWithoutFilter()
 {
 	int id;
 	QString word;
-	cmbVocabulary	= new MultiSelectComboBox( this );
+	cmbVocabulary	= new VsMultiSelectComboBox( this );
 	cmbVocabulary->setDisplayText( tr( "-- Select Vocabulary Words --" ) );
 
 	VocabularyWordsModel *model	= new VocabularyWordsModel();
@@ -79,14 +79,14 @@ void SynonymsDialog::initVocabularyComboWithoutFilter()
 
 void SynonymsDialog::initVocabularyComboWithFilter()
 {
-	cmbVocabulary	= new MultiSelectComboBox( this );
+	cmbVocabulary	= new VsMultiSelectComboBox( this );
 	cmbVocabulary->setDisplayText( tr( "-- Select Vocabulary Words --" ) );
 
 	VocabularyWordsModel *model	= new VocabularyWordsModel();
 	model->qxFetchAll();
 	QList<int> synonyms			= getVocabularySynonyms();
 
-	WordsListModel *comboModel		= new WordsListModel( model, synonyms );
+	VsComboBoxModel *comboModel		= new VsComboBoxModel( model, synonyms );
 	QSortFilterProxyModel *proxy	= new QSortFilterProxyModel;
 	proxy->setSourceModel( comboModel );
 	//proxy->setFilterCaseSensitivity( Qt::CaseInsensitive );
@@ -113,7 +113,7 @@ void SynonymsDialog::initArchiveComboWithoutFilter()
 {
 	int id;
 	QString word;
-	cmbArchive	= new MultiSelectComboBox( this );
+	cmbArchive	= new VsMultiSelectComboBox( this );
 	cmbArchive->setDisplayText( tr( "-- Select Archive Words --" ) );
 
 	qx::QxModel<ArchiveWord> *model	= new qx::QxModel<ArchiveWord>();
@@ -130,14 +130,14 @@ void SynonymsDialog::initArchiveComboWithoutFilter()
 
 void SynonymsDialog::initArchiveComboWithFilter()
 {
-	cmbArchive	= new MultiSelectComboBox( this );
-	cmbArchive->setDisplayText( tr( "-- Select Vocabulary Words --" ) );
+	cmbArchive	= new VsMultiSelectComboBox( this );
+	cmbArchive->setDisplayText( tr( "-- Select Archive Words --" ) );
 
 	qx::QxModel<ArchiveWord> *model	= new qx::QxModel<ArchiveWord>();
 	model->qxFetchAll();
 	QList<int> synonyms				= getArchiveSynonyms();
 
-	WordsListModel *comboModel		= new WordsListModel( model, synonyms );
+	VsComboBoxModel *comboModel		= new VsComboBoxModel( model, synonyms );
 	QSortFilterProxyModel *proxy	= new QSortFilterProxyModel;
 	proxy->setSourceModel( comboModel );
 	//proxy->setFilterCaseSensitivity( Qt::CaseInsensitive );

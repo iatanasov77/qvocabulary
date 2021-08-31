@@ -1,15 +1,15 @@
-#include "MultiSelectComboBoxDelegate.h"
+#include "VsMultiSelectComboBoxDelegate.h"
 
 #include <QApplication>
 #include <QCheckBox>
 #include <QDebug>
 
-MultiSelectComboBoxDelegate::MultiSelectComboBoxDelegate( QObject *parent ) : QItemDelegate( parent )
+VsMultiSelectComboBoxDelegate::VsMultiSelectComboBoxDelegate( QObject *parent ) : QItemDelegate( parent )
 {
 
 }
 
-void MultiSelectComboBoxDelegate::paint( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const
+void VsMultiSelectComboBoxDelegate::paint( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const
 {
 	//Get item data
 	bool value = index.data( Qt::CheckStateRole ).toBool();
@@ -26,11 +26,9 @@ void MultiSelectComboBoxDelegate::paint( QPainter *painter, const QStyleOptionVi
 	// draw item data as CheckBox
 	style->drawControl( QStyle::CE_CheckBox, &opt, painter );
 	//QMessageBox::information(0,"Info",text);
-
-	qDebug() << "MultiSelectComboBoxDelegate::paint";
 }
 
-QWidget* MultiSelectComboBoxDelegate::createEditor( QWidget *parent, const QStyleOptionViewItem & option, const QModelIndex & index ) const
+QWidget* VsMultiSelectComboBoxDelegate::createEditor( QWidget *parent, const QStyleOptionViewItem & option, const QModelIndex & index ) const
 {
 	// create check box as our editor
 	 QCheckBox *editor = new QCheckBox( parent );
@@ -38,17 +36,15 @@ QWidget* MultiSelectComboBoxDelegate::createEditor( QWidget *parent, const QStyl
 	 return editor;
 }
 
-void MultiSelectComboBoxDelegate::setEditorData( QWidget *editor, const QModelIndex &index ) const
+void VsMultiSelectComboBoxDelegate::setEditorData( QWidget *editor, const QModelIndex &index ) const
 {
 	//set editor data
 	QCheckBox *myEditor = static_cast<QCheckBox*>( editor );
 	myEditor->setText( index.data( Qt::DisplayRole ).toString() );
 	myEditor->setChecked( index.data( Qt::CheckStateRole ).toBool() );
-
-	qDebug() << "MultiSelectComboBoxDelegate::setEditorData";
 }
 
-void MultiSelectComboBoxDelegate::setModelData( QWidget *editor, QAbstractItemModel *model, const QModelIndex &index ) const
+void VsMultiSelectComboBoxDelegate::setModelData( QWidget *editor, QAbstractItemModel *model, const QModelIndex &index ) const
 {
 	//get the value from the editor (CheckBox)
 	QCheckBox *myEditor = static_cast<QCheckBox*>( editor );
@@ -59,11 +55,9 @@ void MultiSelectComboBoxDelegate::setModelData( QWidget *editor, QAbstractItemMo
 	data.insert( Qt::DisplayRole, myEditor->text() );
 	data.insert( Qt::CheckStateRole, value );
 	model->setItemData( index, data );
-
-	qDebug() << "MultiSelectComboBoxDelegate::setModelData";
 }
 
-void MultiSelectComboBoxDelegate::updateEditorGeometry( QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index ) const
+void VsMultiSelectComboBoxDelegate::updateEditorGeometry( QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index ) const
 {
 	editor->setGeometry( option.rect );
 }

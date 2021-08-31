@@ -246,8 +246,3 @@ int VocabularyGroupsWidget::setCurrentGroup()
 
 	return currentGroupRow;
 }
-
-QRect QListView::rectForIndex(const QModelIndex &index) const
-{
-	return QListView::rectForIndex( index );
-}

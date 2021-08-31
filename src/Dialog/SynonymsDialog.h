@@ -5,7 +5,7 @@
 #include <QSqlDatabase>
 
 #include "Entity/ArchiveWord.h"
-#include "Widget/MultiSelectComboBox.h"
+#include "../lib/VankoSoft/Widget/VsMultiSelectComboBox.h"
 
 namespace Ui {
 	class SynonymsDialog;
@@ -37,8 +37,8 @@ class SynonymsDialog : public QDialog
 		int _wordId;
 		QWidget *vww;	// parent VocabularyWordsWidget
 	    Ui::SynonymsDialog *ui;
-	    MultiSelectComboBox *cmbVocabulary;
-	    MultiSelectComboBox *cmbArchive;
+	    VsMultiSelectComboBox *cmbVocabulary;
+	    VsMultiSelectComboBox *cmbArchive;
 
 	private slots:
 		void saveSynonyms();
