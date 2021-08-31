@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <QErrorMessage>
 #include <QCompleter>
+#include <QStringListModel>
 #include <QSortFilterProxyModel>
 
 #include "precompiled.h"
@@ -17,6 +18,7 @@
 #include "Application/VsApplication.h"
 #include "Application/VsDatabase.h"
 #include "ModelView/VocabularyWordsModel.h"
+#include "ModelView/WordsListModel.h"
 
 SynonymsDialog::SynonymsDialog( int wordId, QWidget *parent ) :
     QDialog( parent ),
@@ -42,77 +44,52 @@ SynonymsDialog::~SynonymsDialog()
 
 void SynonymsDialog::saveSynonyms()
 {
-	//saveVocabularySynonyms();
+	saveVocabularySynonyms();
 	saveArchiveSynonyms();
 }
 
 void SynonymsDialog::initVocabularyCombo()
+{
+	initVocabularyComboWithFilter();
+	//initVocabularyComboWithoutFilter();
+
+	ui->formLayout->replaceWidget( ui->cbVocabularyWords, cmbVocabulary );
+	//ui->cbVocabularyWords->hide();
+	delete ui->cbVocabularyWords;
+}
+
+void SynonymsDialog::initVocabularyComboWithoutFilter()
 {
 	int id;
 	QString word;
 	cmbVocabulary	= new MultiSelectComboBox( this );
 	cmbVocabulary->setDisplayText( tr( "-- Select Vocabulary Words --" ) );
 
-//	VocabularyWordsModel *model	= new VocabularyWordsModel();
-//	model->qxFetchAll();
-//	QList<int> synonyms			= getVocabularySynonyms();
-//	for( int r = 0; r < model->rowCount(); ++r ) {
-//		id 		= model->data( model->index( r, 0 ) ).toInt();
-//		word	= model->data( model->index( r, 1 ) ).toString();
-//
-//		cmbVocabulary->addItem( word, id );
-//		cmbVocabulary->setItemData( r, synonyms.contains( id ), Qt::CheckStateRole );
-//	}
+	VocabularyWordsModel *model	= new VocabularyWordsModel();
+	model->qxFetchAll();
+	QList<int> synonyms			= getVocabularySynonyms();
+	for( int r = 0; r < model->rowCount(); ++r ) {
+		id 		= model->data( model->index( r, 0 ) ).toInt();
+		word	= model->data( model->index( r, 1 ) ).toString();
 
-
-
-
-
-
-
-
-
-
-//	QCompleter *completear					= new QCompleter( this );
-//	QSortFilterProxyModel *completerModel	= new QSortFilterProxyModel( this );
-//	completerModel->setSourceModel( model );
-//	completerModel->setFilterCaseSensitivity( Qt::CaseInsensitive );
-//	completerModel->setFilterKeyColumn( 1 );
-//
-//	completear->setCaseSensitivity( Qt::CaseInsensitive );
-//	completear->setModel( completerModel );
-//	completear->setCompletionColumn( 1 );
-//	completear->setCompletionMode( QCompleter::PopupCompletion );
-//	completear->setFilterMode( Qt::MatchStartsWith );
-//
-//	cmbVocabulary->setEditable( true );
-//	cmbVocabulary->setCompleter( completear );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	QStringListModel *model = new QStringListModel;
-	for ( int x = 0; x < 1000; x++ )
-	{
-		model->insertRow( model->rowCount() );
-		model->setData( model->index( model->rowCount() - 1, 0 ), QString( "hello %1" ).arg( x ), Qt::DisplayRole );
+		cmbVocabulary->addItem( word, id );
+		cmbVocabulary->setItemData( r, synonyms.contains( id ), Qt::CheckStateRole );
 	}
+}
 
-	QSortFilterProxyModel *proxy = new QSortFilterProxyModel;
-	proxy->setSourceModel( model );
+void SynonymsDialog::initVocabularyComboWithFilter()
+{
+	cmbVocabulary	= new MultiSelectComboBox( this );
+	cmbVocabulary->setDisplayText( tr( "-- Select Vocabulary Words --" ) );
+
+	VocabularyWordsModel *model	= new VocabularyWordsModel();
+	model->qxFetchAll();
+	QList<int> synonyms			= getVocabularySynonyms();
+
+	WordsListModel *comboModel		= new WordsListModel( model, synonyms );
+	QSortFilterProxyModel *proxy	= new QSortFilterProxyModel;
+	proxy->setSourceModel( comboModel );
+	//proxy->setFilterCaseSensitivity( Qt::CaseInsensitive );
 
 	cmbVocabulary->setModel( proxy );
 	cmbVocabulary->setEditable( true );
@@ -120,30 +97,19 @@ void SynonymsDialog::initVocabularyCombo()
 
 	// When the edit text changes, use it to filter the proxy model.
 	connect( cmbVocabulary, SIGNAL( editTextChanged( QString ) ), proxy, SLOT( setFilterWildcard( QString ) ) );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	ui->formLayout->replaceWidget( ui->cbVocabularyWords, cmbVocabulary );
-	ui->cbVocabularyWords->hide();	// Should Remove It
 }
 
 void SynonymsDialog::initArchiveCombo()
+{
+	initArchiveComboWithFilter();
+	//initArchiveComboWithoutFilter();
+
+	ui->formLayout->replaceWidget( ui->cbArchiveWords, cmbArchive );
+	//ui->cbArchiveWords->hide();
+	delete ui->cbArchiveWords;
+}
+
+void SynonymsDialog::initArchiveComboWithoutFilter()
 {
 	int id;
 	QString word;
@@ -160,9 +126,28 @@ void SynonymsDialog::initArchiveCombo()
 		cmbArchive->addItem( word, id );
 		cmbArchive->setItemData( r, synonyms.contains( id ), Qt::CheckStateRole );
 	}
+}
 
-	ui->formLayout->replaceWidget( ui->cbArchiveWords, cmbArchive );
-	ui->cbArchiveWords->hide();	// Should Remove It
+void SynonymsDialog::initArchiveComboWithFilter()
+{
+	cmbArchive	= new MultiSelectComboBox( this );
+	cmbArchive->setDisplayText( tr( "-- Select Vocabulary Words --" ) );
+
+	qx::QxModel<ArchiveWord> *model	= new qx::QxModel<ArchiveWord>();
+	model->qxFetchAll();
+	QList<int> synonyms				= getArchiveSynonyms();
+
+	WordsListModel *comboModel		= new WordsListModel( model, synonyms );
+	QSortFilterProxyModel *proxy	= new QSortFilterProxyModel;
+	proxy->setSourceModel( comboModel );
+	//proxy->setFilterCaseSensitivity( Qt::CaseInsensitive );
+
+	cmbArchive->setModel( proxy );
+	cmbArchive->setEditable( true );
+	cmbArchive->setCompleter( 0 );
+
+	// When the edit text changes, use it to filter the proxy model.
+	connect( cmbArchive, SIGNAL( editTextChanged( QString ) ), proxy, SLOT( setFilterWildcard( QString ) ) );
 }
 
 void SynonymsDialog::selectedVocabularyWords()

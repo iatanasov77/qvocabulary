@@ -24,7 +24,11 @@ class SynonymsDialog : public QDialog
 
 	private:
 		void initVocabularyCombo();
+		void initVocabularyComboWithoutFilter();
+		void initVocabularyComboWithFilter();
 		void initArchiveCombo();
+		void initArchiveComboWithoutFilter();
+		void initArchiveComboWithFilter();
 		QList<int> getVocabularySynonyms();
 		QList<int> getArchiveSynonyms();
 		void saveVocabularySynonyms();

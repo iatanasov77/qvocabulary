@@ -17,8 +17,15 @@ class MultiSelectComboBox : public QComboBox
 		void setDisplayText( QString text );
 		QString getDisplayText() const;
 
+		void setEditable( bool editable );
+
 	private:
 		QString m_DisplayText;
+		QLineEdit *_lineEdit;
+
+	private slots:
+		void onItemPressed ( const QModelIndex &index );
+		void setFilterText( const QString &text );
 };
 
 #endif // MULTISELECTCOMBOBOX_H
