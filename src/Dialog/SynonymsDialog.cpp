@@ -131,7 +131,7 @@ void SynonymsDialog::initArchiveComboWithoutFilter()
 void SynonymsDialog::initArchiveComboWithFilter()
 {
 	cmbArchive	= new MultiSelectComboBox( this );
-	cmbArchive->setDisplayText( tr( "-- Select Vocabulary Words --" ) );
+	cmbArchive->setDisplayText( tr( "-- Select Archive Words --" ) );
 
 	qx::QxModel<ArchiveWord> *model	= new qx::QxModel<ArchiveWord>();
 	model->qxFetchAll();
