@@ -54,10 +54,12 @@ INCLUDEPATH += /projects/VS_QVocabulary/src
 ###############################
 # SOURCES
 ###############################
+SOURCES += $$files(lib/*.cpp, true)
 SOURCES += $$files(src/*.cpp, true)
-SOURCES += /home/vagrant/tools/qt-mustache/src/mustache.cpp
+#SOURCES += /home/vagrant/tools/qt-mustache/src/mustache.cpp
+HEADERS += $$files(lib/*.h, true)
 HEADERS += $$files(src/*.h, true)
-HEADERS += /home/vagrant/tools/qt-mustache/src/mustache.h
+#HEADERS += /home/vagrant/tools/qt-mustache/src/mustache.h
 FORMS += $$files(Forms/*.ui, true) \
     Forms/SettingsWidgetQuiz.ui
 RESOURCES = QVocabulary.qrc

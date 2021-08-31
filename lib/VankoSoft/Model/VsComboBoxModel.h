@@ -1,14 +1,14 @@
-#ifndef MODEL_WORDSLIST_H
-#define MODEL_WORDSLIST_H
+#ifndef VS_MODEL_COMBOBOXMODEL_H
+#define VS_MODEL_COMBOBOXMODEL_H
 
 #include <QAbstractListModel>
 
-class WordsListModel : public QAbstractListModel
+class VsComboBoxModel : public QAbstractListModel
 {
 	Q_OBJECT
 
 	public :
-  		WordsListModel( QAbstractItemModel *sourceModel, QList<int> selectedItems, QObject * parent = 0 );
+  		VsComboBoxModel( QAbstractItemModel *sourceModel, QList<int> selectedItems, QObject * parent = 0 );
   		int rowCount( const QModelIndex& parent = QModelIndex() ) const;
   		QVariant data( const QModelIndex &index, int role ) const;
 
@@ -20,4 +20,4 @@ class WordsListModel : public QAbstractListModel
   		void populate();
 };
 
-#endif	// MODEL_WORDSLIST_H
+#endif	// VS_MODEL_COMBOBOXMODEL_H

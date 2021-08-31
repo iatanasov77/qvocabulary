@@ -1,15 +1,15 @@
-#ifndef MULTISELECTCOMBOBOX_DELEGATE_H
-#define MULTISELECTCOMBOBOX_DELEGATE_H
+#ifndef VS_WIDGET_DELEGATE_MULTISELECTCOMBOBOXDELEGATE_H
+#define VS_WIDGET_DELEGATE_MULTISELECTCOMBOBOXDELEGATE_H
 
 #include <QItemDelegate>
 #include <QStyledItemDelegate>
 
-class MultiSelectComboBoxDelegate : public QItemDelegate
+class VsMultiSelectComboBoxDelegate : public QItemDelegate
 {
 	Q_OBJECT
 
 	public:
-		MultiSelectComboBoxDelegate( QObject *parent );
+		VsMultiSelectComboBoxDelegate( QObject *parent );
 
 		void paint( QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
 		QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem & option, const QModelIndex & index ) const;
@@ -18,4 +18,4 @@ class MultiSelectComboBoxDelegate : public QItemDelegate
 		void updateEditorGeometry( QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
  };
 
-#endif // MULTISELECTCOMBOBOX_DELEGATE_H
+#endif // VS_WIDGET_DELEGATE_MULTISELECTCOMBOBOXDELEGATE_H

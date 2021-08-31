@@ -1,4 +1,4 @@
-#include "MultiSelectComboBox.h"
+#include "VsMultiSelectComboBox.h"
 
 #include <QComboBox>
 #include <QCoreApplication>
@@ -10,20 +10,21 @@
 #include <QSortFilterProxyModel>
 #include <QDebug>
 
-#include "ModelView/WidgetDelegate/MultiSelectComboBoxDelegate.h"
+#include "Delegate/VsMultiSelectComboBoxDelegate.h"
 
 /**
+ * QComboBox as MultiSelect: https://stackoverflow.com/questions/6505627/how-to-make-qcombobox-as-multiselect-in-qt
  * QComboBox with Checkboxes: https://gist.github.com/mistic100/c3b7f3eabc65309687153fe3e0a9a720
  */
-MultiSelectComboBox::MultiSelectComboBox( QWidget *widget ) : QComboBox( widget )
+VsMultiSelectComboBox::VsMultiSelectComboBox( QWidget *widget ) : QComboBox( widget )
 {
     // set delegate items view
-    view()->setItemDelegate( new MultiSelectComboBoxDelegate( this ) );
+    view()->setItemDelegate( new VsMultiSelectComboBoxDelegate( this ) );
     //view()->setStyleSheet("  padding: 15px; ");
     // Enable editing on items view
     view()->setEditTriggers( QAbstractItemView::CurrentChanged );
 
-    // set "MultiSelectComboBox::eventFilter" as event filter for items view
+    // set "VsMultiSelectComboBox::eventFilter" as event filter for items view
     view()->viewport()->installEventFilter( this );
 
     // it just cool to have it as defualt ;)
@@ -32,12 +33,12 @@ MultiSelectComboBox::MultiSelectComboBox( QWidget *widget ) : QComboBox( widget 
     connect( ( QListView* ) view(), SIGNAL( pressed( QModelIndex ) ), this, SLOT( onItemPressed( QModelIndex ) ) );
 }
 
-MultiSelectComboBox::~MultiSelectComboBox()
+VsMultiSelectComboBox::~VsMultiSelectComboBox()
 {
 
 }
 
-bool MultiSelectComboBox::eventFilter( QObject *object, QEvent *event )
+bool VsMultiSelectComboBox::eventFilter( QObject *object, QEvent *event )
 {
     // don't close items view after we release the mouse button
     // by simple eating MouseButtonRelease in viewport of items view
@@ -49,7 +50,7 @@ bool MultiSelectComboBox::eventFilter( QObject *object, QEvent *event )
     return QComboBox::eventFilter( object, event );
 }
 
-void MultiSelectComboBox::paintEvent( QPaintEvent * )
+void VsMultiSelectComboBox::paintEvent( QPaintEvent * )
 {
     QStylePainter painter( this );
     painter.setPen( palette().color( QPalette::Text ) );
@@ -71,29 +72,29 @@ void MultiSelectComboBox::paintEvent( QPaintEvent * )
 
 }
 
-void MultiSelectComboBox::setDisplayText( QString text )
+void VsMultiSelectComboBox::setDisplayText( QString text )
 {
     m_DisplayText = text;
 }
 
-QString MultiSelectComboBox::getDisplayText() const
+QString VsMultiSelectComboBox::getDisplayText() const
 {
     return m_DisplayText;
 }
 
-void MultiSelectComboBox::onItemPressed ( const QModelIndex &index )
+void VsMultiSelectComboBox::onItemPressed ( const QModelIndex &index )
 {
 	model()->setData( index, 0, Qt::CheckStateRole );
 }
 
-void MultiSelectComboBox::setFilterText( const QString &text )
+void VsMultiSelectComboBox::setFilterText( const QString &text )
 {
 	//qDebug() << "Filter Text Changed: " << text;
 	_lineEdit->setText( text );
 	emit editTextChanged( text );
 }
 
-void MultiSelectComboBox::setEditable( bool editable )
+void VsMultiSelectComboBox::setEditable( bool editable )
 {
 	QComboBox::setEditable( editable );
 	_lineEdit	= new QLineEdit( this );

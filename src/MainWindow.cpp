@@ -10,7 +10,8 @@
 #include <QStringList>
 #include <QSqlQueryModel>
 
-#include "mustache.h"
+// From: https://github.com/robertknight/qt-mustache
+#include "../lib/QtMustache/mustache.h"
 
 #include "Application/VsApplication.h"
 #include "Application/VsSettings.h"

@@ -1,8 +1,8 @@
-#include "ModelView/WordsListModel.h"
+#include "VsComboBoxModel.h"
 
 #include <QDebug>
 
-WordsListModel::WordsListModel( QAbstractItemModel *sourceModel, QList<int> selectedItems, QObject * parent )
+VsComboBoxModel::VsComboBoxModel( QAbstractItemModel *sourceModel, QList<int> selectedItems, QObject * parent )
 {
 	source		= sourceModel;
 	selected	= selectedItems;
@@ -10,12 +10,12 @@ WordsListModel::WordsListModel( QAbstractItemModel *sourceModel, QList<int> sele
 	populate();
 }
 
-int WordsListModel::rowCount( const QModelIndex& parent ) const
+int VsComboBoxModel::rowCount( const QModelIndex& parent ) const
 {
 	return source->rowCount();
 }
 
-QVariant WordsListModel::data( const QModelIndex &index, int role ) const
+QVariant VsComboBoxModel::data( const QModelIndex &index, int role ) const
 {
 	if ( ! index.isValid() )
 		return QVariant();
@@ -37,7 +37,7 @@ QVariant WordsListModel::data( const QModelIndex &index, int role ) const
 	}
 }
 
-bool WordsListModel::setData( const QModelIndex &index, const QVariant &value, int role )
+bool VsComboBoxModel::setData( const QModelIndex &index, const QVariant &value, int role )
 {
 	if ( role == Qt::CheckStateRole ) {
 		int id	= source->data( source->index( index.row(), 0 ) ).toInt();
@@ -54,7 +54,7 @@ bool WordsListModel::setData( const QModelIndex &index, const QVariant &value, i
 	return QAbstractListModel::setData( index, value, role );
 }
 
-void WordsListModel::populate()
+void VsComboBoxModel::populate()
 {
 //	beginResetModel();
 //	mDatas.clear();
