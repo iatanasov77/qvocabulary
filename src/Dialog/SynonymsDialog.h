@@ -19,9 +19,6 @@ class SynonymsDialog : public QDialog
 		explicit SynonymsDialog( int wordId, QWidget *parent = 0 );
 		~SynonymsDialog();
 
-		void selectedVocabularyWords();
-		void selectedArchiveWords();
-
 	private:
 		void initVocabularyCombo();
 		void initVocabularyComboWithoutFilter();
@@ -31,6 +28,9 @@ class SynonymsDialog : public QDialog
 		void initArchiveComboWithFilter();
 		QList<int> getVocabularySynonyms();
 		QList<int> getArchiveSynonyms();
+
+		QList<int> selectedVocabularyWords();
+		QList<int> selectedArchiveWords();
 		void saveVocabularySynonyms();
 		void saveArchiveSynonyms();
 

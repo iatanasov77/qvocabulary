@@ -150,21 +150,32 @@ void SynonymsDialog::initArchiveComboWithFilter()
 	connect( cmbArchive, SIGNAL( editTextChanged( QString ) ), proxy, SLOT( setFilterWildcard( QString ) ) );
 }
 
-void SynonymsDialog::selectedVocabularyWords()
+QList<int> SynonymsDialog::selectedVocabularyWords()
 {
-	QStringList words;
+	QList<int> words;
 	for ( int i = 0; i < cmbVocabulary->count(); i++ ) {
 		if ( cmbVocabulary->itemData( i, Qt::CheckStateRole ).toBool() ) {
-			QString word	= cmbVocabulary->itemText( i );
-			qDebug() << "Checked Word: " << word;
-			words << word;
+			//QString word	= cmbVocabulary->itemData( i, Qt::DisplayRole ).toString();
+			int wordId	= cmbVocabulary->itemData( i, Qt::UserRole ).toInt();
+			words << wordId;
 		}
 	}
+
+	return words;
 }
 
-void SynonymsDialog::selectedArchiveWords()
+QList<int> SynonymsDialog::selectedArchiveWords()
 {
+	QList<int> words;
+	for ( int i = 0; i < cmbArchive->count(); i++ ) {
+		if ( cmbArchive->itemData( i, Qt::CheckStateRole ).toBool() ) {
+			//QString word	= cmbVocabulary->itemData( i, Qt::DisplayRole ).toString();
+			int wordId	= cmbArchive->itemData( i, Qt::UserRole ).toInt();
+			words << wordId;
+		}
+	}
 
+	return words;
 }
 
 QList<int> SynonymsDialog::getVocabularySynonyms()
@@ -201,22 +212,103 @@ QList<int> SynonymsDialog::getArchiveSynonyms()
 
 void SynonymsDialog::saveVocabularySynonyms()
 {
-	QString strQuery;
-	QSqlQuery query;
+	QString strQuery		= "";
+	QSqlQuery query			= QSqlQuery( qx::QxSqlDatabase::getDatabase() );
+	QList<int> newSynonyms	= selectedVocabularyWords();
+	QList<int> oldSynonyms	= getVocabularySynonyms();
 
-	selectedVocabularyWords();
+	foreach ( int synonymId, oldSynonyms ) {
+		if ( ! newSynonyms.contains( synonymId ) ) {
+			strQuery += QString( "DELETE FROM VocabularyWordSynonym WHERE word_id=%1 AND synonym_id=%2 AND target = '%3';" )
+							.arg( _wordId )
+							.arg( synonymId )
+							.arg( SynonymTargets["VOCABULARY"] );
 
-	query.prepare( "UPDATE one SET d1 = d1 + :d WHERE ..." );
-	//query.bindValue(...);
-	query.exec();
-	if ( query.numRowsAffected() == 0 ) {
-	    query.prepare( "INSERT ..." );
-	    //query.bindValue(...);
-	    query.exec();
+			strQuery += QString( "DELETE FROM VocabularyWordSynonym WHERE word_id=%1 AND synonym_id=%2 AND target = '%3';" )
+							.arg( synonymId )
+							.arg( _wordId )
+							.arg( SynonymTargets["VOCABULARY"] );
+		}
+	}
+
+	foreach ( int synonymId, newSynonyms ) {
+		if ( oldSynonyms.contains( synonymId ) )
+			continue;
+
+		strQuery += QString( "INSERT INTO VocabularyWordSynonym( word_id, synonym_id, target ) VALUES( %1, %2, '%3' );" )
+						.arg( _wordId )
+						.arg( synonymId )
+						.arg( SynonymTargets["VOCABULARY"] );
+
+		strQuery += QString( "INSERT INTO VocabularyWordSynonym( word_id, synonym_id, target ) VALUES( %1, %2, '%3' );" )
+						.arg( synonymId )
+						.arg( _wordId )
+						.arg( SynonymTargets["VOCABULARY"] );
+
+	}
+
+	if ( strQuery.length() ) {
+		QStringList scriptQueries = strQuery.split( ';' );
+		foreach ( QString queryTxt, scriptQueries ) {
+			if ( queryTxt.trimmed().isEmpty() ) {
+				continue;
+			}
+
+			if ( ! query.exec( queryTxt ) ) {
+				qDebug() << query.lastError().text();
+			}
+			query.finish();
+		}
 	}
 }
 
 void SynonymsDialog::saveArchiveSynonyms()
 {
+	QString strQuery		= "";
+	QSqlQuery query			= QSqlQuery( qx::QxSqlDatabase::getDatabase() );
+	QList<int> newSynonyms	= selectedArchiveWords();
+	QList<int> oldSynonyms	= getArchiveSynonyms();
 
+	foreach ( int synonymId, oldSynonyms ) {
+		if ( ! newSynonyms.contains( synonymId ) ) {
+			strQuery += QString( "DELETE FROM VocabularyWordSynonym WHERE word_id=%1 AND synonym_id=%2 AND target='%3';" )
+							.arg( _wordId )
+							.arg( synonymId )
+							.arg( SynonymTargets["ARCHIVE"] );
+
+			strQuery += QString( "DELETE FROM VocabularyWordSynonym WHERE word_id=%1 AND synonym_id=%2 AND target = '%3';" )
+							.arg( synonymId )
+							.arg( _wordId )
+							.arg( SynonymTargets["ARCHIVE"] );
+		}
+	}
+
+	foreach ( int synonymId, newSynonyms ) {
+		if ( oldSynonyms.contains( synonymId ) )
+			continue;
+
+		strQuery += QString( "INSERT INTO VocabularyWordSynonym( word_id, synonym_id, target ) VALUES( %1, %2, '%3' );" )
+						.arg( _wordId )
+						.arg( synonymId )
+						.arg( SynonymTargets["ARCHIVE"] );
+
+		strQuery += QString( "INSERT INTO VocabularyWordSynonym( word_id, synonym_id, target ) VALUES( %1, %2, '%3' );" )
+						.arg( synonymId )
+						.arg( _wordId )
+						.arg( SynonymTargets["ARCHIVE"] );
+	}
+
+	if ( strQuery.length() ) {
+		QStringList scriptQueries = strQuery.split( ';' );
+		foreach ( QString queryTxt, scriptQueries ) {
+			if ( queryTxt.trimmed().isEmpty() ) {
+				continue;
+			}
+
+			if ( ! query.exec( queryTxt ) ) {
+				qDebug() << query.lastError().text();
+			}
+			query.finish();
+		}
+	}
 }
