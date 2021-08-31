@@ -1,3 +1,14 @@
+0.19.1	|	Release date: **31.08.2021**
+============================================
+* New Features and Improvements and Refactoring:
+  - Big Refactoring and Prepare for Librarying.
+  - Adjust Layout Margins.
+  - Remove some layout margins.
+  - Little Fix of Synonyms Dialog Placeholder.
+  - When Open New Database Use Last Recent Database Path.
+  - Add/Restore to Settings Show Synonyms.
+
+
 0.19.0	|	Release date: **31.08.2021**
 ============================================
 * New Features:
