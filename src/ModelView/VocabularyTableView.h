@@ -23,7 +23,10 @@ class VocabularyTableView : public QTableView
 		void displayWord( QVariant wordId );
 
 	private:
+		void initHeader();
+		void initPopup();
 		void showPopup ( const QModelIndex &index ) const;
+
 };
 
 #endif // VIEW_VOCABULARYTABLEVIEW_H
