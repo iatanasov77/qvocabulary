@@ -48,13 +48,17 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     for( int i = 0; i < hideColumns.size(); i++ ) {
 		ui->tableView->hideColumn( hideColumns[i] );
 	}
+
     int displayTranscriptionsState	= VsSettings::instance()->value( "displayTranscriptions", "Vocabulary" ).toInt();
     if ( displayTranscriptionsState && displayTranscriptionsState == Qt::Checked ) {
     	ui->chkShowTranscriptions->setCheckState( Qt::Checked );
     	showTranscriptions( displayTranscriptionsState );
     }
-    if ( ! hideColumns.contains( 6 ) ) {
+
+    int displaySynonymsState	= VsSettings::instance()->value( "displaySynonyms", "Vocabulary" ).toInt();
+    if ( displaySynonymsState && displaySynonymsState == Qt::Checked ) {
 		ui->chkShowSynonyms->setCheckState( Qt::Checked );
+		showSynonyms( displaySynonymsState );
 	}
 	restoreHeaderSizes(); // From Settings
     ui->tableView->scrollToBottom();
@@ -435,6 +439,10 @@ void VocabularyWordsWidget::setState( QMap<QString, QVariant> state )
 {
 	if ( state.contains( "showTranscriptions" ) ) {
 		ui->chkShowTranscriptions->setChecked( state["showTranscriptions"].toBool() );
+	}
+
+	if ( state.contains( "displaySynonyms" ) ) {
+		ui->chkShowTranscriptions->setChecked( state["displaySynonyms"].toBool() );
 	}
 }
 
