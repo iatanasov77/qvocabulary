@@ -1,3 +1,11 @@
+0.19.0	|	Release date: **31.08.2021**
+============================================
+* New Features:
+  - Save Selected Synonyms from Deialog.
+  - Add Filtering of Synonyms Combo Boxes.
+  - Create SynonymDelegate words widget with click signal.
+
+
 0.18.5	|	Release date: **25.08.2021**
 ============================================
 * New Features and Improvements:
