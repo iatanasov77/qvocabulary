@@ -17,7 +17,7 @@
 
 #include "Widget/Archive/ArchiveWidget.h"
 #include "ModelView/Helper.h"
-#include "ModelView/VocabularyTableViewDelegate.h"
+#include "ModelView/ViewDelegate/VocabularyTranscriptionsDelegate.h"
 
 ArchiveWordsWidget::ArchiveWordsWidget( QWidget *parent ) :
     QWidget( parent ),
@@ -226,8 +226,8 @@ void ArchiveWordsWidget::updateSpeaker()
 
 void ArchiveWordsWidget::initView()
 {
-	VocabularyTableViewDelegate* itemDelegate	= new VocabularyTableViewDelegate( ui->tableView );
-	ui->tableView->setItemDelegateForColumn( 2, itemDelegate );
+	VocabularyTranscriptionsDelegate *transcriptionsDelegate	= new VocabularyTranscriptionsDelegate( ui->tableView );
+	ui->tableView->setItemDelegateForColumn( 2, transcriptionsDelegate );
 	//ui->tableView->setItemDelegate( itemDelegate );
 
 	//ui->tableView->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
@@ -238,7 +238,7 @@ void ArchiveWordsWidget::initView()
 	ui->tableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
 
 	connect(
-		itemDelegate,
+		transcriptionsDelegate,
 		SIGNAL( buttonClicked( QModelIndex ) ),
 		this,
 		SLOT( sayWord( QModelIndex ) )

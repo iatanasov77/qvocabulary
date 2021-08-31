@@ -19,6 +19,9 @@ class VocabularyTableView : public QTableView
 		VocabularyTableView( QWidget *parent = Q_NULLPTR );
 		bool eventFilter( QObject *watched, QEvent *event );
 
+	public slots:
+		void displayWord( QVariant wordId );
+
 	private:
 		void showPopup ( const QModelIndex &index ) const;
 };

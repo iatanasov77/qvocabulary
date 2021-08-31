@@ -158,3 +158,50 @@ void VocabularyWordsModel::_myMoveRows( int sourceRow, int destinationRow, int c
 	queryInsert	= "INSERT INTO Vocabulary( id, language_1, transcription, language_2, group_id, description ) SELECT id, language_1, transcription, language_2, group_id, description FROM TempVocabulary";
 	query->exec( queryInsert );
 }
+
+/**
+ * Added for Synonyms
+ */
+QVariant VocabularyWordsModel::headerData( int section, Qt::Orientation orientation, int role ) const
+{
+	if ( section == 6 ) {
+		return tr( "Synonyms" );
+	} else {
+		return QxModel<Vocabulary>::headerData( section, orientation, role );
+	}
+}
+
+QVariant VocabularyWordsModel::data( const QModelIndex &index, int role ) const
+{
+	QSqlDatabase db		= qx::QxSqlDatabase::getDatabase();
+	QSqlQuery *query	= new QSqlQuery( db );
+	QString synonyms;
+	QList<QVariant> synonymIds;
+	if ( index.column() == 6 ) {
+		QString strQuery	= QString(
+				"SELECT v.id AS wordId, v.language_1 AS synonym "
+				"FROM VocabularyWordSynonym s "
+				"LEFT JOIN Vocabulary v ON v.id = s.synonym_id "
+				"WHERE s.word_id = %1"
+		).arg( index.siblingAtColumn( 0 ).data().toInt() );
+		query->exec( strQuery );
+		int i	= 0;
+		while ( query->next() ) {
+			i++;
+			synonymIds << query->value( "wordId" );
+			synonyms.append( query->value( "synonym" ).toString() );
+
+			if ( i < query->size() || query->size() == -1 ) {
+				synonyms.append( ", " );
+			}
+		}
+
+		if ( role == Qt::DisplayRole ) {
+			return synonyms;
+		} else if ( role == Qt::UserRole ) {
+			return synonymIds;
+		}
+	}
+
+	return QxModel<Vocabulary>::data( index, role );
+}
