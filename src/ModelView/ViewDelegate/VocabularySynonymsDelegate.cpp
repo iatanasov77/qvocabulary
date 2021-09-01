@@ -10,6 +10,7 @@
 
 #include "ModelView/VocabularyTableView.h"
 #include "../lib/VankoSoft/Widget/VsClickableLabel.h"
+#include "../lib/VankoSoft/Widget/VsIconLabel.h"
 
 static int countWords;
 QMap<int, QMap<int, QRect>> VocabularySynonymsDelegate::wordRects;
@@ -127,9 +128,9 @@ void VocabularySynonymsDelegate::createWord( QPainter *painter, QStyleOptionView
 	op.font.setBold( true );
 	op.font.setUnderline( true );
 
-	//const QWidget *widget = option.widget;
-	VsClickableLabel *widget = new VsClickableLabel();
-	widget->setText(  text );
+//	VsClickableLabel *widget = new VsClickableLabel();
+//	widget->setText(  text );
+	VsIconLabel *widget = new VsIconLabel( ":/Resources/icons/dictionary.svg", text );
 	widget->setProperty( "labelData", wordId );
 	widget->setStyleSheet( "QLabel { border: 1px solid gray; border-radius: 2px; background-color: white; padding: 0px 5px 10px 15px; margin: 20px; }");
 	widget->setCursor( QCursor( Qt::PointingHandCursor ) );
