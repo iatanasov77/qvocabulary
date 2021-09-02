@@ -27,6 +27,7 @@
 #include "Dialog/NewVocabularyGroupDialog.h"
 #include "Dialog/AddToArchiveDialog.h"
 #include "Dialog/QVocabularyImportDialog.h"
+#include "Dialog/ExecSqlQueryDialog.h"
 
 MainWindow::MainWindow( QWidget *parent ) :
 	QMainWindow( parent ),
@@ -59,6 +60,8 @@ MainWindow::MainWindow( QWidget *parent ) :
     	resize( mwWidth, mwHeight );
     }
 
+    initDebug();
+
     connect( ui->actionAboutQt, SIGNAL( triggered() ), qApp, SLOT( aboutQt() ) );
 
     //connect( exitAction, &QAction::triggered, qApp, &QApplication::closeAllWindows, Qt::QueuedConnection );
@@ -71,6 +74,13 @@ MainWindow::~MainWindow()
 	delete wdgVocabulary;
 	delete wdgArchive;
     delete ui;
+}
+
+void MainWindow::initDebug()
+{
+	#ifndef QT_DEBUG
+		ui->actionExec_SQL_Query->setVisible( false );
+	#endif
 }
 
 void MainWindow::initWidgets()
@@ -544,6 +554,13 @@ void MainWindow::on_actionAdd_to_Archive_triggered()
 	if ( dlgAddArchive->exec() == QDialog::Accepted ) {
 		initArchiveWidget();
 	}
+}
+
+void MainWindow::on_actionExec_SQL_Query_triggered()
+{
+	ExecSqlQueryDialog* dlgSqlQuery	= new ExecSqlQueryDialog( this );
+	dlgSqlQuery->setModal( true );
+	dlgSqlQuery->exec();
 }
 
 void MainWindow::clearVocabularyWidget()

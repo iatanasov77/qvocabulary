@@ -47,6 +47,7 @@ bool VocabularyTranscriptionsDelegate::editorEvent(
 	bool hover = false;
 	if ( option.state & QStyle::State_MouseOver )
 		hover = true;
+	qDebug() << "BUTTON IS HOVERED: " << hover;
 
 	if ( event->type() == QEvent::MouseButtonRelease ) {
 		QMouseEvent* e	= ( QMouseEvent* )event;

@@ -28,6 +28,7 @@ class SynonymsDialog : public QDialog
 		void initArchiveComboWithFilter();
 		QList<int> getVocabularySynonyms();
 		QList<int> getArchiveSynonyms();
+		QMap<QString, QVariant> getOnlyWordsSynonyms();
 
 		QList<int> selectedVocabularyWords();
 		QList<int> selectedArchiveWords();

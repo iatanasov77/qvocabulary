@@ -39,10 +39,13 @@ class VocabularyWordsModel : public qx::QxModel<Vocabulary>
 		);
 
 		QVariant headerData( int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;	// Added for Synonyms
-		QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;	// Added for Synonyms
+		QVariant data( const QModelIndex &index, int role = Qt::DisplayRole ) const;						// Added for Synonyms
 
 	private:
 		void _myMoveRows( int sourceRow, int destinationRow, int countRows );
+		QMap<QString, QVariant> getVocabularySynonyms( const QModelIndex &index ) const;
+		QMap<QString, QVariant> getArchiveSynonyms( const QModelIndex &index ) const;
+		QString getOnlyWordsSynonyms( const QModelIndex &index ) const;
 
 	signals:
 		void modelUpdated();

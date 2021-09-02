@@ -57,7 +57,7 @@ create table ArchiveGroup (
 create table VocabularyWordSynonym (
 	id INTEGER UNIQUE NOT NULL PRIMARY KEY, 	
 	word_id INTEGER NOT NULL,
-  	synonym_id INTEGER NOT NULL,
-  	target VARCHAR(64),
-  	FOREIGN KEY(synonym_id) REFERENCES VocabularyWordSynonym(id)
+  	synonym_id INTEGER,
+  	only_words VARCHAR(255),
+  	target VARCHAR(64) NOT NULL
 );

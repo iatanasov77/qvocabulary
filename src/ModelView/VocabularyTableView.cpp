@@ -18,16 +18,9 @@ VocabularyTableView::VocabularyTableView( QWidget *parent ) : QTableView( parent
 {
 	viewport()->installEventFilter( this );
 	setMouseTracking( true );
-	popup				= new QDialog( this, Qt::Popup | Qt::ToolTip );
 
-	QVBoxLayout *layout = new QVBoxLayout;
-	popupLabel 			= new QLabel( popup );
-	popupLabel->setWordWrap( true );
-	layout->addWidget( popupLabel );
-	popupLabel->setTextFormat( Qt::RichText );
-	//popupLabel->setOpenExternalLinks( true );
-	popup->setLayout( layout );
-	popup->installEventFilter( this );
+	initHeader();
+	initPopup();
 }
 
 bool VocabularyTableView::eventFilter( QObject *watched, QEvent *event )
@@ -53,6 +46,43 @@ bool VocabularyTableView::eventFilter( QObject *watched, QEvent *event )
 		}
 	}
 	return QTableView::eventFilter( watched, event );
+}
+
+void VocabularyTableView::initHeader()
+{
+	if ( QSysInfo::windowsVersion() == QSysInfo::WV_WINDOWS10 ) {
+	    setStyleSheet(
+	        "QHeaderView::section{"
+	            "border-top:0px solid #D8D8D8;"
+	            "border-left:0px solid #D8D8D8;"
+	            "border-right:1px solid #D8D8D8;"
+	            "border-bottom: 1px solid #D8D8D8;"
+	            "background-color:white;"
+	            "padding:4px;"
+	        "}"
+	        "QTableCornerButton::section{"
+	            "border-top:0px solid #D8D8D8;"
+	            "border-left:0px solid #D8D8D8;"
+	            "border-right:1px solid #D8D8D8;"
+	            "border-bottom: 1px solid #D8D8D8;"
+	            "background-color:white;"
+	        "}"
+	    );
+	}
+}
+
+void VocabularyTableView::initPopup()
+{
+	popup				= new QDialog( this, Qt::Popup | Qt::ToolTip );
+
+	QVBoxLayout *layout = new QVBoxLayout;
+	popupLabel 			= new QLabel( popup );
+	popupLabel->setWordWrap( true );
+	layout->addWidget( popupLabel );
+	popupLabel->setTextFormat( Qt::RichText );
+	//popupLabel->setOpenExternalLinks( true );
+	popup->setLayout( layout );
+	popup->installEventFilter( this );
 }
 
 void VocabularyTableView::showPopup( const QModelIndex &index ) const

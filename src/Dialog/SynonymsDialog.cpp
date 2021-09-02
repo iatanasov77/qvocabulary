@@ -31,6 +31,7 @@ SynonymsDialog::SynonymsDialog( int wordId, QWidget *parent ) :
 
     initVocabularyCombo();
     initArchiveCombo();
+    ui->leOnlyWords->setText( getOnlyWordsSynonyms()["text"].toString() );
 
     QPushButton *saveButton = ui->buttonBox->button( QDialogButtonBox::Save );
     saveButton->setText( tr( "Save" ) );
@@ -46,6 +47,23 @@ void SynonymsDialog::saveSynonyms()
 {
 	saveVocabularySynonyms();
 	saveArchiveSynonyms();
+
+	QString strQuery;
+	int existId	= getOnlyWordsSynonyms()["id"].toInt();
+	if ( ui->leOnlyWords->text().length() ) {
+		if ( existId ) {
+			strQuery	= QString( "UPDATE VocabularyWordSynonym SET only_words='%1' WHERE id=%2" )
+							.arg( ui->leOnlyWords->text() )
+							.arg( QString::number( existId ) );
+		} else {
+			strQuery	= QString( "INSERT INTO VocabularyWordSynonym( word_id, only_words, target ) VALUES( %1, '%2', '%3' )" )
+							.arg( _wordId )
+							.arg( ui->leOnlyWords->text() )
+							.arg( SynonymTargets["ONLY_WORDS"] );
+		}
+
+		QSqlQuery query( strQuery, qx::QxSqlDatabase::getDatabase() );
+	}
 }
 
 void SynonymsDialog::initVocabularyCombo()
@@ -208,6 +226,28 @@ QList<int> SynonymsDialog::getArchiveSynonyms()
 	}
 
 	return synonyms;
+}
+
+QMap<QString, QVariant> SynonymsDialog::getOnlyWordsSynonyms()
+{
+	QMap<QString, QVariant> onlyWords;
+
+	QSqlQuery query(
+		QString( "SELECT * FROM VocabularyWordSynonym WHERE word_id=%1 AND target = '%2'" )
+			.arg( _wordId )
+			.arg( SynonymTargets["ONLY_WORDS"] )
+		,  qx::QxSqlDatabase::getDatabase()
+	);
+
+	if ( query.next() ) {
+		onlyWords["id"]		= query.value( "id" ).toInt();
+		onlyWords["text"]	= query.value( "only_words" ).toString();
+	} else {
+		onlyWords["id"]		= 0;
+		onlyWords["text"]	= "";
+	}
+
+	return onlyWords;
 }
 
 void SynonymsDialog::saveVocabularySynonyms()

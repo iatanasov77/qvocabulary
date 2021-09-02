@@ -6,6 +6,8 @@
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
+
+#include "GlobalTypes.h"
 #include "Entity/Vocabulary.h"
 #include "Application/VsDatabase.h"
 
@@ -173,27 +175,26 @@ QVariant VocabularyWordsModel::headerData( int section, Qt::Orientation orientat
 
 QVariant VocabularyWordsModel::data( const QModelIndex &index, int role ) const
 {
-	QSqlDatabase db		= qx::QxSqlDatabase::getDatabase();
-	QSqlQuery *query	= new QSqlQuery( db );
-	QString synonyms;
-	QList<QVariant> synonymIds;
 	if ( index.column() == 6 ) {
-		QString strQuery	= QString(
-				"SELECT v.id AS wordId, v.language_1 AS synonym "
-				"FROM VocabularyWordSynonym s "
-				"LEFT JOIN Vocabulary v ON v.id = s.synonym_id "
-				"WHERE s.word_id = %1"
-		).arg( index.siblingAtColumn( 0 ).data().toInt() );
-		query->exec( strQuery );
-		int i	= 0;
-		while ( query->next() ) {
-			i++;
-			synonymIds << query->value( "wordId" );
-			synonyms.append( query->value( "synonym" ).toString() );
+		QString synonyms;
+		QList<QVariant> synonymIds;
 
-			if ( i < query->size() || query->size() == -1 ) {
-				synonyms.append( ", " );
-			}
+		QMap<QString, QVariant> vocabularySynonyms	= getVocabularySynonyms( index );
+		QMap<QString, QVariant> archiveSynonyms		= getArchiveSynonyms( index );
+		QString onlyWordsSynonyms					= getOnlyWordsSynonyms( index );
+
+		if ( vocabularySynonyms["words"].toString().length() ) {
+			synonyms	= vocabularySynonyms["words"].toString();
+			synonymIds	= vocabularySynonyms["ids"].toList();
+		}
+
+		if ( archiveSynonyms["words"].toString().length() ) {
+			synonyms.append( QString ( ", %1" ).arg( archiveSynonyms["words"].toString() ) );
+			synonymIds.append( archiveSynonyms["ids"].toList() );
+		}
+
+		if ( onlyWordsSynonyms.length() ) {
+			synonyms.append( QString ( ", %1" ).arg( onlyWordsSynonyms ) );
 		}
 
 		if ( role == Qt::DisplayRole ) {
@@ -204,4 +205,95 @@ QVariant VocabularyWordsModel::data( const QModelIndex &index, int role ) const
 	}
 
 	return QxModel<Vocabulary>::data( index, role );
+}
+
+QMap<QString, QVariant> VocabularyWordsModel::getVocabularySynonyms( const QModelIndex &index ) const
+{
+	QSqlDatabase db		= qx::QxSqlDatabase::getDatabase();
+	QSqlQuery *query	= new QSqlQuery( db );
+	QString synonyms;
+	QList<QVariant> synonymIds;
+
+	QString strQuery	= QString(
+			"SELECT v.id AS wordId, v.language_1 AS synonym "
+			"FROM VocabularyWordSynonym s "
+			"LEFT JOIN Vocabulary v ON v.id = s.synonym_id "
+			"WHERE s.word_id = %1 AND target = '%2'"
+	)
+	.arg( index.siblingAtColumn( 0 ).data().toInt() )
+	.arg( SynonymTargets["VOCABULARY"] );
+
+	query->exec( strQuery );
+	int i	= 0;
+	while ( query->next() ) {
+		i++;
+		synonymIds << query->value( "wordId" );
+		synonyms.append( query->value( "synonym" ).toString() );
+
+		if ( i < query->size() || query->size() == -1 ) {
+			synonyms.append( ", " );
+		}
+	}
+
+	QMap<QString, QVariant> result;
+	result["ids"]	= QVariant( synonymIds );
+	result["words"]	= QVariant( synonyms );
+
+	return result;
+}
+
+QMap<QString, QVariant> VocabularyWordsModel::getArchiveSynonyms( const QModelIndex &index ) const
+{
+	QSqlDatabase db		= qx::QxSqlDatabase::getDatabase();
+	QSqlQuery *query	= new QSqlQuery( db );
+	QString synonyms;
+	QList<QVariant> synonymIds;
+
+	QString strQuery	= QString(
+			"SELECT v.id AS wordId, v.language_1 AS synonym "
+			"FROM VocabularyWordSynonym s "
+			"LEFT JOIN Vocabulary v ON v.id = s.synonym_id "
+			"WHERE s.word_id = %1 AND target = '%2'"
+	)
+	.arg( index.siblingAtColumn( 0 ).data().toInt() )
+	.arg( SynonymTargets["ARCHIVE"] );
+
+	query->exec( strQuery );
+	int i	= 0;
+	while ( query->next() ) {
+		i++;
+		synonymIds << query->value( "wordId" );
+		synonyms.append( query->value( "synonym" ).toString() );
+
+		if ( i < query->size() || query->size() == -1 ) {
+			synonyms.append( ", " );
+		}
+	}
+
+	QMap<QString, QVariant> result;
+	result["ids"]	= QVariant( synonymIds );
+	result["words"]	= QVariant( synonyms );
+
+	return result;
+}
+
+QString VocabularyWordsModel::getOnlyWordsSynonyms( const QModelIndex &index ) const
+{
+	QSqlDatabase db		= qx::QxSqlDatabase::getDatabase();
+	QSqlQuery *query	= new QSqlQuery( db );
+
+	QString strQuery	= QString(
+			"SELECT s.only_words AS synonyms "
+			"FROM VocabularyWordSynonym s "
+			"WHERE s.word_id = %1 AND target = '%2'"
+	)
+	.arg( index.siblingAtColumn( 0 ).data().toInt() )
+	.arg( SynonymTargets["ONLY_WORDS"] );
+
+	query->exec( strQuery );
+	if ( query->next() ) {
+		return query->value( "synonyms" ).toString();
+	}
+
+	return "";
 }

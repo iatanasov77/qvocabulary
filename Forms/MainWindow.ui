@@ -183,6 +183,8 @@
     <addaction name="menuLanguages"/>
     <addaction name="separator"/>
     <addaction name="actionPreferences"/>
+    <addaction name="separator"/>
+    <addaction name="actionExec_SQL_Query"/>
    </widget>
    <widget class="QMenu" name="menuArchive">
     <property name="title">
@@ -357,6 +359,11 @@
   <action name="actionCompair_Vocabulary_Archive">
    <property name="text">
     <string>&amp;Compair Vocabulary|Archive</string>
+   </property>
+  </action>
+  <action name="actionExec_SQL_Query">
+   <property name="text">
+    <string>&amp;Exec SQL Query</string>
    </property>
   </action>
  </widget>

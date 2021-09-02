@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>SynonymsDialog</class>
- <widget class="QDialog" name="SynonymsDialog">
+ <class>ExecSqlQueryDialog</class>
+ <widget class="QDialog" name="ExecSqlQueryDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>365</width>
-    <height>162</height>
+    <height>261</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Edit Synonyms</string>
+   <string>Exec Sql Query</string>
   </property>
   <property name="layoutDirection">
    <enum>Qt::LeftToRight</enum>
@@ -20,34 +20,64 @@
    <item>
     <layout class="QFormLayout" name="formLayout">
      <item row="0" column="0">
-      <widget class="QLabel" name="llVocabularyWords">
+      <widget class="QLabel" name="llName">
        <property name="text">
-        <string>Vocabulary Words</string>
+        <string>Query:</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="cbVocabularyWords"/>
+      <widget class="QTextEdit" name="teQuery"/>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="llArchiveWords">
+    </layout>
+   </item>
+   <item>
+    <widget class="QFrame" name="errorFrame">
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="lblErrorMessage">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnExec">
        <property name="text">
-        <string>Archive Words</string>
+        <string>Exec</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="cbArchiveWords"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="lblOnlyWords">
+     <item>
+      <widget class="QPushButton" name="btnClose">
        <property name="text">
-        <string>Only Words</string>
+        <string>Close</string>
        </property>
       </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="leOnlyWords"/>
      </item>
     </layout>
    </item>
@@ -68,7 +98,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>SynonymsDialog</receiver>
+   <receiver>ExecSqlQueryDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -84,7 +114,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>SynonymsDialog</receiver>
+   <receiver>ExecSqlQueryDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
