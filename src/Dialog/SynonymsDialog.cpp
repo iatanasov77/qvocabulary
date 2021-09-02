@@ -56,7 +56,7 @@ void SynonymsDialog::saveSynonyms()
 							.arg( ui->leOnlyWords->text() )
 							.arg( QString::number( existId ) );
 		} else {
-			strQuery	= QString( "INSERT INTO VocabularyWordSynonym( word_id, only_words, target ) VALUES( %1, %2, %3 )" )
+			strQuery	= QString( "INSERT INTO VocabularyWordSynonym( word_id, only_words, target ) VALUES( %1, '%2', '%3' )" )
 							.arg( _wordId )
 							.arg( ui->leOnlyWords->text() )
 							.arg( SynonymTargets["ONLY_WORDS"] );

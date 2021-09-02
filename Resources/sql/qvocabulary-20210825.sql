@@ -59,5 +59,5 @@ create table VocabularyWordSynonym (
 	word_id INTEGER NOT NULL,
   	synonym_id INTEGER,
   	only_words VARCHAR(255),
-  	target VARCHAR(64)
+  	target VARCHAR(64) NOT NULL
 );

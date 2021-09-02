@@ -55,7 +55,7 @@ void VocabularySynonymsDelegate::paint(
 			word	= word.trimmed();
 
 			if ( word.size( ) ) {
-				wordId					= wordIds[wordNumber - 1].toInt();
+				wordId					= wordNumber >= wordIds.size() ? 0 : wordIds[wordNumber - 1].toInt();
 				op.rect					= textRect( option.rect, wordNumber );
 				rowWordRects[wordId]	= op.rect;
 				initStyleOption( &op, index );
@@ -98,7 +98,9 @@ bool VocabularySynonymsDelegate::editorEvent(
 				( clickY > wordRect.y() && clickY < wordRect.y() + wordRect.height() )
 			) {
 				//qDebug() << "SYNONYM CLICKED: " << wordId;
-				emit synonymClicked( wordId );
+				if ( wordId ) {
+					emit synonymClicked( wordId );
+				}
 			}
 		}
 	}
