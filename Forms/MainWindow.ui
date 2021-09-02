@@ -185,6 +185,7 @@
     <addaction name="actionPreferences"/>
     <addaction name="separator"/>
     <addaction name="actionExec_SQL_Query"/>
+    <addaction name="actionTest_Widgets"/>
    </widget>
    <widget class="QMenu" name="menuArchive">
     <property name="title">
@@ -364,6 +365,11 @@
   <action name="actionExec_SQL_Query">
    <property name="text">
     <string>&amp;Exec SQL Query</string>
+   </property>
+  </action>
+  <action name="actionTest_Widgets">
+   <property name="text">
+    <string>Test Widgets</string>
    </property>
   </action>
  </widget>

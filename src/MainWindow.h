@@ -68,6 +68,7 @@ class MainWindow : public QMainWindow
 		void on_actionAdd_to_Archive_triggered();
 		void on_actionCompair_Vocabulary_Archive_triggered();
 		void on_actionExec_SQL_Query_triggered();
+		void on_actionTest_Widgets_triggered();
 
 		void loadLanguage();
 
