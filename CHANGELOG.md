@@ -1,3 +1,11 @@
+0.19.2	|	Release date: **02.09.2021**
+============================================
+* New Features:
+  - Display All Synonyms in model.
+  - Add Dialog for Exec Sql Queries but showed in Debug Mode Only.
+  - Add OnlyWords to Synonyms.
+
+
 0.19.1	|	Release date: **31.08.2021**
 ============================================
 * New Features and Improvements and Refactoring:
