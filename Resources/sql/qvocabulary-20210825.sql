@@ -59,6 +59,5 @@ create table VocabularyWordSynonym (
 	word_id INTEGER NOT NULL,
   	synonym_id INTEGER,
   	only_words VARCHAR(255),
-  	target VARCHAR(64),
-  	FOREIGN KEY(synonym_id) REFERENCES VocabularyWordSynonym(id)
+  	target VARCHAR(64)
 );

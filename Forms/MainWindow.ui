@@ -363,7 +363,7 @@
   </action>
   <action name="actionExec_SQL_Query">
    <property name="text">
-    <string>Exec SQL Query</string>
+    <string>&amp;Exec SQL Query</string>
    </property>
   </action>
  </widget>
