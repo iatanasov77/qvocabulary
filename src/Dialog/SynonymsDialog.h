@@ -34,6 +34,7 @@ class SynonymsDialog : public QDialog
 		QList<int> selectedArchiveWords();
 		void saveVocabularySynonyms();
 		void saveArchiveSynonyms();
+		void saveOnlyWordsSynonyms();
 
 		int _wordId;
 		QWidget *vww;	// parent VocabularyWordsWidget

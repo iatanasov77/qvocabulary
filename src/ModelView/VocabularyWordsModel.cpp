@@ -166,7 +166,7 @@ void VocabularyWordsModel::_myMoveRows( int sourceRow, int destinationRow, int c
  */
 QVariant VocabularyWordsModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
-	if ( section == 6 ) {
+	if ( section == 6 && orientation == Qt::Horizontal && role == Qt::DisplayRole ) {
 		return tr( "Synonyms" );
 	} else {
 		return QxModel<Vocabulary>::headerData( section, orientation, role );
