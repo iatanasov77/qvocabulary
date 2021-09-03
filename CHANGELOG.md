@@ -1,3 +1,12 @@
+0.19.3	|	Release date: **03.09.2021**
+============================================
+* New Features:
+  - Add New Translations.Add New Translations.
+  - Add a TestWidgetsDialog in Debug Mode.
+* Bug-Fixes:
+  - Some Little Fix (Centering Vocabulary Table Header Synonyms).
+
+
 0.19.2	|	Release date: **02.09.2021**
 ============================================
 * New Features:
