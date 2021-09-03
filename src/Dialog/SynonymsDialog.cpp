@@ -47,23 +47,7 @@ void SynonymsDialog::saveSynonyms()
 {
 	saveVocabularySynonyms();
 	saveArchiveSynonyms();
-
-	QString strQuery;
-	int existId	= getOnlyWordsSynonyms()["id"].toInt();
-	if ( ui->leOnlyWords->text().length() ) {
-		if ( existId ) {
-			strQuery	= QString( "UPDATE VocabularyWordSynonym SET only_words='%1' WHERE id=%2" )
-							.arg( ui->leOnlyWords->text() )
-							.arg( QString::number( existId ) );
-		} else {
-			strQuery	= QString( "INSERT INTO VocabularyWordSynonym( word_id, only_words, target ) VALUES( %1, '%2', '%3' )" )
-							.arg( _wordId )
-							.arg( ui->leOnlyWords->text() )
-							.arg( SynonymTargets["ONLY_WORDS"] );
-		}
-
-		QSqlQuery query( strQuery, qx::QxSqlDatabase::getDatabase() );
-	}
+	saveOnlyWordsSynonyms();
 }
 
 void SynonymsDialog::initVocabularyCombo()
@@ -350,5 +334,30 @@ void SynonymsDialog::saveArchiveSynonyms()
 			}
 			query.finish();
 		}
+	}
+}
+
+void SynonymsDialog::saveOnlyWordsSynonyms()
+{
+	QString strQuery;
+	int existId	= getOnlyWordsSynonyms()["id"].toInt();
+	if ( ui->leOnlyWords->text().length() ) {
+		if ( existId ) {
+			strQuery	= QString( "UPDATE VocabularyWordSynonym SET only_words='%1' WHERE id=%2" )
+							.arg( ui->leOnlyWords->text() )
+							.arg( QString::number( existId ) );
+		} else {
+			strQuery	= QString( "INSERT INTO VocabularyWordSynonym( word_id, only_words, target ) VALUES( %1, '%2', '%3' )" )
+							.arg( _wordId )
+							.arg( ui->leOnlyWords->text() )
+							.arg( SynonymTargets["ONLY_WORDS"] );
+		}
+
+		QSqlQuery query( strQuery, qx::QxSqlDatabase::getDatabase() );
+	}
+
+	if ( ! ui->leOnlyWords->text().length() && existId ) {
+		strQuery = QString( "DELETE FROM VocabularyWordSynonym WHERE id=%1;" ).arg( existId );
+		QSqlQuery query( strQuery, qx::QxSqlDatabase::getDatabase() );
 	}
 }

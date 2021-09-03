@@ -28,6 +28,7 @@
 #include "Dialog/AddToArchiveDialog.h"
 #include "Dialog/QVocabularyImportDialog.h"
 #include "Dialog/ExecSqlQueryDialog.h"
+#include "Dialog/TestWidgetsDialog.h"
 
 MainWindow::MainWindow( QWidget *parent ) :
 	QMainWindow( parent ),
@@ -80,6 +81,7 @@ void MainWindow::initDebug()
 {
 	#ifndef QT_DEBUG
 		ui->actionExec_SQL_Query->setVisible( false );
+		ui->actionTest_Widgets->setVisible( false );
 	#endif
 }
 
@@ -617,6 +619,13 @@ void MainWindow::on_actionCompair_Vocabulary_Archive_triggered()
 	wdgCompair	= new ArchiveCompareWidget( this );
 	ui->verticalLayout_7->addWidget( wdgCompair );
 	ui->stackedWidget->setCurrentWidget( ui->pageCompairArchive );
+}
+
+void MainWindow::on_actionTest_Widgets_triggered()
+{
+	TestWidgetsDialog* dlgTestWidgets	= new TestWidgetsDialog( this );
+	dlgTestWidgets->setModal( true );
+	dlgTestWidgets->exec();
 }
 
 void MainWindow::showVocabularyWord( int wordId, int groupId )

@@ -489,6 +489,7 @@ void VocabularyWordsWidget::initView()
 
 	//ui->tableView->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
 	ui->tableView->horizontalHeader()->resizeSections( QHeaderView::ResizeToContents );
+	//ui->tableView->horizontalHeader()->setDefaultAlignment( Qt::AlignHCenter  | Qt::AlignVCenter );
 	ui->tableView->horizontalHeader()->setStretchLastSection( true );
 
 	connect(

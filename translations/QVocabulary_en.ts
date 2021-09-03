@@ -70,6 +70,29 @@
     </message>
 </context>
 <context>
+    <name>ExecSqlQueryDialog</name>
+    <message>
+        <source>Exec Sql Query</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Query:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HelpWindow</name>
     <message>
         <source>QVocabulary - Help</source>
@@ -325,6 +348,14 @@
         <source>&amp;Compair Vocabulary|Archive</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Exec SQL Query</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewDatabaseDialog</name>
@@ -565,6 +596,10 @@
         <source>Assessment:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Open Quiz</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QuizWindow</name>
@@ -776,6 +811,52 @@ Done, over and out.
     </message>
 </context>
 <context>
+    <name>SynonymsDialog</name>
+    <message>
+        <source>Edit Synonyms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vocabulary Words</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archive Words</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only Words</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-- Select Vocabulary Words --</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-- Select Archive Words --</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TestWidgetsDialog</name>
+    <message>
+        <source>Test Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exec</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TreeModel</name>
     <message>
         <source>Title</source>
@@ -836,11 +917,22 @@ Done, over and out.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Delete Group</source>
+        <source>This will erase all Words associated with this Group. Do you agree?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This will erase all Words associated with this Group. Do you agree?</source>
+        <source>Delete Vocabulary Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VocabularyTableView</name>
+    <message>
+        <source>Debug Message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Word ID: %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -864,6 +956,13 @@ Done, over and out.
     </message>
     <message>
         <source>Vocabulary</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VocabularyWordsModel</name>
+    <message>
+        <source>Synonyms</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -895,6 +994,18 @@ Done, over and out.
     </message>
     <message>
         <source>Add Word Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Synonyms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Vocabulary Words</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will erase the selected words. Do you agree?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
