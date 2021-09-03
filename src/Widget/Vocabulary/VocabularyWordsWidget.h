@@ -13,6 +13,7 @@
 
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/Vocabulary.h"
+#include "Entity/ArchiveWord.h"
 #include "Application/VsSpeaker.h"
 
 namespace Ui {
@@ -35,6 +36,7 @@ class VocabularyWordsWidget : public QWidget
 		QMap<QString, QVariant> getState();
 		void setState( QMap<QString, QVariant> state );
 		void showWord( int wordId, int groupId );
+		void showArchiveWord( int wordId, int groupId );
 
 	public slots:
 		void onDataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight );
@@ -66,7 +68,8 @@ class VocabularyWordsWidget : public QWidget
 		void initContextMenu();
 		void initTextToSpeech();
 		void adjustRowSelection();
-		void displaySearchResults( qx::QxModel<Vocabulary> *searchModel );
+		void displayVocabularySearchResults( qx::QxModel<Vocabulary> *searchModel );
+		void displayArchiveSearchResults( qx::QxModel<ArchiveWord> *searchModel );
 		bool insertFromEmptyRow( QModelIndex index );
 		void restoreHeaderSizes();
 
@@ -76,7 +79,8 @@ class VocabularyWordsWidget : public QWidget
 		QList<int> hideColumns;
 		VsSpeaker* speeker;
 
-		qx::QxModel<Vocabulary>* searchModel;
+		qx::QxModel<Vocabulary>* searchVocabularyModel;
+		qx::QxModel<ArchiveWord> *searchArchiveModel;
 		QWidget* wdgVocabulary;
 };
 
