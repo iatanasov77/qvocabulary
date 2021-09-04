@@ -237,6 +237,9 @@ void ArchiveWordsWidget::initView()
 	ui->tableView->setSelectionBehavior( QAbstractItemView::SelectRows );
 	ui->tableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
 
+	// Disable Editing
+	ui->tableView->setEditTriggers( QAbstractItemView::NoEditTriggers );
+
 	connect(
 		transcriptionsDelegate,
 		SIGNAL( buttonClicked( QModelIndex ) ),

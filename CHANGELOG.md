@@ -1,3 +1,15 @@
+0.20.0	|	Release date: **04.09.2021**
+============================================
+* New Features and Improvements:
+  - Git Ignore.
+  - Synonyms Column Draw the Selection Background.
+  - Disable Table Views Editing Where Is Not Needed.
+  - Remove Test Styling of Synonyms Delegate.
+  - Add VisualParadigm Project to docs.
+  - Add Icons of Search Results Root Items.
+  - Search in Archive from Main VocabularyWords Widget.
+
+
 0.19.3	|	Release date: **03.09.2021**
 ============================================
 * New Features:

@@ -10,14 +10,17 @@
 /.cproject
 /.backup
 /*.backup
-/InstallBuilder/*.backup
 
 ##############################
-# Examples meta data
+# Project meta data
 ##############################
+/release/
+/debug/
+/InstallBuilder/*.backup
+/docs/VisualParadigm/.*
+/docs/VisualParadigm/*.vpp.bak*
 /*/*.autosave
 /build/
-/release/
 /.qmake.stash
 /Makefile
 /Makefile.Debug
@@ -26,4 +29,6 @@
 /Help/*.qch
 /iORxYw.json
 /translations/*.qm
+/QVocabulary_resource.rc
+/QVocabulary.qxee
 

@@ -17,6 +17,8 @@
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/Vocabulary.h"
 #include "Entity/VocabularyGroup.h"
+#include "Entity/ArchiveWord.h"
+#include "Entity/ArchiveGroup.h"
 
 #include "Widget/Vocabulary/VocabularyWidget.h"
 #include "ModelView/Helper.h"
@@ -285,27 +287,21 @@ void VocabularyWordsWidget::deleteWord()
 
 void VocabularyWordsWidget::search()
 {
-	searchModel			= new qx::QxModel<Vocabulary>();
-	QString searchWord	= ui->leSearch->text();
-	QString query		= QString( "WHERE language_1 LIKE '%%1%' OR language_2 LIKE '%%1%'" ).arg( searchWord );
-	searchModel->qxFetchByQuery( query );
+	QString searchWord		= ui->leSearch->text();
+	QString query			= QString( "WHERE language_1 LIKE '%%1%' OR language_2 LIKE '%%1%'" ).arg( searchWord );
 
-	displaySearchResults( searchModel );
-}
+	searchVocabularyModel	= new qx::QxModel<Vocabulary>();
+	searchVocabularyModel->qxFetchByQuery( query );
 
-void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searchModel )
-{
-	int groupId;
-	QString groupName;
-	QMap<int, QTreeWidgetItem*> groups;
-	qx::QxModel<VocabularyGroup>* groupModel	= new qx::QxModel<VocabularyGroup>();
+	searchArchiveModel		= new qx::QxModel<ArchiveWord>();
+	searchArchiveModel->qxFetchByQuery( query );
 
+	// Clear Previous Searches
 	ui->treeWidget->clear();
 
-	QTreeWidgetItem* childItem;
+	// Set Head Titles
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	QStringList headTitles			= viewHeaders( metaInfo );
-
 	QStringList headerLabels;
 	headerLabels << "\t" + headTitles.at( 0 );
 	if ( ui->chkShowTranscriptions->isChecked() ) {
@@ -314,6 +310,32 @@ void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searc
 	headerLabels << headTitles.at( 1 );
 	ui->treeWidget->setHeaderLabels( headerLabels );
 
+	// Init Results
+	displayVocabularySearchResults( searchVocabularyModel );
+	displayArchiveSearchResults( searchArchiveModel );
+
+	// Display Results
+	ui->treeWidget->setColumnWidth( 0 , 200 );
+	ui->stackedWidget->setCurrentWidget( ui->pageSearch );
+}
+
+void VocabularyWordsWidget::displayVocabularySearchResults( qx::QxModel<Vocabulary>* searchModel )
+{
+	int groupId;
+	QString groupName;
+	QMap<int, QTreeWidgetItem*> groups;
+	qx::QxModel<VocabularyGroup>* groupModel	= new qx::QxModel<VocabularyGroup>();
+
+	if ( ! searchModel->rowCount() )
+		return;
+
+	QTreeWidgetItem* rootItem					= new QTreeWidgetItem( ui->treeWidget );
+	rootItem->setText( 0, tr( "Vocabulary" ) );
+	rootItem->setIcon( 0, QIcon( ":/Resources/icons/dictionary.svg" ) );
+	ui->treeWidget->expandItem( rootItem );
+
+	QTreeWidgetItem* childItem;
+	QMap<QString, QVariant> itemData;
 	for ( int i = 0; i < searchModel->rowCount(); ++i ) {
 		groupId	= searchModel->data( searchModel->index( i, 4 ) ).toInt();
 		if ( ! groups.contains( groupId ) ) {
@@ -323,15 +345,19 @@ void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searc
 			groupModel->qxFetchById( groupId );
 			groupName	= groupModel->data( groupModel->index( 0, 1 ) ).toString();
 
-			groups[groupId]	= new QTreeWidgetItem( ui->treeWidget );
+			groups[groupId]	= new QTreeWidgetItem();
 			groups[groupId]->setText( 0, groupName );
 			ui->treeWidget->expandItem( groups[groupId] );
+			rootItem->addChild( groups[groupId] );
 		}
 
 		childItem = new QTreeWidgetItem();
+		// Set Item Data
+		itemData["where"]	= "Vocabulary";
+		itemData["id"]		= searchModel->data( searchModel->index( i, 0 ) );
+		childItem->setData( 0, Qt::UserRole, itemData );
 
 		childItem->setText( 0, searchModel->data( searchModel->index( i, 1 ) ).toString() );
-		childItem->setData( 0, Qt::UserRole, searchModel->data( searchModel->index( i, 0 ) ) );
 		if ( ui->chkShowTranscriptions->isChecked() ) {
 			QFont font;
 			font.setBold( true );
@@ -345,11 +371,61 @@ void VocabularyWordsWidget::displaySearchResults( qx::QxModel<Vocabulary>* searc
 
 		groups[groupId]->addChild( childItem );
 	}
+}
 
-	// Resize Columns
-	ui->treeWidget->setColumnWidth( 0 , 200 );
+void VocabularyWordsWidget::displayArchiveSearchResults( qx::QxModel<ArchiveWord>* searchModel )
+{
+	int groupId;
+	QString groupName;
+	QMap<int, QTreeWidgetItem*> groups;
+	qx::QxModel<ArchiveGroup>* groupModel	= new qx::QxModel<ArchiveGroup>();
 
-	ui->stackedWidget->setCurrentWidget( ui->pageSearch );
+	if ( ! searchModel->rowCount() )
+		return;
+
+	QTreeWidgetItem* rootItem					= new QTreeWidgetItem( ui->treeWidget );
+	rootItem->setText( 0, tr( "Archive" ) );
+	rootItem->setIcon( 0, QIcon( ":/Resources/icons/archive.svg" ) );
+	ui->treeWidget->expandItem( rootItem );
+
+	QTreeWidgetItem* childItem;
+	QMap<QString, QVariant> itemData;
+	for ( int i = 0; i < searchModel->rowCount(); ++i ) {
+		groupId	= searchModel->data( searchModel->index( i, 4 ) ).toInt();
+		if ( ! groups.contains( groupId ) ) {
+			ArchiveGroupPtr group;
+			group.reset( new ArchiveGroup() );
+			group->id 	= groupId;
+			groupModel->qxFetchById( groupId );
+			groupName	= groupModel->data( groupModel->index( 0, 1 ) ).toString();
+
+			groups[groupId]	= new QTreeWidgetItem();
+			groups[groupId]->setText( 0, groupName );
+			ui->treeWidget->expandItem( groups[groupId] );
+			rootItem->addChild( groups[groupId] );
+		}
+
+		childItem = new QTreeWidgetItem();
+
+		// Set Item Data
+		itemData["where"]	= "Archive";
+		itemData["id"]		= searchModel->data( searchModel->index( i, 0 ) );
+		childItem->setData( 0, Qt::UserRole, itemData );
+
+		childItem->setText( 0, searchModel->data( searchModel->index( i, 1 ) ).toString() );
+		if ( ui->chkShowTranscriptions->isChecked() ) {
+			QFont font;
+			font.setBold( true );
+			childItem->setText( 1, searchModel->data( searchModel->index( i, 2 ) ).toString() );
+			childItem->setFont( 1, font );
+
+			childItem->setText( 2, searchModel->data( searchModel->index( i, 3 ) ).toString() );
+		} else {
+			childItem->setText( 1, searchModel->data( searchModel->index( i, 3 ) ).toString() );
+		}
+
+		groups[groupId]->addChild( childItem );
+	}
 }
 
 void VocabularyWordsWidget::changeEvent( QEvent* event )
@@ -534,20 +610,38 @@ void VocabularyWordsWidget::showWord( QTreeWidgetItem* item, int column )
 {
 	Q_UNUSED( column );
 
-	if ( ! searchModel ) {
+	if ( ! searchVocabularyModel ) {
 		return;
 	}
 
-	int groupId	= 1;
-	int wordId	= item->data( 0, Qt::UserRole ).toInt();
-	for ( int i = 0; i < searchModel->rowCount(); ++i ) {
-		if ( searchModel->data( searchModel->index( i, 0 ) ).toInt() == wordId ) {
-			groupId	= searchModel->data( searchModel->index( i, 4 ) ).toInt();
-			//qDebug() << "Search Model Word Founded. Group ID: " << groupId;
+	int wordId;
+	int groupId;
+	QMap<QString, QVariant> itemData	= item->data( 0, Qt::UserRole ).toMap();
+	if ( itemData["where"].toString() == "Vocabulary" ) {
+		wordId	= itemData["id"].toInt();
+		groupId	= 1;
+		for ( int i = 0; i < searchVocabularyModel->rowCount(); ++i ) {
+			if ( searchVocabularyModel->data( searchVocabularyModel->index( i, 0 ) ).toInt() == wordId ) {
+				groupId	= searchVocabularyModel->data( searchVocabularyModel->index( i, 4 ) ).toInt();
+				//qDebug() << "Search Model Word Founded. Group ID: " << groupId;
+			}
 		}
+
+		showWord( wordId, groupId );
 	}
 
-	showWord( wordId, groupId );
+	if ( itemData["where"].toString() == "Archive" ) {
+		wordId	= itemData["id"].toInt();
+		groupId	= 1;
+		for ( int i = 0; i < searchArchiveModel->rowCount(); ++i ) {
+			if ( searchArchiveModel->data( searchArchiveModel->index( i, 0 ) ).toInt() == wordId ) {
+				groupId	= searchArchiveModel->data( searchArchiveModel->index( i, 4 ) ).toInt();
+				//qDebug() << "Search Model Word Founded. Group ID: " << groupId;
+			}
+		}
+
+		showArchiveWord( wordId, groupId );
+	}
 }
 
 void VocabularyWordsWidget::showWord( int wordId, int groupId )
@@ -565,6 +659,12 @@ void VocabularyWordsWidget::showWord( int wordId, int groupId )
 
 	ui->tableView->setCurrentIndex( wordsModelIndex );
 	ui->tableView->scrollTo( wordsModelIndex );
+}
+
+void VocabularyWordsWidget::showArchiveWord( int wordId, int groupId )
+{
+	Q_UNUSED( wordId );
+	Q_UNUSED( groupId );
 }
 
 bool VocabularyWordsWidget::insertFromEmptyRow( QModelIndex index )
