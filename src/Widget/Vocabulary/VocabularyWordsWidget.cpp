@@ -326,8 +326,12 @@ void VocabularyWordsWidget::displayVocabularySearchResults( qx::QxModel<Vocabula
 	QMap<int, QTreeWidgetItem*> groups;
 	qx::QxModel<VocabularyGroup>* groupModel	= new qx::QxModel<VocabularyGroup>();
 
+	if ( ! searchModel->rowCount() )
+		return;
+
 	QTreeWidgetItem* rootItem					= new QTreeWidgetItem( ui->treeWidget );
 	rootItem->setText( 0, tr( "Vocabulary" ) );
+	rootItem->setIcon( 0, QIcon( ":/Resources/icons/dictionary.svg" ) );
 	ui->treeWidget->expandItem( rootItem );
 
 	QTreeWidgetItem* childItem;
@@ -376,8 +380,12 @@ void VocabularyWordsWidget::displayArchiveSearchResults( qx::QxModel<ArchiveWord
 	QMap<int, QTreeWidgetItem*> groups;
 	qx::QxModel<ArchiveGroup>* groupModel	= new qx::QxModel<ArchiveGroup>();
 
+	if ( ! searchModel->rowCount() )
+		return;
+
 	QTreeWidgetItem* rootItem					= new QTreeWidgetItem( ui->treeWidget );
 	rootItem->setText( 0, tr( "Archive" ) );
+	rootItem->setIcon( 0, QIcon( ":/Resources/icons/archive.svg" ) );
 	ui->treeWidget->expandItem( rootItem );
 
 	QTreeWidgetItem* childItem;
@@ -611,6 +619,7 @@ void VocabularyWordsWidget::showWord( QTreeWidgetItem* item, int column )
 	QMap<QString, QVariant> itemData	= item->data( 0, Qt::UserRole ).toMap();
 	if ( itemData["where"].toString() == "Vocabulary" ) {
 		wordId	= itemData["id"].toInt();
+		groupId	= 1;
 		for ( int i = 0; i < searchVocabularyModel->rowCount(); ++i ) {
 			if ( searchVocabularyModel->data( searchVocabularyModel->index( i, 0 ) ).toInt() == wordId ) {
 				groupId	= searchVocabularyModel->data( searchVocabularyModel->index( i, 4 ) ).toInt();
@@ -623,6 +632,7 @@ void VocabularyWordsWidget::showWord( QTreeWidgetItem* item, int column )
 
 	if ( itemData["where"].toString() == "Archive" ) {
 		wordId	= itemData["id"].toInt();
+		groupId	= 1;
 		for ( int i = 0; i < searchArchiveModel->rowCount(); ++i ) {
 			if ( searchArchiveModel->data( searchArchiveModel->index( i, 0 ) ).toInt() == wordId ) {
 				groupId	= searchArchiveModel->data( searchArchiveModel->index( i, 4 ) ).toInt();
@@ -653,7 +663,8 @@ void VocabularyWordsWidget::showWord( int wordId, int groupId )
 
 void VocabularyWordsWidget::showArchiveWord( int wordId, int groupId )
 {
-
+	Q_UNUSED( wordId );
+	Q_UNUSED( groupId );
 }
 
 bool VocabularyWordsWidget::insertFromEmptyRow( QModelIndex index )
