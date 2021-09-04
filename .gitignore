@@ -10,6 +10,12 @@
 /.cproject
 /.backup
 /*.backup
+
+##############################
+# Project meta data
+##############################
+/release/
+/debug/
 /InstallBuilder/*.backup
 /docs/VisualParadigm/.*
 /docs/VisualParadigm/*.vpp.bak*
