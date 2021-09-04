@@ -11,6 +11,8 @@
 /.backup
 /*.backup
 /InstallBuilder/*.backup
+/docs/VisualParadigm/.*
+/docs/VisualParadigm/*.vpp.bak*
 
 ##############################
 # Examples meta data
