@@ -78,7 +78,13 @@ Qt::DropActions VocabularyWordsModel::supportedDropActions() const
 
 Qt::ItemFlags VocabularyWordsModel::flags( const QModelIndex & index ) const
 {
-	Qt::ItemFlags defaultFlags	= Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+	Qt::ItemFlags defaultFlags;
+	if ( index.column() == 6 ) {
+		defaultFlags	= Qt::ItemIsEnabled | Qt::ItemIsSelectable;
+	} else {
+		defaultFlags	= Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsEditable;
+	}
+
 	if ( index.isValid() )
 		return Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | defaultFlags;
 	else
