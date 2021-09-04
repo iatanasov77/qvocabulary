@@ -29,4 +29,6 @@
 /Help/*.qch
 /iORxYw.json
 /translations/*.qm
+/QVocabulary_resource.rc
+/QVocabulary.qxee
 
