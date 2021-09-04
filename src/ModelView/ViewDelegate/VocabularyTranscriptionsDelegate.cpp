@@ -18,12 +18,10 @@ void VocabularyTranscriptionsDelegate::paint(
 	const QStyleOptionViewItem &option,
 	const QModelIndex &index
 ) const {
-	if ( ! index.isValid() || isEmptyLine( index ) ) {
-		return;
-	}
+	if ( ! index.isValid() || isEmptyLine( index ) )
+		QStyledItemDelegate::paint( painter, option, QModelIndex() );	// draw the selection background only
 
 	//setCursor( option, index );
-
 	QStyleOptionViewItem op( option );
 	initStyleOption( &op, index );
 	op.font.setBold( true );

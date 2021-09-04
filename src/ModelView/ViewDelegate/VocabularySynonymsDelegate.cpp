@@ -29,7 +29,7 @@ void VocabularySynonymsDelegate::paint(
 	const QModelIndex &index
 ) const {
 	if ( ! index.isValid() || isEmptyLine( index ) )
-		return;
+		QStyledItemDelegate::paint( painter, option, QModelIndex() );	// draw the selection background only
 
 	if ( index.column() == 6 ) {
 		QStyledItemDelegate::paint( painter, option, QModelIndex() );	// Called parent with empty Index
@@ -129,24 +129,30 @@ void VocabularySynonymsDelegate::createWord( QPainter *painter, QStyleOptionView
 {
 	Q_UNUSED( index );
 
+	//	VsClickableLabel *widget = new VsClickableLabel();
+	//	widget->setText(  text );
+
+
+	VsIconLabel *widget = new VsIconLabel( ":/Resources/icons/dictionary.svg", text );
+	widget->setProperty( "labelData", wordId );
+	widget->setCursor( QCursor( Qt::PointingHandCursor ) );
+	widget->setStyleSheet( "QLabel { border: 1px solid gray; border-radius: 2px; background-color: white; padding: 0px 5px 10px 15px; margin: 20px; }");
+
+	op.widget	= widget;
+	op.icon 	= QIcon( ":/Resources/icons/dictionary.svg" );
+	op.text		= text;
 	op.font.setBold( true );
 	op.font.setUnderline( true );
 
-//	VsClickableLabel *widget = new VsClickableLabel();
-//	widget->setText(  text );
-	VsIconLabel *widget = new VsIconLabel( ":/Resources/icons/dictionary.svg", text );
-	widget->setProperty( "labelData", wordId );
-	//widget->setStyleSheet( "QLabel { border: 1px solid gray; border-radius: 2px; background-color: white; padding: 0px 5px 10px 15px; margin: 20px; }");
-	widget->setCursor( QCursor( Qt::PointingHandCursor ) );
-
-	op.widget		= widget;
-	op.text			= text;
-
 	QStyle *style	= widget ? widget->style() : QApplication::style();
 	style->drawControl( QStyle::CE_ItemViewItem, &op, painter, widget );
-	//style->drawControl( QStyle::CE_PushButton, &op, painter, widget );
-	//style->drawControl( QStyle::CE_FocusFrame, &op, painter, widget );
-	//style->drawControl( QStyle::CE_ShapedFrame, &op, painter, widget );
+
+
+//	QStyleOptionButton wordItem;
+//	wordItem.icon 	= QIcon( ":/Resources/icons/dictionary.svg" );
+//	wordItem.text	= text;
+//	QStyle *style	= op.widget ? op.widget->style() : QApplication::style();
+//	style->drawControl( QStyle::CE_PushButton, &wordItem, painter, op.widget );
 }
 
 QStyleOptionButton VocabularySynonymsDelegate::createButton( QRect buttonRect  ) const
@@ -157,6 +163,7 @@ QStyleOptionButton VocabularySynonymsDelegate::createButton( QRect buttonRect  )
 	button.icon 	= QIcon( ":/Resources/icons/column-management.svg" );
 	button.iconSize	= QSize( 16, 16 );
 	button.state 	= QStyle::State_Enabled;
+	//button.text		= "LKVBSFKDBLF";
 
 	return button;
 }
