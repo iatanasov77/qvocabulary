@@ -32,6 +32,8 @@ void VocabularySynonymsDelegate::paint(
 		return;
 
 	if ( index.column() == 6 ) {
+		QStyledItemDelegate::paint( painter, option, QModelIndex() );	// Called parent with empty Index
+																		// to draw the selection background only
 		painter->save();
 
 		// Button
