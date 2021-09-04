@@ -144,6 +144,9 @@ void VocabularySynonymsDelegate::createWord( QPainter *painter, QStyleOptionView
 
 	QStyle *style	= widget ? widget->style() : QApplication::style();
 	style->drawControl( QStyle::CE_ItemViewItem, &op, painter, widget );
+	//style->drawControl( QStyle::CE_PushButton, &op, painter, widget );
+	//style->drawControl( QStyle::CE_FocusFrame, &op, painter, widget );
+	//style->drawControl( QStyle::CE_ShapedFrame, &op, painter, widget );
 }
 
 QStyleOptionButton VocabularySynonymsDelegate::createButton( QRect buttonRect  ) const
