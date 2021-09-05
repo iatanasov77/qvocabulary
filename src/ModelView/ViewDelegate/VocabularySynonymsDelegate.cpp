@@ -39,7 +39,8 @@ void VocabularySynonymsDelegate::paint(
 		// Button
 		QStyleOptionButton button	= createButton( buttonRect( option.rect ) );
 		QStyle *style				= option.widget ? option.widget->style() : QApplication::style();
-		style->drawControl( QStyle::CE_PushButton, &button, painter, option.widget );
+		if ( ! isEmptyLine( index ) )
+			style->drawControl( QStyle::CE_PushButton, &button, painter, option.widget );
 
 		// Links to Synonyms
 		QString text			= index.data( Qt::DisplayRole ).toString();
