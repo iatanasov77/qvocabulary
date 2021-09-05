@@ -62,7 +62,10 @@ void TestDelegate::createWidget( QPainter *painter, QStyleOptionViewItem op, QMo
 {
 	Q_UNUSED( index );
 
-	op.icon 	= QIcon( ":/Resources/icons/dictionary.svg" );
+	op.features 		|= QStyleOptionViewItem::HasDecoration;
+	op.icon 			= QIcon( ":/Resources/icons/dictionary.svg" );
+	op.decorationSize	= QSize( 16, 16 );
+
 	op.text		= text;
 	op.font.setBold( true );
 	op.font.setUnderline( true );
