@@ -16,7 +16,7 @@ class SynonymsDialog : public QDialog
     Q_OBJECT
 
 	public:
-		explicit SynonymsDialog( int wordId, QWidget *parent = 0 );
+		explicit SynonymsDialog( QMap<QString, QVariant> word, QWidget *parent = 0 );
 		~SynonymsDialog();
 
 	private:

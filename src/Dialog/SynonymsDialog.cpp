@@ -20,14 +20,15 @@
 #include "ModelView/VocabularyWordsModel.h"
 #include "../lib/VankoSoft/Model/VsComboBoxModel.h"
 
-SynonymsDialog::SynonymsDialog( int wordId, QWidget *parent ) :
+SynonymsDialog::SynonymsDialog( QMap<QString, QVariant> word, QWidget *parent ) :
     QDialog( parent ),
     ui( new Ui::SynonymsDialog )
 {
     ui->setupUi( this );
 
     vww = parent;	// parent VocabularyWordsWidget
-	_wordId	= wordId;
+	_wordId	= word["id"].toInt();
+	ui->lblDescription->setText( QString( tr( "Synonyms for word" ) + ": `%1`" ).arg( word["text"].toString() ) );
 
     initVocabularyCombo();
     initArchiveCombo();
