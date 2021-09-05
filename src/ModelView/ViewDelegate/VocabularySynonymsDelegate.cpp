@@ -12,7 +12,7 @@
 #include "../lib/VankoSoft/Widget/VsClickableLabel.h"
 #include "../lib/VankoSoft/Widget/VsIconLabel.h"
 
-static int countWords;
+int VocabularySynonymsDelegate::countWords;
 QMap<int, QMap<int, QRect>> VocabularySynonymsDelegate::wordRects;
 
 /*
@@ -31,7 +31,10 @@ void VocabularySynonymsDelegate::paint(
 	if ( ! index.isValid() || isEmptyLine( index ) )
 		QStyledItemDelegate::paint( painter, option, QModelIndex() );	// draw the selection background only
 
+
 	if ( index.column() == 6 ) {
+		//VocabularySynonymsDelegate::countWords	= 0;
+		//VocabularySynonymsDelegate::wordRects.clear();
 		QStyledItemDelegate::paint( painter, option, QModelIndex() );	// Called parent with empty Index
 																		// to draw the selection background only
 		painter->save();
@@ -46,10 +49,8 @@ void VocabularySynonymsDelegate::paint(
 		QString text			= index.data( Qt::DisplayRole ).toString();
 		QList<QVariant> wordIds	= index.data( Qt::UserRole ).toList();
 		QStringList words		= text.split( "," );
-		countWords				= words.size();
+		VocabularySynonymsDelegate::countWords				= words.size();
 		QStyleOptionViewItem op( option );
-
-		//qDebug() << "COUNT WORD IDS: " << wordIds.size();
 
 		int wordId;
 		int wordNumber	= 1;
@@ -58,9 +59,10 @@ void VocabularySynonymsDelegate::paint(
 			word	= word.trimmed();
 
 			if ( word.size( ) ) {
-				wordId					= wordNumber >= wordIds.size() ? 0 : wordIds[wordNumber - 1].toInt();
+				wordId					= wordNumber > wordIds.size() ? 0 : wordIds[wordNumber - 1].toInt();
 				op.rect					= textRect( option.rect, wordNumber );
-				rowWordRects[wordId]	= op.rect;
+				if ( wordId )
+					rowWordRects[wordId]	= op.rect;
 				initStyleOption( &op, index );
 				createWord( painter, op, index, word, wordId );
 				wordNumber++;
@@ -94,8 +96,10 @@ bool VocabularySynonymsDelegate::editorEvent(
 		}
 
 		QRect wordRect;
+		//qDebug() << "DELEGATE WORD IDS: " << VocabularySynonymsDelegate::wordRects[index.row()].keys();
 		foreach ( int wordId, VocabularySynonymsDelegate::wordRects[index.row()].keys() ) {
-			wordRect	= wordRects[index.row()][wordId];
+			wordRect	= VocabularySynonymsDelegate::wordRects[index.row()][wordId];
+			//qDebug() << "SYNONYM CLICKED: " << wordId;
 			if(
 				( clickX > wordRect.x() && clickX < wordRect.x() + wordRect.width() ) &&
 				( clickY > wordRect.y() && clickY < wordRect.y() + wordRect.height() )
@@ -176,8 +180,8 @@ QRect VocabularySynonymsDelegate::textRect( QRect cellRect, int wordNumber ) con
 	int x 		= cellRect.left();
 	int y 		= cellRect.top();
 	int w 		= cellRect.width() - btnSize;
-	if ( countWords ) {
-		w	= w / countWords;
+	if ( VocabularySynonymsDelegate::countWords ) {
+		w	= w / VocabularySynonymsDelegate::countWords;
 		if ( wordNumber > 1 )
 			x	= x + ( w * ( wordNumber - 1 ) );
 	}

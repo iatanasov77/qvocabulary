@@ -189,16 +189,17 @@ QVariant VocabularyWordsModel::data( const QModelIndex &index, int role ) const
 		QMap<QString, QVariant> archiveSynonyms		= getArchiveSynonyms( index );
 		QString onlyWordsSynonyms					= getOnlyWordsSynonyms( index );
 
+		//qDebug() << "INIT WORD IDS: " << synonymIds;
 		if ( vocabularySynonyms["words"].toString().length() ) {
 			synonyms	= vocabularySynonyms["words"].toString();
 			synonymIds	= vocabularySynonyms["ids"].toList();
 		}
-
+		//qDebug() << "VOCABULARY WORD IDS: " << synonymIds;
 		if ( archiveSynonyms["words"].toString().length() ) {
 			synonyms.append( QString ( ", %1" ).arg( archiveSynonyms["words"].toString() ) );
 			synonymIds.append( archiveSynonyms["ids"].toList() );
 		}
-
+		//qDebug() << "ARCHIVE WORD IDS: " << synonymIds;
 		if ( onlyWordsSynonyms.length() ) {
 			synonyms.append( QString ( ", %1" ).arg( onlyWordsSynonyms ) );
 		}

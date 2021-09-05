@@ -18,6 +18,7 @@ class VocabularySynonymsDelegate : public QStyledItemDelegate
 
 	private:
 		QObject *view;
+		static int countWords;
 		static QMap<int, QMap<int, QRect>> wordRects; // <int row, QMap words>
 
 		QRect textRect( QRect cellRect, int wordNumber = 1 ) const;
