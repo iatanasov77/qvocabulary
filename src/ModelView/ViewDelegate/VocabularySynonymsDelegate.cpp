@@ -59,21 +59,25 @@ bool VocabularySynonymsDelegate::editorEvent(
 	const QStyleOptionViewItem &option,
 	const QModelIndex &index
 ) {
-	if ( event->type() == QEvent::MouseButtonRelease ) {
-		QMouseEvent* e	= ( QMouseEvent* )event;
-		int clickX		= e->x();
-		int clickY		= e->y();
+	QRect btnRect;
+	QRect wordRect;
+	QMouseEvent* e	= ( QMouseEvent* )event;
+	int clickX		= e->x();
+	int clickY		= e->y();
 
-		QRect btnRect	= buttonRect( option.rect );
+	if ( event->type() == QEvent::MouseButtonRelease ) {
+		btnRect	= buttonRect( option.rect );
 		if(
 			( clickX > btnRect.x() && clickX < btnRect.x() + btnRect.width() ) &&
 			( clickY > btnRect.y() && clickY < btnRect.y() + btnRect.height() )
 		) {
 			emit buttonClicked( index );
 		}
+	}
 
-		QRect wordRect;
-		//qDebug() << "DELEGATE WORD IDS: " << VocabularySynonymsDelegate::wordRects[index.row()].keys();
+	if ( event->type() == QEvent::MouseButtonDblClick ) {
+		//qDebug() << "DELEGATE EVENT WORD IDS: " << VocabularySynonymsDelegate::wordRects[index.row()].keys();
+
 		foreach ( int wordId, VocabularySynonymsDelegate::wordRects[index.row()].keys() ) {
 			wordRect	= VocabularySynonymsDelegate::wordRects[index.row()][wordId];
 			//qDebug() << "SYNONYM CLICKED: " << wordId;
@@ -123,22 +127,25 @@ void VocabularySynonymsDelegate::createWords( QPainter *painter, QStyleOptionVie
 	QList<QVariant> wordIds;
 	QList<QVariant> vocabularyWordIds	= userData.value( SynonymTargets["VOCABULARY"] ).toList();
 	QList<QVariant> archiveWordIds		= userData.value( SynonymTargets["ARCHIVE"] ).toList();
+	//qDebug() << "VOCABULARY WORD IDS: " << vocabularyWordIds;
+	//qDebug() << "ARCHIVE WORD IDS: " << archiveWordIds;
 
 	QString wordTarget	= SynonymTargets["VOCABULARY"];
-	wordIds	= vocabularyWordIds;
+	wordIds				= vocabularyWordIds;
 	foreach( QString word, words ) {
 		if ( wordTarget == SynonymTargets["VOCABULARY"] && wordIdIndex >= vocabularyWordIds.size() ) {
 			wordTarget	= SynonymTargets["ARCHIVE"];
-			wordIds		= userData.value( wordTarget ).toList();
+			wordIds		= archiveWordIds;
 			wordIdIndex	= 0;
 		}
 		else if ( wordTarget == SynonymTargets["ARCHIVE"] && wordIdIndex >= archiveWordIds.size() ) {
 			wordTarget	= SynonymTargets["ONLY_WORDS"];
 		}
 
-		wordId	= ( wordTarget == SynonymTargets["ONLY_WORDS"] || ! wordIds.contains( wordIdIndex ) ) ?
+		wordId	= ( ( wordTarget == SynonymTargets["ONLY_WORDS"] ) || ( wordIdIndex >= wordIds.size() ) ) ?
 									0 : wordIds[wordIdIndex].toInt();
 		word	= word.trimmed();
+		//qDebug() << "DELEGATE WORD ID: " << wordId;
 		if ( word.size( ) ) {
 			wordRect	= createWord( painter, option, index, word, wordId, wordNumber, wordTarget );
 			if ( wordRect.firstKey() )
@@ -149,6 +156,7 @@ void VocabularySynonymsDelegate::createWords( QPainter *painter, QStyleOptionVie
 		}
 	}
 	VocabularySynonymsDelegate::wordRects[index.row()]	= rowWordRects;
+	//qDebug() << "DELEGATE WORD IDS: " << rowWordRects.keys();
 }
 
 QMap<int, QRect> VocabularySynonymsDelegate::createWord(
@@ -163,12 +171,8 @@ QMap<int, QRect> VocabularySynonymsDelegate::createWord(
 	QMap<int, QRect> rowWordRects;
 	QStyleOptionViewItem op( option );
 
-	op.rect	= textRect( option.rect, wordNumber );
-	if ( wordId ) {
-		rowWordRects[wordId]	= wordId ? op.rect : QRect();
-	} else {
-		rowWordRects[wordId]	= wordId ? op.rect : QRect();
-	}
+	op.rect					= textRect( option.rect, wordNumber );
+	rowWordRects[wordId]	= wordId ? op.rect : QRect();
 
 	initStyleOption( &op, index );
 
