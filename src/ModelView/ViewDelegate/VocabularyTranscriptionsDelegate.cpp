@@ -30,7 +30,8 @@ void VocabularyTranscriptionsDelegate::paint(
 	QStyle *style				= option.widget ? option.widget->style() : QApplication::style();
 
 	//option.widget->setCursor( QCursor( Qt::PointingHandCursor ) );
-	style->drawControl( QStyle::CE_PushButton, &button, painter, option.widget );
+	if ( ! isEmptyLine( index ) )
+		style->drawControl( QStyle::CE_PushButton, &button, painter, option.widget );
 
 	op.rect	= textRect( option.rect );
 	QStyledItemDelegate::paint( painter, op, index );

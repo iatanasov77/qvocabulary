@@ -18,11 +18,22 @@ class VocabularySynonymsDelegate : public QStyledItemDelegate
 
 	private:
 		QObject *view;
+		static int countWords;
 		static QMap<int, QMap<int, QRect>> wordRects; // <int row, QMap words>
 
 		QRect textRect( QRect cellRect, int wordNumber = 1 ) const;
+		void createWords( QPainter *painter, QStyleOptionViewItem option, QModelIndex index ) const;
+		QMap<int, QRect> createWord(
+			QPainter *painter,
+			QStyleOptionViewItem option,
+			QModelIndex index,
+			QString word,
+			int wordId,
+			int wordNumber,
+			QString wordTarget
+		) const;
+
 		QRect buttonRect( QRect cellRect ) const;
-		void createWord( QPainter *painter, QStyleOptionViewItem op, QModelIndex index, QString text, int wordId ) const;
 		QStyleOptionButton createButton( QRect rect  ) const;
 		bool isEmptyLine( const QModelIndex index ) const;
 

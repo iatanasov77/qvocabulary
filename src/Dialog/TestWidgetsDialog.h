@@ -19,6 +19,10 @@ class TestWidgetsDialog : public QDialog
 		QWidget *mw;	// parent MainWindow
 	    Ui::TestWidgetsDialog *ui;
 
+	    void testWidgets();
+	    void testIconLabel();
+	    void testIconWidgetsDelegate();
+
 	private slots:
 		void execSomething();
 		void closeDialog();

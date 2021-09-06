@@ -1,3 +1,16 @@
+0.20.1	|	Release date: **06.09.2021**
+============================================
+* New Features and Improvements:
+  - Add Description of the SynonymsDialog.
+  - Set Left Margins of VsMultiSelectComboBox Items.
+  - Add Icons to Synonyms Words.
+* Bug-Fixes, Improvements and Debug Features:
+  - Testing Delegate With Multiple Widgets with Icons.
+  - Add Testing Widget For Delegate With Multiple Widgets.
+  - Debug and Fix Synonyms Clicked Event.
+  - Dont show Transcription and Synonyms Buttons on EmptyLines.
+
+
 0.20.0	|	Release date: **04.09.2021**
 ============================================
 * New Features and Improvements:

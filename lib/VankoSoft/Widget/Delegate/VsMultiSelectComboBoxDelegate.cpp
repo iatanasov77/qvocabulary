@@ -21,7 +21,11 @@ void VsMultiSelectComboBoxDelegate::paint( QPainter *painter, const QStyleOption
 	opt.state |= value ? QStyle::State_On : QStyle::State_Off;
 	opt.state |= QStyle::State_Enabled;
 	opt.text = text;
-	opt.rect = option.rect;
+
+	QRect itemRect	= option.rect;
+	itemRect.setLeft( itemRect.left() + 7 );
+	//itemRect.setHeight( itemRect.height() + 5 );
+	opt.rect 		= itemRect;
 
 	// draw item data as CheckBox
 	style->drawControl( QStyle::CE_CheckBox, &opt, painter );

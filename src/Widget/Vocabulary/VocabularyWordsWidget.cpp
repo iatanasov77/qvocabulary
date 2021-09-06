@@ -702,10 +702,11 @@ void VocabularyWordsWidget::restoreHeaderSizes()
 
 void VocabularyWordsWidget::editSynonyms( const QModelIndex &index )
 {
-    int wordId	= index.siblingAtColumn( 0 ).data().toInt();
-    //qDebug() << "EDIT SYNONYMS FOR WORD: " << wordId;
+	QMap<QString, QVariant> word;
+    word["id"]		= index.siblingAtColumn( 0 ).data();
+    word["text"]	= index.siblingAtColumn( 1 ).data();
 
-    SynonymsDialog *dlgSynonyms	= new SynonymsDialog( wordId, this );
+    SynonymsDialog *dlgSynonyms	= new SynonymsDialog( word, this );
     dlgSynonyms->setModal( true );
 	if ( dlgSynonyms->exec() == QDialog::Accepted ) {
 		//initArchiveWidget();
