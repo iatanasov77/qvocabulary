@@ -183,7 +183,7 @@ QVariant VocabularyWordsModel::data( const QModelIndex &index, int role ) const
 {
 	if ( index.column() == 6 ) {
 		QString synonyms;
-		QList<QVariant> synonymIds;
+		QMap<QString, QVariant> userData;
 
 		QMap<QString, QVariant> vocabularySynonyms	= getVocabularySynonyms( index );
 		QMap<QString, QVariant> archiveSynonyms		= getArchiveSynonyms( index );
@@ -192,22 +192,23 @@ QVariant VocabularyWordsModel::data( const QModelIndex &index, int role ) const
 		//qDebug() << "INIT WORD IDS: " << synonymIds;
 		if ( vocabularySynonyms["words"].toString().length() ) {
 			synonyms	= vocabularySynonyms["words"].toString();
-			synonymIds	= vocabularySynonyms["ids"].toList();
+			userData.insert( SynonymTargets["VOCABULARY"], vocabularySynonyms["ids"] );
 		}
 		//qDebug() << "VOCABULARY WORD IDS: " << synonymIds;
 		if ( archiveSynonyms["words"].toString().length() ) {
 			synonyms.append( QString ( ", %1" ).arg( archiveSynonyms["words"].toString() ) );
-			synonymIds.append( archiveSynonyms["ids"].toList() );
+			userData.insert( SynonymTargets["ARCHIVE"], archiveSynonyms["ids"] );
 		}
 		//qDebug() << "ARCHIVE WORD IDS: " << synonymIds;
 		if ( onlyWordsSynonyms.length() ) {
 			synonyms.append( QString ( ", %1" ).arg( onlyWordsSynonyms ) );
+			userData.insert( SynonymTargets["ONLY_WORDS"], QList<QVariant>() );
 		}
 
 		if ( role == Qt::DisplayRole ) {
 			return synonyms;
 		} else if ( role == Qt::UserRole ) {
-			return synonymIds;
+			return userData;
 		}
 	}
 

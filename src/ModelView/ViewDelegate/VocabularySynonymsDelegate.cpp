@@ -8,6 +8,7 @@
 #include <QPainter>
 #include <QTextDocument>
 
+#include "GlobalTypes.h"
 #include "ModelView/VocabularyTableView.h"
 #include "../lib/VankoSoft/Widget/VsClickableLabel.h"
 #include "../lib/VankoSoft/Widget/VsIconLabel.h"
@@ -45,30 +46,7 @@ void VocabularySynonymsDelegate::paint(
 		if ( ! isEmptyLine( index ) )
 			style->drawControl( QStyle::CE_PushButton, &button, painter, option.widget );
 
-		// Links to Synonyms
-		QString text			= index.data( Qt::DisplayRole ).toString();
-		QList<QVariant> wordIds	= index.data( Qt::UserRole ).toList();
-		QStringList words		= text.split( "," );
-		VocabularySynonymsDelegate::countWords				= words.size();
-		QStyleOptionViewItem op( option );
-
-		int wordId;
-		int wordNumber	= 1;
-		QMap<int, QRect> rowWordRects;
-		foreach( QString word, words ) {
-			word	= word.trimmed();
-
-			if ( word.size( ) ) {
-				wordId					= wordNumber > wordIds.size() ? 0 : wordIds[wordNumber - 1].toInt();
-				op.rect					= textRect( option.rect, wordNumber );
-				if ( wordId )
-					rowWordRects[wordId]	= op.rect;
-				initStyleOption( &op, index );
-				createWord( painter, op, index, word, wordId );
-				wordNumber++;
-			}
-		}
-		VocabularySynonymsDelegate::wordRects[index.row()]	= rowWordRects;
+		createWords( painter, option, index );
 
 		painter->restore();
 	} else {
@@ -130,34 +108,89 @@ QWidget* VocabularySynonymsDelegate::createEditor(
 	return editor;
 }
 
-void VocabularySynonymsDelegate::createWord( QPainter *painter, QStyleOptionViewItem op, QModelIndex index, QString text, int wordId ) const
+void VocabularySynonymsDelegate::createWords( QPainter *painter, QStyleOptionViewItem option, QModelIndex index ) const
 {
-	Q_UNUSED( index );
+	QMap<QString, QVariant> userData		= index.data( Qt::UserRole ).toMap();
+	QString text							= index.data( Qt::DisplayRole ).toString();
+	QStringList words						= text.split( "," );
+	VocabularySynonymsDelegate::countWords	= words.size();
 
-	//	VsClickableLabel *widget = new VsClickableLabel();
-	//	widget->setText(  text );
+	int wordIdIndex	= 0;
+	int wordId		= 0;
+	int wordNumber	= 1;
 
+	QMap<int, QRect> rowWordRects;
+	QMap<int, QRect> wordRect;
+	QList<QVariant> wordIds;
+	QList<QVariant> vocabularyWordIds	= userData.value( SynonymTargets["VOCABULARY"] ).toList();
+	QList<QVariant> archiveWordIds		= userData.value( SynonymTargets["ARCHIVE"] ).toList();
 
-	VsIconLabel *widget = new VsIconLabel( ":/Resources/icons/dictionary.svg", text );
-	widget->setProperty( "labelData", wordId );
-	widget->setCursor( QCursor( Qt::PointingHandCursor ) );
-	widget->setStyleSheet( "QLabel { border: 1px solid gray; border-radius: 2px; background-color: white; padding: 0px 5px 10px 15px; margin: 20px; }");
+	QString wordTarget	= SynonymTargets["VOCABULARY"];
+	wordIds	= vocabularyWordIds;
+	foreach( QString word, words ) {
+		if ( wordTarget == SynonymTargets["VOCABULARY"] && wordIdIndex >= vocabularyWordIds.size() ) {
+			wordTarget	= SynonymTargets["ARCHIVE"];
+			wordIds		= userData.value( wordTarget ).toList();
+			wordIdIndex	= 0;
+		}
+		else if ( wordTarget == SynonymTargets["ARCHIVE"] && wordIdIndex >= archiveWordIds.size() ) {
+			wordTarget	= SynonymTargets["ONLY_WORDS"];
+		}
 
-	op.widget	= widget;
-	op.icon 	= QIcon( ":/Resources/icons/dictionary.svg" );
-	op.text		= text;
+		wordId	= ( wordTarget == SynonymTargets["ONLY_WORDS"] || ! wordIds.contains( wordIdIndex ) ) ?
+									0 : wordIds[wordIdIndex].toInt();
+		word	= word.trimmed();
+		if ( word.size( ) ) {
+			wordRect	= createWord( painter, option, index, word, wordId, wordNumber, wordTarget );
+			if ( wordRect.firstKey() )
+				rowWordRects.insert( wordRect );
+
+			wordNumber++;
+			wordIdIndex++;
+		}
+	}
+	VocabularySynonymsDelegate::wordRects[index.row()]	= rowWordRects;
+}
+
+QMap<int, QRect> VocabularySynonymsDelegate::createWord(
+	QPainter *painter,
+	QStyleOptionViewItem option,
+	QModelIndex index,
+	QString word,
+	int wordId,
+	int wordNumber,
+	QString wordTarget
+) const {
+	QMap<int, QRect> rowWordRects;
+	QStyleOptionViewItem op( option );
+
+	op.rect	= textRect( option.rect, wordNumber );
+	if ( wordId ) {
+		rowWordRects[wordId]	= wordId ? op.rect : QRect();
+	} else {
+		rowWordRects[wordId]	= wordId ? op.rect : QRect();
+	}
+
+	initStyleOption( &op, index );
+
+	op.features			|= QStyleOptionViewItem::HasDecoration;
+	op.decorationSize	= QSize( 16, 16 );
+
+	if ( wordTarget == SynonymTargets["VOCABULARY"] )
+		op.icon 			= QIcon( ":/Resources/icons/dictionary.svg" );
+	else if ( wordTarget == SynonymTargets["ARCHIVE"] )
+		op.icon 			= QIcon( ":/Resources/icons/archive.svg" );
+	else
+		op.icon 			= QIcon( ":/Resources/icons/only_word.png" );
+
+	op.text	= word;
 	op.font.setBold( true );
 	op.font.setUnderline( true );
 
-	QStyle *style	= widget ? widget->style() : QApplication::style();
-	style->drawControl( QStyle::CE_ItemViewItem, &op, painter, widget );
+	QStyle *style	= op.widget ? op.widget->style() : QApplication::style();
+	style->drawControl( QStyle::CE_ItemViewItem, &op, painter, op.widget );
 
-
-//	QStyleOptionButton wordItem;
-//	wordItem.icon 	= QIcon( ":/Resources/icons/dictionary.svg" );
-//	wordItem.text	= text;
-//	QStyle *style	= op.widget ? op.widget->style() : QApplication::style();
-//	style->drawControl( QStyle::CE_PushButton, &wordItem, painter, op.widget );
+	return rowWordRects;
 }
 
 QStyleOptionButton VocabularySynonymsDelegate::createButton( QRect buttonRect  ) const

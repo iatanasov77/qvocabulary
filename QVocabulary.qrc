@@ -27,6 +27,7 @@
 	    <file>Resources/icons/add_archive.svg</file>
 	    <file>Resources/icons/compare.svg</file>
 	    <file>Resources/icons/column-management.svg</file>
+	    <file>Resources/icons/only_word.png</file>
 	    
 	    <file>Resources/sql/qvocabulary-20201216.sql</file>
 	    <file>Resources/sql/qvocabulary-20201217.sql</file>
