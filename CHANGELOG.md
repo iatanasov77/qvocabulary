@@ -1,3 +1,10 @@
+0.20.2	|	Release date: **06.09.2021**
+============================================
+* Bug-Fixes, Refactoring and Improvements:
+  - Bind Synonyms Click on DoubleClick Event.
+  - Little Refactoring.
+
+
 0.20.1	|	Release date: **06.09.2021**
 ============================================
 * New Features and Improvements:
