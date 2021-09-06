@@ -113,6 +113,9 @@ void VocabularyWidget::loadGroup( int groupId )
 	currentGroup		= groupId;
 	wdgWords->loadGroup( groupId );
 
+	wdgWords->updateView();	// This is the key to not show an one more empty row for an empty group
+							// when switch from another not empty group.
+
 	VsSettings::instance()->setValue( "currentGroup", currentGroup, "Vocabulary" );
 }
 
