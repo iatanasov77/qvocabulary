@@ -22,8 +22,8 @@ class VocabularySynonymsDelegate : public QStyledItemDelegate
 		static QMap<int, QMap<int, QRect>> wordRects; // <int row, QMap words>
 
 		QRect textRect( QRect cellRect, int wordNumber = 1 ) const;
-		void createWords( QPainter *painter, QStyleOptionViewItem option, QModelIndex index ) const;
-		QMap<int, QRect> createWord(
+		void createWidgets( QPainter *painter, QStyleOptionViewItem option, QModelIndex index ) const;
+		QMap<int, QRect> createWidget(
 			QPainter *painter,
 			QStyleOptionViewItem option,
 			QModelIndex index,

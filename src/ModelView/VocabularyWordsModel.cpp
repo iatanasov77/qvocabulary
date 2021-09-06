@@ -226,7 +226,7 @@ QMap<QString, QVariant> VocabularyWordsModel::getVocabularySynonyms( const QMode
 			"SELECT v.id AS wordId, v.language_1 AS synonym "
 			"FROM VocabularyWordSynonym s "
 			"LEFT JOIN Vocabulary v ON v.id = s.synonym_id "
-			"WHERE s.word_id = %1 AND target = '%2'"
+			"WHERE s.word_id = %1 AND s.target = '%2'"
 	)
 	.arg( index.siblingAtColumn( 0 ).data().toInt() )
 	.arg( SynonymTargets["VOCABULARY"] );
@@ -258,10 +258,10 @@ QMap<QString, QVariant> VocabularyWordsModel::getArchiveSynonyms( const QModelIn
 	QList<QVariant> synonymIds;
 
 	QString strQuery	= QString(
-			"SELECT v.id AS wordId, v.language_1 AS synonym "
+			"SELECT a.id AS wordId, a.language_1 AS synonym "
 			"FROM VocabularyWordSynonym s "
-			"LEFT JOIN Vocabulary v ON v.id = s.synonym_id "
-			"WHERE s.word_id = %1 AND target = '%2'"
+			"LEFT JOIN ArchiveWord a ON a.id = s.synonym_id "
+			"WHERE s.word_id = %1 AND s.target = '%2'"
 	)
 	.arg( index.siblingAtColumn( 0 ).data().toInt() )
 	.arg( SynonymTargets["ARCHIVE"] );

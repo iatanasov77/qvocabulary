@@ -48,7 +48,7 @@ void VocabularySynonymsDelegate::paint(
 
 	// Words
 	if ( ! isEmptyLine( index ) )
-		createWords( painter, option, index );
+		createWidgets( painter, option, index );
 
 	painter->restore();
 }
@@ -111,7 +111,7 @@ QWidget* VocabularySynonymsDelegate::createEditor(
 	return editor;
 }
 
-void VocabularySynonymsDelegate::createWords( QPainter *painter, QStyleOptionViewItem option, QModelIndex index ) const
+void VocabularySynonymsDelegate::createWidgets( QPainter *painter, QStyleOptionViewItem option, QModelIndex index ) const
 {
 	QMap<QString, QVariant> userData		= index.data( Qt::UserRole ).toMap();
 	QString text							= index.data( Qt::DisplayRole ).toString();
@@ -142,12 +142,16 @@ void VocabularySynonymsDelegate::createWords( QPainter *painter, QStyleOptionVie
 			wordTarget	= SynonymTargets["ONLY_WORDS"];
 		}
 
-		wordId	= ( ( wordTarget == SynonymTargets["ONLY_WORDS"] ) || ( wordIdIndex >= wordIds.size() ) ) ?
-									0 : wordIds[wordIdIndex].toInt();
+		wordId	= (
+					( wordTarget == SynonymTargets["ARCHIVE"] ) ||
+					( wordTarget == SynonymTargets["ONLY_WORDS"] ) ||
+					( wordIdIndex >= wordIds.size() )
+				) ? 0 : wordIds[wordIdIndex].toInt();
+
 		word	= word.trimmed();
 		//qDebug() << "DELEGATE WORD ID: " << wordId;
 		if ( word.size( ) ) {
-			wordRect	= createWord( painter, option, index, word, wordId, wordNumber, wordTarget );
+			wordRect	= createWidget( painter, option, index, word, wordId, wordNumber, wordTarget );
 			if ( wordRect.firstKey() )
 				rowWordRects.insert( wordRect );
 
@@ -159,7 +163,7 @@ void VocabularySynonymsDelegate::createWords( QPainter *painter, QStyleOptionVie
 	//qDebug() << "DELEGATE WORD IDS: " << rowWordRects.keys();
 }
 
-QMap<int, QRect> VocabularySynonymsDelegate::createWord(
+QMap<int, QRect> VocabularySynonymsDelegate::createWidget(
 	QPainter *painter,
 	QStyleOptionViewItem option,
 	QModelIndex index,
