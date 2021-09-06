@@ -32,26 +32,25 @@ void VocabularySynonymsDelegate::paint(
 	if ( ! index.isValid() || isEmptyLine( index ) )
 		QStyledItemDelegate::paint( painter, option, QModelIndex() );	// draw the selection background only
 
+	//VocabularySynonymsDelegate::countWords	= 0;
+	//VocabularySynonymsDelegate::wordRects.clear();
+	QStyledItemDelegate::paint( painter, option, QModelIndex() );	// Called parent with empty Index
+																	// to draw the selection background only
+	painter->save();
 
-	if ( index.column() == 6 ) {
-		//VocabularySynonymsDelegate::countWords	= 0;
-		//VocabularySynonymsDelegate::wordRects.clear();
-		QStyledItemDelegate::paint( painter, option, QModelIndex() );	// Called parent with empty Index
-																		// to draw the selection background only
-		painter->save();
-
-		// Button
+	// Button
+	if ( ! isEmptyLine( index ) ) {
 		QStyleOptionButton button	= createButton( buttonRect( option.rect ) );
 		QStyle *style				= option.widget ? option.widget->style() : QApplication::style();
-		if ( ! isEmptyLine( index ) )
-			style->drawControl( QStyle::CE_PushButton, &button, painter, option.widget );
 
+		style->drawControl( QStyle::CE_PushButton, &button, painter, option.widget );
+	}
+
+	// Words
+	if ( ! isEmptyLine( index ) )
 		createWords( painter, option, index );
 
-		painter->restore();
-	} else {
-		QStyledItemDelegate::paint( painter, option, index );
-	}
+	painter->restore();
 }
 
 bool VocabularySynonymsDelegate::editorEvent(
