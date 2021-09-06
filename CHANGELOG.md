@@ -1,3 +1,10 @@
+0.20.3	|	Release date: **06.09.2021**
+============================================
+* Bug-Fixes:
+  - Remove Handle of Clicks of Archive Synonyms.
+  - Fix Fetching Arhive Synonyms.
+
+
 0.20.2	|	Release date: **06.09.2021**
 ============================================
 * Bug-Fixes, Refactoring and Improvements:
