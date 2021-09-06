@@ -25,7 +25,11 @@ NewDatabaseDialog::NewDatabaseDialog( QWidget *parent ) :
     mw = parent;
 
     QPushButton *saveButton = ui->buttonBox->button( QDialogButtonBox::Save );
+    saveButton->setText( tr( "Save" ) );
     connect( saveButton, SIGNAL( clicked() ), this, SLOT( save() ) );
+
+    // May be there is other way to translate Core Strings
+    ui->buttonBox->button( QDialogButtonBox::Cancel )->setText( tr( "Cancel" ) );
 }
 
 NewDatabaseDialog::~NewDatabaseDialog()

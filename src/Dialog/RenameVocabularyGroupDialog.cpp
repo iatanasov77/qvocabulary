@@ -21,6 +21,9 @@ RenameVocabularyGroupDialog::RenameVocabularyGroupDialog( QString oldGroupName, 
 
     QPushButton *renameButton = ui->buttonBox->button( QDialogButtonBox::Save );
     renameButton->setText( tr( "Rename" ) );
+
+    // May be there is other way to translate Core Strings
+    ui->buttonBox->button( QDialogButtonBox::Cancel )->setText( tr( "Cancel" ) );
 }
 
 RenameVocabularyGroupDialog::~RenameVocabularyGroupDialog()
