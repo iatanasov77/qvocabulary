@@ -301,10 +301,12 @@ void SynonymsDialog::saveArchiveSynonyms()
 							.arg( synonymId )
 							.arg( SynonymTargets["ARCHIVE"] );
 
-			strQuery += QString( "DELETE FROM VocabularyWordSynonym WHERE word_id=%1 AND synonym_id=%2 AND target = '%3';" )
-							.arg( synonymId )
-							.arg( _wordId )
-							.arg( SynonymTargets["ARCHIVE"] );
+//	Revert query for Archive Synonyms is Not Needed and Not Well
+//	==============================================================
+//			strQuery += QString( "DELETE FROM VocabularyWordSynonym WHERE word_id=%1 AND synonym_id=%2 AND target = '%3';" )
+//							.arg( synonymId )
+//							.arg( _wordId )
+//							.arg( SynonymTargets["ARCHIVE"] );
 		}
 	}
 
@@ -317,10 +319,12 @@ void SynonymsDialog::saveArchiveSynonyms()
 						.arg( synonymId )
 						.arg( SynonymTargets["ARCHIVE"] );
 
-		strQuery += QString( "INSERT INTO VocabularyWordSynonym( word_id, synonym_id, target ) VALUES( %1, %2, '%3' );" )
-						.arg( synonymId )
-						.arg( _wordId )
-						.arg( SynonymTargets["ARCHIVE"] );
+//	Revert query for Archive Synonyms is Not Needed and Not Well
+//	===============================================================
+//		strQuery += QString( "INSERT INTO VocabularyWordSynonym( word_id, synonym_id, target ) VALUES( %1, %2, '%3' );" )
+//						.arg( synonymId )
+//						.arg( _wordId )
+//						.arg( SynonymTargets["ARCHIVE"] );
 	}
 
 	if ( strQuery.length() ) {
