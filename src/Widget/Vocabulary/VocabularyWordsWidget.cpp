@@ -86,6 +86,7 @@ void VocabularyWordsWidget::initModel()
 {
 	pModel	= new VocabularyWordsModel();
 	ui->tableView->setModel( pModel );
+	setViewHeader( VsDatabase::instance()->metaInfo() );
 
 	// QxModelView module : new feature available to add automatically an empty row at the end of the table to insert quickly new items (setShowEmptyLine() method)
 	pModel->setShowEmptyLine( true );
@@ -154,7 +155,6 @@ void VocabularyWordsWidget::loadGroup( int groupId )
 	ui->leSearch->setText( "" );	// Clear Serch Field
 	QString query	= QString( "WHERE group_id=%1" ).arg( groupId );
 	pModel->qxFetchByQuery( query );
-	//ui->stackedWidget->setCurrentWidget( ui->tableView );
 	ui->stackedWidget->setCurrentWidget( ui->pageVocabulary );
 
 	currentGroup = groupId;
@@ -181,7 +181,6 @@ void VocabularyWordsWidget::refreshView( QModelIndex topLeft, QModelIndex bottom
 
 	emit pModel->dataChanged( topLeft, bottomRight );
 	initModel();
-	setViewHeader( VsDatabase::instance()->metaInfo() );
 
 	loadGroup( currentGroup );
 	showTranscriptions( showTranscriptionsState );

@@ -17,6 +17,8 @@
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/Vocabulary.h"
 #include "Entity/VocabularyGroup.h"
+#include "Entity/ArchiveWord.h"
+#include "Entity/ArchiveGroup.h"
 
 #include "ModelView/QuizViewDelegate.h"
 #include "ModelView/QuizItemModelDelegate.h"
@@ -113,8 +115,6 @@ void QuizWidget::initModel()
 
 	metaInfo	= VsDatabase::instance()->metaInfo();
 
-	pModelVocabulary	= new qx::QxModel<Vocabulary>();
-
 	pModel				= new QuizItemModel();
 	pModel->setHeaderData( 1, Qt::Horizontal, headTitles.at( 0 ), Qt::DisplayRole );
 	pModel->setHeaderData( 2, Qt::Horizontal, headTitles.at( 1 ), Qt::DisplayRole );
@@ -143,9 +143,20 @@ void QuizWidget::initModel()
 	);
 }
 
-void QuizWidget::setQuiz( int quizId, QList<QString> groupIds, bool randomize, bool displayTranscriptions, int time )
+void QuizWidget::setQuiz( int quizId, QMap<QString, QVariant> parameters )
 {
-	rightAnswers		= 0;
+	rightAnswers				= 0;;
+	QList<QVariant> groupIds	= parameters["groupIds"].toList();
+	bool randomize				= parameters["randomize"].toBool();
+	bool displayTranscriptions	= parameters["displayTranscriptions"].toBool();
+	int time					= parameters["time"].toInt();
+	int countWords				= parameters["countWords"].toInt();
+	QString wordsFrom			= parameters["wordsFrom"].toString();
+	if ( wordsFrom == "ArchiveWord" ) {
+		pModelVocabulary	=  new qx::QxModel<ArchiveWord>();
+	} else {
+		pModelVocabulary	= new qx::QxModel<Vocabulary>();
+	}
 
 	if ( displayTranscriptions ) {
 		ui->tableView->showColumn( 2 );
@@ -160,9 +171,16 @@ void QuizWidget::setQuiz( int quizId, QList<QString> groupIds, bool randomize, b
 	// Clear Previous Quiz Items
 	pModel->clear();
 
-	QString query		= QString( "WHERE group_id IN ( %1 )" ).arg( groupIds.join( "," ) );
+	QString fetchGroups	= QString::number( groupIds.takeFirst().toInt() );
+	foreach ( QVariant groupId, groupIds ) {
+		fetchGroups += ", " + QString::number( groupId.toInt() );
+	}
+	QString query		= QString( "WHERE group_id IN ( %1 )" ).arg( fetchGroups );
 	pModelVocabulary->qxFetchByQuery( query );
-	itemsRange	= QVector<int>( pModelVocabulary->rowCount() );
+	questionsNumber	= countWords > 0 && countWords < pModelVocabulary->rowCount() ?
+							countWords :
+							pModelVocabulary->rowCount();
+	itemsRange		= QVector<int>( questionsNumber );
 	std::iota( itemsRange.begin(), itemsRange.end(), 0 );
 	if ( randomize )
 		std::random_shuffle( itemsRange.begin(), itemsRange.end() );
@@ -237,9 +255,6 @@ void QuizWidget::startQuiz()
 
 void QuizWidget::finishQuiz()
 {
-	//qDebug() << "QuizWidget::finishQuiz() CALLED !!!";
-
-	int questionsNumber	= pModel->rowCount();
 	int assessment		= VsAssessment::evaluate( questionsNumber, rightAnswers );
 
 	quiz->assessment	= assessment;

@@ -87,15 +87,12 @@ void VocabularyWidget::initModels()
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	if ( metaInfo ) {
 		ui->databaseLabel->setText( tr( "Vocabulary" ) );
-		QString trWords	= qApp->translate( "VocabularyWidget", "words" );
 		ui->databaseName->setText( QString( "%1 ( %2 %3 )" )
 									.arg( metaInfo->name )
 									.arg( QString::number( qx::dao::count<Vocabulary>() ) )
-									.arg( trWords )
+									.arg( qApp->translate( "VocabularyWidget", "words" ) )
 								);
 	}
-
-	wdgWords->setViewHeader( metaInfo );
 }
 
 void VocabularyWidget::setCurrentGroupName( QString groupName )
@@ -112,6 +109,9 @@ void VocabularyWidget::loadGroup( int groupId )
 {
 	currentGroup		= groupId;
 	wdgWords->loadGroup( groupId );
+
+	wdgWords->updateView();	// This is the key to not show an one more empty row for an empty group
+							// when switch from another not empty group.
 
 	VsSettings::instance()->setValue( "currentGroup", currentGroup, "Vocabulary" );
 }

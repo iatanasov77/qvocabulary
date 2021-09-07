@@ -17,7 +17,7 @@ Q_DECLARE_METATYPE(ItemDataSource)
 
 #include <QMap>
 #include <QString>
-static QMap<QString, QString> SynonymTargets{
+static QMap<QString, QString> SynonymTargets {
 	{"VOCABULARY", "VOCABULARY"},
 	{"ARCHIVE", "ARCHIVE"},
 	{"ONLY_WORDS", "ONLY_WORDS"}

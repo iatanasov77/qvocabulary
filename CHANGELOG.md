@@ -1,3 +1,12 @@
+0.21.0	|	Release date: **07.09.2021**
+============================================
+* New Features:
+  - Add Archive Words to Quiz.
+* Bug-Fixes:
+  - Add VocabularyWords Table Header Transcriptions When Initialize/Reinitialize the Model.
+  - Fix Bug When Switch to New Created Vocabulary Group to not show an empty not edit-alowes below of empty dirty row of the model.
+
+
 0.20.3	|	Release date: **06.09.2021**
 ============================================
 * Bug-Fixes:

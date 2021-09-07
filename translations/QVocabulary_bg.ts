@@ -447,6 +447,14 @@
         <source>Language 2</source>
         <translation type="unfinished">Език 2</translation>
     </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Запази</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отказ</translation>
+    </message>
 </context>
 <context>
     <name>NewVocabularyGroupDialog</name>
@@ -457,6 +465,14 @@
     <message>
         <source>Name</source>
         <translation type="unfinished">Име</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Запази</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отказ</translation>
     </message>
 </context>
 <context>
@@ -519,6 +535,10 @@
     <message>
         <source>VankoSoft QVocabulary Database (*.db)</source>
         <translation type="unfinished">VankoSoft QVocabulary ДБ (*.db)</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отказ</translation>
     </message>
 </context>
 <context>
@@ -693,6 +713,10 @@
     <message>
         <source>Rename</source>
         <translation type="unfinished">Преименувай</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отказ</translation>
     </message>
 </context>
 <context>
@@ -910,31 +934,43 @@ Done, over and out.
     <name>SynonymsDialog</name>
     <message>
         <source>Edit Synonyms</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Редакция Синоними</translation>
     </message>
     <message>
         <source>Vocabulary Words</source>
-        <translation type="unfinished">Речник</translation>
+        <translation type="unfinished">Думи от Речника</translation>
     </message>
     <message>
         <source>Archive Words</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Думи от Архива</translation>
     </message>
     <message>
         <source>Only Words</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Самостоятилни Думи</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запази</translation>
     </message>
     <message>
         <source>-- Select Vocabulary Words --</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">-- Избери Дума от Речника --</translation>
     </message>
     <message>
         <source>-- Select Archive Words --</source>
+        <translation type="unfinished">-- Избери Дума от Архива --</translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Synonyms for word</source>
+        <translation type="unfinished">Синоними за думата</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отказ</translation>
     </message>
 </context>
 <context>
@@ -1111,7 +1147,7 @@ Done, over and out.
     </message>
     <message>
         <source>Show Synonyms</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показване на Синоними</translation>
     </message>
     <message>
         <source>Delete Vocabulary Words</source>
@@ -1119,6 +1155,14 @@ Done, over and out.
     </message>
     <message>
         <source>This will erase the selected words. Do you agree?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vocabulary</source>
+        <translation type="unfinished">Речник:</translation>
+    </message>
+    <message>
+        <source>Archive</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

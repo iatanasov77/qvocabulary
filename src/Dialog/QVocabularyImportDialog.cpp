@@ -31,6 +31,9 @@ QVocabularyImportDialog::QVocabularyImportDialog( QWidget *parent ) :
     QPushButton *saveButton = ui->buttonBox->button( QDialogButtonBox::Save );
     saveButton->setText( tr( "Import" ) );
     connect( saveButton, SIGNAL( clicked() ), this, SLOT( save() ) );
+
+    // May be there is other way to translate Core Strings
+    ui->buttonBox->button( QDialogButtonBox::Cancel )->setText( tr( "Cancel" ) );
 }
 
 QVocabularyImportDialog::~QVocabularyImportDialog()
