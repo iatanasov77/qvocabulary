@@ -657,6 +657,18 @@
         <source>GroupBox</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Vocabulary</source>
+        <translation type="unfinished">Речник:</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Word Count</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QuizWidget</name>
@@ -1071,6 +1083,49 @@ Done, over and out.
     <message>
         <source>Word ID: %1.</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VocabularyTranslationsTypesDialog</name>
+    <message>
+        <source>Vocabulary Translations Types</source>
+        <translation type="unfinished">Детайли на Преводите</translation>
+    </message>
+    <message>
+        <source>Translations for Word:</source>
+        <translation type="unfinished">Преводи за Дума:</translation>
+    </message>
+    <message>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Запази</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отказ</translation>
+    </message>
+    <message>
+        <source>Word</source>
+        <translation type="unfinished">Дума</translation>
+    </message>
+    <message>
+        <source>Noun</source>
+        <translation type="unfinished">Съществително</translation>
+    </message>
+    <message>
+        <source>Adjective</source>
+        <translation type="unfinished">Прилагателно</translation>
+    </message>
+    <message>
+        <source>Verb</source>
+        <translation type="unfinished">Глагол</translation>
+    </message>
+    <message>
+        <source>Proverb</source>
+        <translation type="unfinished">Наречие</translation>
     </message>
 </context>
 <context>

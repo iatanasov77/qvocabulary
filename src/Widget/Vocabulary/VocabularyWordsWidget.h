@@ -56,6 +56,7 @@ class VocabularyWordsWidget : public QWidget
 		void updateView();
 		void saveHeaderSizes( int logicalIndex, int oldSize, int newSize );
 		void editSynonyms( const QModelIndex &index );
+		void editTranslationsTypes( const QModelIndex &index );
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed

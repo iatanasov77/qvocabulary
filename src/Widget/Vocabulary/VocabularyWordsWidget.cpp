@@ -24,10 +24,12 @@
 #include "ModelView/Helper.h"
 #include "ModelView/VocabularyTableView.h"
 #include "ModelView/ViewDelegate/VocabularyTranscriptionsDelegate.h"
+#include "ModelView/ViewDelegate/VocabularyTranslationsDelegate.h"
 #include "ModelView/ViewDelegate/VocabularySynonymsDelegate.h"
 #include "ModelView/VocabularyWordsModel.h"
 #include "Dialog/AddDescriptionDialog.h"
 #include "Dialog/SynonymsDialog.h"
+#include "Dialog/VocabularyTranslationsTypesDialog.h"
 
 VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     QWidget( parent ),
@@ -559,6 +561,9 @@ void VocabularyWordsWidget::initView()
 	VocabularyTranscriptionsDelegate *transcriptionsDelegate	= new VocabularyTranscriptionsDelegate( ui->tableView );
 	ui->tableView->setItemDelegateForColumn( 2, transcriptionsDelegate );
 
+	VocabularyTranslationsDelegate *translationsDelegate	= new VocabularyTranslationsDelegate( ui->tableView );
+	ui->tableView->setItemDelegateForColumn( 3, translationsDelegate );
+
 	VocabularySynonymsDelegate *synonymsDelegate	= new VocabularySynonymsDelegate( ui->tableView );
 	ui->tableView->setItemDelegateForColumn( 6, synonymsDelegate );
 
@@ -572,6 +577,13 @@ void VocabularyWordsWidget::initView()
 		SIGNAL( buttonClicked( QModelIndex ) ),
 		this,
 		SLOT( sayWord( QModelIndex ) )
+	);
+
+	connect(
+		translationsDelegate,
+		SIGNAL( buttonClicked( QModelIndex ) ),
+		this,
+		SLOT( editTranslationsTypes( QModelIndex ) )
 	);
 
 	connect(
@@ -708,6 +720,20 @@ void VocabularyWordsWidget::editSynonyms( const QModelIndex &index )
     SynonymsDialog *dlgSynonyms	= new SynonymsDialog( word, this );
     dlgSynonyms->setModal( true );
 	if ( dlgSynonyms->exec() == QDialog::Accepted ) {
+		//initArchiveWidget();
+	}
+}
+
+void VocabularyWordsWidget::editTranslationsTypes( const QModelIndex &index )
+{
+	QMap<QString, QVariant> word;
+	word["id"]				= index.siblingAtColumn( 0 ).data();
+	word["text"]			= index.siblingAtColumn( 1 ).data();
+	word["translations"]	= index.siblingAtColumn( 3 ).data();
+
+	VocabularyTranslationsTypesDialog *dlgTranslations	= new VocabularyTranslationsTypesDialog( word, this );
+	dlgTranslations->setModal( true );
+	if ( dlgTranslations->exec() == QDialog::Accepted ) {
 		//initArchiveWidget();
 	}
 }
