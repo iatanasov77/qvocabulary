@@ -30,7 +30,7 @@ class QuizWidget : public QWidget
 		QPushButton* btnStopQuiz();
 		QPushButton* btnOpenQuiz();
 
-		void setQuiz( int quizId, QList<QString> groups, bool randomize = false, bool displayTranscriptions = false, int time = 0 );
+		void setQuiz( int quizId, QMap<QString, QVariant> parameters );
 		void startQuiz();
 		void finishQuiz();
 
@@ -59,9 +59,10 @@ class QuizWidget : public QWidget
 		VocabularyMetaInfoPtr metaInfo;
 		QuizPtr quiz;
 
-		qx::QxModel<QuizItem>* pModel;
-		qx::QxModel<Vocabulary>* pModelVocabulary;
+		qx::QxModel<QuizItem> *pModel;
+		qx::IxModel *pModelVocabulary;
 		QVector<int> itemsRange;
+		int questionsNumber;
 		int rightAnswers;
 		int timerSeconds;
 };

@@ -87,7 +87,7 @@ void QuizWindow::initModels()
 void QuizWindow::startQuiz()
 {
 	// Initialize selected groups
-	QList<QString> groupIds;
+	QVariantList groupIds;
 	QVariantList groups;
 	foreach ( QCheckBox* chk, wdgParameters->getChkGroups() ) {
 		if ( chk->isChecked() ) {
@@ -121,7 +121,18 @@ void QuizWindow::startQuiz()
 	daoError			= qx::dao::insert( quiz );
 
 	bool diplayTranscriptions	= wdgParameters->getChkDisplayTranscriptions()->isChecked();
-	wdgQuiz->setQuiz( quiz->id, groupIds, quiz->randomize, diplayTranscriptions, wdgParameters->time() );
+
+	QMap<QString, QVariant> parameters;
+	parameters["groupIds"]				= groupIds;
+	parameters["randomize"]				= quiz->randomize;
+	parameters["diplayTranscriptions"]	= diplayTranscriptions;
+	parameters["time"]					= wdgParameters->time();
+	parameters["countWords"]			= wdgParameters->wordsCount();
+	parameters["wordsFrom"]				= wdgParameters->wordsFrom();
+
+	wdgQuiz->setQuiz( quiz->id, parameters );
+
+
 	wdgQuiz->setEnabled( true );
 	wdgQuiz->startQuiz();
 }

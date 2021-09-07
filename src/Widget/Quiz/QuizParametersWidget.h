@@ -2,6 +2,7 @@
 #define WIDGET_QUIZPARAMETERS_H
 
 #include <QWidget>
+#include <QVBoxLayout>
 #include <QPushButton>
 #include <QCheckBox>
 
@@ -29,10 +30,14 @@ class QuizParametersWidget : public QWidget
 		QCheckBox* getChkRandomize();
 		QCheckBox* getChkDisplayTranscriptions();
 		int time();
+		int wordsCount();
+		QString wordsFrom();
 
 	public slots:
+		void setGroups();
 		void setDirection();
 		void initTimer( bool on );
+		void initWordCount( bool on );
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
@@ -44,6 +49,10 @@ class QuizParametersWidget : public QWidget
 	    QList<QCheckBox*> chkGroups;
 	    EnumDirection direction;
 	    QMap<QString, QVariant> quizSettings;
+
+	    void clearGroups( QLayout *box );
+	    void setVocabularyGroups( QLayout *box );
+	    void setArchiveGroups( QLayout *box );
 };
 
 #endif // WIDGET_QUIZPARAMETERS_H

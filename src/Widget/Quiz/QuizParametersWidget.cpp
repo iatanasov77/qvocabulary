@@ -2,7 +2,6 @@
 #include "ui_QuizParametersWidget.h"
 
 #include <QWidget>
-#include <QVBoxLayout>
 #include <QPushButton>
 #include <QCheckBox>
 #include <QIntValidator>
@@ -14,6 +13,7 @@
 #include "GlobalTypes.h"
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/VocabularyGroup.h"
+#include "Entity/ArchiveGroup.h"
 #include "Application/QVocabularySettings.h"
 
 QuizParametersWidget::QuizParametersWidget( QWidget *parent ) :
@@ -33,6 +33,7 @@ QuizParametersWidget::QuizParametersWidget( QWidget *parent ) :
 
     initGroups();
     initTimer( displayTimer );
+    initWordCount( false );
     setDirection();
 
     connect(
@@ -49,7 +50,22 @@ QuizParametersWidget::QuizParametersWidget( QWidget *parent ) :
 		SLOT( setDirection() )
 	);
 
+	connect(
+		ui->rbVocabulary,
+		SIGNAL( clicked() ),
+		this,
+		SLOT( setGroups() )
+	);
+
+	connect(
+		ui->rbArchive,
+		SIGNAL( clicked() ),
+		this,
+		SLOT( setGroups() )
+	);
+
 	connect( ui->chkTimer, SIGNAL( clicked( bool ) ), this, SLOT( initTimer( bool ) ) );
+	connect( ui->chkWordCount, SIGNAL( clicked( bool ) ), this, SLOT( initWordCount( bool ) ) );
 }
 
 QuizParametersWidget::~QuizParametersWidget()
@@ -78,15 +94,51 @@ void QuizParametersWidget::initTimer( bool on )
 	}
 }
 
+void QuizParametersWidget::initWordCount( bool on )
+{
+	if ( on ) {
+		ui->frmWordCount->show();
+	} else {
+		ui->frmWordCount->hide();
+	}
+}
+
 void QuizParametersWidget::initGroups()
 {
-	qx::QxModel<VocabularyGroup>* pModelVocabularyGroup	= new qx::QxModel<VocabularyGroup>();
-	pModelVocabularyGroup->qxFetchAll();
+	QVBoxLayout *box = new QVBoxLayout;
+	setVocabularyGroups( box );
+	ui->grpGroups->setLayout( box );
+}
 
-	QVBoxLayout *vbox = new QVBoxLayout;
-	for ( int i = 0; i < pModelVocabularyGroup->rowCount(); ++i ) {
-		int groupId		= pModelVocabularyGroup->data( pModelVocabularyGroup->index( i, 0 ) ).toInt();
-		QString groupName	= pModelVocabularyGroup->data( pModelVocabularyGroup->index( i, 1 ) ).toString();
+void QuizParametersWidget::clearGroups( QLayout *box )
+{
+	while( ! box->isEmpty() ) {
+		QWidget *w = box->takeAt( 0 )->widget();
+		delete w;
+	}
+}
+
+void QuizParametersWidget::setGroups()
+{
+	QLayout *box	= ui->grpGroups->layout();
+
+	clearGroups( box );
+	chkGroups.clear();
+	if ( ui->rbVocabulary->isChecked() ) {
+		setVocabularyGroups( box );
+	} else if ( ui->rbArchive->isChecked() ) {
+		setArchiveGroups( box );
+	}
+}
+
+void QuizParametersWidget::setVocabularyGroups( QLayout *box )
+{
+	qx::QxModel<VocabularyGroup>* pModelGroup	= new qx::QxModel<VocabularyGroup>();
+	pModelGroup->qxFetchAll();
+
+	for ( int i = 0; i < pModelGroup->rowCount(); ++i ) {
+		int groupId			= pModelGroup->data( pModelGroup->index( i, 0 ) ).toInt();
+		QString groupName	= pModelGroup->data( pModelGroup->index( i, 1 ) ).toString();
 		//qDebug() << "Added Group: " << groupName;
 
 		QCheckBox* chk		= new QCheckBox( groupName, ui->grpGroups );
@@ -96,9 +148,29 @@ void QuizParametersWidget::initGroups()
 		chkGroups.append( chk );
 		connect( ui->checkAll, SIGNAL ( toggled( bool ) ), chk, SLOT ( setChecked( bool ) ) );
 
-		vbox->addWidget( chk );
+		box->addWidget( chk );
 	}
-	ui->grpGroups->setLayout( vbox );
+}
+
+void QuizParametersWidget::setArchiveGroups( QLayout *box )
+{
+	qx::QxModel<ArchiveGroup>* pModelGroup	= new qx::QxModel<ArchiveGroup>();
+	pModelGroup->qxFetchAll();
+
+	for ( int i = 0; i < pModelGroup->rowCount(); ++i ) {
+		int groupId			= pModelGroup->data( pModelGroup->index( i, 0 ) ).toInt();
+		QString groupName	= pModelGroup->data( pModelGroup->index( i, 1 ) ).toString();
+		//qDebug() << "Added Group: " << groupName;
+
+		QCheckBox* chk		= new QCheckBox( groupName, ui->grpGroups );
+		chk->setProperty( "groupId", QVariant( groupId ) );
+		chk->setProperty( "groupName", groupName );
+
+		chkGroups.append( chk );
+		connect( ui->checkAll, SIGNAL ( toggled( bool ) ), chk, SLOT ( setChecked( bool ) ) );
+
+		box->addWidget( chk );
+	}
 }
 
 void QuizParametersWidget::setDirection()
@@ -144,6 +216,24 @@ int QuizParametersWidget::time()
 	}
 
 	return time;
+}
+
+int QuizParametersWidget::wordsCount()
+{
+	if ( ui->chkWordCount->isChecked() ) {
+		return ui->spWordCount->value();
+	}
+
+	return 0;
+}
+
+QString QuizParametersWidget::wordsFrom()
+{
+	if ( ui->rbArchive->isChecked() ) {
+		return "ArchiveWord";
+	}
+
+	return "Vocabulary";
 }
 
 void QuizParametersWidget::changeEvent( QEvent* event )
