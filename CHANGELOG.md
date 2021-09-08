@@ -1,3 +1,11 @@
+0.21.1	|	Release date: **08.09.2021**
+============================================
+* New Features:
+  - Adding a Delegate for Translations to can  setting more details for every translation of a word.
+* Bug-Fixes:
+  - Fix Unused Warnings.
+
+
 0.21.0	|	Release date: **07.09.2021**
 ============================================
 * New Features:
