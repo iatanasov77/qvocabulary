@@ -8,6 +8,10 @@ namespace qx {
 	{
 		t.id( & VocabularyWordSynonym::id, "id" );
 
+		t.data( & VocabularyWordSynonym::word_id, "word_id" );
+		t.data( & VocabularyWordSynonym::synonym_id, "synonym_id" );
+		t.data( & VocabularyWordSynonym::only_words, "only_words" );
+
 		t.relationManyToOne( & VocabularyWordSynonym::word, "word_id" );
 		//t.relationOneToMany( & VocabularyWordSynonym::synonym, "ListVocabularyWordSynonym", "id" );
 

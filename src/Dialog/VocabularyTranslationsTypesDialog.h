@@ -5,6 +5,7 @@
 #include <QDialog>
 #include <QMap>
 #include <QVariant>
+#include <QButtonGroup>
 
 namespace Ui {
     class VocabularyTranslationsTypesDialog;
@@ -24,8 +25,11 @@ class VocabularyTranslationsTypesDialog : public QDialog
 	private:
 		Ui::VocabularyTranslationsTypesDialog* ui;
 		QMap<QString, QVariant> _word;
+		QList<QButtonGroup *> _wordTypes;
 
 		void initTranslations( QMap<QString, QVariant> word );
+		void initTypes( int countRows );
+		int getCheckedId( QString trWord );
 };
 
 #endif // DIALOG_VOCABULARY_TRANSLATIONS_TYPES_H

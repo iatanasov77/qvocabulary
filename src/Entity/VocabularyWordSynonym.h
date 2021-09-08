@@ -13,9 +13,15 @@ class VocabularyWordSynonym
 	    };
 
 		long id;
+		long word_id;
+		long synonym_id;
+		QString only_words;
+
 		VocabularyPtr word;
 		VocabularyPtr synonym;
-		EnumSynonymTarget target;
+
+		QString target;
+		//EnumSynonymTarget target;
 
 		VocabularyWordSynonym();
 		virtual ~VocabularyWordSynonym();

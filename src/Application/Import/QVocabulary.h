@@ -21,6 +21,8 @@ class QVocabulary : public Import
 		static bool parseWords();
 		static bool _importQuizes();
 		static bool _importArchive();
+		static bool _importSynonyms();
+		static bool _importTranslationTypes();
 
 		static QSqlDatabase db;
 };

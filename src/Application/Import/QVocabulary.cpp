@@ -19,6 +19,8 @@
 #include "Entity/QuizItem.h"
 #include "Entity/ArchiveGroup.h"
 #include "Entity/ArchiveWord.h"
+#include "Entity/VocabularyWordSynonym.h"
+#include "Entity/VocabularyWordTranslation.h"
 
 QSqlDatabase QVocabulary::db;
 
@@ -36,6 +38,8 @@ bool QVocabulary::importFromDb( QString dbName, bool importQuizes, bool importAr
 		qDebug() << "DB is Opened.";
 		parseMeta();
 		parseWords();
+		_importSynonyms();
+		_importTranslationTypes();
 
 		if ( importQuizes ) {
 			_importQuizes();
@@ -177,4 +181,28 @@ bool QVocabulary::_importArchive()
 	}
 
 	return true;
+}
+
+bool QVocabulary::_importSynonyms()
+{
+	QSqlError daoError;
+	VocabularyWordSynonymPtr synonym;
+
+	QSqlQuery synonymQuery( "SELECT * FROM VocabularyWordSynonym", db );
+	while ( synonymQuery.next() ) {
+		synonym	= VocabularyWordSynonymPtr( new VocabularyWordSynonym() );
+		synonym->word_id	= synonymQuery.value( "word_id" ).toInt();
+		synonym->synonym_id	= synonymQuery.value( "synonym_id" ).toInt();
+		synonym->only_words	= synonymQuery.value( "only_words" ).toString();
+		synonym->target		= synonymQuery.value( "target" ).toString();
+
+		daoError			= qx::dao::insert( synonym );
+	}
+
+	return true;
+}
+
+bool QVocabulary::_importTranslationTypes()
+{
+
 }
