@@ -202,7 +202,24 @@ bool QVocabulary::_importSynonyms()
 	return true;
 }
 
+/**
+ * NOT TESTED
+ */
 bool QVocabulary::_importTranslationTypes()
 {
+	QSqlError daoError;
+	VocabularyWordTranslationPtr trType;
+
+	QSqlQuery trQuery( "SELECT * FROM VocabularyWordTranslation", db );
+	while ( trQuery.next() ) {
+		trType	= VocabularyWordTranslationPtr( new VocabularyWordTranslation() );
+		trType->word_id		= trQuery.value( "word_id" ).toInt();
+		trType->tr_word		= trQuery.value( "tr_word" ).toString();
+		trType->tr_type		= trQuery.value( "tr_type" ).toString();
+		trType->tr_weight	= trQuery.value( "tr_weight" ).toInt();
+
+		daoError			= qx::dao::insert( trType );
+	}
+
 	return true;
 }
