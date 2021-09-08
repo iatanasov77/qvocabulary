@@ -2,16 +2,20 @@
 
 #include <QDebug>
 
-VsComboBoxModel::VsComboBoxModel( QAbstractItemModel *sourceModel, QList<int> selectedItems, QObject * parent )
+VsComboBoxModel::VsComboBoxModel( QAbstractItemModel *sourceModel, QList<int> selectedItems, QObject *parent )
 {
+	Q_UNUSED( parent );
+
 	source		= sourceModel;
 	selected	= selectedItems;
 
 	populate();
 }
 
-int VsComboBoxModel::rowCount( const QModelIndex& parent ) const
+int VsComboBoxModel::rowCount( const QModelIndex &parent ) const
 {
+	Q_UNUSED( parent );
+
 	return source->rowCount();
 }
 

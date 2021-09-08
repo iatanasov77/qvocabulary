@@ -17,10 +17,20 @@ Q_DECLARE_METATYPE(ItemDataSource)
 
 #include <QMap>
 #include <QString>
+
 static QMap<QString, QString> SynonymTargets {
 	{"VOCABULARY", "VOCABULARY"},
 	{"ARCHIVE", "ARCHIVE"},
 	{"ONLY_WORDS", "ONLY_WORDS"}
 };
+
+static QMap<QString, QString> TranslationTypes {
+	{"NOUN", "NOUN"},
+	{"ADJECTIVE", "ADJECTIVE"},
+	{"VERB", "VERB"},
+	{"PROVERB", "PROVERB"}
+};
+
+static QList<QString> TranslationTypesList { "NOUN", "ADJECTIVE", "VERB", "PROVERB" };
 
 #endif	// GLOBALTYPES_H

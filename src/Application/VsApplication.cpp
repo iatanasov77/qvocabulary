@@ -12,7 +12,7 @@
 
 #include "Application/VsSettings.h"
 
-const QString VsApplication::DB_VERSION = "20210825";
+const QString VsApplication::DB_VERSION = "20210908";
 QMap<QString, int> VsApplication::dbTableSqlLines()
 {
 	QMap<QString, int> sqlLines;
