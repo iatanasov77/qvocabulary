@@ -204,5 +204,5 @@ bool QVocabulary::_importSynonyms()
 
 bool QVocabulary::_importTranslationTypes()
 {
-
+	return true;
 }
