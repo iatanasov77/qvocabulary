@@ -50,7 +50,9 @@ void QVocabularyImportDialog::save()
 		return;
 	}
 
+	QApplication::setOverrideCursor( Qt::WaitCursor );
 	QVocabulary::importFromDb( dbPath, ui->chkImportQuizes->isChecked(), ui->chkImportArchive->isChecked() );
+	QApplication::restoreOverrideCursor();
 }
 
 void QVocabularyImportDialog::setDatabase()

@@ -55,6 +55,7 @@ void AddToArchiveDialog::addToArchive()
 		return;
 	}
 
+	QApplication::setOverrideCursor( Qt::WaitCursor );
 	QSqlDatabase db	= QSqlDatabase::addDatabase( "QSQLITE", "import_source" );
 	db.setDatabaseName( dbPath );
 	db.setHostName( "localhost" );
@@ -72,6 +73,7 @@ void AddToArchiveDialog::addToArchive()
 	} else {
 		qDebug() << "Import Source Database Cannot Be Opened!";
 	}
+	QApplication::restoreOverrideCursor();
 }
 
 int AddToArchiveDialog::_createArchiveGroup( QString groupName )
