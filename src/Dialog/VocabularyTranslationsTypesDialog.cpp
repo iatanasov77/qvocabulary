@@ -6,6 +6,7 @@
 #include <QButtonGroup>
 #include <QProgressBar>
 #include <QSpinBox>
+#include <QMessageBox>
 
 #include "GlobalTypes.h"
 
@@ -116,8 +117,31 @@ void VocabularyTranslationsTypesDialog::initWeights( int countRows )
 	}
 }
 
+bool VocabularyTranslationsTypesDialog::checkWordTypes()
+{
+	foreach( QButtonGroup *btnGroup, _wordTypes ) {
+		int checkedId	= btnGroup->checkedId();
+		if ( checkedId == -1 ) { // No Type Checked
+			QMessageBox::critical(
+				this,
+				tr( "Error" ),
+				tr( "There are not selected types for some words !" )
+			);
+
+			return false;
+		}
+	}
+
+	return true;
+}
+
 void VocabularyTranslationsTypesDialog::save()
 {
+	if ( ! checkWordTypes() ) {
+		setResult( QDialog::Rejected );
+		return;
+	}
+
 	int row				= 0;
 	QString strQuery	= "";
 	QSqlQuery query		= QSqlQuery( qx::QxSqlDatabase::getDatabase() );

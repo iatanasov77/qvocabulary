@@ -35,6 +35,7 @@ class VocabularyTranslationsTypesDialog : public QDialog
 		void initWeights( int countRows );
 		int getCheckedId( QString trWord );
 		int getWordWeight( QString trWord );
+		bool checkWordTypes();
 };
 
 #endif // DIALOG_VOCABULARY_TRANSLATIONS_TYPES_H
