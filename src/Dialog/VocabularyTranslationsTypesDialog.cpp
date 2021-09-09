@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <QRadioButton>
 #include <QButtonGroup>
+#include <QProgressBar>
 #include <QSpinBox>
 
 #include "GlobalTypes.h"
@@ -19,7 +20,7 @@ VocabularyTranslationsTypesDialog::VocabularyTranslationsTypesDialog( QMap<QStri
     ui( new Ui::VocabularyTranslationsTypesDialog )
 {
     ui->setupUi( this );
-    resize( 800, 400 );
+    resize( 900, 400 );
 
     _word			= word;
     _wordTypes		= QList<QButtonGroup *>();
@@ -64,6 +65,7 @@ void VocabularyTranslationsTypesDialog::initTranslations( QMap<QString, QVariant
 	}
 
 	initTypes( translations.size() );
+	initWeights( translations.size() );
 }
 
 void VocabularyTranslationsTypesDialog::initTypes( int countRows )
@@ -85,18 +87,32 @@ void VocabularyTranslationsTypesDialog::initTypes( int countRows )
 			layout->setContentsMargins( 0, 0, 0, 0 );
 			ui->tableWidget->setCellWidget( y, x, checkBoxWidget );
 		}
+	}
+}
 
-		// Set Weight Item
+void VocabularyTranslationsTypesDialog::initWeights( int countRows )
+{
+	for ( int y = 0; y < countRows; y++ ) {
+		QString word					= ui->tableWidget->item( y, 0 )->text();
+		int wordWeigth					= getWordWeight( word );
+		QProgressBar *weightIndicator	= new QProgressBar( this );
+		weightIndicator->setTextVisible( false );
+		weightIndicator->setFixedHeight( 5 );
+		weightIndicator->setRange( 1, 4 );
+		weightIndicator->setValue( wordWeigth );
 		_wordWeights << new QSpinBox( this );
 		_wordWeights[y]->setRange( 1, 4 );
-		_wordWeights[y]->setValue( getWordWeight( word ) );
+		_wordWeights[y]->setValue( wordWeigth );
 
 		QWidget *weightWidget = new QWidget();
 		QHBoxLayout *layout		= new QHBoxLayout( weightWidget );
+		layout->addWidget( weightIndicator );
 		layout->addWidget( _wordWeights[y] );
 		layout->setAlignment( Qt::AlignCenter );
 		layout->setContentsMargins( 0, 0, 0, 0 );
 		ui->tableWidget->setCellWidget( y, 5, weightWidget );
+
+		connect( _wordWeights[y], SIGNAL( valueChanged( int ) ), weightIndicator, SLOT( setValue( int ) ) );
 	}
 }
 

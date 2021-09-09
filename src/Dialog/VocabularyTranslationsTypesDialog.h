@@ -32,6 +32,7 @@ class VocabularyTranslationsTypesDialog : public QDialog
 
 		void initTranslations( QMap<QString, QVariant> word );
 		void initTypes( int countRows );
+		void initWeights( int countRows );
 		int getCheckedId( QString trWord );
 		int getWordWeight( QString trWord );
 };
