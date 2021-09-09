@@ -315,16 +315,18 @@ void MainWindow::loadDb( const QString &dbPath )
 		return;
 	}
 
-	QApplication::setOverrideCursor( Qt::WaitCursor );
-
 	VsDatabase::instance()->connect( dbPath );
-
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
+
+	// Check If can Open DB
 	if ( VsApplication::canOpenDb( metaInfo->dbVersion ) == false ) {
 		// Clear Recent Databases List and call initDatabase() again
 		VsSettings::instance()->setValue( "recentDatabaseList", QStringList(), "MainWindow" );
 		initDatabase();
-	} else if ( metaInfo->dbVersion != VsApplication::DB_VERSION ) {
+	}
+
+	// Check for DB Version
+	if ( metaInfo->dbVersion != VsApplication::DB_VERSION ) {
 		QMessageBox::warning(
 			this,
 			tr( "Warning" ),
@@ -332,12 +334,13 @@ void MainWindow::loadDb( const QString &dbPath )
 		);
 	}
 
+	QApplication::setOverrideCursor( Qt::WaitCursor );
+
 	initWidgets();
 	wdgVocabulary->initModels();
 	setCurrentDb( dbPath );
 
 	QApplication::restoreOverrideCursor();
-
 	statusBar()->showMessage( tr( "Database loaded" ), 2000 );
 }
 
