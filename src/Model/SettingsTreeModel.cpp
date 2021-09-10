@@ -1,47 +1,47 @@
-#include "ModelView/SettingsMenu/TreeModel.h"
-#include "ModelView/SettingsMenu/TreeItem.h"
+#include "SettingsTreeModel.h"
+#include "SettingsTreeItem.h"
 
 #include <QStringList>
 #include <QDomDocument>
 #include <QApplication>
 
-TreeModel::TreeModel( const QString &data, QObject *parent )
+SettingsTreeModel::SettingsTreeModel( const QString &data, QObject *parent )
     : QAbstractItemModel( parent )
 {
-	rootItem = new TreeItem( { tr( "Title" ), tr( "Id" ) } );
+	rootItem = new SettingsTreeItem( { tr( "Title" ), tr( "Id" ) } );
 	setupModelData( data, rootItem );
 }
 
-TreeModel::~TreeModel()
+SettingsTreeModel::~SettingsTreeModel()
 {
     delete rootItem;
 }
 
-QModelIndex TreeModel::index( int row, int column, const QModelIndex &parent ) const
+QModelIndex SettingsTreeModel::index( int row, int column, const QModelIndex &parent ) const
 {
     if ( ! hasIndex( row, column, parent ) )
         return QModelIndex();
 
-    TreeItem *parentItem;
+    SettingsTreeItem *parentItem;
 
     if ( ! parent.isValid() )
         parentItem = rootItem;
     else
-        parentItem = static_cast<TreeItem*>( parent.internalPointer() );
+        parentItem = static_cast<SettingsTreeItem*>( parent.internalPointer() );
 
-    TreeItem *childItem = parentItem->child( row );
+    SettingsTreeItem *childItem = parentItem->child( row );
     if ( childItem )
         return createIndex( row, column, childItem );
     return QModelIndex();
 }
 
-QModelIndex TreeModel::parent( const QModelIndex &index ) const
+QModelIndex SettingsTreeModel::parent( const QModelIndex &index ) const
 {
     if ( ! index.isValid() )
         return QModelIndex();
 
-    TreeItem *childItem = static_cast<TreeItem*>( index.internalPointer() );
-    TreeItem *parentItem = childItem->parentItem();
+    SettingsTreeItem *childItem = static_cast<SettingsTreeItem*>( index.internalPointer() );
+    SettingsTreeItem *parentItem = childItem->parentItem();
 
     if ( parentItem == rootItem )
         return QModelIndex();
@@ -49,28 +49,28 @@ QModelIndex TreeModel::parent( const QModelIndex &index ) const
     return createIndex( parentItem->row(), 0, parentItem );
 }
 
-int TreeModel::rowCount( const QModelIndex &parent ) const
+int SettingsTreeModel::rowCount( const QModelIndex &parent ) const
 {
-    TreeItem *parentItem;
+    SettingsTreeItem *parentItem;
     if ( parent.column() > 0 )
         return 0;
 
     if ( ! parent.isValid() )
         parentItem = rootItem;
     else
-        parentItem = static_cast<TreeItem*>( parent.internalPointer() );
+        parentItem = static_cast<SettingsTreeItem*>( parent.internalPointer() );
 
     return parentItem->childCount();
 }
 
-int TreeModel::columnCount( const QModelIndex &parent ) const
+int SettingsTreeModel::columnCount( const QModelIndex &parent ) const
 {
     if ( parent.isValid() )
-        return static_cast<TreeItem*>( parent.internalPointer() )->columnCount();
+        return static_cast<SettingsTreeItem*>( parent.internalPointer() )->columnCount();
     return rootItem->columnCount();
 }
 
-QVariant TreeModel::data( const QModelIndex &index, int role ) const
+QVariant SettingsTreeModel::data( const QModelIndex &index, int role ) const
 {
     if ( ! index.isValid() )
         return QVariant();
@@ -78,14 +78,14 @@ QVariant TreeModel::data( const QModelIndex &index, int role ) const
     if ( role != Qt::DisplayRole )
         return QVariant();
 
-    TreeItem *item = static_cast<TreeItem*>( index.internalPointer() );
+    SettingsTreeItem *item = static_cast<SettingsTreeItem*>( index.internalPointer() );
 
     return index.column() == 0 ?
     		QVariant( qApp->translate( "SettingsMenu", item->data( index.column() ).toString().toStdString().c_str() ) ) :
     		item->data( index.column() );
 }
 
-Qt::ItemFlags TreeModel::flags( const QModelIndex &index ) const
+Qt::ItemFlags SettingsTreeModel::flags( const QModelIndex &index ) const
 {
     if ( ! index.isValid() )
         return Qt::NoItemFlags;
@@ -93,7 +93,7 @@ Qt::ItemFlags TreeModel::flags( const QModelIndex &index ) const
     return QAbstractItemModel::flags( index );
 }
 
-QVariant TreeModel::headerData( int section, Qt::Orientation orientation, int role ) const
+QVariant SettingsTreeModel::headerData( int section, Qt::Orientation orientation, int role ) const
 {
     if ( orientation == Qt::Horizontal && role == Qt::DisplayRole )
         return rootItem->data( section );
@@ -101,7 +101,7 @@ QVariant TreeModel::headerData( int section, Qt::Orientation orientation, int ro
     return QVariant();
 }
 
-void TreeModel::setupModelData( const QString data, TreeItem *parent )
+void SettingsTreeModel::setupModelData( const QString data, SettingsTreeItem *parent )
 {
 	QDomDocument* xml	= new QDomDocument();
 	xml->setContent( data );
@@ -111,7 +111,7 @@ void TreeModel::setupModelData( const QString data, TreeItem *parent )
 	iterateChildItems( parent, item );
 }
 
-void TreeModel::iterateChildItems( TreeItem* parent, QDomElement item )	// item passed is first child of the parent
+void SettingsTreeModel::iterateChildItems( SettingsTreeItem* parent, QDomElement item )	// item passed is first child of the parent
 {
 	while( ! item.isNull() )
 	{
@@ -122,7 +122,7 @@ void TreeModel::iterateChildItems( TreeItem* parent, QDomElement item )	// item 
 		QVector<QVariant> columnData;
 		columnData << title << id;
 
-		parent->appendChild( new TreeItem( columnData, parent ) );
+		parent->appendChild( new SettingsTreeItem( columnData, parent ) );
 
 		QDomNode	firstChild	= item.elementsByTagName( "MenuItems" ).at( 0 ).firstChild();
 		if ( ! firstChild.isNull() ) {	// Has Childs

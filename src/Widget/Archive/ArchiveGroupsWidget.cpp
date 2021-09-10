@@ -10,7 +10,7 @@
 
 #include "Application/VsSettings.h"
 #include "Entity/ArchiveGroup.h"
-#include "ModelView/SideBarListViewDelegate.h"
+#include "View/ViewDelegate/SideBar/SideBarListViewDelegate.h"
 #include "ArchiveWidget.h"
 
 ArchiveGroupsWidget::ArchiveGroupsWidget( QWidget *parent ) :

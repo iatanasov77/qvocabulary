@@ -11,7 +11,7 @@
 #include "QxModelView.h"
 
 #include "Entity/VocabularyGroup.h"
-#include "ModelView/SideBarListViewDelegate.h"
+#include "View/ViewDelegate/SideBar/SideBarListViewDelegate.h"
 #include "VocabularyWidget.h"
 #include "Dialog/RenameVocabularyGroupDialog.h"
 

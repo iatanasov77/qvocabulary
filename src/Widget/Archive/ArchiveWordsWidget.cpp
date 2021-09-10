@@ -16,8 +16,8 @@
 #include "Entity/ArchiveGroup.h"
 
 #include "Widget/Archive/ArchiveWidget.h"
-#include "ModelView/Helper.h"
-#include "ModelView/ViewDelegate/VocabularyTranscriptionsDelegate.h"
+#include "Model/Helper.h"
+#include "View/ViewDelegate/Vocabulary/VocabularyTranscriptionsDelegate.h"
 
 ArchiveWordsWidget::ArchiveWordsWidget( QWidget *parent ) :
     QWidget( parent ),

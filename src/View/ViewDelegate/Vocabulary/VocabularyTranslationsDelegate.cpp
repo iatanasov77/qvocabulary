@@ -6,7 +6,7 @@
 #include <QMouseEvent>
 #include <QDebug>
 
-#include "ModelView/VocabularyTableView.h"
+#include "View/VocabularyTableView.h"
 
 VocabularyTranslationsDelegate::VocabularyTranslationsDelegate( QObject *parent ) : QStyledItemDelegate( parent )
 {

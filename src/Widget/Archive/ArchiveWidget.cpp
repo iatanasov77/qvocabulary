@@ -17,7 +17,7 @@
 #include "Application/VsSettings.h"
 #include "Entity/ArchiveWord.h"
 #include "Entity/ArchiveGroup.h"
-#include "ModelView/SideBarListViewDelegate.h"
+#include "View/ViewDelegate/SideBar/SideBarListViewDelegate.h"
 
 #include "Widget/Archive/ArchiveGroupsWidget.h"
 #include "Widget/Archive/ArchiveWordsWidget.h"

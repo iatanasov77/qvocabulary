@@ -9,7 +9,7 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
-#include "ModelView/ArchiveCompareTableView.h"
+#include "View/ArchiveCompareTableView.h"
 
 ArchiveCompareWidget::ArchiveCompareWidget( QWidget *parent ) :
     QWidget( parent ),

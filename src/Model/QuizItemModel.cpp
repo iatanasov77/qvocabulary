@@ -1,4 +1,4 @@
-#include "ModelView/QuizItemModel.h"
+#include "QuizItemModel.h"
 
 #include <QObject>
 #include <QModelIndex>
