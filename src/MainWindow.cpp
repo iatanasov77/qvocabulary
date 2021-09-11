@@ -588,13 +588,13 @@ void MainWindow::initVocabularyWidget()
 {
 	QMap<QString, QVariant> widgetState;
 
-	clearVocabularyWidget();
-
 	if ( wdgVocabulary ) {
 		widgetState	= wdgVocabulary->getState();
 	}
 
+	clearVocabularyWidget();
 	wdgVocabulary	= new VocabularyWidget( this );
+
 	if ( ! widgetState.isEmpty() ) {
 		wdgVocabulary->setState( widgetState );
 	}
