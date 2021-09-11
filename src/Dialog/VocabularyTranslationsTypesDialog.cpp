@@ -195,7 +195,7 @@ int VocabularyTranslationsTypesDialog::getCheckedId( QString trWord )
 									.arg( _word["id"].toInt() )
 									.arg( trWord );
 
-	qDebug() << strQuery;
+	//qDebug() << strQuery;
 	query.exec( strQuery );
 	if ( query.first() )
 		return TranslationTypesList.indexOf( query.value( "tr_type" ).toString() );

@@ -38,7 +38,7 @@ void SideBarListViewDelegate::paint(
 
 	QString buttonText;
 	if ( _showAllButton && index.row() == 0 ) {
-		buttonText 		= "Show All Words";
+		buttonText 		= tr( "Show All Words" );
 	} else {
 		long wordsCount	= groupWordsCount( index.siblingAtColumn( 0 ).data().toInt() );
 		buttonText 		= QString( "%1 (%2)" ).arg( index.siblingAtColumn( 1 ).data().toString() ).arg( wordsCount );

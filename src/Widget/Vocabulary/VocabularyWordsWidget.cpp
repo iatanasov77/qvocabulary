@@ -11,6 +11,7 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "GlobalTypes.h"
 #include "Application/VsSettings.h"
 #include "Application/VsDatabase.h"
 #include "Application/VsSpeaker.h"
@@ -26,8 +27,6 @@
 #include "View/ViewDelegate/Vocabulary/VocabularyTranscriptionsDelegate.h"
 #include "View/ViewDelegate/Vocabulary/VocabularyTranslationsDelegate.h"
 #include "View/ViewDelegate/Vocabulary/VocabularySynonymsDelegate.h"
-#include "Model/VocabularyWordsModel.h"
-#include "Model/VocabularySortingModel.h"
 #include "Dialog/AddDescriptionDialog.h"
 #include "Dialog/SynonymsDialog.h"
 #include "Dialog/VocabularyTranslationsTypesDialog.h"
@@ -87,12 +86,12 @@ VocabularyWordsWidget::~VocabularyWordsWidget()
 
 void VocabularyWordsWidget::initModel()
 {
-	pModel	= new VocabularyWordsModel();
+	pModel		= new VocabularyWordsModel();
 
 	// QxModelView module : new feature available to add automatically an empty row at the end of the table to insert quickly new items (setShowEmptyLine() method)
 	pModel->setShowEmptyLine( true );
 
-	VocabularySortingModel *proxyModel	= new VocabularySortingModel( this );
+	proxyModel	= new VocabularySortingModel( this );
 	proxyModel->setDynamicSortFilter( true );
 	proxyModel->setSourceModel( pModel );
 
@@ -246,6 +245,7 @@ void VocabularyWordsWidget::displayContextMenu( QPoint pos )
 	menu->addSeparator();
 	menu->addAction( actAddDescription );
 
+	// Move To Group Actions
 	QAction* actMove;
 	QMap<int, QString> groups	= Helper::getAllGroups();
 	QMapIterator<int, QString> i(groups);
@@ -258,6 +258,25 @@ void VocabularyWordsWidget::displayContextMenu( QPoint pos )
 
 	    menuMoveToGroup->addAction( actMove );
 	}
+
+	// Filter Actions
+	menu->addSeparator();
+	QAction* actFilter;
+	for ( int i = 0; i < TranslationTypesList.count(); i++ ) {
+		actFilter	= new QAction( this );
+		actFilter->setText( tr( "Filter by" ) + tr( QString( " " + TranslationTypesList[i].toLower() ).toStdString().c_str() ) );
+		actFilter->setData( QVariant( i ) );
+		//actFilter->setIcon( QIcon( ":/Resources/icons/mail-message-new.svg" ) );
+		connect( actFilter, &QAction::triggered, this, &VocabularyWordsWidget::setFilter );
+
+		menu->addAction( actFilter );
+	}
+	menu->addSeparator();
+	actFilter	= new QAction( this );
+	actFilter->setText( tr( "Clear Filter" ) );
+	//actFilter->setIcon( QIcon( ":/Resources/icons/mail-message-new.svg" ) );
+	connect( actFilter, &QAction::triggered, this, &VocabularyWordsWidget::clearFilter );
+	menu->addAction( actFilter );
 
 	menu->popup( ui->tableView->viewport()->mapToGlobal( pos ) );
 }
@@ -748,4 +767,16 @@ void VocabularyWordsWidget::editTranslationsTypes( const QModelIndex &index )
 	if ( dlgTranslations->exec() == QDialog::Accepted ) {
 		//initArchiveWidget();
 	}
+}
+
+void VocabularyWordsWidget::setFilter()
+{
+	QAction *action		= qobject_cast<QAction *>( sender() );
+
+	proxyModel->setFilterWordType( action->data().toInt() );
+}
+
+void VocabularyWordsWidget::clearFilter()
+{
+	proxyModel->clearFilter();
 }

@@ -16,6 +16,9 @@
 #include "Entity/ArchiveWord.h"
 #include "Application/VsSpeaker.h"
 
+#include "Model/VocabularyWordsModel.h"
+#include "Model/VocabularySortingModel.h"
+
 namespace Ui {
 	class VocabularyWordsWidget;
 }
@@ -57,6 +60,8 @@ class VocabularyWordsWidget : public QWidget
 		void saveHeaderSizes( int logicalIndex, int oldSize, int newSize );
 		void editSynonyms( const QModelIndex &index );
 		void editTranslationsTypes( const QModelIndex &index );
+		void setFilter();
+		void clearFilter();
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
@@ -77,6 +82,7 @@ class VocabularyWordsWidget : public QWidget
 		int currentGroup;
 		Ui::VocabularyWordsWidget *ui;
 		qx::QxModel<Vocabulary> *pModel;
+		VocabularySortingModel *proxyModel;
 		QList<int> hideColumns;
 		VsSpeaker* speeker;
 

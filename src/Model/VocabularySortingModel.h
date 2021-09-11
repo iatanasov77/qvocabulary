@@ -10,9 +10,17 @@ class VocabularySortingModel : public QSortFilterProxyModel
 	public:
 		VocabularySortingModel( QObject *parent = 0 );
 
+		void clearFilter();
+		void setFilterWordType( int type );
+
 	protected:
 		bool lessThan( const QModelIndex &left, const QModelIndex &right ) const override;
+		bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 
+	private:
+		int wordType;
+
+		QList<int> getTranslationsTypes( int wordId ) const;
 };
 
 #endif	// MODEL_VOCABULARYSORTING_H
