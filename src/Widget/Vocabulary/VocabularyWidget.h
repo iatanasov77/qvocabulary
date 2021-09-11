@@ -40,6 +40,7 @@ class VocabularyWidget : public QWidget
 		QMap<QString, QVariant> getState();
 		void setState( QMap<QString, QVariant> state );
 		void showWord( int wordId, int groupId );
+		void refreshGroups();
 
 	public slots:
 		void loadGroup( const QModelIndex &index );

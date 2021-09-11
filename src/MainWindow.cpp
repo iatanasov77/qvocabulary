@@ -136,10 +136,13 @@ void MainWindow::initIcons()
 
 void MainWindow::on_actionInsertGroup_triggered()
 {
-	NewVocabularyGroupDialog *dlg	= new NewVocabularyGroupDialog( this );
-
-	dlg->setModal( true );
-	dlg->show();
+	NewVocabularyGroupDialog *dlg	= dialogNewVocabularyGroup();
+	if( dlg->exec() == QDialog::Accepted )
+	{
+		wdgVocabulary->refreshGroups();
+		//initVocabularyWidget();
+		//setCurrentGroup( newGroupId );
+	}
 }
 
 void MainWindow::on_actionInsertWord_triggered()
@@ -641,4 +644,12 @@ void MainWindow::showArchiveWord( int wordId, int groupId )
 {
 	on_actionShow_Archive_triggered();
 	wdgArchive->showWord( wordId, groupId  );
+}
+
+NewVocabularyGroupDialog* MainWindow::dialogNewVocabularyGroup()
+{
+	NewVocabularyGroupDialog *dlg	= new NewVocabularyGroupDialog( this );
+	dlg->setModal( true );
+
+	return dlg;
 }

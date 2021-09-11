@@ -4,8 +4,6 @@
 #include <QWidget>
 #include <QDialog>
 
-#include "MainWindow.h"
-
 namespace Ui {
     class NewVocabularyGroupDialog;
 }
@@ -22,7 +20,6 @@ class NewVocabularyGroupDialog : public QDialog
 		void save();
 
 	private:
-		MainWindow* mw;	// parent MainWindow
 		Ui::NewVocabularyGroupDialog* ui;
 };
 

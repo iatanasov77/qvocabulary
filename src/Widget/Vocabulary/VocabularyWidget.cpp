@@ -177,3 +177,8 @@ void VocabularyWidget::showWord( int wordId, int groupId )
 {
 	wdgWords->showWord( wordId, groupId );
 }
+
+void VocabularyWidget::refreshGroups()
+{
+	wdgGroups->refreshView();
+}

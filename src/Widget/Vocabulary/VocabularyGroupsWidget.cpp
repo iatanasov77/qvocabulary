@@ -10,11 +10,13 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "MainWindow.h"
 //#include "Entity/VocabularyGroup.h"
 #include "Model/VocabularyGroupsModel.h"
 #include "View/ViewDelegate/SideBar/SideBarListViewDelegate.h"
 #include "VocabularyWidget.h"
 #include "Dialog/RenameVocabularyGroupDialog.h"
+#include "Dialog/NewVocabularyGroupDialog.h"
 
 VocabularyGroupsWidget::VocabularyGroupsWidget( QWidget *parent ) :
     QWidget( parent ),
@@ -57,10 +59,8 @@ int VocabularyGroupsWidget::currentGroup()
 
 void VocabularyGroupsWidget::initModel()
 {
-	//pModel	= new qx::QxModel<VocabularyGroup>();
 	pModel	= new VocabularyGroupsModel( true );
 	pModel->qxFetchAll();
-	//pModel->showAllButton();
 	ui->listView->setModel( pModel );
 
 	connect(
@@ -151,15 +151,19 @@ void VocabularyGroupsWidget::displayContextMenu( QPoint pos )
 	ui->listView->setCurrentIndex( ui->listView->indexAt( pos ) );
 
 	QMenu *menu		= new QMenu( this );
+	QAction *createAct	= new QAction( tr( "&New Group" ), this );
 	QAction *renameAct	= new QAction( tr( "&Rename Group" ), this );
 	QAction *deleteAct = new QAction( tr( "&Delete Group" ), this );
 
+	createAct->setData( QVariant( pos ) );
 	renameAct->setData( QVariant( pos ) );
 	deleteAct->setData( QVariant( pos ) );
 
+	connect( createAct, &QAction::triggered, this, &VocabularyGroupsWidget::createGroup );
 	connect( renameAct, &QAction::triggered, this, &VocabularyGroupsWidget::renameGroup );
 	connect( deleteAct, &QAction::triggered, this, &VocabularyGroupsWidget:: deleteGroup );
 
+	menu->addAction( createAct );
 	menu->addAction( renameAct );
 	menu->addAction( deleteAct );
 
@@ -171,6 +175,17 @@ void VocabularyGroupsWidget::displayContextMenu( QPoint pos )
 	);
 
 	menu->popup( ui->listView->viewport()->mapToGlobal( pos ) );
+}
+
+void VocabularyGroupsWidget::createGroup()
+{
+	QObject *mw	= parent()->parent();
+	NewVocabularyGroupDialog *dlg	= qobject_cast<MainWindow*>( mw )->dialogNewVocabularyGroup();
+	if( dlg->exec() == QDialog::Accepted )
+	{
+		refreshView();
+	}
+	qobject_cast<MainWindow*>( mw )->dialogNewVocabularyGroup();
 }
 
 void VocabularyGroupsWidget::renameGroup()
