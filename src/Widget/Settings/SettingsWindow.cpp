@@ -11,7 +11,7 @@
 #include "SettingsWidgetQuiz.h"
 #include "SettingsWidgetImport.h"
 
-#include "ModelView/SettingsMenu/TreeModel.h"
+#include "Model/SettingsTreeModel.h"
 
 SettingsWindow::SettingsWindow( QWidget *parent ) :
     QWidget( parent ),
@@ -54,7 +54,7 @@ void SettingsWindow::initMenu()
 {
 	QFile file( ":/Resources/settings_menu/menu.xml" );
 	file.open( QIODevice::ReadOnly );
-	TreeModel* sourceModel	= new TreeModel( file.readAll(), this );
+	SettingsTreeModel* sourceModel	= new SettingsTreeModel( file.readAll(), this );
 	menuModel				= new QSortFilterProxyModel( this );
 
 	menuModel->setSourceModel( sourceModel );

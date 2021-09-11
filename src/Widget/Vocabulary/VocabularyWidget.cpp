@@ -19,7 +19,7 @@
 #include "Entity/VocabularyMetaInfo.h"
 #include "Entity/Vocabulary.h"
 #include "Entity/VocabularyGroup.h"
-#include "ModelView/SideBarListViewDelegate.h"
+#include "View/ViewDelegate/SideBar/SideBarListViewDelegate.h"
 
 #include "Widget/Vocabulary/VocabularyGroupsWidget.h"
 #include "Widget/Vocabulary/VocabularyWordsWidget.h"
@@ -176,4 +176,9 @@ void VocabularyWidget::setState( QMap<QString, QVariant> state )
 void VocabularyWidget::showWord( int wordId, int groupId )
 {
 	wdgWords->showWord( wordId, groupId );
+}
+
+void VocabularyWidget::refreshGroups()
+{
+	wdgGroups->refreshView();
 }

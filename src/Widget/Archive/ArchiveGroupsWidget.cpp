@@ -10,7 +10,7 @@
 
 #include "Application/VsSettings.h"
 #include "Entity/ArchiveGroup.h"
-#include "ModelView/SideBarListViewDelegate.h"
+#include "View/ViewDelegate/SideBar/SideBarListViewDelegate.h"
 #include "ArchiveWidget.h"
 
 ArchiveGroupsWidget::ArchiveGroupsWidget( QWidget *parent ) :
@@ -32,7 +32,7 @@ ArchiveGroupsWidget::ArchiveGroupsWidget( QWidget *parent ) :
 	/*
 	 * Init view delegate
 	 */
-    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( currentGroupRow, true, ui->listView );
+    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( pModel, currentGroupRow, true, ui->listView );
     ui->listView->setItemDelegate( itemDelegate );
 
     /*

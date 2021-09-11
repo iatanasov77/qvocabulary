@@ -20,9 +20,9 @@
 #include "Entity/ArchiveWord.h"
 #include "Entity/ArchiveGroup.h"
 
-#include "ModelView/QuizViewDelegate.h"
-#include "ModelView/QuizItemModelDelegate.h"
-#include "ModelView/QuizItemModel.h"
+#include "View/ViewDelegate/Quiz/QuizViewDelegate.h"
+#include "View/ViewDelegate/Quiz/QuizItemModelDelegate.h"
+#include "Model/QuizItemModel.h"
 
 QuizWidget::QuizWidget( QWidget *parent ) :
     QWidget( parent ),

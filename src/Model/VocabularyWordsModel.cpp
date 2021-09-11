@@ -1,4 +1,4 @@
-#include "ModelView/VocabularyWordsModel.h"
+#include "VocabularyWordsModel.h"
 
 #include <QMimeData>
 #include <QTextCodec>

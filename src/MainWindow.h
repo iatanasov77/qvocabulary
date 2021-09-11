@@ -13,8 +13,8 @@
 #include "Widget/Vocabulary/VocabularyWidget.h"
 #include "Widget/Settings/SettingsWindow.h"
 #include "Dialog/NewDatabaseDialog.h"
-//#include "Dialog/NewVocabularyGroupDialog.h"
-//#include "Dialog/RenameVocabularyGroupDialog.h"
+#include "Dialog/NewVocabularyGroupDialog.h"
+#include "Dialog/RenameVocabularyGroupDialog.h"
 
 namespace Ui {
 	class MainWindow;
@@ -31,12 +31,16 @@ class MainWindow : public QMainWindow
 		void loadDb( const QString &dbPath );
 		void setCurrentGroup( int groupId );
 		void initWidgets();
+		void initVocabularyWidget();
+		void initArchiveWidget();
 		//friend void NewVocabularyGroupDialog::reloadWidgets();
 		//friend void RenameVocabularyGroupDialog::reloadWidgets();
 
 		void showVocabularyWord( int wordId, int groupId );
 		void showArchiveWord( int wordId, int groupId );
 		void openQuiz( int quizId, QString quizTitle );
+
+		NewVocabularyGroupDialog* dialogNewVocabularyGroup();
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
@@ -46,8 +50,6 @@ class MainWindow : public QMainWindow
 	private slots:
 		void on_actionNew_DB_triggered();
 		void on_actionOpen_DB_triggered();
-		void on_actionInsertGroup_triggered();
-		void on_actionInsertWord_triggered();
 		void openRecentDatabase();
 		void clearRecentDatabases();
 		void on_actionSave_As_triggered();
@@ -72,6 +74,10 @@ class MainWindow : public QMainWindow
 
 		void loadLanguage();
 
+	public slots:
+		void on_actionInsertGroup_triggered();
+		void on_actionInsertWord_triggered();
+
 	private:
 		// Methods
 		void initDebug();
@@ -81,8 +87,6 @@ class MainWindow : public QMainWindow
 		void initMenuLanguages();
 		void clearVocabularyWidget();
 		void clearArchiveWidget();
-		void initVocabularyWidget();
-		void initArchiveWidget();
 
 		void createReccentDatabaseActions();
 

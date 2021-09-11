@@ -1,5 +1,5 @@
-#ifndef DIALOG_NEW_VOCABULARY_GROUP_H
-#define DIALOG_NEW_VOCABULARY_GROUP_H
+#ifndef DIALOG_RENAME_VOCABULARY_GROUP_H
+#define DIALOG_RENAME_VOCABULARY_GROUP_H
 
 #include <QModelIndex>
 #include <QWidget>
@@ -27,4 +27,4 @@ class RenameVocabularyGroupDialog : public QDialog
 
 };
 
-#endif // DIALOG_NEW_VOCABULARY_GROUP_H
+#endif // DIALOG_RENAME_VOCABULARY_GROUP_H

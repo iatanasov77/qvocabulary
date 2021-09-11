@@ -15,6 +15,14 @@
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AddToArchiveDialog</name>
@@ -683,6 +691,17 @@
     </message>
 </context>
 <context>
+    <name>SettingsTreeModel</name>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsWidgetGeneral</name>
     <message>
         <source>Frame</source>
@@ -847,6 +866,13 @@ Done, over and out.
     </message>
 </context>
 <context>
+    <name>SideBarListViewDelegate</name>
+    <message>
+        <source>Show All Words</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SynonymsDialog</name>
     <message>
         <source>Edit Synonyms</source>
@@ -901,17 +927,6 @@ Done, over and out.
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>TreeModel</name>
-    <message>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -972,6 +987,10 @@ Done, over and out.
         <source>Delete Vocabulary Group</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;New Group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VocabularyTableView</name>
@@ -1024,6 +1043,18 @@ Done, over and out.
     </message>
     <message>
         <source>Proverb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There are not selected types for some words !</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1105,6 +1136,14 @@ Done, over and out.
     </message>
     <message>
         <source>Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter by</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -10,12 +10,16 @@
 #include "Entity/Vocabulary.h"
 #include "Entity/ArchiveWord.h"
 
-SideBarListViewDelegate::SideBarListViewDelegate( int currRow, bool inArchive, QObject *parent ) :
+#include "Model/VocabularyGroupsModel.h"
+
+SideBarListViewDelegate::SideBarListViewDelegate(  QAbstractItemModel *model, int currRow, bool inArchive, QObject *parent ) :
     QItemDelegate( parent )
 {
 	_inArchive	= inArchive;
 	_currRow	= currRow;
 	_event		= QEvent::None;
+
+	_showAllButton	= _inArchive ? false : qobject_cast<VocabularyGroupsModel*>( model )->showAllButton();
 }
 
 void SideBarListViewDelegate::setEvent( int event )	// Pass a valid QEvent::Type
@@ -32,8 +36,13 @@ void SideBarListViewDelegate::paint(
 	if ( ! index.isValid() )
 		return;
 
-	long wordsCount				= groupWordsCount( index.siblingAtColumn( 0 ).data().toInt() );
-	QString buttonText 			= QString( "%1 (%2)" ).arg( index.siblingAtColumn( 1 ).data().toString() ).arg( wordsCount );
+	QString buttonText;
+	if ( _showAllButton && index.row() == 0 ) {
+		buttonText 		= tr( "Show All Words" );
+	} else {
+		long wordsCount	= groupWordsCount( index.siblingAtColumn( 0 ).data().toInt() );
+		buttonText 		= QString( "%1 (%2)" ).arg( index.siblingAtColumn( 1 ).data().toString() ).arg( wordsCount );
+	}
 
 	QStyleOptionButton button	= createButton( index.row(), option.rect, buttonText );
 	//qDebug() << "Draw Button at row " << index.row() << " with state " << QString::number( button.state );

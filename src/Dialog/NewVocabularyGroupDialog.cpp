@@ -14,8 +14,6 @@ NewVocabularyGroupDialog::NewVocabularyGroupDialog( QWidget *parent ) :
     QDialog( parent ),
     ui( new Ui::NewVocabularyGroupDialog )
 {
-	mw 		= qobject_cast<MainWindow*>( parent );
-
     ui->setupUi( this );
 
     QPushButton *saveButton = ui->buttonBox->button( QDialogButtonBox::Save );
@@ -39,9 +37,4 @@ void NewVocabularyGroupDialog::save()
 	pModelVocabularyGroup->insertRow( row );
 	pModelVocabularyGroup->setData( pModelVocabularyGroup->index( row, 1 ), ui->leName->text() );
 	pModelVocabularyGroup->qxSave();
-
-	// Set Current group to the new created group
-	int newGroupId	= pModelVocabularyGroup->data( pModelVocabularyGroup->index( row, 0 ) ).toInt();
-	mw->initWidgets();
-	mw->setCurrentGroup( newGroupId );
 }

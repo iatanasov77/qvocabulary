@@ -5,8 +5,8 @@
 
 #include "../lib/VankoSoft/Widget/VsIconLabel.h"
 
-#include "ModelView/VocabularyWordsModel.h"
-#include "ModelView/ViewDelegate/TestDelegate.h"
+#include "Model/VocabularyWordsModel.h"
+#include "View/ViewDelegate/Test/TestDelegate.h"
 
 TestWidgetsDialog::TestWidgetsDialog( QWidget *parent ) :
     QDialog( parent ),

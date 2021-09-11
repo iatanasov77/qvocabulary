@@ -1,27 +1,27 @@
 /*
  * FROM THIS EXAMPLE BUT CHANGED SOURCE FILE FORMAT FROM TXT TO XML:
  * ===========================================================================
- * https://doc.qt.io/qt-5/qtwidgets-itemviews-simpletreemodel-example.html
+ * https://doc.qt.io/qt-5/qtwidgets-itemviews-simpleSettingsTreeModel-example.html
  */
-#ifndef SETTINGSMENU_TREEMODEL_H
-#define SETTINGSMENU_TREEMODEL_H
+#ifndef SETTINGSMENU_SettingsTreeModel_H
+#define SETTINGSMENU_SettingsTreeModel_H
 
 #include <QAbstractItemModel>
 #include <QModelIndex>
 #include <QVariant>
 #include <QDomElement>
 
-class TreeItem;
+class SettingsTreeItem;
 
 #include "GlobalTypes.h"
 
-class TreeModel : public QAbstractItemModel
+class SettingsTreeModel : public QAbstractItemModel
 {
     Q_OBJECT
 
 	public:
-		explicit TreeModel( const QString &data, QObject *parent = nullptr );
-		~TreeModel();
+		explicit SettingsTreeModel( const QString &data, QObject *parent = nullptr );
+		~SettingsTreeModel();
 
 		QVariant data( const QModelIndex &index, int role ) const override;
 		Qt::ItemFlags flags( const QModelIndex &index ) const override;
@@ -34,11 +34,11 @@ class TreeModel : public QAbstractItemModel
 		QStringList ids();
 
 	private:
-		void setupModelData( const QString data, TreeItem *parent );
-		void iterateChildItems( TreeItem* parent, QDomElement item );
+		void setupModelData( const QString data, SettingsTreeItem *parent );
+		void iterateChildItems( SettingsTreeItem* parent, QDomElement item );
 
-		TreeItem *rootItem;
+		SettingsTreeItem *rootItem;
 		QStringList _ids;
 };
 
-#endif	// SETTINGSMENU_TREEMODEL_H
+#endif	// SETTINGSMENU_SettingsTreeModel_H

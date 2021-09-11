@@ -9,7 +9,7 @@
 #include <QTextDocument>
 
 #include "GlobalTypes.h"
-#include "ModelView/VocabularyTableView.h"
+#include "View/VocabularyTableView.h"
 #include "../lib/VankoSoft/Widget/VsClickableLabel.h"
 #include "../lib/VankoSoft/Widget/VsIconLabel.h"
 

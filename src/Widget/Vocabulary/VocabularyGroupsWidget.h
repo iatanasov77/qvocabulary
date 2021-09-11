@@ -10,6 +10,7 @@
 #include "QxModelView.h"
 
 #include "Entity/VocabularyGroup.h"
+#include "Model/VocabularyGroupsModel.h"
 
 namespace Ui {
 	class VocabularyGroupsWidget;
@@ -34,6 +35,7 @@ class VocabularyGroupsWidget : public QWidget
 		void setCurrentGroup( const QModelIndex &index );
 		void scrollTo( int groupId );
 		void displayContextMenu( QPoint pos );
+		void createGroup();
 		void renameGroup();
 		void deleteGroup();
 
@@ -51,7 +53,9 @@ class VocabularyGroupsWidget : public QWidget
 		void initContextMenu();
 
 		Ui::VocabularyGroupsWidget* ui;
-		qx::QxModel<VocabularyGroup>* pModel;
+
+		//qx::QxModel<VocabularyGroup> *pModel;
+		VocabularyGroupsModel *pModel;
 };
 
 #endif // WIDGET_VOCABULARYGROUPS_H

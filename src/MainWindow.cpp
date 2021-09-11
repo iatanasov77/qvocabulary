@@ -136,10 +136,13 @@ void MainWindow::initIcons()
 
 void MainWindow::on_actionInsertGroup_triggered()
 {
-	NewVocabularyGroupDialog *dlg	= new NewVocabularyGroupDialog( this );
-
-	dlg->setModal( true );
-	dlg->show();
+	NewVocabularyGroupDialog *dlg	= dialogNewVocabularyGroup();
+	if( dlg->exec() == QDialog::Accepted )
+	{
+		wdgVocabulary->refreshGroups();
+		//initVocabularyWidget();
+		//setCurrentGroup( newGroupId );
+	}
 }
 
 void MainWindow::on_actionInsertWord_triggered()
@@ -315,16 +318,18 @@ void MainWindow::loadDb( const QString &dbPath )
 		return;
 	}
 
-	QApplication::setOverrideCursor( Qt::WaitCursor );
-
 	VsDatabase::instance()->connect( dbPath );
-
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
+
+	// Check If can Open DB
 	if ( VsApplication::canOpenDb( metaInfo->dbVersion ) == false ) {
 		// Clear Recent Databases List and call initDatabase() again
 		VsSettings::instance()->setValue( "recentDatabaseList", QStringList(), "MainWindow" );
 		initDatabase();
-	} else if ( metaInfo->dbVersion != VsApplication::DB_VERSION ) {
+	}
+
+	// Check for DB Version
+	if ( metaInfo->dbVersion != VsApplication::DB_VERSION ) {
 		QMessageBox::warning(
 			this,
 			tr( "Warning" ),
@@ -332,12 +337,13 @@ void MainWindow::loadDb( const QString &dbPath )
 		);
 	}
 
+	QApplication::setOverrideCursor( Qt::WaitCursor );
+
 	initWidgets();
 	wdgVocabulary->initModels();
 	setCurrentDb( dbPath );
 
 	QApplication::restoreOverrideCursor();
-
 	statusBar()->showMessage( tr( "Database loaded" ), 2000 );
 }
 
@@ -585,13 +591,13 @@ void MainWindow::initVocabularyWidget()
 {
 	QMap<QString, QVariant> widgetState;
 
-	clearVocabularyWidget();
-
 	if ( wdgVocabulary ) {
 		widgetState	= wdgVocabulary->getState();
 	}
 
+	clearVocabularyWidget();
 	wdgVocabulary	= new VocabularyWidget( this );
+
 	if ( ! widgetState.isEmpty() ) {
 		wdgVocabulary->setState( widgetState );
 	}
@@ -638,4 +644,12 @@ void MainWindow::showArchiveWord( int wordId, int groupId )
 {
 	on_actionShow_Archive_triggered();
 	wdgArchive->showWord( wordId, groupId  );
+}
+
+NewVocabularyGroupDialog* MainWindow::dialogNewVocabularyGroup()
+{
+	NewVocabularyGroupDialog *dlg	= new NewVocabularyGroupDialog( this );
+	dlg->setModal( true );
+
+	return dlg;
 }

@@ -16,7 +16,7 @@
 #include "Entity/Quiz.h"
 #include "Entity/QuizItem.h"
 #include "Application/VsSettings.h"
-#include "ModelView/QuizItemModelDelegate.h"
+#include "View/ViewDelegate/Quiz/QuizItemModelDelegate.h"
 
 QuizListWindow::QuizListWindow( QWidget *parent ) :
     QWidget( parent ),

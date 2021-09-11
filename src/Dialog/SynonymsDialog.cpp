@@ -17,7 +17,7 @@
 
 #include "Application/VsApplication.h"
 #include "Application/VsDatabase.h"
-#include "ModelView/VocabularyWordsModel.h"
+#include "Model/VocabularyWordsModel.h"
 #include "../lib/VankoSoft/Model/VsComboBoxModel.h"
 
 SynonymsDialog::SynonymsDialog( QMap<QString, QVariant> word, QWidget *parent ) :
