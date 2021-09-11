@@ -272,10 +272,18 @@ void VocabularyWordsWidget::displayContextMenu( QPoint pos )
 		menu->addAction( actFilter );
 	}
 	menu->addSeparator();
+
+	// Clear Filters and Sortings
 	actFilter	= new QAction( this );
 	actFilter->setText( tr( "Clear Filter" ) );
 	//actFilter->setIcon( QIcon( ":/Resources/icons/mail-message-new.svg" ) );
 	connect( actFilter, &QAction::triggered, this, &VocabularyWordsWidget::clearFilter );
+	menu->addAction( actFilter );
+
+	actFilter	= new QAction( this );
+	actFilter->setText( tr( "Clear Sorting" ) );
+	//actFilter->setIcon( QIcon( ":/Resources/icons/mail-message-new.svg" ) );
+	connect( actFilter, &QAction::triggered, this, &VocabularyWordsWidget::clearSorting );
 	menu->addAction( actFilter );
 
 	menu->popup( ui->tableView->viewport()->mapToGlobal( pos ) );
@@ -779,4 +787,9 @@ void VocabularyWordsWidget::setFilter()
 void VocabularyWordsWidget::clearFilter()
 {
 	proxyModel->clearFilter();
+}
+
+void VocabularyWordsWidget::clearSorting()
+{
+	proxyModel->clearSorting();
 }

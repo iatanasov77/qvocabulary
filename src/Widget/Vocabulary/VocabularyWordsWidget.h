@@ -62,6 +62,7 @@ class VocabularyWordsWidget : public QWidget
 		void editTranslationsTypes( const QModelIndex &index );
 		void setFilter();
 		void clearFilter();
+		void clearSorting();
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed

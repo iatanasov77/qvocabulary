@@ -1146,5 +1146,9 @@ Done, over and out.
         <source>Filter by</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Clear Sorting</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

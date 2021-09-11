@@ -18,6 +18,12 @@ void VocabularySortingModel::clearFilter()
 	invalidateFilter();
 }
 
+void VocabularySortingModel::clearSorting()
+{
+	setSortRole( Qt::InitialSortOrderRole );
+	invalidate();
+}
+
 void VocabularySortingModel::setFilterWordType( int type )
 {
 	wordType	= type;
@@ -43,6 +49,8 @@ bool VocabularySortingModel::lessThan( const QModelIndex &left, const QModelInde
 
 bool VocabularySortingModel::filterAcceptsRow( int sourceRow, const QModelIndex &sourceParent ) const
 {
+	Q_UNUSED( sourceParent )
+
     int wordId	= sourceModel()->data( sourceModel()->index( sourceRow, 0 ) ).toInt();
 
     return  wordType >= 0 ? getTranslationsTypes( wordId ).contains( wordType ) : true;
