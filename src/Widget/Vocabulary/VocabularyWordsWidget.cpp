@@ -27,6 +27,7 @@
 #include "View/ViewDelegate/Vocabulary/VocabularyTranslationsDelegate.h"
 #include "View/ViewDelegate/Vocabulary/VocabularySynonymsDelegate.h"
 #include "Model/VocabularyWordsModel.h"
+#include "Model/VocabularySortingModel.h"
 #include "Dialog/AddDescriptionDialog.h"
 #include "Dialog/SynonymsDialog.h"
 #include "Dialog/VocabularyTranslationsTypesDialog.h"
@@ -87,11 +88,18 @@ VocabularyWordsWidget::~VocabularyWordsWidget()
 void VocabularyWordsWidget::initModel()
 {
 	pModel	= new VocabularyWordsModel();
-	ui->tableView->setModel( pModel );
-	setViewHeader( VsDatabase::instance()->metaInfo() );
 
 	// QxModelView module : new feature available to add automatically an empty row at the end of the table to insert quickly new items (setShowEmptyLine() method)
 	pModel->setShowEmptyLine( true );
+
+	VocabularySortingModel *proxyModel	= new VocabularySortingModel( this );
+	proxyModel->setDynamicSortFilter( true );
+	proxyModel->setSourceModel( pModel );
+
+	//ui->tableView->setModel( pModel );
+	ui->tableView->setModel( proxyModel );
+	ui->tableView->setSortingEnabled( true );
+	setViewHeader( VsDatabase::instance()->metaInfo() );
 
 	connect(
 		pModel,
