@@ -1,3 +1,24 @@
+0.21.2	|	Release date: **11.09.2021**
+============================================
+* New Features:
+  - Add Filter by Word Types.
+  - Add Vocabulary Words Sorting.
+  - Add New Vocabulary Groups from Context Menu.
+  - Add SideBar Button 'Show All'.
+  - Add Waitiing Cursor when Import Database and when Import Archive.
+  - Add weight indicator for Translations and Refactoring init of weights.
+  - Set Weights for Word Translations.
+  - Added Import of QVocabulary VocabularyWordTranslation table.
+* Bug-Fixes:
+  - Fix Layouts of AddDescriptionDialog.
+  - Move Checks of Opened Database before initialize a Waitiing Cursor.
+  - Set Size of  Word Translations Dialog.
+  - Fix Crashing when New Vocabulary Group is Created.
+  - Fix Little Make Warning.
+  - Very Big Refactoring of Models and Views.
+  - Add Check for Not Selected Types before save the TranslationsTypesDialog.
+
+
 0.21.1	|	Release date: **08.09.2021**
 ============================================
 * New Features:
