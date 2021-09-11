@@ -154,9 +154,13 @@ int VocabularyWordsWidget::insertWord()
  */
 void VocabularyWordsWidget::loadGroup( int groupId )
 {
-	ui->leSearch->setText( "" );	// Clear Serch Field
-	QString query	= QString( "WHERE group_id=%1" ).arg( groupId );
-	pModel->qxFetchByQuery( query );
+	ui->leSearch->setText( "" );	// Clear Search Field
+	if ( groupId ) {
+		QString query	= QString( "WHERE group_id=%1" ).arg( groupId );
+		pModel->qxFetchByQuery( query );
+	} else {
+		pModel->qxFetchAll();
+	}
 	ui->stackedWidget->setCurrentWidget( ui->pageVocabulary );
 
 	currentGroup = groupId;

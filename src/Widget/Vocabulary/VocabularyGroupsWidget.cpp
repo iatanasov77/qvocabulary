@@ -10,7 +10,8 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
-#include "Entity/VocabularyGroup.h"
+//#include "Entity/VocabularyGroup.h"
+#include "Model/VocabularyGroupsModel.h"
 #include "View/ViewDelegate/SideBar/SideBarListViewDelegate.h"
 #include "VocabularyWidget.h"
 #include "Dialog/RenameVocabularyGroupDialog.h"
@@ -29,7 +30,7 @@ VocabularyGroupsWidget::VocabularyGroupsWidget( QWidget *parent ) :
     /*
 	 * Init view delegate
 	 */
-    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( setCurrentGroup(), false, ui->listView );
+    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( pModel, setCurrentGroup(), false, ui->listView );
     ui->listView->setItemDelegate( itemDelegate );
 
     /*
@@ -56,8 +57,10 @@ int VocabularyGroupsWidget::currentGroup()
 
 void VocabularyGroupsWidget::initModel()
 {
-	pModel	= new qx::QxModel<VocabularyGroup>();
+	//pModel	= new qx::QxModel<VocabularyGroup>();
+	pModel	= new VocabularyGroupsModel( true );
 	pModel->qxFetchAll();
+	//pModel->showAllButton();
 	ui->listView->setModel( pModel );
 
 	connect(

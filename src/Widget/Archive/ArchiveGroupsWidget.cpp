@@ -32,7 +32,7 @@ ArchiveGroupsWidget::ArchiveGroupsWidget( QWidget *parent ) :
 	/*
 	 * Init view delegate
 	 */
-    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( currentGroupRow, true, ui->listView );
+    SideBarListViewDelegate* itemDelegate	= new SideBarListViewDelegate( pModel, currentGroupRow, true, ui->listView );
     ui->listView->setItemDelegate( itemDelegate );
 
     /*
