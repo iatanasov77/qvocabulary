@@ -95,7 +95,8 @@ void VocabularyWidget::initModels()
 	// Init VocabularyMetaInfo
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	if ( metaInfo ) {
-		ui->lblDatabaseName->setText( QString( "%1 " ).arg( metaInfo->name ) );
+		ui->lblDatabaseName->setText( QString( "%1" ).arg( metaInfo->name ) );
+		ui->lblDatabaseName->setFont( QFont( "Arial", 12, QFont::Bold ) );
 	}
 }
 
