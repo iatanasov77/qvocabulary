@@ -11,6 +11,7 @@ class VocabularySortingModel : public QSortFilterProxyModel
 		VocabularySortingModel( QObject *parent = 0 );
 
 		void clearFilter();
+		void clearSorting();
 		void setFilterWordType( int type );
 
 	protected:

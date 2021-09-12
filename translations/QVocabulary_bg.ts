@@ -1253,11 +1253,15 @@ Done, over and out.
     </message>
     <message>
         <source>Clear Filter</source>
-        <translation type="unfinished"> Изчисти Филтър</translation>
+        <translation type="unfinished">Изчисти Филтър</translation>
     </message>
     <message>
         <source>Filter by</source>
         <translation type="unfinished">Филтрирай по</translation>
+    </message>
+    <message>
+        <source>Clear Sorting</source>
+        <translation type="unfinished">Изчисти Сортиране</translation>
     </message>
 </context>
 </TS>
