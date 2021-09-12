@@ -9,6 +9,7 @@
 VocabularySortingModel::VocabularySortingModel( QObject *parent )
     : QSortFilterProxyModel(parent)
 {
+	setSortCaseSensitivity( Qt::CaseInsensitive );
 	clearFilter();
 }
 
@@ -20,7 +21,7 @@ void VocabularySortingModel::clearFilter()
 
 void VocabularySortingModel::clearSorting()
 {
-	setSortRole( Qt::InitialSortOrderRole );
+	sort( 0, Qt::AscendingOrder );
 	invalidate();
 }
 
@@ -36,15 +37,18 @@ void VocabularySortingModel::setFilterWordType( int type )
  */
 bool VocabularySortingModel::lessThan( const QModelIndex &left, const QModelIndex &right ) const
 {
-	bool hasLeftId	= sourceModel()->data( left.siblingAtColumn( 0 ) ).toBool();
-	bool hasRightId	= sourceModel()->data( left.siblingAtColumn( 0 ) ).toBool();
+	bool leftId		= sourceModel()->data( left.siblingAtColumn( 0 ) ).toInt();
+	bool rightId	= sourceModel()->data( right.siblingAtColumn( 0 ) ).toInt();
 
-    if ( ! hasLeftId )
+    if ( leftId == 0 )
         return ( this->sortOrder() == Qt::DescendingOrder );
-    else if ( ! hasRightId )
+    else if ( rightId == 0 )
         return ( this->sortOrder() == Qt::AscendingOrder );
-    else
-        return QSortFilterProxyModel::lessThan( left, right );
+    else {
+    	//return leftId < rightId;
+    	return QSortFilterProxyModel::lessThan( left, right );
+    }
+
 }
 
 bool VocabularySortingModel::filterAcceptsRow( int sourceRow, const QModelIndex &sourceParent ) const

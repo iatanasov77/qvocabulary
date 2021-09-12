@@ -100,6 +100,9 @@ void VocabularyWordsWidget::initModel()
 	ui->tableView->setSortingEnabled( true );
 	setViewHeader( VsDatabase::instance()->metaInfo() );
 
+	proxyModel->clearSorting();	// Dont work when call in constructor of ProxyModel.
+								// Should call after the view is initialized.
+
 	connect(
 		pModel,
 		SIGNAL( dataChanged( const QModelIndex&, const QModelIndex& ) ),
