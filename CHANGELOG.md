@@ -1,3 +1,11 @@
+0.21.3	|	Release date: **12.09.2021**
+============================================
+* New Features:
+  - Add Clear Sorting action.
+* Bug-Fixes:
+  - Fix Vocabulary Sorting Issues.
+
+
 0.21.2	|	Release date: **11.09.2021**
 ============================================
 * New Features:
