@@ -22,6 +22,7 @@ class VocabularyTranslationsTypesDialog : public QDialog
 
 	public slots:
 		void save();
+		void checkAll( int logicalIndex, bool isOn );
 
 	private:
 		Ui::VocabularyTranslationsTypesDialog* ui;
