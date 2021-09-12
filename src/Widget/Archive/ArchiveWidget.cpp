@@ -83,13 +83,12 @@ void ArchiveWidget::initModels()
 {
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	if ( metaInfo ) {
-		ui->databaseLabel->setText( tr( "Archive" ) );
-		QString trWords	= qApp->translate( "VocabularyWidget", "words" );
-		ui->databaseName->setText( QString( "%1 ( %2 %3 )" )
-									.arg( metaInfo->name )
-									.arg( QString::number( qx::dao::count<ArchiveWord>() ) )
-									.arg( trWords )
-								);
+		ui->lblDatabase->setText( tr( "Archive" ) );
+		ui->lblDatabaseName->setText( QString( "%1 " ).arg( metaInfo->name ) );
+		ui->lblDatabaseWordsCount->setText(  QString( "( %1 %2 )" )
+												.arg( QString::number( qx::dao::count<ArchiveWord>() ) )
+												.arg( qApp->translate( "VocabularyWidget", "words" ) )
+											);
 	}
 }
 

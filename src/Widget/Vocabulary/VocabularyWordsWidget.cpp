@@ -223,6 +223,7 @@ void VocabularyWordsWidget::onDataChanged( const QModelIndex& topLeft, const QMo
 			insertFromEmptyRow( topLeft );
 
 			refreshView( topLeft.siblingAtColumn( 0 ), topLeft.siblingAtColumn( 5 ) );
+			qobject_cast<VocabularyWidget *>( wdgVocabulary )->setWordsCount();
 		}
 	}
 }

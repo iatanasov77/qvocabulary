@@ -1167,7 +1167,7 @@ Done, over and out.
     </message>
     <message>
         <source>Database:</source>
-        <translation type="unfinished">Речник:</translation>
+        <translation type="obsolete">Речник:</translation>
     </message>
     <message>
         <source>Current Group:</source>
@@ -1179,6 +1179,18 @@ Done, over and out.
     </message>
     <message>
         <source>Vocabulary</source>
+        <translation type="obsolete">Речник:</translation>
+    </message>
+    <message>
+        <source>Database: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>( 0 words )</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vocabulary: </source>
         <translation type="unfinished">Речник:</translation>
     </message>
 </context>
