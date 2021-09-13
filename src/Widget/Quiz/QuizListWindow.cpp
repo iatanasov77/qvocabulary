@@ -167,9 +167,12 @@ void QuizListWindow::initQuizListDetails( QTreeWidgetItem* parent, int quizRow )
 	parent->addChild( treeItem );
 
 	// Duration
+	QTime duration( 0,0,0 );
+	duration = duration.addSecs( startedAt.msecsTo( finishedAt ) / 1000 );
+
 	treeItem = new QTreeWidgetItem();
-	treeItem->setText( 0, "Duration (s)" );
-	treeItem->setText( 1, QString::number( startedAt.msecsTo( finishedAt ) / 1000 ) );
+	treeItem->setText( 0, "Duration" );
+	treeItem->setText( 1, duration.toString( "hh:mm:ss" ) );
 	parent->addChild( treeItem );
 }
 
