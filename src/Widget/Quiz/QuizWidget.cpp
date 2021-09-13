@@ -265,6 +265,7 @@ void QuizWidget::finishQuiz()
 	ui->lcdAssessment->display( assessment );
 	ui->frmTimer->hide();
 	ui->frmAssessment->show();
+	ui->lblAssesmentDetails->setText( QString( "( %1/%2 )" ).arg( rightAnswers ).arg( questionsNumber ) );
 
 	pModel->qxSave();
 

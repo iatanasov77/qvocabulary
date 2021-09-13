@@ -108,7 +108,16 @@ QGroupBox* QuizListWindow::quizButtons( QMap<QString, QVariant> properties )
 
 void QuizListWindow::initQuizListItem( QTreeWidgetItem* parent, int quizRow, QMap<QString, QVariant> properties )
 {
-	QString assessment		= pModel->data( pModel->index( quizRow, 4 ) ).toString();
+	int quizId						= pModel->data( pModel->index( quizRow, 0 ) ).toInt();
+	QString countQuestionsQuery		= QString( "WHERE quiz_id = %1" ).arg( QString::number( quizId ) );
+	QString countRightAnswersQuery	= QString( "WHERE quiz_id = %1 AND right_answer = TRUE" ).arg( QString::number( quizId ) );
+	int countQuestions				= qx::dao::count<QuizItem>( countQuestionsQuery );
+	int rightAnswers				= qx::dao::count<QuizItem>( countRightAnswersQuery );
+	QString assessment				= QString( "%1 ( %2/%3 )" )
+										.arg( pModel->data( pModel->index( quizRow, 4 ) ).toString() )
+										.arg( QString::number( rightAnswers ) )
+										.arg( QString::number( countQuestions ) );
+
 	QString date			= pModel->data( pModel->index( quizRow, 5 ) ).toDateTime().toString ( "dd.MM.yyyy" );
 
 	QFont itemFont			= QFont( "" , 7 , QFont::Bold );
