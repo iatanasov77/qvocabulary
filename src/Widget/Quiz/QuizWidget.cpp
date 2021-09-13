@@ -228,7 +228,7 @@ void QuizWidget::onDataChanged( const QModelIndex& topLeft, const QModelIndex& b
 {
 	if ( topLeft == bottomRight && topLeft.column() == 5 ) {
 		QString lang2	= pModel->data( topLeft.siblingAtColumn( 3 ) ).toString();
-		QString answer	= pModel->data( topLeft.siblingAtColumn( 5 ) ).toString();
+		QString answer	= pModel->data( topLeft.siblingAtColumn( 5 ) ).toString().trimmed();
 
 		// Detect if answer is right
 		bool found	= answer.size() && lang2.contains( answer, Qt::CaseInsensitive );
