@@ -7,6 +7,7 @@ class Helper
 {
 	public:
 		static QMap<int, QString> getAllGroups();
+		static void delay( int secs );
 };
 
 #endif // MODELVIEW_HELPER_H

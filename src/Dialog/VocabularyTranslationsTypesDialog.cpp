@@ -16,6 +16,8 @@
 
 #include "Entity/VocabularyGroup.h"
 
+#include "Widget/VsTableHeaderView.h"
+
 VocabularyTranslationsTypesDialog::VocabularyTranslationsTypesDialog( QMap<QString, QVariant> word, QWidget *parent ) :
     QDialog( parent ),
     ui( new Ui::VocabularyTranslationsTypesDialog )
@@ -37,6 +39,8 @@ VocabularyTranslationsTypesDialog::VocabularyTranslationsTypesDialog( QMap<QStri
 
     // May be there is other way to translate Core Strings
     ui->buttonBox->button( QDialogButtonBox::Cancel )->setText( tr( "Cancel" ) );
+
+    connect( ui->tableWidget->horizontalHeader(), SIGNAL( checkboxClicked( int, bool ) ), this, SLOT( checkAll( int, bool ) ) );
 }
 
 VocabularyTranslationsTypesDialog::~VocabularyTranslationsTypesDialog()
@@ -50,6 +54,9 @@ void VocabularyTranslationsTypesDialog::initTranslations( QMap<QString, QVariant
 	QStringList translations	= word["translations"].toString().split( "," );
 	ui->tableWidget->setRowCount( translations.size() );
 	ui->tableWidget->setColumnCount( 6 );
+
+	VsTableHeaderView *myHeader = new VsTableHeaderView( Qt::Horizontal, ui->tableWidget, {1, 2, 3, 4} );
+	ui->tableWidget->setHorizontalHeader( myHeader );
 	ui->tableWidget->setHorizontalHeaderLabels( {
 		tr( "Word" ),
 		tr( "Noun" ),
@@ -217,4 +224,18 @@ int VocabularyTranslationsTypesDialog::getWordWeight( QString trWord )
 		return query.value( "tr_weight" ).toInt();
 	else
 		return _defaultWeight;
+}
+
+void VocabularyTranslationsTypesDialog::checkAll( int logicalIndex, bool isOn )
+{
+	//qDebug() << "VocabularyTranslationsTypesDialog::checkAll: " << isOn;
+	foreach ( QButtonGroup *btnGroup, _wordTypes ) {
+		if ( isOn ) {
+			btnGroup->button( logicalIndex - 1 )->setChecked( isOn );
+		} else {
+			btnGroup->button( logicalIndex - 1 )->setAutoExclusive( false );
+			btnGroup->button( logicalIndex - 1 )->setChecked( false );
+			btnGroup->button( logicalIndex - 1 )->setAutoExclusive( true );
+		}
+	}
 }

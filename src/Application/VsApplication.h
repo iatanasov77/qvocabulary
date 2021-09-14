@@ -29,6 +29,7 @@ class VsApplication
 		QMap<QString, QString> languages();
 		void loadLanguage( const QString& rLanguage );
 		QString appAboutBody();
+		QString quizHelpDataBody();
 
 		QMap<QString, int> dbTableSqlLines();
 		static const QString DB_VERSION;

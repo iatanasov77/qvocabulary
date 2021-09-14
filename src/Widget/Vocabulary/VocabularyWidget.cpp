@@ -9,11 +9,13 @@
 #include <QSettings>
 #include <QMap>
 #include <QVariant>
+#include <QMessageBox>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "Model/Helper.h"
 #include "Application/VsDatabase.h"
 #include "Application/VsSettings.h"
 #include "Entity/VocabularyMetaInfo.h"
@@ -31,6 +33,7 @@ VocabularyWidget::VocabularyWidget( QWidget *parent ) :
     ui->setupUi( this );
 
     init();
+    Helper::delay( 5 ); // Add a delay to database to be loaded
     initModels();
 
     // Hide Current group Display in Header Frame
@@ -83,15 +86,17 @@ void VocabularyWidget::init()
 
 void VocabularyWidget::initModels()
 {
+	//QMessageBox::warning( this, "Meta Info Entered", "Meta Info Entered." );
+	ui->lblDatabase->setText( tr( "Vocabulary: " ) );
+	ui->lblDatabaseWordsCount->setText( QString( "( %1 %2 )" )
+												.arg( QString::number( qx::dao::count<Vocabulary>() ) )
+												.arg( qApp->translate( "VocabularyWidget", "words" ) )
+											);
 	// Init VocabularyMetaInfo
 	VocabularyMetaInfoPtr metaInfo	= VsDatabase::instance()->metaInfo();
 	if ( metaInfo ) {
-		ui->databaseLabel->setText( tr( "Vocabulary" ) );
-		ui->databaseName->setText( QString( "%1 ( %2 %3 )" )
-									.arg( metaInfo->name )
-									.arg( QString::number( qx::dao::count<Vocabulary>() ) )
-									.arg( qApp->translate( "VocabularyWidget", "words" ) )
-								);
+		ui->lblDatabaseName->setText( QString( "%1" ).arg( metaInfo->name ) );
+		ui->lblDatabaseName->setFont( QFont( "Arial", 12, QFont::Bold ) );
 	}
 }
 
@@ -103,6 +108,7 @@ void VocabularyWidget::setCurrentGroupName( QString groupName )
 void VocabularyWidget::insertWord()
 {
 	wdgWords->insertWord();
+	setWordsCount();
 }
 
 void VocabularyWidget::loadGroup( int groupId )
@@ -181,4 +187,12 @@ void VocabularyWidget::showWord( int wordId, int groupId )
 void VocabularyWidget::refreshGroups()
 {
 	wdgGroups->refreshView();
+}
+
+void VocabularyWidget::setWordsCount()
+{
+	ui->lblDatabaseWordsCount->setText(  QString( "( %1 %2 )" )
+											.arg( QString::number( qx::dao::count<Vocabulary>() ) )
+											.arg( qApp->translate( "VocabularyWidget", "words" ) )
+										);
 }

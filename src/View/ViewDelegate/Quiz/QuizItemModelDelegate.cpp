@@ -28,7 +28,7 @@ void QuizItemModelDelegate::paint(
 
 	if ( index.column() == _statusColumn && _displayAnswerStatus ) {
 		//QIcon icon = qvariant_cast<QIcon>(index.data(Qt::DecorationRole));
-		if ( index.siblingAtColumn( 6 ).data().toBool() ) {
+		if ( index.siblingAtColumn( 5 ).data().toBool() ) {
 			icon	= QIcon( ":/Resources/icons/Symbol_OK.svg" );
 		} else {
 			icon	= QIcon( ":/Resources/icons/close.svg" );

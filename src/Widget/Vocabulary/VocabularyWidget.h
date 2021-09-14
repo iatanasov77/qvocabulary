@@ -41,6 +41,7 @@ class VocabularyWidget : public QWidget
 		void setState( QMap<QString, QVariant> state );
 		void showWord( int wordId, int groupId );
 		void refreshGroups();
+		void setWordsCount();
 
 	public slots:
 		void loadGroup( const QModelIndex &index );

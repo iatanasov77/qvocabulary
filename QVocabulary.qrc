@@ -41,8 +41,10 @@
 	    <file>Resources/sql/qvocabulary-20210825.sql</file>
 	    <file>Resources/sql/qvocabulary-20210908.sql</file>
 	    
-	    <file>Resources/html/about_en.html</file>
 	    <file>Resources/html/about_bg.html</file>
+	    <file>Resources/html/about_en.html</file>
+	    <file>Resources/html/quiz_help_data_bg.html</file>
+	    <file>Resources/html/quiz_help_data_en.html</file>
 	    
 	    <file>Resources/settings_menu/menu.xml</file>
 	</qresource>

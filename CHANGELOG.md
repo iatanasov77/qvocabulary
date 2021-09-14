@@ -1,3 +1,15 @@
+0.22.0	|	Release date: **14.09.2021**
+============================================
+* New Features:
+  - Create a Popup for Quiz Exam Help Data.
+  - Quiz Display Assessment Details.
+  - Add Check All in VocabularyTranslationsTypesDialog for Word Types.
+* Bug-Fixes:
+  - Quiz Trim Answer Before compute the Assessment.
+  - Quiz List Format Duration of Finished Quizes.
+  - Update Vocabulary Word Counts on Insert a Word.
+
+
 0.21.3	|	Release date: **12.09.2021**
 ============================================
 * New Features:
