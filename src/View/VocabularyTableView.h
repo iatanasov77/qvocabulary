@@ -12,8 +12,6 @@
 class VocabularyTableView : public QTableView
 {
     Q_OBJECT
-    QDialog *popup;
-    QLabel *popupLabel;
 
 	public:
 		VocabularyTableView( QWidget *parent = Q_NULLPTR );
@@ -23,6 +21,9 @@ class VocabularyTableView : public QTableView
 		void displayWord( QVariant wordId );
 
 	private:
+		QDialog *popup;
+		QLabel *popupLabel;
+
 		void initHeader();
 		void initPopup();
 		void showPopup ( const QModelIndex &index ) const;

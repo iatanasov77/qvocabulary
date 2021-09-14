@@ -20,9 +20,11 @@
 #include "Entity/ArchiveWord.h"
 #include "Entity/ArchiveGroup.h"
 
+#include "View/QuizExamTableView.h"
 #include "View/ViewDelegate/Quiz/QuizViewDelegate.h"
 #include "View/ViewDelegate/Quiz/QuizItemModelDelegate.h"
 #include "Model/QuizItemModel.h"
+#include "Model/VocabularyWordsModel.h"
 
 QuizWidget::QuizWidget( QWidget *parent ) :
     QWidget( parent ),
@@ -31,7 +33,8 @@ QuizWidget::QuizWidget( QWidget *parent ) :
     ui->setupUi( this );
     qw			= parent;
 
-    hideColumns = {0, 2, 3, 4, 6};
+    hideColumns = {0, 1, 3, 5, 6, 7, 8};
+    initView();
     initModel();
 
     connect(
@@ -96,31 +99,43 @@ void QuizWidget::updateTimer()
 	ui->lcdNumber->display( text );
 }
 
+void QuizWidget::initView()
+{
+	ui->verticalLayout->removeWidget( ui->tableView );
+	ui->tableView	= new QuizExamTableView( ui->frame );
+	ui->verticalLayout->addWidget( ui->tableView );
+}
+
 void QuizWidget::initModel()
 {
 	QMap<QString, QVariant> quizSettings	= QVocabularySettings::instance()->quizSettings();
 
 	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate(
 		ui->tableView,
-		5,
+		4,
 		quizSettings["displayQuizAnswerStatus"].toBool()
 	);
-	ui->tableView->setItemDelegateForColumn( 5, itemDelegate );
+	ui->tableView->setItemDelegateForColumn( 4, itemDelegate );
 
 	QStringList headTitles;
 	headTitles
 		<< qApp->translate( "Vocabulary", "Source Language" )
+		<< qApp->translate( "Vocabulary", "Answer" )
 		<< qApp->translate( "Vocabulary", "Transcription" )
-		<< qApp->translate( "Vocabulary", "Answer" );
+		<< qApp->translate( "Vocabulary", "Description" )
+		<< qApp->translate( "Vocabulary", "Synonyms" );
 
 	metaInfo	= VsDatabase::instance()->metaInfo();
 
 	pModel				= new QuizItemModel();
-	pModel->setHeaderData( 1, Qt::Horizontal, headTitles.at( 0 ), Qt::DisplayRole );
-	pModel->setHeaderData( 2, Qt::Horizontal, headTitles.at( 1 ), Qt::DisplayRole );
-	pModel->setHeaderData( 5, Qt::Horizontal, headTitles.at( 2 ), Qt::DisplayRole );
+	pModel->setHeaderData( 2, Qt::Horizontal, headTitles.at( 0 ), Qt::DisplayRole );
+	pModel->setHeaderData( 4, Qt::Horizontal, headTitles.at( 1 ), Qt::DisplayRole );
+	pModel->setHeaderData( 6, Qt::Horizontal, headTitles.at( 2 ), Qt::DisplayRole );
+	pModel->setHeaderData( 7, Qt::Horizontal, headTitles.at( 3 ), Qt::DisplayRole );
+	pModel->setHeaderData( 8, Qt::Horizontal, headTitles.at( 4 ), Qt::DisplayRole );
 
 	ui->tableView->setModel( pModel );
+
 	//ui->tableView->horizontalHeader()->setSectionResizeMode( QHeaderView::Stretch );
 	ui->tableView->horizontalHeader()->resizeSections( QHeaderView::ResizeToContents );
 	ui->tableView->horizontalHeader()->setStretchLastSection( true );
@@ -155,13 +170,7 @@ void QuizWidget::setQuiz( int quizId, QMap<QString, QVariant> parameters )
 	if ( wordsFrom == "ArchiveWord" ) {
 		pModelVocabulary	=  new qx::QxModel<ArchiveWord>();
 	} else {
-		pModelVocabulary	= new qx::QxModel<Vocabulary>();
-	}
-
-	if ( displayTranscriptions ) {
-		ui->tableView->showColumn( 2 );
-	} else {
-		ui->tableView->hideColumn( 2 );
+		pModelVocabulary	= new VocabularyWordsModel();
 	}
 
 	quiz.reset( new Quiz() );
@@ -188,8 +197,8 @@ void QuizWidget::setQuiz( int quizId, QMap<QString, QVariant> parameters )
 	QString lang1	= ( quiz->direction == FIRST_TO_SECOND ) ? metaInfo->language1 : metaInfo->language2;
 	QString lang2	= ( quiz->direction == FIRST_TO_SECOND ) ? metaInfo->language2 : metaInfo->language1;
 
-	pModel->setHeaderData( 1, Qt::Horizontal, qApp->translate( "Vocabulary", lang1.toStdString().c_str() ), Qt::DisplayRole );
-	pModel->setHeaderData( 5, Qt::Horizontal, qApp->translate( "Vocabulary", lang2.toStdString().c_str() ), Qt::DisplayRole );
+	pModel->setHeaderData( 2, Qt::Horizontal, qApp->translate( "Vocabulary", lang1.toStdString().c_str() ), Qt::DisplayRole );
+	pModel->setHeaderData( 3, Qt::Horizontal, qApp->translate( "Vocabulary", lang2.toStdString().c_str() ), Qt::DisplayRole );
 
 	if ( time > 0 ) {
 		initTimer( time );
@@ -210,32 +219,45 @@ void QuizWidget::insertWord()
 	int column1			= ( quiz->direction == FIRST_TO_SECOND ) ? 1 : 3;
 	int column2			= ( quiz->direction == FIRST_TO_SECOND ) ? 3 : 1;
 
-	//qDebug() << "Random Row: " << randomRow << " Column 1: " << column1 << " Column 2: " << column2;
+	// Fetch from Vocabulary
 	QVariant wordLang1			= pModelVocabulary->data( pModelVocabulary->index( randomRow, column1 ) );
 	QVariant wordLang2			= pModelVocabulary->data( pModelVocabulary->index( randomRow, column2 ) );
-	QVariant wordTranscription	= pModelVocabulary->data( pModelVocabulary->index( randomRow, 2 ) );
 
+	// Set in Quiz Item
 	pModel->insertRow( targetRow );
-	pModel->setData( pModel->index( targetRow, 1 ), wordLang1 );
-	pModel->setData( pModel->index( targetRow, 2 ), wordTranscription );
+	pModel->setData( pModel->index( targetRow, 1 ), QVariant::fromValue( quiz->id ) );
+	pModel->setData( pModel->index( targetRow, 2 ), wordLang1 );
 	pModel->setData( pModel->index( targetRow, 3 ), wordLang2 );
-	pModel->setData( pModel->index( targetRow, 4 ), QVariant::fromValue( quiz->id ) );
+	pModel->setData( pModel->index( targetRow, 5 ), false );
 
-	pModel->setData( pModel->index( targetRow, 6 ), false );
+	insertWordHelpData( targetRow, randomRow );
+}
+
+void QuizWidget::insertWordHelpData( int quizItemRow, int vocabularyRow )
+{
+	// Fetch from Vocabulary
+	QVariant wordTranscription	= pModelVocabulary->data( pModelVocabulary->index( vocabularyRow, 2 ) );
+	QVariant wordDescription	= pModelVocabulary->data( pModelVocabulary->index( vocabularyRow, 5 ) );
+	QVariant wordSynonyms		= pModelVocabulary->data( pModelVocabulary->index( vocabularyRow, 6 ) );
+
+	// Set in Quiz Item
+	pModel->setData( pModel->index( quizItemRow, 6 ), wordTranscription );
+	pModel->setData( pModel->index( quizItemRow, 7 ), wordDescription );
+	pModel->setData( pModel->index( quizItemRow, 8 ), wordSynonyms );
 }
 
 void QuizWidget::onDataChanged( const QModelIndex& topLeft, const QModelIndex& bottomRight )
 {
-	if ( topLeft == bottomRight && topLeft.column() == 5 ) {
+	if ( topLeft == bottomRight && topLeft.column() == 4 ) {
 		QString lang2	= pModel->data( topLeft.siblingAtColumn( 3 ) ).toString();
-		QString answer	= pModel->data( topLeft.siblingAtColumn( 5 ) ).toString().trimmed();
+		QString answer	= pModel->data( topLeft.siblingAtColumn( 4 ) ).toString().trimmed();
 
 		// Detect if answer is right
 		bool found	= answer.size() && lang2.contains( answer, Qt::CaseInsensitive );
 		if ( found )
 			rightAnswers++;
 
-		pModel->setData( topLeft.siblingAtColumn( 6 ), found );
+		pModel->setData( topLeft.siblingAtColumn( 5 ), found );
 
 		if ( topLeft.row() == pModel->rowCount() -1 ) {
 			insertWord();

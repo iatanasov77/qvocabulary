@@ -15,10 +15,14 @@ class QuizItem
 		//QuizPtr quiz;
 
 		QString language_1;
-		QString transcription;
 		QString language_2;
 		QString answer;
 		bool rightAnswer;
+
+		// Word Help Data (Unstored)
+		QString transcription;
+		QString word_description;
+		QString word_synonyms;
 };
 
 QX_REGISTER_HPP_QX_VOCABULARY(QuizItem, qx::trait::no_base_class_defined, 0)

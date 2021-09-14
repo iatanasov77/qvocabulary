@@ -50,7 +50,9 @@ class QuizWidget : public QWidget
 
 	private:
 		void initTimer( int time = 0 );
+		void initView();
 		void initModel();
+		void insertWordHelpData( int quizItemRow, int vocabularyRow );
 
 		Ui::QuizWidget* ui;
 		QWidget *qw;

@@ -174,3 +174,19 @@ bool VsApplication::canOpenDb( QString dbVersion )
 
 	return true;
 }
+
+QString VsApplication::quizHelpDataBody()
+{
+	QString data;
+	QString fileName	= QString( ":/Resources/html/quiz_help_data_%1.html" ).arg( m_currLang );
+
+	QFile file( fileName );
+	if( ! file.open( QIODevice::ReadOnly ) ) {
+		data = QString( "Cannot open Quiz Help Data file!" );
+	} else {
+		data = file.readAll();
+	}
+
+	file.close();
+	return data;
+}
