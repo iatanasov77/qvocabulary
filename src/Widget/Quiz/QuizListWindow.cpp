@@ -217,11 +217,13 @@ void QuizListWindow::displayItems( int quizId, QString quizTitle )
 	ui->tableView->setModel( model );
 	ui->tableView->setSortingEnabled( true );
 
-	model->setHeaderData( 1, Qt::Horizontal, itemHeadTitles.at( 0 ), Qt::DisplayRole );
-	model->setHeaderData( 2, Qt::Horizontal, itemHeadTitles.at( 1 ), Qt::DisplayRole );
-	model->setHeaderData( 3, Qt::Horizontal, itemHeadTitles.at( 2 ), Qt::DisplayRole );
+	model->setHeaderData( 2, Qt::Horizontal, itemHeadTitles.at( 0 ), Qt::DisplayRole );
+	model->setHeaderData( 3, Qt::Horizontal, itemHeadTitles.at( 1 ), Qt::DisplayRole );
+	model->setHeaderData( 4, Qt::Horizontal, itemHeadTitles.at( 2 ), Qt::DisplayRole );
 	model->setHeaderData( 5, Qt::Horizontal, itemHeadTitles.at( 3 ), Qt::DisplayRole );
 	model->setHeaderData( 6, Qt::Horizontal, itemHeadTitles.at( 4 ), Qt::DisplayRole );
+	model->setHeaderData( 7, Qt::Horizontal, itemHeadTitles.at( 5 ), Qt::DisplayRole );
+	model->setHeaderData( 8, Qt::Horizontal, itemHeadTitles.at( 6 ), Qt::DisplayRole );
 
 	QList<QVariant> hideItemColumns	= VsSettings::instance()->value( "displayItemColumns", "Quiz" ).toList();
 	for( int i = 0; i < hideItemColumns.size(); i++ ) {
@@ -230,8 +232,8 @@ void QuizListWindow::displayItems( int quizId, QString quizTitle )
 		}
 	}
 
-	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate( ui->tableView, 6, true, false );
-	ui->tableView->setItemDelegateForColumn( 6, itemDelegate );
+	QuizItemModelDelegate* itemDelegate	= new QuizItemModelDelegate( ui->tableView, 5, true, false );
+	ui->tableView->setItemDelegateForColumn( 5, itemDelegate );
 	//ui->tableView->setItemDelegate( itemDelegate );
 
 	ui->tableView->setEditTriggers( QAbstractItemView::NoEditTriggers );	// Quiz Items to be not Editable
@@ -305,10 +307,13 @@ QStringList QuizListWindow::quizItemHeaders()
 	QStringList headTitles;
 	headTitles
 		<< qApp->translate( "Quiz", "Word" )
-		<< qApp->translate( "Vocabulary", "Transcription" )
 		<< qApp->translate( "Quiz", "Translation" )
 		<< qApp->translate( "Quiz", "Answer" )
-		<< qApp->translate( "Quiz", "Right" );
+		<< qApp->translate( "Quiz", "Right" )
+
+		<< qApp->translate( "Vocabulary", "Transcription" )
+		<< qApp->translate( "Vocabulary", "Description" )
+		<< qApp->translate( "Vocabulary", "Synonyms" );
 
 	return headTitles;
 }

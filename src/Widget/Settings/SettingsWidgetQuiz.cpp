@@ -41,25 +41,25 @@ void SettingsWidgetQuiz::initDisplayItemColumn()
 	QList<QVariant> displayItemColumns	= VsSettings::instance()->value( "displayItemColumns", "Quiz" ).toList();
 	for( int i = 0; i < displayItemColumns.size(); i++ ) {
 		switch ( i ) {
-			case 1:
+			case 2:
 				// language_1
 				ui->chDisplayColumnLanguage_1->setChecked( displayItemColumns[i].toBool() );
-				break;
-			case 2:
-				// transcription
-				ui->chDisplayColumnTranscription->setChecked( displayItemColumns[i].toBool() );
 				break;
 			case 3:
 				// language_2
 				ui->chDisplayColumnTranslation->setChecked( displayItemColumns[i].toBool() );
 				break;
-			case 5:
+			case 4:
 				// answer
 				ui->chDisplayColumnAnswer->setChecked( displayItemColumns[i].toBool() );
 				break;
-			case 6:
+			case 5:
 				// right_answer
 				ui->chDisplayColumnIsRight->setChecked( displayItemColumns[i].toBool() );
+				break;
+			case 6:
+				// transcription
+				ui->chDisplayColumnTranscription->setChecked( displayItemColumns[i].toBool() );
 				break;
 		}
 	}
@@ -97,12 +97,14 @@ QList<QVariant> SettingsWidgetQuiz::displayItemColumns()
 	QList<QVariant> columns;
 
 	columns << false;											// id
-	columns << ui->chDisplayColumnLanguage_1->isChecked();		// language_1
-	columns << ui->chDisplayColumnTranscription->isChecked();	// transcription
-	columns << ui->chDisplayColumnTranslation->isChecked();		// language_2
 	columns << false;											// quiz_id
+	columns << ui->chDisplayColumnLanguage_1->isChecked();		// language_1
+	columns << ui->chDisplayColumnTranslation->isChecked();		// language_2
 	columns << ui->chDisplayColumnAnswer->isChecked();			// answer
 	columns << ui->chDisplayColumnIsRight->isChecked();			// right_answer
+	columns << ui->chDisplayColumnTranscription->isChecked();	// transcription
+	columns << false;											// description
+	columns << false;											// synonyms
 
 	return columns;
 }
