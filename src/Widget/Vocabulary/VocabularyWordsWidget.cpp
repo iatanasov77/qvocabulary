@@ -389,13 +389,13 @@ void VocabularyWordsWidget::displayVocabularySearchResults( qx::QxModel<Vocabula
 			groupModel->qxFetchById( groupId );
 			groupName	= groupModel->data( groupModel->index( 0, 1 ) ).toString();
 
-			groups[groupId]	= new QTreeWidgetItem();
+			groups[groupId]	= new QTreeWidgetItem( rootItem );
 			groups[groupId]->setText( 0, groupName );
-			ui->treeWidget->expandItem( groups[groupId] );
 			rootItem->addChild( groups[groupId] );
+			ui->treeWidget->expandItem( groups[groupId] );
 		}
 
-		childItem = new QTreeWidgetItem();
+		childItem = new QTreeWidgetItem( groups[groupId] );
 		// Set Item Data
 		itemData["where"]	= "Vocabulary";
 		itemData["id"]		= searchModel->data( searchModel->index( i, 0 ) );
@@ -443,13 +443,13 @@ void VocabularyWordsWidget::displayArchiveSearchResults( qx::QxModel<ArchiveWord
 			groupModel->qxFetchById( groupId );
 			groupName	= groupModel->data( groupModel->index( 0, 1 ) ).toString();
 
-			groups[groupId]	= new QTreeWidgetItem();
+			groups[groupId]	= new QTreeWidgetItem( rootItem );
 			groups[groupId]->setText( 0, groupName );
-			ui->treeWidget->expandItem( groups[groupId] );
 			rootItem->addChild( groups[groupId] );
+			ui->treeWidget->expandItem( groups[groupId] );
 		}
 
-		childItem = new QTreeWidgetItem();
+		childItem = new QTreeWidgetItem( groups[groupId] );
 
 		// Set Item Data
 		itemData["where"]	= "Archive";
