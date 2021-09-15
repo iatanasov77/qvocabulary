@@ -57,10 +57,6 @@ void SettingsWidgetQuiz::initDisplayItemColumn()
 				// right_answer
 				ui->chDisplayColumnIsRight->setChecked( displayItemColumns[i].toBool() );
 				break;
-			case 6:
-				// transcription
-				ui->chDisplayColumnTranscription->setChecked( displayItemColumns[i].toBool() );
-				break;
 		}
 	}
 }
@@ -102,7 +98,7 @@ QList<QVariant> SettingsWidgetQuiz::displayItemColumns()
 	columns << ui->chDisplayColumnTranslation->isChecked();		// language_2
 	columns << ui->chDisplayColumnAnswer->isChecked();			// answer
 	columns << ui->chDisplayColumnIsRight->isChecked();			// right_answer
-	columns << ui->chDisplayColumnTranscription->isChecked();	// transcription
+	columns << false;											// transcription
 	columns << false;											// description
 	columns << false;											// synonyms
 
