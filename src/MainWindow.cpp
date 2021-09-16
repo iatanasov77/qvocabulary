@@ -26,6 +26,7 @@
 #include "Dialog/NewDatabaseDialog.h"
 #include "Dialog/NewVocabularyGroupDialog.h"
 #include "Dialog/AddToArchiveDialog.h"
+#include "Dialog/ImportArchiveDialog.h"
 #include "Dialog/QVocabularyImportDialog.h"
 #include "Dialog/ExecSqlQueryDialog.h"
 #include "Dialog/TestWidgetsDialog.h"
@@ -131,6 +132,7 @@ void MainWindow::initIcons()
 	ui->actionShow_Vocabulary->setIcon( QIcon( ":/Resources/icons/dictionary.svg" ) );
 	ui->actionShow_Archive->setIcon( QIcon( ":/Resources/icons/archive.svg" ) );
 	ui->actionAdd_to_Archive->setIcon( QIcon( ":/Resources/icons/add_archive.svg" ) );
+	ui->actionImport_Archive->setIcon( QIcon( ":/Resources/icons/document-import.svg" ) );
 	ui->actionCompair_Vocabulary_Archive->setIcon( QIcon( ":/Resources/icons/compare.svg" ) );
 }
 
@@ -560,6 +562,15 @@ void MainWindow::on_actionAdd_to_Archive_triggered()
 	AddToArchiveDialog* dlgAddArchive	= new AddToArchiveDialog( this );
 	dlgAddArchive->setModal( true );
 	if ( dlgAddArchive->exec() == QDialog::Accepted ) {
+		initArchiveWidget();
+	}
+}
+
+void MainWindow::on_actionImport_Archive_triggered()
+{
+	ImportArchiveDialog* dlgImportArchive	= new ImportArchiveDialog( this );
+	dlgImportArchive->setModal( true );
+	if ( dlgImportArchive->exec() == QDialog::Accepted ) {
 		initArchiveWidget();
 	}
 }
