@@ -107,8 +107,8 @@ bool SideBarListViewDelegate::editorEvent(
 				} else {
 					QModelIndex oldIndex 	= model->index( _currRow, 1 );
 					_currRow	= index.row();
-					emit model->dataChanged( oldIndex, oldIndex );
 					emit buttonClicked( index );
+					emit model->dataChanged( oldIndex, oldIndex );
 				}
 			}
 			break;
