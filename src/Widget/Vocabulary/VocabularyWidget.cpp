@@ -113,6 +113,8 @@ void VocabularyWidget::insertWord()
 
 void VocabularyWidget::loadGroup( int groupId )
 {
+	//qDebug() << "LOAD GROUP: " << groupId;
+
 	currentGroup		= groupId;
 	wdgWords->loadGroup( groupId );
 
