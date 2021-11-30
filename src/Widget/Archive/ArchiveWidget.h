@@ -31,13 +31,13 @@ class ArchiveWidget : public QWidget
 		ArchiveWidget( QWidget *parent = 0 );
 		~ArchiveWidget();
 
-		void loadGroup( int groupId );
 		void setCurrentGroupName( QString groupName );
 		void refreshWidgets();
 		void setCurrentGroup( int groupId );
 		void showWord( int wordId, int groupId );
 
 	public slots:
+		void loadGroup( int groupId = 0 );
 		void loadGroup( const QModelIndex &index );
 		void updateSpeaker();
 
