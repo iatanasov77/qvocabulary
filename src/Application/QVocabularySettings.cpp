@@ -30,7 +30,7 @@ QMap<QString, QVariant> QVocabularySettings::quizSettings()
 	quizSettings["displayQuizAnswerStatus"]	= value( "displayQuizAnswerStatus", "Quiz", QVariant( false ) );
 	quizSettings["randomizeWords"]			= value( "randomizeWords", "Quiz", QVariant( true ) );
 	quizSettings["displayTimer"]			= value( "displayTimer", "Quiz", QVariant( false ) );
-	quizSettings["timerDefaultTime"]		= value( "volume", "Quiz", QVariant( 1800 ) );
+	quizSettings["timerDefaultTime"]		= value( "timerDefaultTime", "Quiz", QVariant( 1800 ) );
 
 	return quizSettings;
 }

@@ -40,6 +40,8 @@ ArchiveGroupsWidget::ArchiveGroupsWidget( QWidget *parent ) :
      */
     ArchiveWidget *wdgArchive	= qobject_cast<ArchiveWidget *>( parent ); // parent() if not in constructor
 	connect( this, SIGNAL( currentGroupChanged( QModelIndex ) ), itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ) );
+
+	connect( ui->btnShowAll, SIGNAL( released() ), wdgArchive, SLOT( loadGroup() ) );
 	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), wdgArchive, SLOT( loadGroup( QModelIndex ) ) );
 	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), this, SLOT( setCurrentGroup( QModelIndex ) ) );
 

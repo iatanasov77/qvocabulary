@@ -81,7 +81,7 @@ bool SideBarListViewDelegate::editorEvent(
 	Q_UNUSED( model );
 	Q_UNUSED( option );
 
-	qDebug() << "Event Type 2: " << event->type();
+	//qDebug() << "Event Type 2: " << event->type();
 	switch ( event->type() ) {
 		case QEvent::MouseButtonPress:
 			{
@@ -107,8 +107,8 @@ bool SideBarListViewDelegate::editorEvent(
 				} else {
 					QModelIndex oldIndex 	= model->index( _currRow, 1 );
 					_currRow	= index.row();
-					emit model->dataChanged( oldIndex, oldIndex );
 					emit buttonClicked( index );
+					emit model->dataChanged( oldIndex, oldIndex );
 				}
 			}
 			break;

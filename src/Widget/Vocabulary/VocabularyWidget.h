@@ -32,7 +32,6 @@ class VocabularyWidget : public QWidget
 
 		void initModels();
 		void insertWord();
-		void loadGroup( int groupId );
 		void deleteGroup( int groupId );
 		void setCurrentGroupName( QString groupName );
 		void refreshWidgets();
@@ -44,6 +43,7 @@ class VocabularyWidget : public QWidget
 		void setWordsCount();
 
 	public slots:
+		void loadGroup( int groupId = 0 );
 		void loadGroup( const QModelIndex &index );
 		void updateSpeaker();
 

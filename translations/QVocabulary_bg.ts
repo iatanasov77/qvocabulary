@@ -112,6 +112,33 @@
     </message>
 </context>
 <context>
+    <name>ImportArchiveDialog</name>
+    <message>
+        <source>Import Archive from Database</source>
+        <translation type="unfinished">Импортиране на Архив от Базаданни</translation>
+    </message>
+    <message>
+        <source>DB File</source>
+        <translation type="unfinished">ДБ Файл</translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">Файл Брауз</translation>
+    </message>
+    <message>
+        <source>Import Archive</source>
+        <translation type="unfinished">Импортирай Архив</translation>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation type="unfinished">Отвори БД</translation>
+    </message>
+    <message>
+        <source>Db Files (*.db)</source>
+        <translation type="unfinished">ДБ Файлове (*.db)</translation>
+    </message>
+</context>
+<context>
     <name>InitDatabaseDialog</name>
     <message>
         <source>Dialog</source>
@@ -423,6 +450,10 @@
     <message>
         <source>Test Widgets</source>
         <translation type="unfinished">Тестване на Уиджети</translation>
+    </message>
+    <message>
+        <source>Import Archive</source>
+        <translation type="unfinished">Импортирай Архив</translation>
     </message>
 </context>
 <context>
@@ -855,7 +886,7 @@
     </message>
     <message>
         <source>Display Transcription</source>
-        <translation type="unfinished">Показвай Транскрипциите</translation>
+        <translation type="obsolete">Показвай Транскрипциите</translation>
     </message>
     <message>
         <source>Display Translation</source>
@@ -1056,6 +1087,10 @@ Done, over and out.
         <source>Description</source>
         <translation type="unfinished">Описание</translation>
     </message>
+    <message>
+        <source>Synonyms</source>
+        <translation type="unfinished">Синоними</translation>
+    </message>
 </context>
 <context>
     <name>VocabularyGroupsWidget</name>
@@ -1066,7 +1101,7 @@ Done, over and out.
     <message>
         <source>Vocabulary Groups</source>
         <translatorcomment>Речник Групи</translatorcomment>
-        <translation type="unfinished">Речник Раздели</translation>
+        <translation type="obsolete">Речник Раздели</translation>
     </message>
     <message>
         <source>&amp;Rename Group</source>
@@ -1090,7 +1125,11 @@ Done, over and out.
     </message>
     <message>
         <source>&amp;New Group</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Нова Група</translation>
+    </message>
+    <message>
+        <source>Show All Words</source>
+        <translation type="unfinished">Покажи Всички</translation>
     </message>
 </context>
 <context>

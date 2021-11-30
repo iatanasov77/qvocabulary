@@ -192,9 +192,10 @@
      <string>Ar&amp;chive</string>
     </property>
     <addaction name="actionShow_Archive"/>
-    <addaction name="actionAdd_to_Archive"/>
-    <addaction name="separator"/>
     <addaction name="actionCompair_Vocabulary_Archive"/>
+    <addaction name="separator"/>
+    <addaction name="actionAdd_to_Archive"/>
+    <addaction name="actionImport_Archive"/>
    </widget>
    <addaction name="menuDatabase"/>
    <addaction name="menuArchive"/>
@@ -370,6 +371,11 @@
   <action name="actionTest_Widgets">
    <property name="text">
     <string>Test Widgets</string>
+   </property>
+  </action>
+  <action name="actionImport_Archive">
+   <property name="text">
+    <string>Import Archive</string>
    </property>
   </action>
  </widget>

@@ -108,6 +108,33 @@
     </message>
 </context>
 <context>
+    <name>ImportArchiveDialog</name>
+    <message>
+        <source>Import Archive from Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DB File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Db Files (*.db)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>InitDatabaseDialog</name>
     <message>
         <source>Dialog</source>
@@ -362,6 +389,10 @@
     </message>
     <message>
         <source>Test Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import Archive</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -766,10 +797,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Display Transcription</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Display Translation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -960,15 +987,15 @@ Done, over and out.
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Synonyms</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VocabularyGroupsWidget</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vocabulary Groups</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -989,6 +1016,10 @@ Done, over and out.
     </message>
     <message>
         <source>&amp;New Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show All Words</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
