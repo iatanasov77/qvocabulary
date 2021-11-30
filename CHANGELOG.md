@@ -1,3 +1,18 @@
+0.22.1	|	Release date: **30.11.2021**
+============================================
+* New Features and Improvements:
+  - Update Translations
+  - Conect Show All Button for Archive Widget.
+  - Adjust Size of Vocabulary Groups Widget.
+  - Connect Vocabulary Groups Show All Button.
+  - Add Vocabulary Groups Shaw All Button.
+  - Add Import Archive From Another DB.
+  - Quiz Improvements.
+* Bug-Fixes:
+  - Fix Search Results to Expand All Items.
+  - Fix QuizListWindow with new QuizItem Model.
+
+
 0.22.0	|	Release date: **14.09.2021**
 ============================================
 * New Features:
