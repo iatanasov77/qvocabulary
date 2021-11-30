@@ -999,10 +999,6 @@ Done, over and out.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Vocabulary Groups</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Rename Group</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1020,6 +1016,10 @@ Done, over and out.
     </message>
     <message>
         <source>&amp;New Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show All Words</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

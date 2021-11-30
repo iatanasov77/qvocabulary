@@ -1101,7 +1101,7 @@ Done, over and out.
     <message>
         <source>Vocabulary Groups</source>
         <translatorcomment>Речник Групи</translatorcomment>
-        <translation type="unfinished">Речник Раздели</translation>
+        <translation type="obsolete">Речник Раздели</translation>
     </message>
     <message>
         <source>&amp;Rename Group</source>
@@ -1125,7 +1125,11 @@ Done, over and out.
     </message>
     <message>
         <source>&amp;New Group</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Нова Група</translation>
+    </message>
+    <message>
+        <source>Show All Words</source>
+        <translation type="unfinished">Покажи Всички</translation>
     </message>
 </context>
 <context>
