@@ -81,7 +81,7 @@ bool SideBarListViewDelegate::editorEvent(
 	Q_UNUSED( model );
 	Q_UNUSED( option );
 
-	qDebug() << "Event Type 2: " << event->type();
+	//qDebug() << "Event Type 2: " << event->type();
 	switch ( event->type() ) {
 		case QEvent::MouseButtonPress:
 			{
