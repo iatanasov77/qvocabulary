@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QSqlDatabase>
+#include <QMap>
 
 namespace Ui {
 	class ImportArchiveDialog;

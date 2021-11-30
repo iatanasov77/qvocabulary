@@ -23,6 +23,7 @@ VocabularyGroupsWidget::VocabularyGroupsWidget( QWidget *parent ) :
     ui( new Ui::VocabularyGroupsWidget )
 {
     ui->setupUi( this );
+    ui->btnShowAll->setFixedSize( QSize( 110, 20 ) );
 
     initModel();
     initContextMenu();
