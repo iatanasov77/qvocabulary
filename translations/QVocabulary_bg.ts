@@ -515,6 +515,17 @@
     </message>
 </context>
 <context>
+    <name>QDialogButtonBox</name>
+    <message>
+        <source>&amp;Yes</source>
+        <translation type="obsolete">Да</translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation type="obsolete">Не</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>English</source>
@@ -1288,11 +1299,11 @@ Done, over and out.
     </message>
     <message>
         <source>Delete Vocabulary Words</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Изтриване на Думи от Речника</translation>
     </message>
     <message>
         <source>This will erase the selected words. Do you agree?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ще бъдат изтрити маркираните думи. Съгласни ли сте?</translation>
     </message>
     <message>
         <source>Vocabulary</source>
@@ -1313,6 +1324,14 @@ Done, over and out.
     <message>
         <source>Clear Sorting</source>
         <translation type="unfinished">Изчисти Сортиране</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Да</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">Не</translation>
     </message>
 </context>
 </TS>
