@@ -1140,7 +1140,7 @@ Done, over and out.
     </message>
     <message>
         <source>Delete Vocabulary Group</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Изтриване на Група </translation>
     </message>
     <message>
         <source>&amp;New Group</source>
