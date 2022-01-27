@@ -656,6 +656,14 @@
         <source>Display Quiz</source>
         <translation type="unfinished">Покажи Тест</translation>
     </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Да</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">Не</translation>
+    </message>
 </context>
 <context>
     <name>QuizParametersWidget</name>
@@ -1141,6 +1149,14 @@ Done, over and out.
     <message>
         <source>Show All Words</source>
         <translation type="unfinished">Покажи Всички</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Да</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">Не</translation>
     </message>
 </context>
 <context>

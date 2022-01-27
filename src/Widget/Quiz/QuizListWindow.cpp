@@ -243,14 +243,17 @@ void QuizListWindow::displayItems( int quizId, QString quizTitle )
 
 void QuizListWindow::deleteQuiz()
 {
-	QMessageBox::StandardButton reply	= QMessageBox::question(
-		this,
+	QMessageBox messageBox(
+		QMessageBox::Question,
 		tr( "Delete Quiz" ),
 		tr( "This will erase the quiz with all its items. Do you agree?" ),
-		QMessageBox::Yes|QMessageBox::No
+		QMessageBox::Yes | QMessageBox::No,
+		this
 	);
+	messageBox.setButtonText( QMessageBox::Yes, tr( "Yes" ) );
+	messageBox.setButtonText( QMessageBox::No, tr( "No" ) );
 
-	if ( reply == QMessageBox::Yes ) {
+	if ( messageBox.exec() == QMessageBox::Yes ) {
 		QToolButton* button	= qobject_cast<QToolButton *>( sender() );
 		int quizId			= button->property( "quizId" ).toInt();
 
