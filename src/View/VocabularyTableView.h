@@ -8,6 +8,7 @@
 #include <QTableView>
 #include <QVBoxLayout>
 #include <QHeaderView>
+#include <QDropEvent>
 
 class VocabularyTableView : public QTableView
 {
@@ -20,13 +21,18 @@ class VocabularyTableView : public QTableView
 	public slots:
 		void displayWord( QVariant wordId );
 
+	protected:
+		//void dropEvent( QDropEvent *e );
 	private:
-		QDialog *popup;
-		QLabel *popupLabel;
+		QDialog *_popup;
+		QLabel *_popupLabel;
+		int m_dropRow;
 
-		void initHeader();
-		void initPopup();
-		void showPopup ( const QModelIndex &index ) const;
+		void _init();
+		void _initHeader();
+		void _initPopup();
+		void _showPopup ( const QModelIndex &index ) const;
+		int _selectedRow() const;
 
 };
 

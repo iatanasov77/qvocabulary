@@ -44,7 +44,6 @@ VocabularyWordsWidget::VocabularyWordsWidget( QWidget *parent ) :
     currentGroup 	= 1;
     hideColumns 	= {0, 2, 4, 5};
 
-    adjustRowSelection();
     initModel();
     initContextMenu();
     initTextToSpeech();
@@ -87,9 +86,6 @@ VocabularyWordsWidget::~VocabularyWordsWidget()
 void VocabularyWordsWidget::initModel()
 {
 	pModel		= new VocabularyWordsModel();
-
-	// QxModelView module : new feature available to add automatically an empty row at the end of the table to insert quickly new items (setShowEmptyLine() method)
-	pModel->setShowEmptyLine( true );
 
 	proxyModel	= new VocabularySortingModel( this );
 	proxyModel->setDynamicSortFilter( true );
@@ -516,13 +512,6 @@ void VocabularyWordsWidget::showSynonyms( int state )
 	}
 
 	VsSettings::instance()->setValue( "displaySynonyms", QVariant( state ), "Vocabulary" );
-}
-
-void VocabularyWordsWidget::adjustRowSelection()
-{
-	ui->tableView->setSelectionBehavior( QAbstractItemView::SelectRows );
-	//ui->tableView->setSelectionMode( QAbstractItemView::SingleSelection );	// SingleSelection because easyer
-	ui->tableView->setSelectionMode( QAbstractItemView::ExtendedSelection );
 }
 
 void VocabularyWordsWidget::sayWord( const QModelIndex &index )
