@@ -34,30 +34,6 @@ void VocabularyTableView::_init()
 	setDragDropMode( QAbstractItemView::DragDrop );
 }
 
-int VocabularyTableView::_selectedRow() const
-{
-	QItemSelectionModel *selection	= selectionModel();
-	return selection->hasSelection() ? selection->selectedRows().front().row() : -1;
-}
-
-//void VocabularyTableView::dropEvent( QDropEvent *e )
-//{
-//	if ( e->source() != this || e->dropAction() != Qt::MoveAction )
-//		return;
-//	int dragRow	= _selectedRow();
-//
-//	QTableView::dropEvent( e );  // m_dropRow is set by inserted row
-//
-//	if ( m_dropRow > dragRow )
-//		--m_dropRow;
-//
-//	QMetaObject::invokeMethod(
-//		this,
-//		std::bind( &VocabularyTableView::selectRow, this, m_dropRow ),
-//		Qt::QueuedConnection
-//	);  // Postpones selection
-//}
-
 bool VocabularyTableView::eventFilter( QObject *watched, QEvent *event )
 {
 	if ( viewport() == watched ) {

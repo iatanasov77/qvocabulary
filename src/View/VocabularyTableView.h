@@ -21,19 +21,14 @@ class VocabularyTableView : public QTableView
 	public slots:
 		void displayWord( QVariant wordId );
 
-	protected:
-		//void dropEvent( QDropEvent *e );
 	private:
 		QDialog *_popup;
 		QLabel *_popupLabel;
-		int m_dropRow;
 
 		void _init();
 		void _initHeader();
 		void _initPopup();
 		void _showPopup ( const QModelIndex &index ) const;
-		int _selectedRow() const;
-
 };
 
 #endif // VIEW_VOCABULARYTABLEVIEW_H
