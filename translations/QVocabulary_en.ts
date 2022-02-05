@@ -585,6 +585,30 @@
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Randomize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>First to Second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second to First</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QuizParametersWidget</name>
@@ -653,10 +677,6 @@
     <name>QuizWidget</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quiz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

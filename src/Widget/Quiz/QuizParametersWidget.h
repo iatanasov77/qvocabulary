@@ -53,6 +53,8 @@ class QuizParametersWidget : public QWidget
 	    void clearGroups( QLayout *box );
 	    void setVocabularyGroups( QLayout *box );
 	    void setArchiveGroups( QLayout *box );
+
+	    void initDirection();
 };
 
 #endif // WIDGET_QUIZPARAMETERS_H

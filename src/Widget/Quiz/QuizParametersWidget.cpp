@@ -32,6 +32,7 @@ QuizParametersWidget::QuizParametersWidget( QWidget *parent ) :
     ui->chkTimer->setChecked( displayTimer );
 
     initGroups();
+    initDirection();
     initTimer( displayTimer );
     initWordCount( false );
     setDirection();
@@ -171,6 +172,11 @@ void QuizParametersWidget::setArchiveGroups( QLayout *box )
 
 		box->addWidget( chk );
 	}
+}
+
+void QuizParametersWidget::initDirection()
+{
+
 }
 
 void QuizParametersWidget::setDirection()

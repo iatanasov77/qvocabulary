@@ -664,6 +664,31 @@
         <source>No</source>
         <translation type="unfinished">Не</translation>
     </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished">Посока</translation>
+    </message>
+    <message>
+        <source>Randomize</source>
+        <translation type="unfinished">Разбъркай на Случаен Принцип</translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished">Групи</translation>
+    </message>
+    <message>
+        <source>Duration</source>
+        <translation type="unfinished">Времетраене</translation>
+    </message>
+    <message>
+        <source>First to Second</source>
+        <translatorcomment>Втори към Първи</translatorcomment>
+        <translation type="unfinished">Първи към Втори</translation>
+    </message>
+    <message>
+        <source>Second to First</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QuizParametersWidget</name>
@@ -736,7 +761,7 @@
     </message>
     <message>
         <source>Quiz</source>
-        <translation type="unfinished">Тест</translation>
+        <translation type="obsolete">Тест</translation>
     </message>
     <message>
         <source>Time:</source>

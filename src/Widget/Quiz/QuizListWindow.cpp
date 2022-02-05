@@ -159,20 +159,31 @@ void QuizListWindow::initQuizListDetails( QTreeWidgetItem* parent, int quizRow )
 
 	// Direction
 	treeItem = new QTreeWidgetItem();
-	treeItem->setText( 0, "Direction" );
-	treeItem->setText( 1, ( direction == FIRST_TO_SECOND ) ? "First to Second" : "Second to First" );
+	treeItem->setText( 0, tr( "Direction" ) );
+	treeItem->setText( 1, ( direction == FIRST_TO_SECOND ) ?
+			qApp->translate( "QuizListWindow", "First to Second" ) :
+			qApp->translate( "QuizListWindow", "Second to First" )
+	);
 	parent->addChild( treeItem );
 
 	// Randomize
 	treeItem = new QTreeWidgetItem();
-	treeItem->setText( 0, "Randomize" );
+	treeItem->setText( 0, tr( "Randomize" ) );
 	treeItem->setText( 1, pModel->data( pModel->index( quizRow, 2 ) ).toString() );
 	parent->addChild( treeItem );
 
 	// Groups
 	treeItem = new QTreeWidgetItem();
-	treeItem->setText( 0, "Groups" );
-	treeItem->setText( 1, pModel->data( pModel->index( quizRow, 3 ) ).toString() );
+	treeItem->setText( 0, tr( "Groups" ) );
+	treeItem->setText( 1, "" );
+	QJsonArray groups	= QJsonDocument::fromJson( pModel->data( pModel->index( quizRow, 3 ) ).toByteArray() ).array();
+	QTreeWidgetItem* groupItem;
+	for ( int i = 0; i < groups.count(); ++i ) {
+		groupItem	= new QTreeWidgetItem();
+		groupItem->setText( 0, "" );
+		groupItem->setText( 1, groups[i].toString() );
+		treeItem->addChild( groupItem );
+	}
 	parent->addChild( treeItem );
 
 	// Duration
@@ -180,7 +191,7 @@ void QuizListWindow::initQuizListDetails( QTreeWidgetItem* parent, int quizRow )
 	duration = duration.addSecs( startedAt.msecsTo( finishedAt ) / 1000 );
 
 	treeItem = new QTreeWidgetItem();
-	treeItem->setText( 0, "Duration" );
+	treeItem->setText( 0, tr( "Duration" ) );
 	treeItem->setText( 1, duration.toString( "hh:mm:ss" ) );
 	parent->addChild( treeItem );
 }
