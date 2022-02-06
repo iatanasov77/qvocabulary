@@ -43,6 +43,10 @@ class VocabularyWordsModel : public qx::QxModel<Vocabulary>
 
 	private:
 		void _myMoveRows( int sourceRow, int destinationRow, int countRows );
+		int _getDestinationId( int destinationRow );
+		void _tempQueryInsert( int id, QSqlQuery *origTableQuery, QSqlQuery *tempTableQuery );
+		void _prepareMove();
+		void _finishMove();
 		QMap<QString, QVariant> getVocabularySynonyms( const QModelIndex &index ) const;
 		QMap<QString, QVariant> getArchiveSynonyms( const QModelIndex &index ) const;
 		QString getOnlyWordsSynonyms( const QModelIndex &index ) const;

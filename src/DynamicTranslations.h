@@ -19,6 +19,12 @@ const char* Description		= QT_TRANSLATE_NOOP( "Vocabulary", "Description" );
 const char* English2Bulgarian	= QT_TRANSLATE_NOOP( "QuizParametersWidget", "English to Bulgarian" );
 const char* Bulgarian2English	= QT_TRANSLATE_NOOP( "QuizParametersWidget", "Bulgarian to English" );
 
+// QuizList Directions
+const char* First2Second		= QT_TRANSLATE_NOOP( "QuizListWindow", "First to Second" );
+const char* Second2First		= QT_TRANSLATE_NOOP( "QuizListWindow", "Second to First" );
+const char* FromVocabulary		= QT_TRANSLATE_NOOP( "QuizListWindow", "Vocabulary" );
+const char* FromArchive			= QT_TRANSLATE_NOOP( "QuizListWindow", "Archive" );
+
 // QuizItem Table Head Titles
 const char* Word		= QT_TRANSLATE_NOOP( "Quiz", "Word" );
 const char* Translation	= QT_TRANSLATE_NOOP( "Quiz", "Translation" );

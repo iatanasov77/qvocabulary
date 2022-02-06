@@ -25,6 +25,7 @@ class QuizParametersWidget : public QWidget
 		void setMetaInfo( VocabularyMetaInfoPtr metaInfo );
 		void initGroups();
 
+		EnumFromVocabulary getFromVocabulary();
 		QList<QCheckBox*> getChkGroups();
 		EnumDirection getDirection();
 		QCheckBox* getChkRandomize();
@@ -53,6 +54,8 @@ class QuizParametersWidget : public QWidget
 	    void clearGroups( QLayout *box );
 	    void setVocabularyGroups( QLayout *box );
 	    void setArchiveGroups( QLayout *box );
+
+	    void initDirection();
 };
 
 #endif // WIDGET_QUIZPARAMETERS_H

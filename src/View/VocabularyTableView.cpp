@@ -19,8 +19,19 @@ VocabularyTableView::VocabularyTableView( QWidget *parent ) : QTableView( parent
 	viewport()->installEventFilter( this );
 	setMouseTracking( true );
 
-	initHeader();
-	initPopup();
+	_init();
+	_initHeader();
+	_initPopup();
+}
+
+void VocabularyTableView::_init()
+{
+	setSelectionBehavior( QAbstractItemView::SelectRows );
+	//setSelectionMode( QAbstractItemView::SingleSelection );	// SingleSelection because easyer
+	setSelectionMode( QAbstractItemView::ExtendedSelection );
+	setDropIndicatorShown( true );
+	//setDragDropMode( QAbstractItemView::InternalMove );
+	setDragDropMode( QAbstractItemView::DragDrop );
 }
 
 bool VocabularyTableView::eventFilter( QObject *watched, QEvent *event )
@@ -30,25 +41,25 @@ bool VocabularyTableView::eventFilter( QObject *watched, QEvent *event )
 			QMouseEvent *mouseEvent	= static_cast<QMouseEvent*>( event );
 			QModelIndex index 		= indexAt( mouseEvent->pos() );
 			if( index.isValid() ) {
-				showPopup( index );
+				_showPopup( index );
 			}
 			else{
-				popup->hide();
+				_popup->hide();
 			}
 		}
 		else if ( event->type() == QEvent::Leave ) {
-			popup->hide();
+			_popup->hide();
 		}
 	}
-	else if ( popup == watched ) {
+	else if ( _popup == watched ) {
 		if( event->type() == QEvent::Leave ) {
-			popup->hide();
+			_popup->hide();
 		}
 	}
 	return QTableView::eventFilter( watched, event );
 }
 
-void VocabularyTableView::initHeader()
+void VocabularyTableView::_initHeader()
 {
 	if ( QSysInfo::windowsVersion() == QSysInfo::WV_WINDOWS10 ) {
 	    setStyleSheet(
@@ -71,21 +82,21 @@ void VocabularyTableView::initHeader()
 	}
 }
 
-void VocabularyTableView::initPopup()
+void VocabularyTableView::_initPopup()
 {
-	popup				= new QDialog( this, Qt::Popup | Qt::ToolTip );
+	_popup				= new QDialog( this, Qt::Popup | Qt::ToolTip );
 
 	QVBoxLayout *layout = new QVBoxLayout;
-	popupLabel 			= new QLabel( popup );
-	popupLabel->setWordWrap( true );
-	layout->addWidget( popupLabel );
-	popupLabel->setTextFormat( Qt::RichText );
-	//popupLabel->setOpenExternalLinks( true );
-	popup->setLayout( layout );
-	popup->installEventFilter( this );
+	_popupLabel 		= new QLabel( _popup );
+	_popupLabel->setWordWrap( true );
+	layout->addWidget( _popupLabel );
+	_popupLabel->setTextFormat( Qt::RichText );
+	//_popupLabel->setOpenExternalLinks( true );
+	_popup->setLayout( layout );
+	_popup->installEventFilter( this );
 }
 
-void VocabularyTableView::showPopup( const QModelIndex &index ) const
+void VocabularyTableView::_showPopup( const QModelIndex &index ) const
 {
 	// May be should get the column width
 	int popupWidth	= 300;
@@ -94,17 +105,17 @@ void VocabularyTableView::showPopup( const QModelIndex &index ) const
 		QString description	= index.siblingAtColumn( 5 ).data( Qt::DisplayRole ).toString();
 		if ( description.size() > 0 ) {
 			QRect r	= visualRect( index );
-			popup->move( viewport()->mapToGlobal( r.bottomLeft() ) );
-			popup->setFixedSize( popupWidth, popup->heightForWidth( popupWidth ) );
+			_popup->move( viewport()->mapToGlobal( r.bottomLeft() ) );
+			_popup->setFixedSize( popupWidth, _popup->heightForWidth( popupWidth ) );
 
 			// Sibling(5) = description
-			popupLabel->setText( description );
-			popup->adjustSize();
-			popup->show();
+			_popupLabel->setText( description );
+			_popup->adjustSize();
+			_popup->show();
 		}
 	}
 	else {
-		popup->hide();
+		_popup->hide();
 	}
 }
 

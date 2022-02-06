@@ -112,13 +112,14 @@ void QuizWindow::startQuiz()
 	QuizPtr quiz;
 	quiz.reset( new Quiz() );
 
-	auto jsonDoc	= QJsonDocument( QJsonArray::fromVariantList( groups ) );
-	quiz->groups	= jsonDoc.toJson();
+	auto jsonDoc			= QJsonDocument( QJsonArray::fromVariantList( groups ) );
+	quiz->groups			= jsonDoc.toJson();
 
-	quiz->direction		= wdgParameters->getDirection();
-	quiz->randomize		= wdgParameters->getChkRandomize()->isChecked();
-	quiz->startedAt		= QDateTime::currentDateTime();
-	daoError			= qx::dao::insert( quiz );
+	quiz->fromVocabulary	= wdgParameters->getFromVocabulary();
+	quiz->direction			= wdgParameters->getDirection();
+	quiz->randomize			= wdgParameters->getChkRandomize()->isChecked();
+	quiz->startedAt			= QDateTime::currentDateTime();
+	daoError				= qx::dao::insert( quiz );
 
 	bool diplayTranscriptions	= wdgParameters->getChkDisplayTranscriptions()->isChecked();
 

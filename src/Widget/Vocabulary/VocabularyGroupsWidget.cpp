@@ -205,14 +205,17 @@ void VocabularyGroupsWidget::renameGroup()
 
 void VocabularyGroupsWidget::deleteGroup()
 {
-	QMessageBox::StandardButton reply	= QMessageBox::question(
-		this,
+	QMessageBox messageBox(
+		QMessageBox::Question,
 		tr( "Delete Vocabulary Group" ),
 		tr( "This will erase all Words associated with this Group. Do you agree?" ),
-		QMessageBox::Yes|QMessageBox::No
+		QMessageBox::Yes | QMessageBox::No,
+		this
 	);
+	messageBox.setButtonText( QMessageBox::Yes, tr( "Yes" ) );
+	messageBox.setButtonText( QMessageBox::No, tr( "No" ) );
 
-	if ( reply == QMessageBox::Yes ) {
+	if ( messageBox.exec() == QMessageBox::Yes ) {
 		QModelIndex indexId				= ui->listView->currentIndex().siblingAtColumn( 0 );
 		//VocabularyWidget *wdgVocabulary	= qobject_cast<VocabularyWidget *>( parent() );
 		//wdgVocabulary->deleteGroup( pModel->data( indexId ).toInt() );

@@ -32,6 +32,7 @@ QuizParametersWidget::QuizParametersWidget( QWidget *parent ) :
     ui->chkTimer->setChecked( displayTimer );
 
     initGroups();
+    initDirection();
     initTimer( displayTimer );
     initWordCount( false );
     setDirection();
@@ -173,6 +174,11 @@ void QuizParametersWidget::setArchiveGroups( QLayout *box )
 	}
 }
 
+void QuizParametersWidget::initDirection()
+{
+
+}
+
 void QuizParametersWidget::setDirection()
 {
 	if ( ui->rbFirst2Second->isChecked() ) {
@@ -245,4 +251,16 @@ void QuizParametersWidget::changeEvent( QEvent* event )
 
     // remember to call base class implementation
     QWidget::changeEvent( event );
+}
+
+EnumFromVocabulary QuizParametersWidget::getFromVocabulary()
+{
+	EnumFromVocabulary fromVocabulary;
+	if ( ui->rbArchive->isChecked() ) {
+		fromVocabulary	= FROM_ARCHIVE;
+	} else {
+		fromVocabulary	= FROM_VOCABULARY;
+	}
+
+	return fromVocabulary;
 }

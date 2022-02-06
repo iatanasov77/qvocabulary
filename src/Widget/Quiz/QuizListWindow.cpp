@@ -114,7 +114,7 @@ void QuizListWindow::initQuizListItem( QTreeWidgetItem* parent, int quizRow, QMa
 	int countQuestions				= qx::dao::count<QuizItem>( countQuestionsQuery );
 	int rightAnswers				= qx::dao::count<QuizItem>( countRightAnswersQuery );
 	QString assessment				= QString( "%1 ( %2/%3 )" )
-										.arg( pModel->data( pModel->index( quizRow, 4 ) ).toString() )
+										.arg( pModel->data( pModel->index( quizRow, 5 ) ).toString() )
 										.arg( QString::number( rightAnswers ) )
 										.arg( QString::number( countQuestions ) );
 
@@ -151,28 +151,49 @@ void QuizListWindow::initQuizListItem( QTreeWidgetItem* parent, int quizRow, QMa
 
 void QuizListWindow::initQuizListDetails( QTreeWidgetItem* parent, int quizRow )
 {
-	EnumDirection direction	= pModel->data( pModel->index( quizRow, 1 ) ).value<EnumDirection>();
-	QDateTime startedAt		= pModel->data( pModel->index( quizRow, 5 ) ).toDateTime();
-	QDateTime finishedAt	= pModel->data( pModel->index( quizRow, 6 ) ).toDateTime();
+	EnumDirection direction				= pModel->data( pModel->index( quizRow, 1 ) ).value<EnumDirection>();
+	EnumFromVocabulary fromVocabulary	= pModel->data( pModel->index( quizRow, 3 ) ).value<EnumFromVocabulary>();
+	QDateTime startedAt					= pModel->data( pModel->index( quizRow, 6 ) ).toDateTime();
+	QDateTime finishedAt				= pModel->data( pModel->index( quizRow, 7 ) ).toDateTime();
 
 	QTreeWidgetItem* treeItem;
 
 	// Direction
 	treeItem = new QTreeWidgetItem();
-	treeItem->setText( 0, "Direction" );
-	treeItem->setText( 1, ( direction == FIRST_TO_SECOND ) ? "First to Second" : "Second to First" );
+	treeItem->setText( 0, tr( "Direction" ) );
+	treeItem->setText( 1, ( direction == FIRST_TO_SECOND ) ?
+			qApp->translate( "QuizListWindow", "First to Second" ) :
+			qApp->translate( "QuizListWindow", "Second to First" )
+	);
 	parent->addChild( treeItem );
 
 	// Randomize
 	treeItem = new QTreeWidgetItem();
-	treeItem->setText( 0, "Randomize" );
+	treeItem->setText( 0, tr( "Randomize" ) );
 	treeItem->setText( 1, pModel->data( pModel->index( quizRow, 2 ) ).toString() );
+	parent->addChild( treeItem );
+
+	// Form Vocabulary
+	treeItem = new QTreeWidgetItem();
+	treeItem->setText( 0, tr( "From Vacabulary" ) );
+	treeItem->setText( 1, ( fromVocabulary == FROM_ARCHIVE ) ?
+			qApp->translate( "QuizListWindow", "Archive" ) :
+			qApp->translate( "QuizListWindow", "Vocabulary" )
+	);
 	parent->addChild( treeItem );
 
 	// Groups
 	treeItem = new QTreeWidgetItem();
-	treeItem->setText( 0, "Groups" );
-	treeItem->setText( 1, pModel->data( pModel->index( quizRow, 3 ) ).toString() );
+	treeItem->setText( 0, tr( "Groups" ) );
+	treeItem->setText( 1, "" );
+	QJsonArray groups	= QJsonDocument::fromJson( pModel->data( pModel->index( quizRow, 4 ) ).toByteArray() ).array();
+	QTreeWidgetItem* groupItem;
+	for ( int i = 0; i < groups.count(); ++i ) {
+		groupItem	= new QTreeWidgetItem();
+		groupItem->setText( 0, "" );
+		groupItem->setText( 1, groups[i].toString() );
+		treeItem->addChild( groupItem );
+	}
 	parent->addChild( treeItem );
 
 	// Duration
@@ -180,7 +201,7 @@ void QuizListWindow::initQuizListDetails( QTreeWidgetItem* parent, int quizRow )
 	duration = duration.addSecs( startedAt.msecsTo( finishedAt ) / 1000 );
 
 	treeItem = new QTreeWidgetItem();
-	treeItem->setText( 0, "Duration" );
+	treeItem->setText( 0, tr( "Duration" ) );
 	treeItem->setText( 1, duration.toString( "hh:mm:ss" ) );
 	parent->addChild( treeItem );
 }
@@ -243,14 +264,17 @@ void QuizListWindow::displayItems( int quizId, QString quizTitle )
 
 void QuizListWindow::deleteQuiz()
 {
-	QMessageBox::StandardButton reply	= QMessageBox::question(
-		this,
+	QMessageBox messageBox(
+		QMessageBox::Question,
 		tr( "Delete Quiz" ),
 		tr( "This will erase the quiz with all its items. Do you agree?" ),
-		QMessageBox::Yes|QMessageBox::No
+		QMessageBox::Yes | QMessageBox::No,
+		this
 	);
+	messageBox.setButtonText( QMessageBox::Yes, tr( "Yes" ) );
+	messageBox.setButtonText( QMessageBox::No, tr( "No" ) );
 
-	if ( reply == QMessageBox::Yes ) {
+	if ( messageBox.exec() == QMessageBox::Yes ) {
 		QToolButton* button	= qobject_cast<QToolButton *>( sender() );
 		int quizId			= button->property( "quizId" ).toInt();
 

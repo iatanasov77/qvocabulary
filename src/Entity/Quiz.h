@@ -13,6 +13,7 @@ class Quiz
 		long id;
 		EnumDirection direction;
 		bool randomize;
+		EnumFromVocabulary fromVocabulary;
 		QString groups;	// Use JSON String of the groups list
 		int assessment;
 		QDateTime startedAt;

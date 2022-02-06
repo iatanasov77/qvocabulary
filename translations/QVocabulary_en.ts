@@ -577,6 +577,50 @@
         <source>Display Quiz</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Randomize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>First to Second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second to First</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vocabulary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From Vacabulary</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QuizParametersWidget</name>
@@ -645,10 +689,6 @@
     <name>QuizWidget</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Quiz</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1022,6 +1062,14 @@ Done, over and out.
         <source>Show All Words</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VocabularyTableView</name>
@@ -1187,6 +1235,14 @@ Done, over and out.
     </message>
     <message>
         <source>Clear Sorting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

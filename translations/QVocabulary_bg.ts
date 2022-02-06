@@ -515,6 +515,17 @@
     </message>
 </context>
 <context>
+    <name>QDialogButtonBox</name>
+    <message>
+        <source>&amp;Yes</source>
+        <translation type="obsolete">Да</translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation type="obsolete">Не</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>English</source>
@@ -615,7 +626,7 @@
     </message>
     <message>
         <source>Quizes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Тестове</translation>
     </message>
     <message>
         <source>Quiz: </source>
@@ -644,6 +655,52 @@
     <message>
         <source>Display Quiz</source>
         <translation type="unfinished">Покажи Тест</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Да</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">Не</translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished">Посока</translation>
+    </message>
+    <message>
+        <source>Randomize</source>
+        <translation type="unfinished">Разбъркай на Случаен Принцип</translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished">Групи</translation>
+    </message>
+    <message>
+        <source>Duration</source>
+        <translation type="unfinished">Времетраене</translation>
+    </message>
+    <message>
+        <source>First to Second</source>
+        <translatorcomment>Първи към Втори</translatorcomment>
+        <translation type="unfinished">Първи към Втори</translation>
+    </message>
+    <message>
+        <source>Second to First</source>
+        <translatorcomment>Втори към Първи</translatorcomment>
+        <translation type="unfinished">Втори към Първи</translation>
+    </message>
+    <message>
+        <source>Vocabulary</source>
+        <translation type="unfinished">Речник</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation type="unfinished">Архив</translation>
+    </message>
+    <message>
+        <source>From Vacabulary</source>
+        <translation type="unfinished">Взето От</translation>
     </message>
 </context>
 <context>
@@ -717,7 +774,7 @@
     </message>
     <message>
         <source>Quiz</source>
-        <translation type="unfinished">Тест</translation>
+        <translation type="obsolete">Тест</translation>
     </message>
     <message>
         <source>Time:</source>
@@ -1121,7 +1178,7 @@ Done, over and out.
     </message>
     <message>
         <source>Delete Vocabulary Group</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Изтриване на Група </translation>
     </message>
     <message>
         <source>&amp;New Group</source>
@@ -1130,6 +1187,14 @@ Done, over and out.
     <message>
         <source>Show All Words</source>
         <translation type="unfinished">Покажи Всички</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Да</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">Не</translation>
     </message>
 </context>
 <context>
@@ -1288,11 +1353,11 @@ Done, over and out.
     </message>
     <message>
         <source>Delete Vocabulary Words</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Изтриване на Думи от Речника</translation>
     </message>
     <message>
         <source>This will erase the selected words. Do you agree?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ще бъдат изтрити маркираните думи. Съгласни ли сте?</translation>
     </message>
     <message>
         <source>Vocabulary</source>
@@ -1313,6 +1378,14 @@ Done, over and out.
     <message>
         <source>Clear Sorting</source>
         <translation type="unfinished">Изчисти Сортиране</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Да</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">Не</translation>
     </message>
 </context>
 </TS>

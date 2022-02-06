@@ -10,6 +10,7 @@ namespace qx {
 		t.data( & Quiz::direction, "direction" );
 		t.data( & Quiz::randomize, "randomize" );
 
+		t.data( & Quiz::fromVocabulary, "from_vocabulary" );
 		t.data( & Quiz::groups, "groups" );
 
 		t.data( & Quiz::assessment, "assessment" );

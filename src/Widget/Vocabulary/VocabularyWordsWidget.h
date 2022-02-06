@@ -74,7 +74,6 @@ class VocabularyWordsWidget : public QWidget
 		void initModel();
 		void initContextMenu();
 		void initTextToSpeech();
-		void adjustRowSelection();
 		void displayVocabularySearchResults( qx::QxModel<Vocabulary> *searchModel );
 		void displayArchiveSearchResults( qx::QxModel<ArchiveWord> *searchModel );
 		bool insertFromEmptyRow( QModelIndex index );
