@@ -609,6 +609,18 @@
         <source>Second to First</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Vocabulary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>From Vacabulary</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QuizParametersWidget</name>

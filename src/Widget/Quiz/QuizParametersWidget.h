@@ -25,6 +25,7 @@ class QuizParametersWidget : public QWidget
 		void setMetaInfo( VocabularyMetaInfoPtr metaInfo );
 		void initGroups();
 
+		EnumFromVocabulary getFromVocabulary();
 		QList<QCheckBox*> getChkGroups();
 		EnumDirection getDirection();
 		QCheckBox* getChkRandomize();

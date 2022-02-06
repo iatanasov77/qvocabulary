@@ -7,6 +7,12 @@ enum EnumDirection {
 };
 Q_DECLARE_METATYPE(EnumDirection)
 
+enum EnumFromVocabulary {
+	FROM_VOCABULARY	= 0,
+	FROM_ARCHIVE 	= 1
+};
+Q_DECLARE_METATYPE(EnumFromVocabulary)
+
 enum ItemDataRole {
 	ObserverRole = 14
 };

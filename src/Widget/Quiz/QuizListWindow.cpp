@@ -114,7 +114,7 @@ void QuizListWindow::initQuizListItem( QTreeWidgetItem* parent, int quizRow, QMa
 	int countQuestions				= qx::dao::count<QuizItem>( countQuestionsQuery );
 	int rightAnswers				= qx::dao::count<QuizItem>( countRightAnswersQuery );
 	QString assessment				= QString( "%1 ( %2/%3 )" )
-										.arg( pModel->data( pModel->index( quizRow, 4 ) ).toString() )
+										.arg( pModel->data( pModel->index( quizRow, 5 ) ).toString() )
 										.arg( QString::number( rightAnswers ) )
 										.arg( QString::number( countQuestions ) );
 
@@ -151,9 +151,10 @@ void QuizListWindow::initQuizListItem( QTreeWidgetItem* parent, int quizRow, QMa
 
 void QuizListWindow::initQuizListDetails( QTreeWidgetItem* parent, int quizRow )
 {
-	EnumDirection direction	= pModel->data( pModel->index( quizRow, 1 ) ).value<EnumDirection>();
-	QDateTime startedAt		= pModel->data( pModel->index( quizRow, 5 ) ).toDateTime();
-	QDateTime finishedAt	= pModel->data( pModel->index( quizRow, 6 ) ).toDateTime();
+	EnumDirection direction				= pModel->data( pModel->index( quizRow, 1 ) ).value<EnumDirection>();
+	EnumFromVocabulary fromVocabulary	= pModel->data( pModel->index( quizRow, 3 ) ).value<EnumFromVocabulary>();
+	QDateTime startedAt					= pModel->data( pModel->index( quizRow, 6 ) ).toDateTime();
+	QDateTime finishedAt				= pModel->data( pModel->index( quizRow, 7 ) ).toDateTime();
 
 	QTreeWidgetItem* treeItem;
 
@@ -172,11 +173,20 @@ void QuizListWindow::initQuizListDetails( QTreeWidgetItem* parent, int quizRow )
 	treeItem->setText( 1, pModel->data( pModel->index( quizRow, 2 ) ).toString() );
 	parent->addChild( treeItem );
 
+	// Form Vocabulary
+	treeItem = new QTreeWidgetItem();
+	treeItem->setText( 0, tr( "From Vacabulary" ) );
+	treeItem->setText( 1, ( fromVocabulary == FROM_ARCHIVE ) ?
+			qApp->translate( "QuizListWindow", "Archive" ) :
+			qApp->translate( "QuizListWindow", "Vocabulary" )
+	);
+	parent->addChild( treeItem );
+
 	// Groups
 	treeItem = new QTreeWidgetItem();
 	treeItem->setText( 0, tr( "Groups" ) );
 	treeItem->setText( 1, "" );
-	QJsonArray groups	= QJsonDocument::fromJson( pModel->data( pModel->index( quizRow, 3 ) ).toByteArray() ).array();
+	QJsonArray groups	= QJsonDocument::fromJson( pModel->data( pModel->index( quizRow, 4 ) ).toByteArray() ).array();
 	QTreeWidgetItem* groupItem;
 	for ( int i = 0; i < groups.count(); ++i ) {
 		groupItem	= new QTreeWidgetItem();

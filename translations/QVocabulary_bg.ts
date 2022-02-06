@@ -626,7 +626,7 @@
     </message>
     <message>
         <source>Quizes</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Тестове</translation>
     </message>
     <message>
         <source>Quiz: </source>
@@ -682,12 +682,25 @@
     </message>
     <message>
         <source>First to Second</source>
-        <translatorcomment>Втори към Първи</translatorcomment>
+        <translatorcomment>Първи към Втори</translatorcomment>
         <translation type="unfinished">Първи към Втори</translation>
     </message>
     <message>
         <source>Second to First</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Втори към Първи</translatorcomment>
+        <translation type="unfinished">Втори към Първи</translation>
+    </message>
+    <message>
+        <source>Vocabulary</source>
+        <translation type="unfinished">Речник</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation type="unfinished">Архив</translation>
+    </message>
+    <message>
+        <source>From Vacabulary</source>
+        <translation type="unfinished">Взето От</translation>
     </message>
 </context>
 <context>
