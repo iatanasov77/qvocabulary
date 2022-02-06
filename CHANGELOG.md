@@ -1,3 +1,12 @@
+0.23.0	|	Release date: **06.02.2022**
+============================================
+* New Features and Improvements:
+  - Improve Quiz List Window.
+  - Styling Quiz Widgets.
+  - Refactoring and Improve Vocabolary Words Reordering.
+  - Translate a QMessageBox Dialogs in All Project.
+
+
 0.22.1	|	Release date: **30.11.2021**
 ============================================
 * New Features and Improvements:
