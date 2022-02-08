@@ -10,7 +10,7 @@
 #include "MainWindow.h"
 #include "Entity/VocabularyGroup.h"
 
-NewVocabularyGroupDialog::NewVocabularyGroupDialog( QWidget *parent ) :
+NewVocabularyGroupDialog::NewVocabularyGroupDialog( QWidget *parent ):
     QDialog( parent ),
     ui( new Ui::NewVocabularyGroupDialog )
 {

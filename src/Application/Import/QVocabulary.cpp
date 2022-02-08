@@ -26,16 +26,13 @@ QSqlDatabase QVocabulary::db;
 
 bool QVocabulary::importFromDb( QString dbName, bool importQuizes, bool importArchive )
 {
-	qDebug() << "Import DB: " << dbName;
 	db	= QSqlDatabase::addDatabase( "QSQLITE", "import_source" );
 	db.setDatabaseName( dbName );
 	db.setHostName( "localhost" );
 	db.setUserName( "root" );
 	db.setPassword( "root" );
 
-	qDebug() << "Import Started.";
 	if ( db.open() ) {
-		qDebug() << "DB is Opened.";
 		parseMeta();
 		parseWords();
 		_importSynonyms();

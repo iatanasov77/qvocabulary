@@ -137,7 +137,10 @@
      <addaction name="actionImportMicrosoftVocabulary"/>
      <addaction name="actionExportMicrosoftVocabulary"/>
      <addaction name="separator"/>
+     <addaction name="actionImport_from_Android_MyDictionary_xls"/>
+     <addaction name="separator"/>
      <addaction name="actionImportVankoSoftQVocabulary"/>
+     <addaction name="separator"/>
     </widget>
     <addaction name="actionNew_DB"/>
     <addaction name="actionOpen_DB"/>
@@ -376,6 +379,11 @@
   <action name="actionImport_Archive">
    <property name="text">
     <string>Import Archive</string>
+   </property>
+  </action>
+  <action name="actionImport_from_Android_MyDictionary_xls">
+   <property name="text">
+    <string>Import from Android MyDictionary (*.xls)</string>
    </property>
   </action>
  </widget>
