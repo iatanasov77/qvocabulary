@@ -134,8 +134,8 @@
      <property name="title">
       <string>I&amp;mport / Export</string>
      </property>
-     <addaction name="actionImportMicrosoftVocabulary"/>
-     <addaction name="actionExportMicrosoftVocabulary"/>
+     <addaction name="action"/>
+     <addaction name="action_2"/>
      <addaction name="separator"/>
      <addaction name="actionImport_from_Android_MyDictionary_xls"/>
      <addaction name="separator"/>
@@ -220,11 +220,7 @@
    <addaction name="actionNew_DB"/>
    <addaction name="actionOpen_DB"/>
    <addaction name="separator"/>
-   <addaction name="actionImportMicrosoftVocabulary"/>
-   <addaction name="actionExportMicrosoftVocabulary"/>
-   <addaction name="separator"/>
    <addaction name="actionInsertGroup"/>
-   <addaction name="actionInsertWord"/>
    <addaction name="separator"/>
    <addaction name="actionShow_Archive"/>
    <addaction name="actionShow_Vocabulary"/>
@@ -282,7 +278,7 @@
     <bool>false</bool>
    </property>
   </action>
-  <action name="actionImportMicrosoftVocabulary">
+  <action name="action">
    <property name="text">
     <string>&amp;Import From Microsoft Vocabulary++ (*.vocab)</string>
    </property>
@@ -300,7 +296,7 @@
     <string>&amp;Save As</string>
    </property>
   </action>
-  <action name="actionExportMicrosoftVocabulary">
+  <action name="action_2">
    <property name="text">
     <string>&amp;Export To Microsoft Vocabulary++ (*.vocab)</string>
    </property>
