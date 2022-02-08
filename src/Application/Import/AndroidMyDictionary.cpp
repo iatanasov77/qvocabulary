@@ -21,7 +21,7 @@ bool AndroidMyDictionary::importFromDb( QString dbName, QString groupName )
 
 		db.close();
 	} else {
-		qDebug() << "Import Source Database Cannot Be Opened!";
+		return false;
 	}
 
 	return true;

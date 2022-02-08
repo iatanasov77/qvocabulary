@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <QFileDialog>
 #include <QErrorMessage>
+#include <QMessageBox>
 
 #include "Application/Import/QVocabulary.h"
 
@@ -40,8 +41,15 @@ void QVocabularyImportDialog::save()
 	}
 
 	QApplication::setOverrideCursor( Qt::WaitCursor );
-	QVocabulary::importFromDb( dbPath, ui->chkImportQuizes->isChecked(), ui->chkImportArchive->isChecked() );
+	bool importStatus	= QVocabulary::importFromDb( dbPath, ui->chkImportQuizes->isChecked(), ui->chkImportArchive->isChecked() );
 	QApplication::restoreOverrideCursor();
+	if ( ! importStatus ) {
+		QMessageBox::critical(
+			this,
+			tr( "Error" ),
+			tr( "Import Source Database Cannot Be Opened !" )
+		);
+	}
 }
 
 void QVocabularyImportDialog::setDatabase()

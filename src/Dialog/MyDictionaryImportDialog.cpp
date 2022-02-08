@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include <QFileDialog>
 #include <QErrorMessage>
+#include <QMessageBox>
 
 #include "Application/Import/AndroidMyDictionary.h"
 
@@ -50,8 +51,15 @@ void MyDictionaryImportDialog::save()
 	}
 
 	QApplication::setOverrideCursor( Qt::WaitCursor );
-	AndroidMyDictionary::importFromDb( dbPath, groupName );
+	bool importStatus	= AndroidMyDictionary::importFromDb( dbPath, groupName );
 	QApplication::restoreOverrideCursor();
+	if ( ! importStatus ) {
+		QMessageBox::critical(
+			this,
+			tr( "Error" ),
+			tr( "Import Source Database Cannot Be Opened !" )
+		);
+	}
 }
 
 void MyDictionaryImportDialog::setDatabase()
