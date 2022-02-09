@@ -68,7 +68,7 @@ void MyDictionaryImportDialog::setDatabase()
 		this,
 		tr( "Open Android MyDictionary Database" ),
 		QDir::homePath(),
-		tr( "Android MyDictionary Database (*.xls)" )
+		tr( "Android MyDictionary Database (*.xls *.csv)" )
 	);
 	ui->leDatabase->setText( dbPath );
 }
