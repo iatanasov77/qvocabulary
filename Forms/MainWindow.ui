@@ -379,7 +379,10 @@
   </action>
   <action name="actionImport_from_Android_MyDictionary_xls">
    <property name="text">
-    <string>Import from Android MyDictionary (*.xls)</string>
+    <string>Import from Android MyDictionary (*.xls *.csv)</string>
+   </property>
+   <property name="toolTip">
+    <string>Import from Android MyDictionary (*.xls *.csv)</string>
    </property>
   </action>
  </widget>

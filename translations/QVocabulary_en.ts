@@ -395,6 +395,53 @@
         <source>Import Archive</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Import from Android MyDictionary (*.xls *.csv)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MyDictionaryImportDialog</name>
+    <message>
+        <source>Import From Android MyDictionary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import to Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import Source Database Cannot Be Opened !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Android MyDictionary Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Android MyDictionary Database (*.xls *.csv)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewDatabaseDialog</name>
@@ -464,10 +511,6 @@
 <context>
     <name>QVocabularyImportDialog</name>
     <message>
-        <source>Create New Database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -509,6 +552,18 @@
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import From VankoSoft QVocabulary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import Source Database Cannot Be Opened !</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
