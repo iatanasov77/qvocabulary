@@ -455,6 +455,57 @@
         <source>Import Archive</source>
         <translation type="unfinished">Импортирай Архив</translation>
     </message>
+    <message>
+        <source>Import from Android MyDictionary (*.xls)</source>
+        <translation type="obsolete">Импорт от Andorid MyDctionary (*.xls)</translation>
+    </message>
+    <message>
+        <source>Import from Android MyDictionary (*.xls *.csv)</source>
+        <translation type="unfinished">Импорт от Andorid MyDctionary (*.xls *.csv)</translation>
+    </message>
+</context>
+<context>
+    <name>MyDictionaryImportDialog</name>
+    <message>
+        <source>Import From Android MyDictionary</source>
+        <translation type="unfinished">Импорт От Android MyDictionary</translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation type="unfinished">База Данни</translation>
+    </message>
+    <message>
+        <source>Browse</source>
+        <translation type="unfinished">Файл Брауз</translation>
+    </message>
+    <message>
+        <source>Import to Group</source>
+        <translation type="unfinished">Импорт в Група</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation type="unfinished">Импорт</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Отказ</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Грешка</translation>
+    </message>
+    <message>
+        <source>Import Source Database Cannot Be Opened !</source>
+        <translation type="unfinished">Импорт Базата Данни Не Може Да Бъде Отворена !</translation>
+    </message>
+    <message>
+        <source>Open Android MyDictionary Database</source>
+        <translation type="unfinished">Отвори Android MyDictionary База Данни</translation>
+    </message>
+    <message>
+        <source>Android MyDictionary Database (*.xls *.csv)</source>
+        <translation type="unfinished">Android MyDictionary База Данни (*.xls *.csv)</translation>
+    </message>
 </context>
 <context>
     <name>NewDatabaseDialog</name>
@@ -544,7 +595,7 @@
     <name>QVocabularyImportDialog</name>
     <message>
         <source>Create New Database</source>
-        <translation type="unfinished">Създай Нова БД</translation>
+        <translation type="obsolete">Създай Нова БД</translation>
     </message>
     <message>
         <source>Database</source>
@@ -589,6 +640,18 @@
     <message>
         <source>Cancel</source>
         <translation type="unfinished">Отказ</translation>
+    </message>
+    <message>
+        <source>Import From VankoSoft QVocabulary</source>
+        <translation type="unfinished">Импорт от VankoSoft QVocabulary</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Грешка</translation>
+    </message>
+    <message>
+        <source>Import Source Database Cannot Be Opened !</source>
+        <translation type="unfinished">Импорт Базата Данни Не Може Да Бъде Отворена !</translation>
     </message>
 </context>
 <context>

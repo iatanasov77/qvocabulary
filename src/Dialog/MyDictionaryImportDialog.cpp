@@ -1,16 +1,18 @@
-#include "QVocabularyImportDialog.h"
-#include "ui_QVocabularyImportDialog.h"
+#include "MyDictionaryImportDialog.h"
+#include "ui_MyDictionaryImportDialog.h"
 
 #include <QPushButton>
 #include <QFileDialog>
 #include <QErrorMessage>
 #include <QMessageBox>
 
-#include "Application/Import/QVocabulary.h"
+#include "Application/Import/AndroidMyDictionary.h"
 
-QVocabularyImportDialog::QVocabularyImportDialog( QWidget *parent ) :
+#include "MainWindow.h"
+
+MyDictionaryImportDialog::MyDictionaryImportDialog( QWidget *parent ) :
     QDialog( parent ),
-    ui( new Ui::QVocabularyImportDialog )
+    ui( new Ui::MyDictionaryImportDialog )
 {
     ui->setupUi( this );
 
@@ -26,12 +28,12 @@ QVocabularyImportDialog::QVocabularyImportDialog( QWidget *parent ) :
     ui->buttonBox->button( QDialogButtonBox::Cancel )->setText( tr( "Cancel" ) );
 }
 
-QVocabularyImportDialog::~QVocabularyImportDialog()
+MyDictionaryImportDialog::~MyDictionaryImportDialog()
 {
     delete ui;
 }
 
-void QVocabularyImportDialog::save()
+void MyDictionaryImportDialog::save()
 {
 	if ( dbPath.isEmpty() ) {
 		QErrorMessage* errorMessage	= new QErrorMessage( this );
@@ -40,8 +42,16 @@ void QVocabularyImportDialog::save()
 		return;
 	}
 
+	QString groupName	= ui->leImport2Group->text();
+	if ( groupName.isEmpty() ) {
+		QErrorMessage* errorMessage	= new QErrorMessage( this );
+		errorMessage->showMessage( "You have to write the name of the group to import !" );
+
+		return;
+	}
+
 	QApplication::setOverrideCursor( Qt::WaitCursor );
-	bool importStatus	= QVocabulary::importFromDb( dbPath, ui->chkImportQuizes->isChecked(), ui->chkImportArchive->isChecked() );
+	bool importStatus	= AndroidMyDictionary::importFromDb( dbPath, groupName );
 	QApplication::restoreOverrideCursor();
 	if ( ! importStatus ) {
 		QMessageBox::critical(
@@ -52,13 +62,13 @@ void QVocabularyImportDialog::save()
 	}
 }
 
-void QVocabularyImportDialog::setDatabase()
+void MyDictionaryImportDialog::setDatabase()
 {
 	dbPath	= QFileDialog::getOpenFileName(
 		this,
-		tr( "Open VankoSoft QVocabulary Database" ),
+		tr( "Open Android MyDictionary Database" ),
 		QDir::homePath(),
-		tr( "VankoSoft QVocabulary Database (*.db)" )
+		tr( "Android MyDictionary Database (*.xls *.csv)" )
 	);
 	ui->leDatabase->setText( dbPath );
 }

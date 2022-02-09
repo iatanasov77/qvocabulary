@@ -28,6 +28,7 @@
 #include "Dialog/AddToArchiveDialog.h"
 #include "Dialog/ImportArchiveDialog.h"
 #include "Dialog/QVocabularyImportDialog.h"
+#include "Dialog/MyDictionaryImportDialog.h"
 #include "Dialog/ExecSqlQueryDialog.h"
 #include "Dialog/TestWidgetsDialog.h"
 
@@ -112,8 +113,6 @@ void MainWindow::initIcons()
 	ui->actionSave_As->setIcon( QIcon( ":/Resources/icons/computer.svg" ) );
 
 	ui->menuImport->setIcon( QIcon( ":/Resources/icons/document-import.svg" ) );
-	ui->actionImportMicrosoftVocabulary->setIcon( QIcon( ":/Resources/icons/document-import.svg" ) );
-	ui->actionExportMicrosoftVocabulary->setIcon( QIcon( ":/Resources/icons/document-import.svg" ) );
 
 	ui->actionSimpleExam->setIcon( QIcon( ":/Resources/icons/quiz.svg" ) );
 	ui->actionCompletedExams->setIcon( QIcon( ":/Resources/icons/quiz-list.svg" ) );
@@ -663,4 +662,15 @@ NewVocabularyGroupDialog* MainWindow::dialogNewVocabularyGroup()
 	dlg->setModal( true );
 
 	return dlg;
+}
+
+void MainWindow::on_actionImport_from_Android_MyDictionary_xls_triggered()
+{
+	MyDictionaryImportDialog* dlgImport	= new MyDictionaryImportDialog( this );
+	dlgImport->setModal( true );
+	if ( dlgImport->exec() == QDialog::Accepted ) {
+		initWidgets();
+		wdgVocabulary->initModels();
+		statusBar()->showMessage( tr( "Database imported" ), 2000 );
+	}
 }
