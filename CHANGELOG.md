@@ -1,3 +1,13 @@
+0.24.0	|	Release date: **09.02.2022**
+============================================
+* New Features:
+  - Update Translations about Import From Android MyDictionary.
+  - Add Import From CSV into MyDictionary Import.
+  - Improve Import Dialogs.
+  - Update MainWindow ToolBar.
+  - Create Import From Android MyDictionary.
+
+
 0.23.0	|	Release date: **06.02.2022**
 ============================================
 * New Features and Improvements:
