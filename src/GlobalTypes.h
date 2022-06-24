@@ -34,9 +34,11 @@ static QMap<QString, QString> TranslationTypes {
 	{"NOUN", "NOUN"},
 	{"ADJECTIVE", "ADJECTIVE"},
 	{"VERB", "VERB"},
-	{"PROVERB", "PROVERB"}
+	{"ADVERB", "ADVERB"},
+	{"PREPOSITION", "PREPOSITION"},
+	{"CONJUCTION", "CONJUCTION"}
 };
 
-static QList<QString> TranslationTypesList { "NOUN", "ADJECTIVE", "VERB", "PROVERB" };
+static QList<QString> TranslationTypesList { "NOUN", "ADJECTIVE", "VERB", "ADVERB", "PREPOSITION", "CONJUCTION" };
 
 #endif	// GLOBALTYPES_H

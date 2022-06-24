@@ -53,16 +53,18 @@ void VocabularyTranslationsTypesDialog::initTranslations( QMap<QString, QVariant
 	int row						= 0;
 	QStringList translations	= word["translations"].toString().split( "," );
 	ui->tableWidget->setRowCount( translations.size() );
-	ui->tableWidget->setColumnCount( 6 );
+	ui->tableWidget->setColumnCount( 8 );
 
-	VsTableHeaderView *myHeader = new VsTableHeaderView( Qt::Horizontal, ui->tableWidget, {1, 2, 3, 4} );
+	VsTableHeaderView *myHeader = new VsTableHeaderView( Qt::Horizontal, ui->tableWidget, {1, 2, 3, 4, 5, 6} );
 	ui->tableWidget->setHorizontalHeader( myHeader );
 	ui->tableWidget->setHorizontalHeaderLabels( {
 		tr( "Word" ),
 		tr( "Noun" ),
 		tr( "Adjective" ),
 		tr( "Verb" ),
-		tr( "Proverb" ),
+		tr( "Adverb" ),
+		tr( "Preposition" ),
+		tr( "Conjunction" ),
 		tr( "Weight" )
 	} );
 
@@ -82,7 +84,7 @@ void VocabularyTranslationsTypesDialog::initTypes( int countRows )
 		QString word	= ui->tableWidget->item( y, 0 )->text();
 		_wordTypes << new QButtonGroup( this );
 		_wordTypes[y]->setExclusive( true );
-		for ( int x = 1; x < 5; x++ ) {
+		for ( int x = 1; x < 7; x++ ) {
 			int checkedId			= x - 1;
 			QWidget *checkBoxWidget = new QWidget();
 			QHBoxLayout *layout		= new QHBoxLayout( checkBoxWidget );
@@ -105,7 +107,7 @@ void VocabularyTranslationsTypesDialog::initWeights( int countRows )
 		int wordWeigth					= getWordWeight( word );
 		QProgressBar *weightIndicator	= new QProgressBar( this );
 		weightIndicator->setTextVisible( false );
-		weightIndicator->setFixedHeight( 5 );
+		weightIndicator->setFixedHeight( 7 );
 		weightIndicator->setRange( 1, 4 );
 		weightIndicator->setValue( wordWeigth );
 		_wordWeights << new QSpinBox( this );
@@ -118,7 +120,7 @@ void VocabularyTranslationsTypesDialog::initWeights( int countRows )
 		layout->addWidget( _wordWeights[y] );
 		layout->setAlignment( Qt::AlignCenter );
 		layout->setContentsMargins( 0, 0, 0, 0 );
-		ui->tableWidget->setCellWidget( y, 5, weightWidget );
+		ui->tableWidget->setCellWidget( y, 7, weightWidget );
 
 		connect( _wordWeights[y], SIGNAL( valueChanged( int ) ), weightIndicator, SLOT( setValue( int ) ) );
 	}
@@ -233,9 +235,9 @@ void VocabularyTranslationsTypesDialog::checkAll( int logicalIndex, bool isOn )
 		if ( isOn ) {
 			btnGroup->button( logicalIndex - 1 )->setChecked( isOn );
 		} else {
-			btnGroup->button( logicalIndex - 1 )->setAutoExclusive( false );
+			//btnGroup->button( logicalIndex - 1 )->setAutoExclusive( false );
 			btnGroup->button( logicalIndex - 1 )->setChecked( false );
-			btnGroup->button( logicalIndex - 1 )->setAutoExclusive( true );
+			//btnGroup->button( logicalIndex - 1 )->setAutoExclusive( true );
 		}
 	}
 }
