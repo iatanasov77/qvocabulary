@@ -78,6 +78,7 @@ bool VocabularySynonymsDelegate::editorEvent(
 	if ( event->type() == QEvent::MouseButtonDblClick ) {
 		//qDebug() << "DELEGATE EVENT WORD IDS: " << VocabularySynonymsDelegate::wordRects[index.row()].keys();
 
+		bool isSynonymClicked	= false;
 		foreach ( int wordId, VocabularySynonymsDelegate::wordRects[index.row()].keys() ) {
 			wordRect	= VocabularySynonymsDelegate::wordRects[index.row()][wordId];
 			//qDebug() << "SYNONYM CLICKED: " << wordId;
@@ -87,9 +88,14 @@ bool VocabularySynonymsDelegate::editorEvent(
 			) {
 				//qDebug() << "SYNONYM CLICKED: " << wordId;
 				if ( wordId ) {
+					isSynonymClicked	= true;
 					emit synonymClicked( wordId );
 				}
 			}
+		}
+
+		if ( ! isSynonymClicked ) {
+			emit buttonClicked( index );
 		}
 	}
 
