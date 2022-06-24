@@ -23,7 +23,7 @@ VocabularyTranslationsTypesDialog::VocabularyTranslationsTypesDialog( QMap<QStri
     ui( new Ui::VocabularyTranslationsTypesDialog )
 {
     ui->setupUi( this );
-    resize( 900, 400 );
+    resize( 1024, 400 );
 
     _word			= word;
     _wordTypes		= QList<QButtonGroup *>();
