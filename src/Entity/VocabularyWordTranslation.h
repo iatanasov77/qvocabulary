@@ -13,7 +13,9 @@ class VocabularyWordTranslation
 			NOUN,
 			ADJECTIVE,
 			VERB,
-			PROVERB
+			ADVERB,
+			PREPOSITION,
+			CONJUCTION
 		};
 
 		/*
