@@ -1176,10 +1176,6 @@ Done, over and out.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Proverb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Weight</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1189,6 +1185,18 @@ Done, over and out.
     </message>
     <message>
         <source>There are not selected types for some words !</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adverb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preposition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conjunction</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

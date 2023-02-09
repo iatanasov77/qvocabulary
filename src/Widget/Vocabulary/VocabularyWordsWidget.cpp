@@ -744,6 +744,8 @@ void VocabularyWordsWidget::restoreHeaderSizes()
 		//qDebug() << "Vocabulary Header Size: " << headerSizes[key].toInt();
 		ui->tableView->horizontalHeader()->resizeSection( key.toInt(), headerSizes[key].toInt() );
 	}
+	ui->tableView->horizontalHeader()->setStretchLastSection( true );
+	//ui->tableView->setFixedWidth( 50 );
 }
 
 void VocabularyWordsWidget::editSynonyms( const QModelIndex &index )

@@ -1311,7 +1311,7 @@ Done, over and out.
     </message>
     <message>
         <source>Proverb</source>
-        <translation type="unfinished">Наречие</translation>
+        <translation type="obsolete">Наречие</translation>
     </message>
     <message>
         <source>Weight</source>
@@ -1319,11 +1319,23 @@ Done, over and out.
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Грешка</translation>
     </message>
     <message>
         <source>There are not selected types for some words !</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adverb</source>
+        <translation type="unfinished">Наречие</translation>
+    </message>
+    <message>
+        <source>Preposition</source>
+        <translation type="unfinished">Предлог</translation>
+    </message>
+    <message>
+        <source>Conjunction</source>
+        <translation type="unfinished">Израз</translation>
     </message>
 </context>
 <context>
