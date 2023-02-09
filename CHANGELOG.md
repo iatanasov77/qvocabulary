@@ -1,3 +1,11 @@
+0.25.0	|	Release date: **09.02.2023**
+============================================
+* New Features and Improvements:
+  - Open Synonym Dialog on Double Click.
+  - Improve VocabularyTranslationsTypesDialog .
+  - Update QtMustache From Oficial Repository.
+
+
 0.24.0	|	Release date: **09.02.2022**
 ============================================
 * New Features:
