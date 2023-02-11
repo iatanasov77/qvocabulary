@@ -1,3 +1,10 @@
+0.25.1	|	Release date: **11.02.2023**
+============================================
+* New Features:
+  - Update Project File.
+  - Update QtMustache Library.
+
+
 0.25.0	|	Release date: **09.02.2023**
 ============================================
 * New Features and Improvements:
