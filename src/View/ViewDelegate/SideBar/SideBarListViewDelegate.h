@@ -22,10 +22,14 @@ class SideBarListViewDelegate : public QItemDelegate
 
 	signals:
 		void buttonClicked( const QModelIndex &index );
+		void quizButtonClicked( const QModelIndex &index );
 
 	private:
 		QStyleOptionButton createButton( int indexRow, QRect rect, QString text ) const;
+		QStyleOptionButton createQuizButton( int indexRow, QRect rect ) const;
 		long groupWordsCount( int groupId ) const;
+		QRect groupButtonRect( QRect cellRect ) const;
+		QRect quizButtonRect( QRect cellRect ) const;
 
 		bool _inArchive;
 		int _currRow;
