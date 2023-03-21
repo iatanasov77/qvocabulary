@@ -136,10 +136,20 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_5">
              <item>
-              <widget class="QGroupBox" name="grpGroups">
-               <property name="title">
-                <string>GroupBox</string>
+              <widget class="QScrollArea" name="grpGroupsScrollArea">
+               <property name="widgetResizable">
+                <bool>true</bool>
                </property>
+               <widget class="QWidget" name="grpGroups">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>385</width>
+                  <height>85</height>
+                 </rect>
+                </property>
+               </widget>
               </widget>
              </item>
             </layout>
@@ -237,7 +247,14 @@
             </spacer>
            </item>
            <item>
-            <widget class="QTimeEdit" name="teTimer"/>
+            <widget class="QTimeEdit" name="teTimer">
+             <property name="currentSection">
+              <enum>QDateTimeEdit::MinuteSection</enum>
+             </property>
+             <property name="displayFormat">
+              <string>hh:mm</string>
+             </property>
+            </widget>
            </item>
            <item>
             <spacer name="horizontalSpacer_2">

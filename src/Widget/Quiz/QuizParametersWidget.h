@@ -30,9 +30,12 @@ class QuizParametersWidget : public QWidget
 		EnumDirection getDirection();
 		QCheckBox* getChkRandomize();
 		QCheckBox* getChkDisplayTranscriptions();
+		QCheckBox* getChkTimer();
+		void setTimerTime( QTime time );
 		int time();
 		int wordsCount();
 		QString wordsFrom();
+		void scrollGroups( QCheckBox* chk );;
 
 	public slots:
 		void setGroups();

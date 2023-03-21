@@ -172,3 +172,20 @@ void QuizWindow::resizeEvent( QResizeEvent* event )
 	settings->setValue( "quizWindowWidth", QVariant( qwSize.width() ), "Quiz" );
 	settings->setValue( "quizWindowHeight", QVariant( qwSize.height() ), "Quiz" );
 }
+
+void QuizWindow::configureGroupQuiz( int groupId )
+{
+	foreach ( QCheckBox* chk, wdgParameters->getChkGroups() ) {
+		if ( chk->property( "groupId" ).toInt() == groupId ) {
+			chk->setCheckState( Qt::Checked );
+			wdgParameters->scrollGroups( chk );
+		}
+	}
+
+	wdgParameters->getChkRandomize()->setCheckState( Qt::Checked );
+	wdgParameters->getChkDisplayTranscriptions()->setCheckState( Qt::Checked );
+
+	wdgParameters->getChkTimer()->setCheckState( Qt::Checked );
+	QTime time( 0, 5 );	// 5 Minutes
+	wdgParameters->setTimerTime( time );
+}

@@ -22,6 +22,8 @@ class QuizWindow : public QWidget
 		~QuizWindow();
 		void openQuiz( int quizId, QString quizTitle );
 
+		void configureGroupQuiz( int groupId );
+
 	public slots:
 		void startQuiz();
 		void stopQuiz();

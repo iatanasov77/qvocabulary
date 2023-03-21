@@ -42,6 +42,8 @@ class MainWindow : public QMainWindow
 
 		NewVocabularyGroupDialog* dialogNewVocabularyGroup();
 
+		void startQuiz( int groupId = 0 );
+
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
 		void changeEvent(QEvent*);

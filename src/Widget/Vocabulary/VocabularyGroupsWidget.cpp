@@ -46,6 +46,8 @@ VocabularyGroupsWidget::VocabularyGroupsWidget( QWidget *parent ) :
 	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), wdgVocabulary, SLOT( loadGroup( QModelIndex ) ) );
 	connect( itemDelegate, SIGNAL( buttonClicked( QModelIndex ) ), this, SLOT( setCurrentGroup( QModelIndex ) ) );
 
+	connect( itemDelegate, SIGNAL( quizButtonClicked( QModelIndex ) ), wdgVocabulary, SLOT( showGroupQuiz( QModelIndex ) ) );
+
 	wdgVocabulary->setCurrentGroupName( ui->listView->model()->data( ui->listView->model()->index( 0, 1 ) ).toString() );
 }
 

@@ -46,6 +46,7 @@ class VocabularyWidget : public QWidget
 		void loadGroup( int groupId = 0 );
 		void loadGroup( const QModelIndex &index );
 		void updateSpeaker();
+		void showGroupQuiz( const QModelIndex &index );
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed

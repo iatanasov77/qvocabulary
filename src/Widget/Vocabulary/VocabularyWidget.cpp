@@ -15,6 +15,7 @@
 #include "QxOrm_Impl.h"
 #include "QxModelView.h"
 
+#include "MainWindow.h"
 #include "Model/Helper.h"
 #include "Application/VsDatabase.h"
 #include "Application/VsSettings.h"
@@ -197,4 +198,16 @@ void VocabularyWidget::setWordsCount()
 											.arg( QString::number( qx::dao::count<Vocabulary>() ) )
 											.arg( qApp->translate( "VocabularyWidget", "words" ) )
 										);
+}
+
+void VocabularyWidget::showGroupQuiz( const QModelIndex &index )
+{
+	int groupId				= index.siblingAtColumn( 0 ).data().toInt();
+	QString groupName		= index.siblingAtColumn( 1 ).data().toString();
+
+	QObject *mw	= parent();
+	//MainWindow *mwCasted	= qobject_cast<MainWindow*>( mw );
+	MainWindow *mwCasted	= static_cast<MainWindow*>( mw );
+
+	mwCasted->startQuiz( groupId );
 }
