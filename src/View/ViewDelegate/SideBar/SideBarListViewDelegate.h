@@ -20,6 +20,9 @@ class SideBarListViewDelegate : public QItemDelegate
 
 		void setEvent( int event );
 
+	protected:
+		void setCursor( QEvent *event, const QStyleOptionViewItem option, const QModelIndex index ) const;
+
 	signals:
 		void buttonClicked( const QModelIndex &index );
 		void quizButtonClicked( const QModelIndex &index );

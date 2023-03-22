@@ -82,7 +82,8 @@ bool SideBarListViewDelegate::editorEvent(
 	const QModelIndex &index
 ) {
 	Q_UNUSED( model );
-	Q_UNUSED( option );
+
+	setCursor( event, option, index );
 
 	QRect btnQuizRect;
 	QRect btnGroupRect;
@@ -141,7 +142,8 @@ bool SideBarListViewDelegate::editorEvent(
 			break;
 	}
 
-	return true;
+	//return true;
+	return QItemDelegate::editorEvent( event, model, option, index );
 }
 
 QStyleOptionButton SideBarListViewDelegate::createButton( int indexRow, QRect rect, QString text ) const
@@ -208,4 +210,19 @@ QRect SideBarListViewDelegate::quizButtonRect( QRect cellRect ) const
 	int h = btnSize;
 
 	return QRect( x, y, w, h );
+}
+
+void SideBarListViewDelegate::setCursor( QEvent *event, const QStyleOptionViewItem option, const QModelIndex index ) const
+{
+	QMouseEvent *e			= static_cast<QMouseEvent *>( event );
+	QPointF mousePosition	= e->pos();
+
+	if ( option.rect.contains( mousePosition.toPoint() ) ) {
+		//qDebug() << "SET CURSOR !!!";
+		QApplication::setOverrideCursor( QCursor( Qt::PointingHandCursor ) );
+		//option.widget->setCursor( QCursor( Qt::PointingHandCursor ) );
+	} else {
+		//qDebug() << "RESTORE CURSOR !!!";
+		QApplication::restoreOverrideCursor();
+	}
 }
