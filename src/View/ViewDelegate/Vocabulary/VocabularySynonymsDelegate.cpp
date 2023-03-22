@@ -19,9 +19,9 @@ QMap<int, QMap<int, QRect>> VocabularySynonymsDelegate::wordRects;
 /*
  * Change Mouse Cursor: https://stackoverflow.com/questions/9131727/how-can-i-change-the-mouse-pointer-when-mouse-over-text-with-qstyleditemdelegate
  */
-VocabularySynonymsDelegate::VocabularySynonymsDelegate( QObject *parent ) : QStyledItemDelegate( parent )
+VocabularySynonymsDelegate::VocabularySynonymsDelegate( QObject *parent ) : VocabularyViewDelegate( parent )
 {
-	view	= parent;
+
 }
 
 void VocabularySynonymsDelegate::paint(
@@ -31,6 +31,8 @@ void VocabularySynonymsDelegate::paint(
 ) const {
 	if ( ! index.isValid() || isEmptyLine( index ) )
 		QStyledItemDelegate::paint( painter, option, QModelIndex() );	// draw the selection background only
+
+	//setCursor( option, index );
 
 	//VocabularySynonymsDelegate::countWords	= 0;
 	//VocabularySynonymsDelegate::wordRects.clear();
@@ -59,6 +61,8 @@ bool VocabularySynonymsDelegate::editorEvent(
 	const QStyleOptionViewItem &option,
 	const QModelIndex &index
 ) {
+	setCursor( event, option, index );
+
 	QRect btnRect;
 	QRect wordRect;
 	QMouseEvent* e	= ( QMouseEvent* )event;
@@ -234,24 +238,4 @@ QRect VocabularySynonymsDelegate::textRect( QRect cellRect, int wordNumber ) con
 	int h 		= cellRect.height();
 
 	return QRect( x, y, w, h );
-}
-
-QRect VocabularySynonymsDelegate::buttonRect( QRect cellRect ) const
-{
-	int btnSize	= cellRect.height();	// Button rect should be a square
-
-	int x = cellRect.left() + cellRect.width() - btnSize;
-	int y = cellRect.top();
-	int w = btnSize;
-	int h = btnSize;
-
-	return QRect( x, y, w, h );
-}
-
-bool VocabularySynonymsDelegate::isEmptyLine( const QModelIndex index ) const
-{
-	if ( index.siblingAtColumn( 0 ).data().toInt() )
-		return false;
-	else
-		return true;
 }

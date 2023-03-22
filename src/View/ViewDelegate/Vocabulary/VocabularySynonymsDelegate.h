@@ -1,11 +1,9 @@
 #ifndef VIEW_VOCABULARYSYNONYMSDELEGATE_H
 #define VIEW_VOCABULARYSYNONYMSDELEGATE_H
 
-#include <QStyledItemDelegate>
-#include <QPainter>
-#include <QTextDocument>
+#include "View/ViewDelegate/VocabularyViewDelegate.h"
 
-class VocabularySynonymsDelegate : public QStyledItemDelegate
+class VocabularySynonymsDelegate : public VocabularyViewDelegate
 {
     Q_OBJECT
 
@@ -15,6 +13,9 @@ class VocabularySynonymsDelegate : public QStyledItemDelegate
 
 		bool editorEvent( QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index );
 		QWidget* createEditor( QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index ) const;
+
+	protected:
+		QStyleOptionButton createButton( QRect rect  ) const;
 
 	private:
 		QObject *view;
@@ -33,12 +34,7 @@ class VocabularySynonymsDelegate : public QStyledItemDelegate
 			QString wordTarget
 		) const;
 
-		QRect buttonRect( QRect cellRect ) const;
-		QStyleOptionButton createButton( QRect rect  ) const;
-		bool isEmptyLine( const QModelIndex index ) const;
-
 	signals:
-		void buttonClicked( const QModelIndex &index );
 		void synonymClicked( int wordId );
 };
 
