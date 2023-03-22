@@ -37,6 +37,7 @@ MainWindow::MainWindow( QWidget *parent ) :
     ui( new Ui::MainWindow )
 {
     ui->setupUi( this );
+    waitingSpinner	= new VsWaitingSpinner( this );
 
     // The Trick ;)
     wdgVocabulary	= 0;
@@ -338,13 +339,13 @@ void MainWindow::loadDb( const QString &dbPath )
 		);
 	}
 
-	QApplication::setOverrideCursor( Qt::WaitCursor );
+	waitingSpinner->start();
 
 	initWidgets();
 	wdgVocabulary->initModels();
 	setCurrentDb( dbPath );
 
-	QApplication::restoreOverrideCursor();
+	waitingSpinner->stop();
 	statusBar()->showMessage( tr( "Database loaded" ), 2000 );
 }
 
@@ -463,10 +464,7 @@ void MainWindow::on_actionImportVankoSoftQVocabulary_triggered()
 
 void MainWindow::on_actionSimpleExam_triggered()
 {
-	wdgQuiz = new QuizWindow( this );
-	wdgQuiz->setWindowFlags( Qt::Window );
-	//wdgQuiz->setModal( true );
-	wdgQuiz->show();
+	startQuiz();
 }
 
 void MainWindow::on_actionCompletedExams_triggered()
@@ -673,4 +671,18 @@ void MainWindow::on_actionImport_from_Android_MyDictionary_xls_triggered()
 		wdgVocabulary->initModels();
 		statusBar()->showMessage( tr( "Database imported" ), 2000 );
 	}
+}
+
+void MainWindow::startQuiz( int groupId )
+{
+	wdgQuiz	= new QuizWindow( this );
+
+	if ( groupId ) {
+		wdgQuiz->configureGroupQuiz( groupId );
+	}
+
+	/* */
+	wdgQuiz->setWindowFlags( Qt::Window );
+	//wdgQuiz->setModal( true );
+	wdgQuiz->show();
 }

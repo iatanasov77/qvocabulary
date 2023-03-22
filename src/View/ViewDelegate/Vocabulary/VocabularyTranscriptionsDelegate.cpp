@@ -8,9 +8,9 @@
 
 #include "View/VocabularyTableView.h"
 
-VocabularyTranscriptionsDelegate::VocabularyTranscriptionsDelegate( QObject *parent ) : QStyledItemDelegate( parent )
+VocabularyTranscriptionsDelegate::VocabularyTranscriptionsDelegate( QObject *parent ) : VocabularyViewDelegate( parent )
 {
-	view	= parent;
+
 }
 
 void VocabularyTranscriptionsDelegate::paint(
@@ -22,6 +22,7 @@ void VocabularyTranscriptionsDelegate::paint(
 		QStyledItemDelegate::paint( painter, option, QModelIndex() );	// draw the selection background only
 
 	//setCursor( option, index );
+
 	QStyleOptionViewItem op( option );
 	initStyleOption( &op, index );
 	op.font.setBold( true );
@@ -43,10 +44,8 @@ bool VocabularyTranscriptionsDelegate::editorEvent(
 	const QStyleOptionViewItem &option,
 	const QModelIndex &index
 ) {
-	bool hover = false;
-	if ( option.state & QStyle::State_MouseOver )
-		hover = true;
-	qDebug() << "BUTTON IS HOVERED: " << hover;
+	setCursor( event, option, index );
+	//setCursor( option, index );
 
 	if ( event->type() == QEvent::MouseButtonRelease ) {
 		QMouseEvent* e	= ( QMouseEvent* )event;
@@ -97,60 +96,4 @@ QStyleOptionButton VocabularyTranscriptionsDelegate::createButton( QRect buttonR
 	button.state 	= QStyle::State_Enabled;
 
 	return button;
-}
-
-QRect VocabularyTranscriptionsDelegate::textRect( QRect cellRect ) const
-{
-	int btnSize	= cellRect.height();	// Button rect should be a square
-
-	int x 		= cellRect.left();
-	int y 		= cellRect.top();
-	int w 		= cellRect.width() - btnSize;
-	int h 		= cellRect.height();
-
-	return QRect( x, y, w, h );
-}
-
-QRect VocabularyTranscriptionsDelegate::buttonRect( QRect cellRect ) const
-{
-	int btnSize	= cellRect.height();	// Button rect should be a square
-
-	int x = cellRect.left() + cellRect.width() - btnSize;
-	int y = cellRect.top();
-	int w = btnSize;
-	int h = btnSize;
-
-	return QRect( x, y, w, h );
-}
-
-/*
- * Manual: https://stackoverflow.com/questions/9131727/how-can-i-change-the-mouse-pointer-when-mouse-over-text-with-qstyleditemdelegate
- */
-void VocabularyTranscriptionsDelegate::setCursor( const QStyleOptionViewItem option, const QModelIndex index ) const
-{
-	VocabularyTableView *myView	= qobject_cast<VocabularyTableView*>( view );
-
-	/*
-	 * Notice that you may need the viewport() in order to be precise. In this case in order to map the global coordinates you will need:
-	 */
-	//QPoint viewportPos = myWidget->viewport()->mapFromGlobal( globalCursorPos );
-
-	if ( option.state & QStyle::State_MouseOver ) {
-	     QPoint globalCursorPos		= QCursor::pos();
-	     QPoint widgetPos 			= option.widget->mapFromGlobal( globalCursorPos );
-	     QModelIndex currentIndex	= myView->indexAt( widgetPos );
-
-	     if ( currentIndex == index )
-	         QApplication::setOverrideCursor( QCursor( Qt::PointingHandCursor ) );
-	     else
-	         QApplication::restoreOverrideCursor();
-	}
-}
-
-bool VocabularyTranscriptionsDelegate::isEmptyLine( const QModelIndex index ) const
-{
-	if ( index.siblingAtColumn( 0 ).data().toInt() )
-		return false;
-	else
-		return true;
 }

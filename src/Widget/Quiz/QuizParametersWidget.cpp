@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QCheckBox>
 #include <QIntValidator>
+#include <QScrollBar>
 
 #include "precompiled.h"
 #include "QxOrm_Impl.h"
@@ -213,6 +214,17 @@ QCheckBox* QuizParametersWidget::getChkRandomize()
 	return ui->chkRandomize;
 }
 
+QCheckBox* QuizParametersWidget::getChkTimer()
+{
+	return ui->chkTimer;
+}
+
+void QuizParametersWidget::setTimerTime( QTime time )
+{
+	ui->teTimer->setTime( time );
+	ui->frmTime->show();
+}
+
 int QuizParametersWidget::time()
 {
 	int time	= 0;
@@ -263,4 +275,12 @@ EnumFromVocabulary QuizParametersWidget::getFromVocabulary()
 	}
 
 	return fromVocabulary;
+}
+
+void QuizParametersWidget::scrollGroups( QCheckBox* chk )
+{
+	//ui->grpGroupsScrollArea->ensureWidgetVisible( chk );
+
+	// Scroll To Bottom
+	ui->grpGroupsScrollArea->verticalScrollBar()->setValue( ui->grpGroupsScrollArea->verticalScrollBar()->maximum() );
 }

@@ -47,8 +47,11 @@ void SideBarListViewDelegate::paint(
 	QStyleOptionButton button	= createButton( index.row(), option.rect, buttonText );
 	//qDebug() << "Draw Button at row " << index.row() << " with state " << QString::number( button.state );
 
+	QStyleOptionButton quizButton	= createQuizButton( index.row(), quizButtonRect( option.rect ) );
+
 	painter->save();
 	QApplication::style()->drawControl( QStyle::CE_PushButton, &button, painter );
+	QApplication::style()->drawControl( QStyle::CE_PushButton, &quizButton, painter );
 	painter->restore();
 }
 
@@ -79,7 +82,14 @@ bool SideBarListViewDelegate::editorEvent(
 	const QModelIndex &index
 ) {
 	Q_UNUSED( model );
-	Q_UNUSED( option );
+
+	setCursor( event, option, index );
+
+	QRect btnQuizRect;
+	QRect btnGroupRect;
+	QMouseEvent* e	= ( QMouseEvent* )event;
+	int clickX		= e->x();
+	int clickY		= e->y();
 
 	//qDebug() << "Event Type 2: " << event->type();
 	switch ( event->type() ) {
@@ -98,17 +108,32 @@ bool SideBarListViewDelegate::editorEvent(
 		case QEvent::None:
 		case QEvent::MouseButtonRelease:
 			{
-				_event	= QEvent::MouseButtonRelease;
+				_event		= QEvent::MouseButtonRelease;
 
-				if ( _currRow == index.row() ) {
-					QModelIndex newIndex 	= model->index( index.row(), 1 );
-					emit buttonClicked( index );
-					emit model->dataChanged( newIndex, newIndex );
-				} else {
-					QModelIndex oldIndex 	= model->index( _currRow, 1 );
-					_currRow	= index.row();
-					emit buttonClicked( index );
-					emit model->dataChanged( oldIndex, oldIndex );
+				btnQuizRect	= quizButtonRect( option.rect );
+				if(
+					( clickX > btnQuizRect.x() && clickX < btnQuizRect.x() + btnQuizRect.width() ) &&
+					( clickY > btnQuizRect.y() && clickY < btnQuizRect.y() + btnQuizRect.height() )
+				) {
+					emit quizButtonClicked( index );
+				}
+
+
+				btnGroupRect	= groupButtonRect( option.rect );
+				if(
+					( clickX > btnGroupRect.x() && clickX < btnGroupRect.x() + btnGroupRect.width() ) &&
+					( clickY > btnGroupRect.y() && clickY < btnGroupRect.y() + btnGroupRect.height() )
+				) {
+					if ( _currRow == index.row() ) {
+						QModelIndex newIndex 	= model->index( index.row(), 1 );
+						emit buttonClicked( index );
+						emit model->dataChanged( newIndex, newIndex );
+					} else {
+						QModelIndex oldIndex 	= model->index( _currRow, 1 );
+						_currRow	= index.row();
+						emit buttonClicked( index );
+						emit model->dataChanged( oldIndex, oldIndex );
+					}
 				}
 			}
 			break;
@@ -117,7 +142,8 @@ bool SideBarListViewDelegate::editorEvent(
 			break;
 	}
 
-	return true;
+	//return true;
+	return QItemDelegate::editorEvent( event, model, option, index );
 }
 
 QStyleOptionButton SideBarListViewDelegate::createButton( int indexRow, QRect rect, QString text ) const
@@ -138,6 +164,19 @@ QStyleOptionButton SideBarListViewDelegate::createButton( int indexRow, QRect re
 	return button;
 }
 
+QStyleOptionButton SideBarListViewDelegate::createQuizButton( int indexRow, QRect rect ) const
+{
+	QStyleOptionButton button;
+
+	button.rect		= rect;
+	button.icon 	= QIcon( ":/Resources/icons/quiz.svg" );
+	button.iconSize	= QSize( 16, 16 );
+	button.state 	= QStyle::State_Enabled;
+	//button.text		= "LKVBSFKDBLF";
+
+	return button;
+}
+
 long SideBarListViewDelegate::groupWordsCount( int groupId ) const
 {
 	QString query	= QString( "WHERE group_id=%1" ).arg( groupId );
@@ -146,5 +185,44 @@ long SideBarListViewDelegate::groupWordsCount( int groupId ) const
 		return qx::dao::count<ArchiveWord>( qx::QxSqlQuery( query ) );
 	} else {
 		return qx::dao::count<Vocabulary>( qx::QxSqlQuery( query ) );
+	}
+}
+
+QRect SideBarListViewDelegate::groupButtonRect( QRect cellRect ) const
+{
+	int btnSize	= cellRect.height();	// Button rect should be a square
+
+	int x = cellRect.left();
+	int y = cellRect.top();
+	int w = cellRect.width() - btnSize;
+	int h = cellRect.height();
+
+	return QRect( x, y, w, h );
+}
+
+QRect SideBarListViewDelegate::quizButtonRect( QRect cellRect ) const
+{
+	int btnSize	= cellRect.height();	// Button rect should be a square
+
+	int x = cellRect.left() + cellRect.width() - btnSize;
+	int y = cellRect.top();
+	int w = btnSize;
+	int h = btnSize;
+
+	return QRect( x, y, w, h );
+}
+
+void SideBarListViewDelegate::setCursor( QEvent *event, const QStyleOptionViewItem option, const QModelIndex index ) const
+{
+	QMouseEvent *e			= static_cast<QMouseEvent *>( event );
+	QPointF mousePosition	= e->pos();
+
+	if ( option.rect.contains( mousePosition.toPoint() ) ) {
+		//qDebug() << "SET CURSOR !!!";
+		QApplication::setOverrideCursor( QCursor( Qt::PointingHandCursor ) );
+		//option.widget->setCursor( QCursor( Qt::PointingHandCursor ) );
+	} else {
+		//qDebug() << "RESTORE CURSOR !!!";
+		QApplication::restoreOverrideCursor();
 	}
 }

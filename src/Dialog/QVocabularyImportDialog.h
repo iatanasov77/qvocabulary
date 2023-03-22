@@ -2,6 +2,7 @@
 #define DIALOG_QVOCABULARY_IMPORT_H
 
 #include <QDialog>
+#include "Application/VsWaitingSpinner.h"
 
 namespace Ui {
 	class QVocabularyImportDialog;
@@ -20,6 +21,7 @@ class QVocabularyImportDialog : public QDialog
 	    Ui::QVocabularyImportDialog *ui;
 
 	    QString dbPath;
+	    VsWaitingSpinner *waitingSpinner;
 
 	private slots:
 		void save();

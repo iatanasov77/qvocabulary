@@ -8,7 +8,7 @@
 
 #include "View/VocabularyTableView.h"
 
-VocabularyTranslationsDelegate::VocabularyTranslationsDelegate( QObject *parent ) : QStyledItemDelegate( parent )
+VocabularyTranslationsDelegate::VocabularyTranslationsDelegate( QObject *parent ) : VocabularyViewDelegate( parent )
 {
 
 }
@@ -20,6 +20,8 @@ void VocabularyTranslationsDelegate::paint(
 ) const {
 	if ( ! index.isValid() || isEmptyLine( index ) )
 		QStyledItemDelegate::paint( painter, option, QModelIndex() );	// draw the selection background only
+
+	//setCursor( option, index );
 
 	QStyleOptionViewItem op( option );
 	initStyleOption( &op, index );
@@ -40,6 +42,8 @@ bool VocabularyTranslationsDelegate::editorEvent(
 	const QStyleOptionViewItem &option,
 	const QModelIndex &index
 ) {
+	setCursor( event, option, index );
+
 	if ( event->type() == QEvent::MouseButtonRelease ) {
 		QMouseEvent* e	= ( QMouseEvent* )event;
 		int clickX		= e->x();
@@ -82,36 +86,4 @@ QStyleOptionButton VocabularyTranslationsDelegate::createButton( QRect buttonRec
 	button.state 	= QStyle::State_Enabled;
 
 	return button;
-}
-
-QRect VocabularyTranslationsDelegate::textRect( QRect cellRect ) const
-{
-	int btnSize	= cellRect.height();	// Button rect should be a square
-
-	int x 		= cellRect.left();
-	int y 		= cellRect.top();
-	int w 		= cellRect.width() - btnSize;
-	int h 		= cellRect.height();
-
-	return QRect( x, y, w, h );
-}
-
-QRect VocabularyTranslationsDelegate::buttonRect( QRect cellRect ) const
-{
-	int btnSize	= cellRect.height();	// Button rect should be a square
-
-	int x = cellRect.left() + cellRect.width() - btnSize;
-	int y = cellRect.top();
-	int w = btnSize;
-	int h = btnSize;
-
-	return QRect( x, y, w, h );
-}
-
-bool VocabularyTranslationsDelegate::isEmptyLine( const QModelIndex index ) const
-{
-	if ( index.siblingAtColumn( 0 ).data().toInt() )
-		return false;
-	else
-		return true;
 }

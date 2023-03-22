@@ -20,11 +20,6 @@ CONFIG(debug, debug|release) {
 	CONFIG += console
 }
 
-# Ne varshat nikva rabota
-####################################
-#QMAKE_CXXFLAGS += -static-libgcc
-#QMAKE_CXXFLAGS += -static-libstdc++
-
 DEFINES += QT_DEPRECATED_WARNINGS
 
 # You can make your code fail to compile if you use deprecated APIs.
@@ -52,7 +47,17 @@ CONFIG(debug, debug|release) {
     LIBS += -lQxOrm
 }
 
+###########################################################
+# QtWaitingSpinner
+###########################################################
+INCLUDEPATH += /usr/include/QtWaitingSpinner/include
+LIBS += -L/usr/lib -lqtwaitingspinner
+
+###########################################################
+# Qt Mustache
+###########################################################
 INCLUDEPATH += /home/vagrant/tools/qt-mustache/src
+
 INCLUDEPATH += /projects/VS_QVocabulary/src
 
 ###############################
@@ -60,14 +65,11 @@ INCLUDEPATH += /projects/VS_QVocabulary/src
 ###############################
 SOURCES += $$files(lib/*.cpp, true)
 SOURCES += $$files(src/*.cpp, true)
-#SOURCES += /home/vagrant/tools/qt-mustache/src/mustache.cpp
 HEADERS += $$files(lib/*.h, true)
 HEADERS += $$files(src/*.h, true)
-#HEADERS += /home/vagrant/tools/qt-mustache/src/mustache.h
 FORMS += $$files(Forms/*.ui, true) \
     Forms/SettingsWidgetQuiz.ui
 RESOURCES = QVocabulary.qrc
-#RC_ICONS = dictionary.ico
 RC_ICONS = dictionary_transparent.ico
 TRANSLATIONS += $$files(translations/*.ts, true)
 

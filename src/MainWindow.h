@@ -15,6 +15,7 @@
 #include "Dialog/NewDatabaseDialog.h"
 #include "Dialog/NewVocabularyGroupDialog.h"
 #include "Dialog/RenameVocabularyGroupDialog.h"
+#include "Application/VsWaitingSpinner.h"
 
 namespace Ui {
 	class MainWindow;
@@ -41,6 +42,8 @@ class MainWindow : public QMainWindow
 		void openQuiz( int quizId, QString quizTitle );
 
 		NewVocabularyGroupDialog* dialogNewVocabularyGroup();
+
+		void startQuiz( int groupId = 0 );
 
 	protected:
 		// this event is called, when a new translator is loaded or the system language is changed
@@ -116,6 +119,8 @@ class MainWindow : public QMainWindow
 		enum { MaxRecentDatabases = 5 };
 		QString curDatabase;
 		QAction* recentDatabaseActs[MaxRecentDatabases];
+
+		VsWaitingSpinner *waitingSpinner;
 
 //		QDockWidget* helpWindow;
 //		QDockWidget* quizWindow;

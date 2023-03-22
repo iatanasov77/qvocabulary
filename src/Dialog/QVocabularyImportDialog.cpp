@@ -13,6 +13,7 @@ QVocabularyImportDialog::QVocabularyImportDialog( QWidget *parent ) :
     ui( new Ui::QVocabularyImportDialog )
 {
     ui->setupUi( this );
+    waitingSpinner	= new VsWaitingSpinner( this );
 
     mw = parent;
 
@@ -40,9 +41,10 @@ void QVocabularyImportDialog::save()
 		return;
 	}
 
-	QApplication::setOverrideCursor( Qt::WaitCursor );
+	waitingSpinner->start();
 	bool importStatus	= QVocabulary::importFromDb( dbPath, ui->chkImportQuizes->isChecked(), ui->chkImportArchive->isChecked() );
-	QApplication::restoreOverrideCursor();
+	waitingSpinner->stop();
+
 	if ( ! importStatus ) {
 		QMessageBox::critical(
 			this,

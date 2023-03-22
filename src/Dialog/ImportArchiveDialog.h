@@ -5,6 +5,8 @@
 #include <QSqlDatabase>
 #include <QMap>
 
+#include "Application/VsWaitingSpinner.h"
+
 namespace Ui {
 	class ImportArchiveDialog;
 }
@@ -24,6 +26,8 @@ class ImportArchiveDialog : public QDialog
 	    Ui::ImportArchiveDialog *ui;
 	    QString dbPath;
 	    QMap<int, int> importedGroups;
+
+	    VsWaitingSpinner *waitingSpinner;
 
 	private slots:
 		void importArchive();

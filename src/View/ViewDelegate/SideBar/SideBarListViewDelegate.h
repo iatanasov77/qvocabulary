@@ -20,12 +20,19 @@ class SideBarListViewDelegate : public QItemDelegate
 
 		void setEvent( int event );
 
+	protected:
+		void setCursor( QEvent *event, const QStyleOptionViewItem option, const QModelIndex index ) const;
+
 	signals:
 		void buttonClicked( const QModelIndex &index );
+		void quizButtonClicked( const QModelIndex &index );
 
 	private:
 		QStyleOptionButton createButton( int indexRow, QRect rect, QString text ) const;
+		QStyleOptionButton createQuizButton( int indexRow, QRect rect ) const;
 		long groupWordsCount( int groupId ) const;
+		QRect groupButtonRect( QRect cellRect ) const;
+		QRect quizButtonRect( QRect cellRect ) const;
 
 		bool _inArchive;
 		int _currRow;

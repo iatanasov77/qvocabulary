@@ -1,3 +1,13 @@
+1.0.0	|	Release date: **22.03.2023**
+============================================
+* New Features and Improvements:
+  - Update Project File.
+  - Add Quiz Buttons into Sidbar GroupsListView.
+  - Configure Group Quiz When SideBar Quiz Button Clicked.
+  - Create Base VocabularyViewDelegate Class.
+  - Add Waiting Spinner.
+
+
 0.25.1	|	Release date: **11.02.2023**
 ============================================
 * New Features:
