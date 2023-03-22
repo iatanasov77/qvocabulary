@@ -724,10 +724,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>GroupBox</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Vocabulary</source>
         <translation type="unfinished"></translation>
     </message>
@@ -737,6 +733,10 @@
     </message>
     <message>
         <source>Word Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hh:mm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
