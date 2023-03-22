@@ -20,6 +20,7 @@ ImportArchiveDialog::ImportArchiveDialog( QWidget *parent ) :
     ui( new Ui::ImportArchiveDialog )
 {
     ui->setupUi( this );
+    waitingSpinner	= new VsWaitingSpinner( this );
 
     connect( ui->browseForDb, SIGNAL( clicked() ), this, SLOT( setDatabase() ) );
 
@@ -49,7 +50,7 @@ void ImportArchiveDialog::importArchive()
 		return;
 	}
 
-	QApplication::setOverrideCursor( Qt::WaitCursor );
+	waitingSpinner->start();
 	QSqlDatabase db	= QSqlDatabase::addDatabase( "QSQLITE", "import_source" );
 	db.setDatabaseName( dbPath );
 	db.setHostName( "localhost" );
@@ -63,7 +64,7 @@ void ImportArchiveDialog::importArchive()
 	} else {
 		qDebug() << "Import Source Database Cannot Be Opened!";
 	}
-	QApplication::restoreOverrideCursor();
+	waitingSpinner->stop();
 }
 
 void ImportArchiveDialog::_importArchiveGroups( QSqlDatabase db )

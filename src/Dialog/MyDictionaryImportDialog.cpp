@@ -15,6 +15,7 @@ MyDictionaryImportDialog::MyDictionaryImportDialog( QWidget *parent ) :
     ui( new Ui::MyDictionaryImportDialog )
 {
     ui->setupUi( this );
+    waitingSpinner	= new VsWaitingSpinner( this );
 
     mw = parent;
 
@@ -50,9 +51,10 @@ void MyDictionaryImportDialog::save()
 		return;
 	}
 
-	QApplication::setOverrideCursor( Qt::WaitCursor );
+	waitingSpinner->start();
 	bool importStatus	= AndroidMyDictionary::importFromDb( dbPath, groupName );
-	QApplication::restoreOverrideCursor();
+	waitingSpinner->stop();
+
 	if ( ! importStatus ) {
 		QMessageBox::critical(
 			this,

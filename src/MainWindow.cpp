@@ -37,6 +37,7 @@ MainWindow::MainWindow( QWidget *parent ) :
     ui( new Ui::MainWindow )
 {
     ui->setupUi( this );
+    waitingSpinner	= new VsWaitingSpinner( this );
 
     // The Trick ;)
     wdgVocabulary	= 0;
@@ -338,13 +339,13 @@ void MainWindow::loadDb( const QString &dbPath )
 		);
 	}
 
-	QApplication::setOverrideCursor( Qt::WaitCursor );
+	waitingSpinner->start();
 
 	initWidgets();
 	wdgVocabulary->initModels();
 	setCurrentDb( dbPath );
 
-	QApplication::restoreOverrideCursor();
+	waitingSpinner->stop();
 	statusBar()->showMessage( tr( "Database loaded" ), 2000 );
 }
 

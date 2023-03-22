@@ -22,6 +22,8 @@ AddToArchiveDialog::AddToArchiveDialog( QWidget *parent ) :
     ui( new Ui::AddToArchiveDialog )
 {
     ui->setupUi( this );
+    waitingSpinner	= new VsWaitingSpinner( this );
+
     initGroupsCombo();
 
     mw = parent;
@@ -55,7 +57,7 @@ void AddToArchiveDialog::addToArchive()
 		return;
 	}
 
-	QApplication::setOverrideCursor( Qt::WaitCursor );
+	waitingSpinner->start();
 	QSqlDatabase db	= QSqlDatabase::addDatabase( "QSQLITE", "import_source" );
 	db.setDatabaseName( dbPath );
 	db.setHostName( "localhost" );
@@ -73,7 +75,7 @@ void AddToArchiveDialog::addToArchive()
 	} else {
 		qDebug() << "Import Source Database Cannot Be Opened!";
 	}
-	QApplication::restoreOverrideCursor();
+	waitingSpinner->stop();
 }
 
 int AddToArchiveDialog::_createArchiveGroup( QString groupName )

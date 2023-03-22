@@ -15,6 +15,7 @@
 #include "Dialog/NewDatabaseDialog.h"
 #include "Dialog/NewVocabularyGroupDialog.h"
 #include "Dialog/RenameVocabularyGroupDialog.h"
+#include "Application/VsWaitingSpinner.h"
 
 namespace Ui {
 	class MainWindow;
@@ -118,6 +119,8 @@ class MainWindow : public QMainWindow
 		enum { MaxRecentDatabases = 5 };
 		QString curDatabase;
 		QAction* recentDatabaseActs[MaxRecentDatabases];
+
+		VsWaitingSpinner *waitingSpinner;
 
 //		QDockWidget* helpWindow;
 //		QDockWidget* quizWindow;

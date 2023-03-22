@@ -47,7 +47,17 @@ CONFIG(debug, debug|release) {
     LIBS += -lQxOrm
 }
 
+###########################################################
+# QtWaitingSpinner
+###########################################################
+INCLUDEPATH += /usr/include/QtWaitingSpinner/include
+LIBS += -L/usr/lib -lqtwaitingspinner
+
+###########################################################
+# Qt Mustache
+###########################################################
 INCLUDEPATH += /home/vagrant/tools/qt-mustache/src
+
 INCLUDEPATH += /projects/VS_QVocabulary/src
 
 ###############################

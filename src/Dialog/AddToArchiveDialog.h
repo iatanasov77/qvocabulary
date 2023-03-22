@@ -5,6 +5,7 @@
 #include <QSqlDatabase>
 
 #include "Entity/ArchiveWord.h"
+#include "Application/VsWaitingSpinner.h"
 
 namespace Ui {
 	class AddToArchiveDialog;
@@ -28,6 +29,7 @@ class AddToArchiveDialog : public QDialog
 	    Ui::AddToArchiveDialog *ui;
 
 	    QString dbPath;
+	    VsWaitingSpinner *waitingSpinner;
 
 	private slots:
 		void addToArchive();
