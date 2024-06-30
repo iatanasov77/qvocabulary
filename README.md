@@ -4,9 +4,21 @@ A QT alternative of Microsoft Vocabulary++
 For building use this vagrant machine: https://github.com/iatanasov77/my-desktop-projects
 
 ## I. Howto Build Application
-	### 1. First clone or download source in the separate folder
-	### 2. Run `qmake` to create a Makefile ( To Build For Windows use `qmake-mingw` )
-	### 3. Run `make`
+
+  ### 1. First clone or download source in the separate folder
+  
+  - Build in Developement Mode
+  
+  ```bash
+    qmake CONFIG+=debug
+	make
+  ```
+  - Build in Production Mode
+  
+  ```bash
+    qmake
+	make
+  ```
 	
 ## II. Howto Build Help
 	### 1. Enter into the Help folder
