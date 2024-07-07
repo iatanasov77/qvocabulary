@@ -44,7 +44,7 @@ void SettingsWidgetGeneral::apply()
 	int idx						= ui->cmbLanguage->currentIndex();
 	QString	selectedLanguage	= ui->cmbLanguage->itemData( idx ).toString();
 
-	VsApplication::instance()->loadLanguage( selectedLanguage );
+	VsApplication::instance()->loadLanguage( QLocale( selectedLanguage ) );
 }
 
 void SettingsWidgetGeneral::changeEvent( QEvent* event )

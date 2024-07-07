@@ -46,7 +46,7 @@ MainWindow::MainWindow( QWidget *parent ) :
     // Load Current Language
     QString currentLanguage = VsSettings::instance()->value( "language", "General" ).toString();
     if ( ! currentLanguage.isEmpty() ) {
-    	VsApplication::instance()->loadLanguage( currentLanguage );
+    	VsApplication::instance()->loadLanguage( QLocale( currentLanguage ) );
     }
 
     stylingMenu();

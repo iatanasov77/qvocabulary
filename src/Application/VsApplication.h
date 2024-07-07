@@ -2,6 +2,7 @@
 #define VS_APPLICATION_H
 
 #include <QDir>
+#include <QLocale>
 #include <QTranslator>
 
 class VsApplication
@@ -15,7 +16,7 @@ class VsApplication
 	    static VsApplication* _instance;
 	    QTranslator m_translator; // contains the translations for this application
 		QTranslator m_translatorQt; // contains the translations for qt
-		QString m_currLang; // contains the currently loaded language
+		QLocale defaultLocale; // contains the currently loaded language
 		QString m_langPath; // Path of language files. This is always fixed to /languages.
 
 	public:
@@ -27,7 +28,7 @@ class VsApplication
 		static bool canOpenDb( QString dbVersion );
 
 		QMap<QString, QString> languages();
-		void loadLanguage( const QString& rLanguage );
+		void loadLanguage( const QLocale& locale );
 		QString appAboutBody();
 		QString quizHelpDataBody();
 

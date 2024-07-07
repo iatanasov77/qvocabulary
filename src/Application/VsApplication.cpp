@@ -35,7 +35,8 @@ VsApplication* VsApplication::_instance = 0;
 
 VsApplication::VsApplication()
 {
-	m_currLang	= "en";
+	defaultLocale	= QLocale( QLocale::English, QLocale::UnitedStates );
+	QLocale::setDefault( defaultLocale );
 
 //	QSettings* settings	= VsSettings::instance()->settings();
 //	settings->setValue( "language", m_currLang );
@@ -107,27 +108,28 @@ QMap<QString, QString> VsApplication::languages()
 	/*
 	 *  Always translated in Bulgarian
 	 *
-	languages["en"]	= QObject::tr( "English" );
-	languages["bg"]	= QObject::tr( "Bulgarian" );
+	languages["en_US"]	= QObject::tr( "English" );
+	languages["bg_BG"]	= QObject::tr( "Bulgarian" );
 	*/
-	languages["en"]	= "English";
-	languages["bg"]	= "Bulgarian";
+	languages["en_US"]	= "English";
+	languages["bg_BG"]	= "Bulgarian";
 
 	return languages;
 }
 
-void VsApplication::loadLanguage( const QString& rLanguage )
+void VsApplication::loadLanguage( const QLocale& locale )
 {
-	if( m_currLang != rLanguage ) {
-		m_currLang		= rLanguage;
-		QLocale locale	= QLocale( m_currLang );
+	if( defaultLocale != locale ) {
+		defaultLocale	= locale;
+		QLocale::setDefault( defaultLocale );
 
-		QLocale::setDefault( locale );
 		QString languageName	= QLocale::languageToString( locale.language() );
+		QString rLanguage		= locale.name().split('_').at( 0 ).toLower();
+
 		switchTranslator( m_translator, QString( "QVocabulary_%1.qm" ).arg( rLanguage ) );
 		switchTranslator( m_translatorQt, QString( "qt_%1.qm" ).arg( rLanguage ) );
 
-		VsSettings::instance()->setValue( "language", m_currLang, "General" );
+		VsSettings::instance()->setValue( "language", defaultLocale.name(), "General" );
 	}
 }
 
@@ -149,7 +151,8 @@ void VsApplication::switchTranslator( QTranslator& translator, const QString& fi
 QString VsApplication::appAboutBody()
 {
 	QString data;
-	QString fileName	= QString( ":/Resources/html/about_%1.html" ).arg( m_currLang );
+	QString rLanguage	= defaultLocale.name().split('_').at( 0 ).toLower();
+	QString fileName	= QString( ":/Resources/html/about_%1.html" ).arg( rLanguage );
 
 	QFile file( fileName );
 	if( ! file.open( QIODevice::ReadOnly ) ) {
@@ -178,7 +181,8 @@ bool VsApplication::canOpenDb( QString dbVersion )
 QString VsApplication::quizHelpDataBody()
 {
 	QString data;
-	QString fileName	= QString( ":/Resources/html/quiz_help_data_%1.html" ).arg( m_currLang );
+	QString rLanguage	= defaultLocale.name().split('_').at( 0 ).toLower();
+	QString fileName	= QString( ":/Resources/html/quiz_help_data_%1.html" ).arg( rLanguage );
 
 	QFile file( fileName );
 	if( ! file.open( QIODevice::ReadOnly ) ) {
